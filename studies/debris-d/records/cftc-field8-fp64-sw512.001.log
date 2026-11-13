@@ -1,0 +1,9 @@
+images/fields/field8-rk4-fp64.cfta
+images/fields/field8-rk4-fp64.cftp
+images/fields/field8-rk4-fp64.bank
+images/fields/field8-rk4-fp64.half.bank
+images/fields/field8-rk4-fp64.manifest.json
+images/fields/field8-rk4-fp64.graph.json
+images/fields/field8-rk4-fp64.canonical.cftl
+images/fields/field8-rk4-fp64.math.txt
+[cpurun] cftc-field8-fp64-sw512 wall 9.12s cycles/2.5e9 8.72s procs-times 3.41s job 3.41s processes 4 caught 4 exit 0

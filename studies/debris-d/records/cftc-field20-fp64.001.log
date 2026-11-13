@@ -1,0 +1,3 @@
+cftc: refused bank-capacity: C:\Users\logan\source\repos\cft-debris\studies\debris-d\systems\field20-rk4.cftl: 1762 params and 6 constants: the bank holds 512 on every device
+[cpurun] cftc-field20-fp64 wall 1.30s cycles/2.5e9 1.34s procs-times 0.30s job 0.30s processes 4 caught 4 exit 3
+exit 3

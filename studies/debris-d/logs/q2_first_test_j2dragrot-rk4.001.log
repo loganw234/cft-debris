@@ -1,0 +1,93 @@
+# log q2_first_test_j2dragrot-rk4.001.log
+# written by q2_first_test.py, sha256 46b458f3f9b2ae735ec30f07fd2b0d9a16b8a629e19ee4d3b8e9f10a99b0dd52
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 20:54:02 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   (a) every lane's state after each of the 4 segments equals lang.run's, bit for bit, and each unmarked lane's byte is [7:5] clear with [4:0] equal to lang.run's flags for that lane and segment; a marked lane (bit 7) is replayed by lang.run and its guess counted, not required
+#   (b) |image - mpmath(120 digits)| <= 64 * N * 2^-p * S per component, N the steps so far, S = 7.0e+06 m for positions and 8.0e+03 m/s for velocities; t must be exact (0)
+#   (c) control: lang.run of the source with mu one ulp (of the format) above its rounded value must differ from the image's states somewhere (so (a) can fail); identical = control FAILED
+#   (d) the planted source's mu encoding is the original's plus one (the plant is what it says)
+
+== j2dragrot-rk4 at fp64 ==
+compile j2dragrot-rk4-fp64: exit 0 in 5.06 s; no stderr
+image {"accepted_by": ["sw", "u50-rev8", "u50-rev8-quad", "u50-rev8-deep"], "bank_sha256": "38e94ca0d87ddea0a7cd24a58defc675e634b17b3be5a0b31f267a49fdba9d1f", "bank_slots": 182, "cftp_sha256": "7f59875f7d0b9f249777ff4f241c32310e7bdfe11b0e3673b466af857ae47c8a", "features": ["WIDE_CONST", "REGS32", "BANK_PTR", "SCRATCH", "SCRATCH_IO", "SCRATCH_STRICT", "FLAG_CONTROL"], "graph_by_op": {"add": 6, "cos": 4, "div": 4, "exp": 4, "fma": 136, "mul": 148, "neg": 48, "sin": 4, "sqrt": 8, "sub": 12}, "graph_step_nodes": 374, "half_bank_sha256": "63569f969a34ec9eac557356b19ed8e6913414198c0177ecf8141cbd3c66f2c5", "image": "j2dragrot-rk4-fp64", "instructions": 4558, "manifest_sha256": "a49c4a6b85a90bd0288bdd86cf83ec6179116c656dfab067e70bc051edf2018b", "per_step": {"alu": 4357, "by_op": {"abs": 17, "add": 316, "cmpeq": 19, "cmple": 28, "cmplt": 42, "fma": 646, "iadd": 149, "iand": 266, "icmplt": 208, "ior": 111, "ishl": 96, "ishr": 104, "isub": 177, "ixor": 71, "max": 12, "min": 12, "mul": 430, "neg": 126, "recip_seed": 4, "rsqrt_seed": 8, "select": 1027, "sub": 488}, "copies": 1, "endrep": 1, "instructions": 4541, "loads": 73, "stores": 43}, "rebuild": "python -I -B <archive e01003cc0b98 extracted>/python/cftc studies/debris-d/systems/j2dragrot-rk4.cftl --steps 24 --format fp64 --out <dir> --stem j2dragrot-rk4-fp64", "registers": 29, "scratch_declared": 256, "scratch_slots": 35, "source_sha256": "50b8ffba3b5982668e80889e1c15dcfc35e3d34ce0fbe6a375063ae915704473"}
+seqrun exit 0 in 0.45 s
+  build_id unknown
+  image C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-D/images/q2\j2dragrot-rk4-fp64.cftp insns 4558 consts 182 scratch_in 8 scratch_out 8 scratch_used 35 esz 8 deposits 0
+  seg 1 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 2 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 3 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 4 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+lang.run: 4 segments x 8 lanes in 3.8 s; marked lanes 0 (of 32 lane-segments), wrong guesses 0
+PASS: j2dragrot-rk4 fp64 (a) image equals lang.run bit for bit, states and lane flags, 4 segments x 8 lanes
+  (b) segment 1 pos: largest |image - mpmath| 3.172e-9 (0.00266 of the tolerance)
+  (b) segment 1 vel: largest |image - mpmath| 3.519e-12 (0.00258 of the tolerance)
+  (b) segment 2 pos: largest |image - mpmath| 1.17e-8 (0.0049 of the tolerance)
+  (b) segment 2 vel: largest |image - mpmath| 1.898e-11 (0.00696 of the tolerance)
+  (b) segment 3 pos: largest |image - mpmath| 3.948e-8 (0.011 of the tolerance)
+  (b) segment 3 vel: largest |image - mpmath| 4.003e-11 (0.00978 of the tolerance)
+  (b) segment 4 pos: largest |image - mpmath| 6.383e-8 (0.0134 of the tolerance)
+  (b) segment 4 vel: largest |image - mpmath| 8.232e-11 (0.0151 of the tolerance)
+mpmath reference in 0.7 s
+PASS: j2dragrot-rk4 fp64 (b) within 64*N*2^-53*S of mpmath at 120 digits
+PASS: j2dragrot-rk4 fp64 (d) planted mu encoding = original + 1 (0x42f6a8665bda5400 -> 0x42f6a8665bda5401)
+planted run in 3.8 s: 179 of 224 values differ from the image's
+PASS: j2dragrot-rk4 fp64 (c) control: the planted source fails (a)
+marks: 0 marked lane-segments; 3072 lane-evaluations (8 lanes x 96 steps x 4 stages)
+
+== j2dragrot-rk4 at fp128 ==
+compile j2dragrot-rk4-fp128: exit 0 in 4.04 s; no stderr
+image {"accepted_by": ["sw", "u50-rev8", "u50-rev8-quad", "u50-rev8-deep"], "bank_sha256": "281a1ce1b6af471497c37024adb3d6f912038413cd898b6b31b52dda58d3bc5d", "bank_slots": 185, "cftp_sha256": "a7f5084449462372f5d809ee45b0359b32622738b58b761a74a8f567acbe27c9", "features": ["WIDE_CONST", "REGS32", "BANK_PTR", "SCRATCH", "SCRATCH_IO", "SCRATCH_STRICT", "FLAG_CONTROL"], "graph_by_op": {"add": 6, "cos": 4, "div": 4, "exp": 4, "fma": 136, "mul": 148, "neg": 48, "sin": 4, "sqrt": 8, "sub": 12}, "graph_step_nodes": 374, "half_bank_sha256": "906d29cb1246f8038c1348d3e6c6e8efddc7c698ea57dd8d0f0214f657a3562d", "image": "j2dragrot-rk4-fp128", "instructions": 4521, "manifest_sha256": "022a1bf94036c9a9a5682d853808a56c9691b191e9442f2b77f6345e8efe5b0e", "per_step": {"alu": 4352, "by_op": {"abs": 17, "add": 304, "cmpeq": 19, "cmple": 28, "cmplt": 42, "fma": 727, "iadd": 149, "iand": 263, "icmplt": 211, "ior": 111, "ishl": 96, "ishr": 104, "isub": 177, "ixor": 71, "max": 12, "min": 12, "mul": 440, "neg": 123, "recip_seed": 4, "rsqrt_seed": 8, "select": 958, "sub": 476}, "copies": 0, "endrep": 1, "instructions": 4505, "loads": 53, "stores": 33}, "rebuild": "python -I -B <archive e01003cc0b98 extracted>/python/cftc studies/debris-d/systems/j2dragrot-rk4.cftl --steps 24 --format fp128 --out <dir> --stem j2dragrot-rk4-fp128", "registers": 29, "scratch_declared": 256, "scratch_slots": 32, "source_sha256": "50b8ffba3b5982668e80889e1c15dcfc35e3d34ce0fbe6a375063ae915704473"}
+seqrun exit 0 in 0.63 s
+  build_id unknown
+  image C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-D/images/q2\j2dragrot-rk4-fp128.cftp insns 4521 consts 185 scratch_in 8 scratch_out 8 scratch_used 32 esz 16 deposits 0
+  seg 1 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 2 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 3 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 4 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+lang.run: 4 segments x 8 lanes in 3.9 s; marked lanes 0 (of 32 lane-segments), wrong guesses 0
+PASS: j2dragrot-rk4 fp128 (a) image equals lang.run bit for bit, states and lane flags, 4 segments x 8 lanes
+  (b) segment 1 pos: largest |image - mpmath| 2.521e-27 (0.00243 of the tolerance)
+  (b) segment 1 vel: largest |image - mpmath| 3.875e-30 (0.00327 of the tolerance)
+  (b) segment 2 pos: largest |image - mpmath| 1.868e-26 (0.00902 of the tolerance)
+  (b) segment 2 vel: largest |image - mpmath| 1.475e-29 (0.00623 of the tolerance)
+  (b) segment 3 pos: largest |image - mpmath| 3.086e-26 (0.00994 of the tolerance)
+  (b) segment 3 vel: largest |image - mpmath| 3.231e-29 (0.0091 of the tolerance)
+  (b) segment 4 pos: largest |image - mpmath| 4.244e-26 (0.0102 of the tolerance)
+  (b) segment 4 vel: largest |image - mpmath| 4.574e-29 (0.00966 of the tolerance)
+mpmath reference in 0.8 s
+PASS: j2dragrot-rk4 fp128 (b) within 64*N*2^-113*S of mpmath at 120 digits
+PASS: j2dragrot-rk4 fp128 (d) planted mu encoding = original + 1 (0x402f6a8665bda5400000000000000000 -> 0x402f6a8665bda5400000000000000001)
+planted run in 3.5 s: 178 of 224 values differ from the image's
+PASS: j2dragrot-rk4 fp128 (c) control: the planted source fails (a)
+marks: 0 marked lane-segments; 3072 lane-evaluations (8 lanes x 96 steps x 4 stages)
+
+== j2dragrot-rk4 at fp256 ==
+compile j2dragrot-rk4-fp256: exit 0 in 5.76 s; no stderr
+image {"accepted_by": ["sw", "u50-rev8", "u50-rev8-quad", "u50-rev8-deep"], "bank_sha256": "2717b9cfddf3507e3728265d1336de246ced4414ce3e7b6df5d3cabfc340aa16", "bank_slots": 206, "cftp_sha256": "6e03766c78dd13b0f0e3441c116eacd622dab2b67ced266c2b00c9eca8461f69", "features": ["WIDE_CONST", "REGS32", "BANK_PTR", "SCRATCH", "SCRATCH_IO", "SCRATCH_STRICT", "FLAG_CONTROL"], "graph_by_op": {"add": 6, "cos": 4, "div": 4, "exp": 4, "fma": 136, "mul": 148, "neg": 48, "sin": 4, "sqrt": 8, "sub": 12}, "graph_step_nodes": 374, "half_bank_sha256": "e5c03f1aef82f201621e70d3ce3fec261eafb7c32bd113167aa6fc117d89ff9d", "image": "j2dragrot-rk4-fp256", "instructions": 4621, "manifest_sha256": "3d468fb71a0a31a4bb7930e212a8b11b4aeed7c2c89a03be6fffea9a5ccbbdf2", "per_step": {"alu": 4457, "by_op": {"abs": 17, "add": 304, "cmpeq": 19, "cmple": 28, "cmplt": 42, "fma": 855, "iadd": 149, "iand": 260, "icmplt": 211, "ior": 111, "ishl": 96, "ishr": 104, "isub": 177, "ixor": 71, "max": 12, "min": 12, "mul": 456, "neg": 123, "recip_seed": 4, "rsqrt_seed": 8, "select": 922, "sub": 476}, "copies": 0, "endrep": 1, "instructions": 4605, "loads": 50, "stores": 31}, "rebuild": "python -I -B <archive e01003cc0b98 extracted>/python/cftc studies/debris-d/systems/j2dragrot-rk4.cftl --steps 24 --format fp256 --out <dir> --stem j2dragrot-rk4-fp256", "registers": 29, "scratch_declared": 256, "scratch_slots": 31, "source_sha256": "50b8ffba3b5982668e80889e1c15dcfc35e3d34ce0fbe6a375063ae915704473"}
+seqrun exit 0 in 0.76 s
+  build_id unknown
+  image C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-D/images/q2\j2dragrot-rk4-fp256.cftp insns 4621 consts 206 scratch_in 8 scratch_out 8 scratch_used 31 esz 32 deposits 0
+  seg 1 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 2 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 3 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 4 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+lang.run: 4 segments x 8 lanes in 3.7 s; marked lanes 0 (of 32 lane-segments), wrong guesses 0
+PASS: j2dragrot-rk4 fp256 (a) image equals lang.run bit for bit, states and lane flags, 4 segments x 8 lanes
+  (b) segment 1 pos: largest |image - mpmath| 1.614e-64 (0.00332 of the tolerance)
+  (b) segment 1 vel: largest |image - mpmath| 1.773e-67 (0.00319 of the tolerance)
+  (b) segment 2 pos: largest |image - mpmath| 5.168e-64 (0.00531 of the tolerance)
+  (b) segment 2 vel: largest |image - mpmath| 4.652e-67 (0.00418 of the tolerance)
+  (b) segment 3 pos: largest |image - mpmath| 1.28e-63 (0.00876 of the tolerance)
+  (b) segment 3 vel: largest |image - mpmath| 1.133e-66 (0.00679 of the tolerance)
+  (b) segment 4 pos: largest |image - mpmath| 1.443e-63 (0.00741 of the tolerance)
+  (b) segment 4 vel: largest |image - mpmath| 1.755e-66 (0.00788 of the tolerance)
+mpmath reference in 0.7 s
+PASS: j2dragrot-rk4 fp256 (b) within 64*N*2^-237*S of mpmath at 120 digits
+PASS: j2dragrot-rk4 fp256 (d) planted mu encoding = original + 1 (0x4002f6a8665bda54000000000000000000000000000000000000000000000000 -> 0x4002f6a8665bda54000000000000000000000000000000000000000000000001)
+planted run in 3.9 s: 180 of 224 values differ from the image's
+PASS: j2dragrot-rk4 fp256 (c) control: the planted source fails (a)
+marks: 0 marked lane-segments; 3072 lane-evaluations (8 lanes x 96 steps x 4 stages)
+# failures: 0
+# finished 2026-11-12 20:54:43 (local)

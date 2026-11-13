@@ -1,0 +1,13 @@
+# log q2_degree_sweep.002.log
+# written by q2_degree_sweep.py, sha256 509867b9dfd66cbbb71e987b287c5995b2754425f12cc42cd1fe7c52c7279228
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 21:26:37 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   every compile ends in exit 0 with a manifest declaring 256 scratch slots, or in exit 3 with a refusal named on a `cftc: refused <name>` line; a timeout (120 s) or anything else is a FAIL
+degree 8: source field8-rk4.cftl sha256 582cdadc18cc21a0276d6804aba8834610981a6261485ddc9c4d4bcacdbaa021
+PASS: degree 8 fp64: REFUSED scratch-capacity in 7.2 s: C:/Users/logan/source/repos/cft-debris/studies/debris-d/systems/field8-rk4.cftl: this program needs 273 scratch slots a lane (7 state, 1 lane params, 265 spills) and sw has 256
+PASS: degree 8 fp128: REFUSED scratch-capacity in 6.9 s: C:/Users/logan/source/repos/cft-debris/studies/debris-d/systems/field8-rk4.cftl: this program needs 273 scratch slots a lane (7 state, 1 lane params, 265 spills) and sw has 256
+PASS: degree 8 fp256: REFUSED bank-capacity in 1.6 s: C:/Users/logan/source/repos/cft-debris/studies/debris-d/systems/field8-rk4.cftl: 322 params, 6 constants and 188 words of the routines the compiler inlines for div, sqrt, exp, sin and cos come to 516: the bank holds 512 on every device
+# failures: 0
+# finished 2026-11-12 21:26:53 (local)

@@ -1,0 +1,39 @@
+# log q2_first_test_j2-rk4.001.log
+# written by q2_first_test.py, sha256 46b458f3f9b2ae735ec30f07fd2b0d9a16b8a629e19ee4d3b8e9f10a99b0dd52
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 20:53:46 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   (a) every lane's state after each of the 4 segments equals lang.run's, bit for bit, and each unmarked lane's byte is [7:5] clear with [4:0] equal to lang.run's flags for that lane and segment; a marked lane (bit 7) is replayed by lang.run and its guess counted, not required
+#   (b) |image - mpmath(120 digits)| <= 64 * N * 2^-p * S per component, N the steps so far, S = 7.0e+06 m for positions and 8.0e+03 m/s for velocities; t must be exact (0)
+#   (c) control: lang.run of the source with mu one ulp (of the format) above its rounded value must differ from the image's states somewhere (so (a) can fail); identical = control FAILED
+#   (d) the planted source's mu encoding is the original's plus one (the plant is what it says)
+
+== j2-rk4 at fp64 ==
+compile j2-rk4-fp64: exit 0 in 1.27 s; no stderr
+image {"accepted_by": ["sw", "u50-rev8", "u50-rev8-quad", "u50-rev8-deep"], "bank_sha256": "a28d08db83426ed60284b7bb1e61d969d47c11cb58dbe83daff41450cc215722", "bank_slots": 50, "cftp_sha256": "4df3570e82a59e214022ba4316df7cdcb922ab641ab9cf12bf087bf3c5417c9c", "features": ["WIDE_CONST", "REGS32", "BANK_PTR", "SCRATCH", "SCRATCH_IO", "SCRATCH_STRICT", "FLAG_CONTROL"], "graph_by_op": {"add": 6, "div": 4, "fma": 60, "mul": 48, "neg": 12, "sqrt": 4}, "graph_step_nodes": 134, "half_bank_sha256": "b8f4a67c59a51b19d4288260981c63417183bb2dd5ccaffd6f7159418440f33e", "image": "j2-rk4-fp64", "instructions": 1532, "manifest_sha256": "fc6e91bbce3f2752e9a5ba3effcc133537eb19e25c08209aab8a0e624dc6c618", "per_step": {"alu": 1458, "by_op": {"add": 6, "cmple": 8, "cmplt": 24, "fma": 164, "iadd": 88, "iand": 143, "icmplt": 120, "ior": 65, "ishl": 44, "ishr": 57, "isub": 100, "ixor": 20, "mul": 121, "neg": 38, "recip_seed": 4, "rsqrt_seed": 4, "select": 428, "sub": 24}, "copies": 0, "endrep": 1, "instructions": 1518, "loads": 19, "stores": 16}, "rebuild": "python -I -B <archive e01003cc0b98 extracted>/python/cftc studies/debris-d/systems/j2-rk4.cftl --steps 24 --format fp64 --out <dir> --stem j2-rk4-fp64", "registers": 29, "scratch_declared": 256, "scratch_slots": 20, "source_sha256": "4e34b5fae06988961ee8073c3937543b9b34bc310f4619399d5cf6d577b39ded"}
+seqrun exit 0 in 0.19 s
+  build_id unknown
+  image C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-D/images/q2\j2-rk4-fp64.cftp insns 1532 consts 50 scratch_in 6 scratch_out 6 scratch_used 20 esz 8 deposits 0
+  seg 1 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 2 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 3 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+  seg 4 flags 0x10 bus 0x0 marked 0 lanes 1010101010101010
+lang.run: 4 segments x 8 lanes in 1.1 s; marked lanes 0 (of 32 lane-segments), wrong guesses 0
+PASS: j2-rk4 fp64 (a) image equals lang.run bit for bit, states and lane flags, 4 segments x 8 lanes
+  (b) segment 1 pos: largest |image - mpmath| 2.544e-9 (0.00213 of the tolerance)
+  (b) segment 1 vel: largest |image - mpmath| 4.171e-12 (0.00306 of the tolerance)
+  (b) segment 2 pos: largest |image - mpmath| 1.427e-8 (0.00598 of the tolerance)
+  (b) segment 2 vel: largest |image - mpmath| 2.194e-11 (0.00804 of the tolerance)
+  (b) segment 3 pos: largest |image - mpmath| 4.724e-8 (0.0132 of the tolerance)
+  (b) segment 3 vel: largest |image - mpmath| 4.967e-11 (0.0121 of the tolerance)
+  (b) segment 4 pos: largest |image - mpmath| 6.704e-8 (0.014 of the tolerance)
+  (b) segment 4 vel: largest |image - mpmath| 9.466e-11 (0.0173 of the tolerance)
+mpmath reference in 0.2 s
+PASS: j2-rk4 fp64 (b) within 64*N*2^-53*S of mpmath at 120 digits
+PASS: j2-rk4 fp64 (d) planted mu encoding = original + 1 (0x42f6a8665bda5400 -> 0x42f6a8665bda5401)
+planted run in 1.0 s: 181 of 192 values differ from the image's
+PASS: j2-rk4 fp64 (c) control: the planted source fails (a)
+marks: 0 marked lane-segments; 3072 lane-evaluations (8 lanes x 96 steps x 4 stages)
+# failures: 0
+# finished 2026-11-12 20:53:50 (local)

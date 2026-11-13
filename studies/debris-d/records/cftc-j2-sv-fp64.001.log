@@ -1,0 +1,10 @@
+images/q2/j2-sv-fp64.cfta
+images/q2/j2-sv-fp64.cftp
+images/q2/j2-sv-fp64.bank
+images/q2/j2-sv-fp64.half.bank
+images/q2/j2-sv-fp64.manifest.json
+images/q2/j2-sv-fp64.graph.json
+images/q2/j2-sv-fp64.canonical.cftl
+images/q2/j2-sv-fp64.math.txt
+[cpurun] cftc-j2-sv-fp64 wall 0.72s cycles/2.5e9 0.77s procs-times 0.28s job 0.28s processes 2 caught 2 exit 0
+exit 0

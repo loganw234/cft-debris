@@ -1,0 +1,88 @@
+# log q3_marks.002.log
+# written by q3_marks.py, sha256 cf73c3231f5d74adb24ced3931a78c9c2f43f33878c4c91568a7251c8860c9bf
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 21:31:08 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   C1 Part B: every unmarked lane equals mpmath's correct rounding bit for bit; a marked lane's guess is counted, not required
+#   C2 Part A: every segment runs and returns n lane bytes
+#   C3 (version 2) positive control: exp's edge class x = c 2^-p (c odd < 2^11) marks >= 1 lane at fp64; if not, '0 marks' is reported as not shown able to see a mark
+version 1 (log 001) FAILED its C3 as stated: the tiny class marked 0 lanes at fp64
+PASS: C2 Part A fp64: 4 segments of 512 lanes ran
+  Part A fp64: 0 marked lane-segments of 2048; 196608 lane-evaluations (each one exp, one sin, one cos); seqrun lines: seg 1 flags 0x10 bus 0x0 marked 0 lanes 101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010
+PASS: C2 Part A fp128: 4 segments of 512 lanes ran
+  Part A fp128: 0 marked lane-segments of 2048; 196608 lane-evaluations (each one exp, one sin, one cos); seqrun lines: seg 1 flags 0x10 bus 0x0 marked 0 lanes 101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010
+PASS: C2 Part A fp256: 4 segments of 512 lanes ran
+  Part A fp256: 0 marked lane-segments of 2048; 196608 lane-evaluations (each one exp, one sin, one cos); seqrun lines: seg 1 flags 0x10 bus 0x0 marked 0 lanes 101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010
+probe image probe-exp-fp64: cftp sha256 63fe9525ed450cabb9cc0f2cb23bc8be1e436e6232eca078334ecc07383b55e9 (source sha256 fbeea1e17a71bec77c2d948fb4c3ec74ba91590098bba89974a9a3d930f42354)
+PASS: C1 exp fp64 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp64 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp64 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp64 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp64 deep: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp64 deep   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp64 edge: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp64 edge   :    5 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-exp-fp128: cftp sha256 37fbab84e0a51204bff98a77f8984f212df9d5e9a4862f85e26747b6a2e44acf (source sha256 fbeea1e17a71bec77c2d948fb4c3ec74ba91590098bba89974a9a3d930f42354)
+PASS: C1 exp fp128 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp128 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp128 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp128 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp128 deep: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp128 deep   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp128 edge: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp128 edge   :  510 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-exp-fp256: cftp sha256 aadcc46d5b9aaba57448b21b5716e3ff0296d3794330e3bacf6d08a3eab764b3 (source sha256 fbeea1e17a71bec77c2d948fb4c3ec74ba91590098bba89974a9a3d930f42354)
+PASS: C1 exp fp256 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp256 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp256 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp256 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp256 deep: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp256 deep   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 exp fp256 edge: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS exp fp256 edge   :  532 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-sin-fp64: cftp sha256 47b3032762ea3c5991b87710301b853b00b76bfc43852e5b5aeddd20b5f0f336 (source sha256 42fabdc0f49144d86594a560663298468e4294822226dd1fb6cc5705578eaa62)
+PASS: C1 sin fp64 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp64 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 sin fp64 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp64 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 sin fp64 large: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp64 large  :    0 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-sin-fp128: cftp sha256 1575734df1c689108c72b656d1355386fa6be604ff6ac4b9cd32bc69cbd373d2 (source sha256 42fabdc0f49144d86594a560663298468e4294822226dd1fb6cc5705578eaa62)
+PASS: C1 sin fp128 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp128 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 sin fp128 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp128 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 sin fp128 large: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp128 large  :    0 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-sin-fp256: cftp sha256 016fabeaea093aa00fdbba01a8eb9c7f1ddf1c0cde98031cc8b0dcae68bd55a6 (source sha256 42fabdc0f49144d86594a560663298468e4294822226dd1fb6cc5705578eaa62)
+PASS: C1 sin fp256 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp256 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 sin fp256 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp256 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 sin fp256 large: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS sin fp256 large  :    0 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-cos-fp64: cftp sha256 efcbf54458b6f48cb2939c1467f7ec3636915540c14451d43393e733bdb48cf5 (source sha256 35ceb24a1325b5e6e317582f6c239aa89aa8ae83a7e215d34ba25e826417fa38)
+PASS: C1 cos fp64 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp64 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 cos fp64 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp64 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 cos fp64 large: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp64 large  :    0 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-cos-fp128: cftp sha256 494ae7cc73c35f5d53c225f2279fb35f7179daaf9f1d8baedba2d27874203066 (source sha256 35ceb24a1325b5e6e317582f6c239aa89aa8ae83a7e215d34ba25e826417fa38)
+PASS: C1 cos fp128 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp128 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 cos fp128 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp128 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 cos fp128 large: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp128 large  :    0 of 1024 lanes marked, 0 of those guesses wrong
+probe image probe-cos-fp256: cftp sha256 e27ffa3fb9a4992a58a898e00712717396bc21f0df831d21b50db281e172e49c (source sha256 35ceb24a1325b5e6e317582f6c239aa89aa8ae83a7e215d34ba25e826417fa38)
+PASS: C1 cos fp256 typical: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp256 typical:    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 cos fp256 tiny: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp256 tiny   :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C1 cos fp256 large: 0 of 1024 unmarked lanes differ from mpmath
+  MARKS cos fp256 large  :    0 of 1024 lanes marked, 0 of those guesses wrong
+PASS: C3 positive control: exp fp64 edge class marked 5 lanes (>= 1)
+# failures: 0
+# finished 2026-11-12 21:32:25 (local)

@@ -1,0 +1,8 @@
+; DEBRIS-D (cft-debris, MIT): a one-call map, next x = cos(x), to count the lanes the
+; cos routine marks on chosen arguments (Q3's replay budget). Compiled with --steps 1.
+system probecos
+format fp64
+round  rne
+state  x
+next x = cos(x)
+step   map

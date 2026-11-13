@@ -1,0 +1,65 @@
+; DEBRIS-D, Q2's second system (cft-debris, MIT): J2, drag and rotation,
+; stepped by rk4 at 60 s. Metres and seconds; inertial state, z along the
+; Earth's axis, time carried in the state (d/dt t = 1).
+; - J2 as in j2-rk4.cftl;
+; - the Earth's rotation as forcing: cos and sin of w t turn the position
+;   into the Earth-fixed frame, where C22 and S22 (EIGEN-6C4's degree-2
+;   tesserals, unnormalised to 12 digits) act, and the acceleration is
+;   turned back;
+; - drag through an exponential atmosphere rho0 exp(-(r - r0)/H), with
+;   r0 = 6778137 m (400 km), rho0 3.725e-12 kg/m^3 and H 58,515 m (the
+;   400 km row of the exponential model; BELIEVED, a test value), the air
+;   co-rotating (v - w x r), and each object's Cd A / (2 m) a lane param.
+; Routines an evaluation: one sqrt and one division (the field), one cos
+; and one sin (the rotation), one exp and one more sqrt (the drag).
+system j2dragrot
+format fp64
+round  rne
+state  t, x, y, z, vx, vy, vz
+param  mu = 398600441800000
+param  kj2 = 3/2 * 0.00108262668 * 6378137 * 6378137
+param  k22 = 3 * 398600441800000 * 6378137 * 6378137
+param  c22 = 0.00000157459195415
+param  s22 = -0.000000903892538598
+param  w = 0.00007292115
+param  rho0 = 0.000000000003725
+param  ih = 1/58515
+param  a0 = 6778137/58515
+lane param bc = 0.011
+let r2  = fma(x, x, fma(y, y, z * z))
+let r   = sqrt(r2)
+let ir  = 1 / r
+let ir2 = ir * ir
+let ir3 = ir2 * ir
+let g   = mu * ir3
+let zr  = z * ir
+let zr2 = zr * zr
+let f   = kj2 * ir2
+let gxy = g * fma(f, fma(-5, zr2, 1), 1)
+let gz  = g * fma(f, fma(-5, zr2, 3), 1)
+let th  = w * t
+let c   = cos(th)
+let s   = sin(th)
+let xb  = fma(c, x, s * y)
+let yb  = fma(c, y, -(s * x))
+let wq  = fma(c22, fma(xb, xb, -(yb * yb)), 2 * (s22 * (xb * yb)))
+let q   = 5 * (wq * ir2)
+let g5  = k22 * (ir3 * ir2)
+let axb = g5 * fma(2, fma(c22, xb, s22 * yb), -(q * xb))
+let ayb = g5 * fma(2, fma(s22, xb, -(c22 * yb)), -(q * yb))
+let az2 = -(g5 * (q * z))
+let ax2 = fma(c, axb, -(s * ayb))
+let ay2 = fma(s, axb, c * ayb)
+let rho = rho0 * exp(fma(-r, ih, a0))
+let vrx = fma(w, y, vx)
+let vry = fma(-w, x, vy)
+let vr  = sqrt(fma(vrx, vrx, fma(vry, vry, vz * vz)))
+let kd  = (bc * rho) * vr
+d/dt t  = 1
+d/dt x  = vx
+d/dt y  = vy
+d/dt z  = vz
+d/dt vx = fma(-kd, vrx, ax2 - gxy * x)
+d/dt vy = fma(-kd, vry, ay2 - gxy * y)
+d/dt vz = fma(-kd, vz, az2 - gz * z)
+step   rk4, h = 60

@@ -1,0 +1,3 @@
+cftc: refused bank-capacity: C:/Users/logan/source/repos/cft-debris/studies/debris-d/systems/field8-rk4.cftl: 322 params, 6 constants and 188 words of the routines the compiler inlines for div, sqrt, exp, sin and cos come to 516: the bank holds 512 on every device
+[cpurun] cftc-field8-fp256-sw512 wall 1.58s cycles/2.5e9 1.59s procs-times 0.42s job 0.42s processes 4 caught 4 exit 3
+exit 3

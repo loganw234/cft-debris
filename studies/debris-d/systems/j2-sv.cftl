@@ -1,0 +1,29 @@
+; DEBRIS-D, Q2's and Q4's Stormer-Verlet twin of j2-rk4 (cft-debris, MIT): a LEO orbit under the
+; central term and J2, stepped by stormer-verlet at 60 s. Metres and seconds; the
+; state is inertial with z along the Earth's axis, so the axisymmetric J2
+; needs no frame. One square root and one division an evaluation.
+;   a = -mu r / r^3 * (1 + (3/2) J2 (Re/r)^2 (1 - 5 z^2/r^2))   for x, y
+;   a = -mu z / r^3 * (1 + (3/2) J2 (Re/r)^2 (3 - 5 z^2/r^2))   for z
+; mu (GM) 3.986004418e14 m^3/s^2, J2 1.08262668e-3, Re 6378137 m.
+system j2sv
+format fp64
+round  rne
+state  x, y, z, vx, vy, vz
+param  mu = 398600441800000
+param  kj2 = 3/2 * 0.00108262668 * 6378137 * 6378137
+let r2  = fma(x, x, fma(y, y, z * z))
+let ir  = 1 / sqrt(r2)
+let ir2 = ir * ir
+let g   = mu * (ir2 * ir)
+let zr  = z * ir
+let zr2 = zr * zr
+let f   = kj2 * ir2
+let gxy = g * fma(f, fma(-5, zr2, 1), 1)
+let gz  = g * fma(f, fma(-5, zr2, 3), 1)
+d/dt x  = vx
+d/dt y  = vy
+d/dt z  = vz
+d/dt vx = -(gxy * x)
+d/dt vy = -(gxy * y)
+d/dt vz = -(gz * z)
+step   stormer-verlet, h = 60, q = (x, y, z), p = (vx, vy, vz)

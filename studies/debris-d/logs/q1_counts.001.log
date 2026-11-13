@@ -1,0 +1,41 @@
+# log q1_counts.001.log
+# written by q1_counts.py, sha256 fc85903f53a82f7d17fa9bc4590024b159754b82dbe7c79340d7152a88f3db01
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 21:11:03 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   C1 degree 2 equals the hand count: add 37, mul 104, div 3, sqrt 1, every other class 0
+#   C2 the planted build adds exactly 2 mul and 1 add per degree summed (n = 2..N) to each gravity line, changes no other class, and leaves every non-gravity line unchanged
+count_ops.exe sha256 c257f7d649840dd41fd86602751ce9b3a1a675fb2bf40e8336f00b4070e0d3b1
+count_ops_plant.exe sha256 7b6ca9b5ab7811b442e31c6da6fb8ed1c31376f6659ee8ab6ea33f8705de6cf3
+q1/count_kernels.inc sha256 fadf29255c47df34304341533d8efa5b742bbf68084d902d3734d00aa602fd1e
+q1/plant/count_kernels.inc sha256 2dbc944d27ef0f2750b3ab9bcb86b0cc479e62c8e71cf4704168d5c194dd15fa
+count_ops.cpp sha256 d3d442d14e6fbd84ec189e06587b81aae7cd6a9fb3f46bf54eb11ef6e8cb6818
+make_count_build.py sha256 6b79a50709b20dbdd15da7dfc2e80c54844e336a6301ce69aa1bf354b8d870a9
+  gravity degree 2 (2..2)            fma_class     141 (add 37 mul 104) div 3 sqrt 1 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  gravity degree 8 (2..8)            fma_class    1482 (add 463 mul 1019) div 3 sqrt 1 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  gravity degree 20 (2..20)          fma_class    8160 (add 2611 mul 5549) div 3 sqrt 1 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  gravity degree 36 (2..36)          fma_class   25352 (add 8163 mul 17189) div 3 sqrt 1 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  gravity degree 70 (2..70)          fma_class   93335 (add 30161 mul 63174) div 3 sqrt 1 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  Sun and Moon positions (Chebyshev) fma_class     355 (add 235 mul 120) div 7 sqrt 0 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  Sun and Moon point masses (both)   fma_class      54 (add 20 mul 34) div 4 sqrt 4 neg 0 cmp 0 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  frame, interpolated (X, Y, s nodes) fma_class     339 (add 133 mul 206) div 12 sqrt 1 neg 18 cmp 1 exp 0 log 0 pow 0 sin 7 cos 7 tan 0 asin 0 acos 0 atan 1 atan2 1 fmod 2
+  drag, exponential atmosphere       fma_class      23 (add 8 mul 15) div 1 sqrt 2 neg 1 cmp 5 exp 1 log 0 pow 0 sin 0 cos 0 tan 0 asin 0 acos 0 atan 0 atan2 0 fmod 0
+  SRP conical, sunlit (nu 1.000)     fma_class      28 (add 10 mul 18) div 5 sqrt 2 neg 0 cmp 3 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 2 acos 1 atan 0 atan2 0 fmod 0
+  SRP conical, umbra (nu 0.000)      fma_class      29 (add 11 mul 18) div 5 sqrt 2 neg 0 cmp 4 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 2 acos 1 atan 0 atan2 0 fmod 0
+  SRP conical, penumbra (nu 0.495)   fma_class      50 (add 19 mul 31) div 9 sqrt 3 neg 0 cmp 10 exp 0 log 0 pow 0 sin 0 cos 0 tan 0 asin 2 acos 3 atan 0 atan2 0 fmod 0
+PASS: C1 degree 2: counted {'add': 37, 'mul': 104, 'div': 3, 'sqrt': 1} against the hand count {'add': 37, 'mul': 104, 'div': 3, 'sqrt': 1}
+PASS: C2 gravity degree 2 (2..2): plant adds 2 mul and 1 add (got mul +2 add +1, other classes unchanged)
+PASS: C2 gravity degree 8 (2..8): plant adds 14 mul and 7 add (got mul +14 add +7, other classes unchanged)
+PASS: C2 gravity degree 20 (2..20): plant adds 38 mul and 19 add (got mul +38 add +19, other classes unchanged)
+PASS: C2 gravity degree 36 (2..36): plant adds 70 mul and 35 add (got mul +70 add +35, other classes unchanged)
+PASS: C2 gravity degree 70 (2..70): plant adds 138 mul and 69 add (got mul +138 add +69, other classes unchanged)
+PASS: C2 Sun and Moon positions (Chebyshev) unchanged by the plant
+PASS: C2 Sun and Moon point masses (both) unchanged by the plant
+PASS: C2 frame, interpolated (X, Y, s nodes) unchanged by the plant
+PASS: C2 drag, exponential atmosphere unchanged by the plant
+PASS: C2 SRP conical, sunlit (nu 1.000) unchanged by the plant
+PASS: C2 SRP conical, umbra (nu 0.000) unchanged by the plant
+PASS: C2 SRP conical, penumbra (nu 0.495) unchanged by the plant
+# failures: 0
+# finished 2026-11-12 21:11:03 (local)

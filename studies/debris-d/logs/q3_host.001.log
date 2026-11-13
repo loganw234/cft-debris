@@ -1,0 +1,295 @@
+# log q3_host.001.log
+# written by q3_host.py, sha256 2fbb684bd8d499cb612dde4d76c94fee3b3e32ad8f6d160f2082b502f20bd4a2
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 21:13:26 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   C1. opbench: every one of the 1,000 results a (function, format) equals mpmath's correctly rounded value (computed at p + 192 bits, rounded to nearest-even by this script's own encoder), bit for bit
+#   C2. opbench: the timed loop takes at least 10 times as long as the same loop with the operation removed (the fold alone)
+#   C3. seqrun --time: the timed runs take at least 10 times as long as the fold alone
+#   C4. seqrun --time: the timing run's segment-1 output equals the first segment's output of the plain run (the checksum's input is the computation timed)
+#   Load is stated beside every block; booking B0024 (sensitive, desktop, 21:15-21:50 -0700).
+window B0024 open: 21:15:05 local
+timesheet.py list desktop (exit 0):
+  | B0023  desktop        notice    2026-11-12 20:38 -0700 -> 2026-11-13 00:38 -0700  cft-debris/DEBRIS-D: cft-debris round DEBRIS-D (Opus study): reading, a libcft build from an archive and small CPU runs in its scratch; host timings only inside a sensitive window booked separately
+  | B0024  desktop        sensitive 2026-11-12 21:15 -0700 -> 2026-11-12 21:50 -0700  cft-debris/DEBRIS-D: cft-debris DEBRIS-D, Q3: host timings of libcft in the agent's scratch (cft-bench, its own driver for divide, square root and transcendentals, the software executor on compiled images); each timing seconds, under 10 CPU-minutes in all
+load start: Windows CPU load % sampled 3 times: [0, 4, 2]
+load before cft-bench fp64: Windows CPU load % sampled 3 times: [5, 8, 1]
+cft-bench -f fp64 -t 1 (exit 0):
+  | cft-bench: software backend
+  | 4096 elements per call, >=1s per measurement, exponent spread +/-8
+  | 
+  | format   B/el  op            ns/elem      Melem/s       MB/s
+  | ------   ----  --------  -----------  -----------  ---------
+  | fp64        8  abs             36.04       27.744      443.9
+  | fp64        8  neg             37.41       26.728      427.6
+  | fp64        8  copysign        37.99       26.321      631.7
+  | fp64        8  min             67.33       14.853      356.5
+  | fp64        8  max             67.90       14.728      353.5
+  | fp64        8  minnum          70.45       14.194      340.7
+  | fp64        8  maxnum          67.62       14.789      354.9
+  | fp64        8  cmplt           78.61       12.720      305.3
+  | fp64        8  cmple           83.99       11.906      285.7
+  | fp64        8  cmpeq           62.78       15.929      382.3
+  | fp64        8  select          36.60       27.321      874.3
+  | fp64        8  iand            30.85       32.419      778.1
+  | fp64        8  ior             30.49       32.798      787.1
+  | fp64        8  ixor            29.62       33.755      810.1
+  | fp64        8  iadd            39.60       25.253      606.1
+  | fp64        8  isub            44.43       22.509      540.2
+  | fp64        8  ishl            42.45       23.555      565.3
+  | fp64        8  ishr            38.79       25.780      618.7
+  | fp64        8  icmplt          47.23       21.173      508.2
+  | fp64        8  add            234.34        4.267      102.4
+  | fp64        8  sub            270.37        3.699       88.8
+  | fp64        8  mul            172.98        5.781      138.7
+  | fp64        8  fma            217.70        4.594      147.0
+load before cft-bench fp128: Windows CPU load % sampled 3 times: [1, 11, 3]
+cft-bench -f fp128 -t 1 (exit 0):
+  | cft-bench: software backend
+  | 4096 elements per call, >=1s per measurement, exponent spread +/-8
+  | 
+  | format   B/el  op            ns/elem      Melem/s       MB/s
+  | ------   ----  --------  -----------  -----------  ---------
+  | fp128      16  abs             61.10       16.368      523.8
+  | fp128      16  neg             66.90       14.949      478.4
+  | fp128      16  copysign        63.32       15.794      758.1
+  | fp128      16  min             90.44       11.057      530.8
+  | fp128      16  max             95.69       10.450      501.6
+  | fp128      16  minnum          95.33       10.489      503.5
+  | fp128      16  maxnum          88.60       11.287      541.8
+  | fp128      16  cmplt          104.91        9.532      457.5
+  | fp128      16  cmple          106.85        9.359      449.2
+  | fp128      16  cmpeq           89.67       11.152      535.3
+  | fp128      16  select          62.06       16.114     1031.3
+  | fp128      16  iand            49.98       20.007      960.3
+  | fp128      16  ior             50.49       19.805      950.7
+  | fp128      16  ixor            52.61       19.007      912.3
+  | fp128      16  iadd            59.86       16.707      801.9
+  | fp128      16  isub            66.10       15.128      726.2
+  | fp128      16  ishl            68.06       14.694      705.3
+  | fp128      16  ishr            62.86       15.908      763.6
+  | fp128      16  icmplt          73.47       13.611      653.3
+  | fp128      16  add            294.10        3.400      163.2
+  | fp128      16  sub            286.10        3.495      167.8
+  | fp128      16  mul            200.38        4.991      239.5
+  | fp128      16  fma            236.56        4.227      270.5
+load before cft-bench fp256: Windows CPU load % sampled 3 times: [8, 5, 7]
+cft-bench -f fp256 -t 1 (exit 0):
+  | cft-bench: software backend
+  | 4096 elements per call, >=1s per measurement, exponent spread +/-8
+  | 
+  | format   B/el  op            ns/elem      Melem/s       MB/s
+  | ------   ----  --------  -----------  -----------  ---------
+  | fp256      32  abs             91.43       10.937      700.0
+  | fp256      32  neg            100.96        9.905      633.9
+  | fp256      32  copysign        97.67       10.239      982.9
+  | fp256      32  min            124.20        8.052      773.0
+  | fp256      32  max            125.47        7.970      765.1
+  | fp256      32  minnum         131.46        7.607      730.2
+  | fp256      32  maxnum         126.70        7.893      757.7
+  | fp256      32  cmplt          155.64        6.425      616.8
+  | fp256      32  cmple          155.24        6.442      618.4
+  | fp256      32  cmpeq          147.04        6.801      652.9
+  | fp256      32  select          93.28       10.721     1372.2
+  | fp256      32  iand            90.31       11.073     1063.1
+  | fp256      32  ior             92.89       10.765     1033.5
+  | fp256      32  ixor            93.56       10.689     1026.1
+  | fp256      32  iadd            99.48       10.052      965.0
+  | fp256      32  isub           104.08        9.608      922.3
+  | fp256      32  ishl           118.53        8.437      809.9
+  | fp256      32  ishr           116.62        8.575      823.2
+  | fp256      32  icmplt         129.67        7.712      740.3
+  | fp256      32  add            448.84        2.228      213.9
+  | fp256      32  sub            433.49        2.307      221.5
+  | fp256      32  mul            324.19        3.085      296.1
+  | fp256      32  fma            338.50        2.954      378.1
+load before add fp64: Windows CPU load % sampled 3 times: [3, 0, 2]
+  op add fmt fp64 n 1000 calls 1989 seconds 0.500181 ns_per_element 251.47 fold_only_seconds 0.002013 ratio 248.4 checksum 1cc6127a905d9201 fold f6522cf11fa61889 flags 0x10 build_id unknown
+PASS: C2 add fp64 timed/fold-only ratio 248.4 >= 10
+PASS: C1 add fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before add fp128: Windows CPU load % sampled 3 times: [7, 9, 7]
+  op add fmt fp128 n 1000 calls 2011 seconds 0.500168 ns_per_element 248.72 fold_only_seconds 0.003866 ratio 129.4 checksum b11df41e35bb9972 fold 6ea584b7dd22a795 flags 0x0 build_id unknown
+PASS: C2 add fp128 timed/fold-only ratio 129.4 >= 10
+PASS: C1 add fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before add fp256: Windows CPU load % sampled 3 times: [4, 8, 2]
+  op add fmt fp256 n 1000 calls 1385 seconds 0.500372 ns_per_element 361.28 fold_only_seconds 0.005572 ratio 89.8 checksum 0ca8e7a82aa5f31a fold 9af3ecb8dfc30f02 flags 0x0 build_id unknown
+PASS: C2 add fp256 timed/fold-only ratio 89.8 >= 10
+PASS: C1 add fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before mul fp64: Windows CPU load % sampled 3 times: [4, 1, 3]
+  op mul fmt fp64 n 1000 calls 3266 seconds 0.500132 ns_per_element 153.13 fold_only_seconds 0.003288 ratio 152.1 checksum d3b1fc81d35f6e29 fold de9046045a43f9e8 flags 0x10 build_id unknown
+PASS: C2 mul fp64 timed/fold-only ratio 152.1 >= 10
+PASS: C1 mul fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before mul fp128: Windows CPU load % sampled 3 times: [1, 6, 24]
+  op mul fmt fp128 n 1000 calls 2800 seconds 0.500396 ns_per_element 178.71 fold_only_seconds 0.005642 ratio 88.7 checksum fd2317bed9019b25 fold 0d14b268853000a5 flags 0x0 build_id unknown
+PASS: C2 mul fp128 timed/fold-only ratio 88.7 >= 10
+PASS: C1 mul fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before mul fp256: Windows CPU load % sampled 3 times: [1, 5, 5]
+  op mul fmt fp256 n 1000 calls 2047 seconds 0.500074 ns_per_element 244.30 fold_only_seconds 0.008217 ratio 60.9 checksum 19aebb1c85214162 fold 58aa3d8fd32d109d flags 0x0 build_id unknown
+PASS: C2 mul fp256 timed/fold-only ratio 60.9 >= 10
+PASS: C1 mul fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before fma fp64: Windows CPU load % sampled 3 times: [1, 2, 6]
+  op fma fmt fp64 n 1000 calls 2563 seconds 0.500113 ns_per_element 195.13 fold_only_seconds 0.002737 ratio 182.7 checksum 9b87a8c5dd73e481 fold 744b68ecf18578be flags 0x10 build_id unknown
+PASS: C2 fma fp64 timed/fold-only ratio 182.7 >= 10
+PASS: C1 fma fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before fma fp128: Windows CPU load % sampled 3 times: [2, 3, 2]
+  op fma fmt fp128 n 1000 calls 2127 seconds 0.500011 ns_per_element 235.08 fold_only_seconds 0.004298 ratio 116.3 checksum 103aea77d1059baa fold 4e2c8d8bd7ac4d6d flags 0x10 build_id unknown
+PASS: C2 fma fp128 timed/fold-only ratio 116.3 >= 10
+PASS: C1 fma fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before fma fp256: Windows CPU load % sampled 3 times: [6, 3, 5]
+  op fma fmt fp256 n 1000 calls 1601 seconds 0.500288 ns_per_element 312.48 fold_only_seconds 0.006899 ratio 72.5 checksum 3730190e75356974 fold 9876fdcf61e9de54 flags 0x0 build_id unknown
+PASS: C2 fma fp256 timed/fold-only ratio 72.5 >= 10
+PASS: C1 fma fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before div fp64: Windows CPU load % sampled 3 times: [4, 1, 5]
+  op div fmt fp64 n 1000 calls 140 seconds 0.500410 ns_per_element 3574.36 fold_only_seconds 0.000134 ratio 3740.0 checksum 47f4af071fc55da5 fold 1c5593898f2aa9f9 flags 0x10 build_id unknown
+PASS: C2 div fp64 timed/fold-only ratio 3740.0 >= 10
+PASS: C1 div fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before div fp128: Windows CPU load % sampled 3 times: [0, 0, 0]
+  op div fmt fp128 n 1000 calls 90 seconds 0.503879 ns_per_element 5598.66 fold_only_seconds 0.000181 ratio 2783.9 checksum 0e1d3c9c3a2275ad fold 9775afa13dcb98d0 flags 0x10 build_id unknown
+PASS: C2 div fp128 timed/fold-only ratio 2783.9 >= 10
+PASS: C1 div fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before div fp256: Windows CPU load % sampled 3 times: [1, 3, 3]
+  op div fmt fp256 n 1000 calls 55 seconds 0.507888 ns_per_element 9234.33 fold_only_seconds 0.000221 ratio 2301.3 checksum 0313e7da38bf118b fold 2a605922423aad6c flags 0x10 build_id unknown
+PASS: C2 div fp256 timed/fold-only ratio 2301.3 >= 10
+PASS: C1 div fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before sqrt fp64: Windows CPU load % sampled 3 times: [3, -1, 3]
+  op sqrt fmt fp64 n 1000 calls 114 seconds 0.501589 ns_per_element 4399.91 fold_only_seconds 0.000115 ratio 4346.5 checksum 46cfaac2d8194745 fold ce2552a3b63a3758 flags 0x10 build_id unknown
+PASS: C2 sqrt fp64 timed/fold-only ratio 4346.5 >= 10
+PASS: C1 sqrt fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before sqrt fp128: Windows CPU load % sampled 3 times: [-1, 0, 1]
+  op sqrt fmt fp128 n 1000 calls 78 seconds 0.500685 ns_per_element 6419.04 fold_only_seconds 0.000156 ratio 3199.3 checksum cd1ffb6466472d35 fold 2db7b535882c98c4 flags 0x10 build_id unknown
+PASS: C2 sqrt fp128 timed/fold-only ratio 3199.3 >= 10
+PASS: C1 sqrt fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before sqrt fp256: Windows CPU load % sampled 3 times: [0, 7, 10]
+  op sqrt fmt fp256 n 1000 calls 46 seconds 0.507680 ns_per_element 11036.52 fold_only_seconds 0.000190 ratio 2667.8 checksum 2f0432b55d3a87c5 fold 48ea28143f87c628 flags 0x10 build_id unknown
+PASS: C2 sqrt fp256 timed/fold-only ratio 2667.8 >= 10
+PASS: C1 sqrt fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before exp fp64: Windows CPU load % sampled 3 times: [0, 3, 3]
+  op exp fmt fp64 n 1000 calls 4 seconds 0.545450 ns_per_element 136362.62 fold_only_seconds 0.000004 ratio 133039.5 checksum 752b297ab03abde5 fold 78286b6eb35ef1a1 flags 0x10 build_id unknown
+PASS: C2 exp fp64 timed/fold-only ratio 133039.5 >= 10
+PASS: C1 exp fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before exp fp128: Windows CPU load % sampled 3 times: [3, 2, 2]
+  op exp fmt fp128 n 1000 calls 3 seconds 1.002230 ns_per_element 334076.53 fold_only_seconds 0.000006 ratio 164301.8 checksum 2a420e2aad32df96 fold 6671a63ec082e0a5 flags 0x10 build_id unknown
+PASS: C2 exp fp128 timed/fold-only ratio 164301.8 >= 10
+PASS: C1 exp fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before exp fp256: Windows CPU load % sampled 3 times: [2, 1, 0]
+  op exp fmt fp256 n 1000 calls 3 seconds 3.363329 ns_per_element 1121109.57 fold_only_seconds 0.000011 ratio 292464.1 checksum 80dc11e4142e39a8 fold d27b0daf5091f3c3 flags 0x10 build_id unknown
+PASS: C2 exp fp256 timed/fold-only ratio 292464.1 >= 10
+PASS: C1 exp fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before log fp64: Windows CPU load % sampled 3 times: [3, 1, 9]
+  op log fmt fp64 n 1000 calls 3 seconds 0.504594 ns_per_element 168197.97 fold_only_seconds 0.000003 ratio 168196.7 checksum 1f9ddecaa09f20f1 fold c7804d9d7bf09e46 flags 0x10 build_id unknown
+PASS: C2 log fp64 timed/fold-only ratio 168196.7 >= 10
+PASS: C1 log fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before log fp128: Windows CPU load % sampled 3 times: [5, 5, 9]
+  op log fmt fp128 n 1000 calls 3 seconds 1.444244 ns_per_element 481414.77 fold_only_seconds 0.000006 ratio 225661.5 checksum e928e6920d4fed1a fold a7d918907724c265 flags 0x10 build_id unknown
+PASS: C2 log fp128 timed/fold-only ratio 225661.5 >= 10
+PASS: C1 log fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before log fp256: Windows CPU load % sampled 3 times: [1, 1, 3]
+  op log fmt fp256 n 1000 calls 3 seconds 5.309897 ns_per_element 1769965.73 fold_only_seconds 0.000012 ratio 442488.1 checksum 9c751ea6d39b7cbe fold 5fade89ee1cb126d flags 0x10 build_id unknown
+PASS: C2 log fp256 timed/fold-only ratio 442488.1 >= 10
+PASS: C1 log fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before pow fp64: Windows CPU load % sampled 3 times: [0, 2, -1]
+  op pow fmt fp64 n 1000 calls 3 seconds 1.027329 ns_per_element 342442.93 fold_only_seconds 0.000003 ratio 342440.3 checksum a432d2337072c9a7 fold f29036bea9f306a8 flags 0x10 build_id unknown
+PASS: C2 pow fp64 timed/fold-only ratio 342440.3 >= 10
+PASS: C1 pow fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before pow fp128: Windows CPU load % sampled 3 times: [2, 0, 0]
+  op pow fmt fp128 n 1000 calls 3 seconds 2.795704 ns_per_element 931901.30 fold_only_seconds 0.000006 ratio 458317.4 checksum 8603c0f0440ebb2e fold 9740884208e84bdd flags 0x10 build_id unknown
+PASS: C2 pow fp128 timed/fold-only ratio 458317.4 >= 10
+PASS: C1 pow fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before pow fp256: Windows CPU load % sampled 3 times: [3, 1, 1]
+  op pow fmt fp256 n 1000 calls 3 seconds 10.081747 ns_per_element 3360582.43 fold_only_seconds 0.000012 ratio 833203.9 checksum d590cefdfd67a398 fold 070db2ea29269f97 flags 0x10 build_id unknown
+PASS: C2 pow fp256 timed/fold-only ratio 833203.9 >= 10
+PASS: C1 pow fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before sin fp64: Windows CPU load % sampled 3 times: [0, 0, 2]
+  op sin fmt fp64 n 1000 calls 3 seconds 0.677669 ns_per_element 225889.63 fold_only_seconds 0.000003 ratio 225887.9 checksum e63cbbf9005465a9 fold ef6d5cb996684cf2 flags 0x10 build_id unknown
+PASS: C2 sin fp64 timed/fold-only ratio 225887.9 >= 10
+PASS: C1 sin fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before sin fp128: Windows CPU load % sampled 3 times: [6, 4, 9]
+  op sin fmt fp128 n 1000 calls 3 seconds 1.657380 ns_per_element 552459.97 fold_only_seconds 0.000006 ratio 276238.6 checksum 120d6eb9096dbeb2 fold d5246c1a79f677d1 flags 0x10 build_id unknown
+PASS: C2 sin fp128 timed/fold-only ratio 276238.6 >= 10
+PASS: C1 sin fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before sin fp256: Windows CPU load % sampled 3 times: [2, 2, 2]
+  op sin fmt fp256 n 1000 calls 3 seconds 5.664503 ns_per_element 1888167.63 fold_only_seconds 0.000012 ratio 488325.3 checksum 96fdb71086dd7a26 fold a17070e9497ae325 flags 0x10 build_id unknown
+PASS: C2 sin fp256 timed/fold-only ratio 488325.3 >= 10
+PASS: C1 sin fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before cos fp64: Windows CPU load % sampled 3 times: [6, 9, 5]
+  op cos fmt fp64 n 1000 calls 3 seconds 0.654620 ns_per_element 218206.57 fold_only_seconds 0.000003 ratio 211174.0 checksum af3afaba22b880c1 fold c43c7022f0edcf96 flags 0x10 build_id unknown
+PASS: C2 cos fp64 timed/fold-only ratio 211174.0 >= 10
+PASS: C1 cos fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before cos fp128: Windows CPU load % sampled 3 times: [5, 1, 6]
+  op cos fmt fp128 n 1000 calls 3 seconds 1.903831 ns_per_element 634610.20 fold_only_seconds 0.000006 ratio 297482.1 checksum abcb33bcf46844be fold 558298d89bb8e4e5 flags 0x10 build_id unknown
+PASS: C2 cos fp128 timed/fold-only ratio 297482.1 >= 10
+PASS: C1 cos fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before cos fp256: Windows CPU load % sampled 3 times: [0, 3, 1]
+  op cos fmt fp256 n 1000 calls 3 seconds 5.780691 ns_per_element 1926897.10 fold_only_seconds 0.000012 ratio 477744.0 checksum 9e029658792f4a5b fold e938fc503d941df0 flags 0x10 build_id unknown
+PASS: C2 cos fp256 timed/fold-only ratio 477744.0 >= 10
+PASS: C1 cos fp256: 0 of 1000 results differ from mpmath's correct rounding
+load before atan2 fp64: Windows CPU load % sampled 3 times: [1, 1, 2]
+  op atan2 fmt fp64 n 1000 calls 4 seconds 0.528531 ns_per_element 132132.75 fold_only_seconds 0.000004 ratio 132131.7 checksum 5fa81d5676b619cd fold a91cb5a5636796fd flags 0x10 build_id unknown
+PASS: C2 atan2 fp64 timed/fold-only ratio 132131.7 >= 10
+PASS: C1 atan2 fp64: 0 of 1000 results differ from mpmath's correct rounding
+load before atan2 fp128: Windows CPU load % sampled 3 times: [5, 2, 2]
+  op atan2 fmt fp128 n 1000 calls 3 seconds 0.928928 ns_per_element 309642.60 fold_only_seconds 0.000006 ratio 152285.0 checksum 3bb6a1d4ba26bee2 fold 17998331cbca808d flags 0x10 build_id unknown
+PASS: C2 atan2 fp128 timed/fold-only ratio 152285.0 >= 10
+PASS: C1 atan2 fp128: 0 of 1000 results differ from mpmath's correct rounding
+load before atan2 fp256: Windows CPU load % sampled 3 times: [2, 2, 3]
+  op atan2 fmt fp256 n 1000 calls 3 seconds 3.099048 ns_per_element 1033015.87 fold_only_seconds 0.000012 ratio 256120.2 checksum 4572aa9d771b6750 fold d181aaf4046683c3 flags 0x10 build_id unknown
+PASS: C2 atan2 fp256 timed/fold-only ratio 256120.2 >= 10
+PASS: C1 atan2 fp256: 0 of 1000 results differ from mpmath's correct rounding
+
+TABLE opbench ns per element (software backend, one thread, n = 1000 a call):
+  op              fp64         fp128         fp256
+  add            251.5         248.7         361.3
+  mul            153.1         178.7         244.3
+  fma            195.1         235.1         312.5
+  div           3574.4        5598.7        9234.3
+  sqrt          4399.9        6419.0       11036.5
+  exp         136362.6      334076.5     1121109.6
+  log         168198.0      481414.8     1769965.7
+  pow         342442.9      931901.3     3360582.4
+  sin         225889.6      552460.0     1888167.6
+  cos         218206.6      634610.2     1926897.1
+  atan2       132132.8      309642.6     1033015.9
+load before program j2-rk4-fp64: Windows CPU load % sampled 3 times: [3, 5, 0]
+  j2-rk4-fp64: time runs 3 seconds 0.174848 fold_only_seconds 0.000001 checksum 5c7943d22e325c25 fold_checksum 06aa5a734cb0be76
+PASS: C3 j2-rk4-fp64 timed 0.1748 s >= 10 x fold-only 0.000001 s
+PASS: C4 j2-rk4-fp64: the timed program's first 8 lanes equal Q2's segment 1
+  RATE j2-rk4-fp64: lanes 32 runs 3 steps/run 24: 13177.2 lane-steps/s, 2.000e+07 lane-instructions/s (1518 instructions a step), 50.0 ns a lane-instruction; load before [3, 5, 0]
+load before program j2-rk4-fp128: Windows CPU load % sampled 3 times: [4, 11, 0]
+  j2-rk4-fp128: time runs 3 seconds 0.174287 fold_only_seconds 0.000001 checksum 43648c232567dc35 fold_checksum 455538ce1c267996
+PASS: C3 j2-rk4-fp128 timed 0.1743 s >= 10 x fold-only 0.000001 s
+PASS: C4 j2-rk4-fp128: the timed program's first 8 lanes equal Q2's segment 1
+  RATE j2-rk4-fp128: lanes 32 runs 3 steps/run 24: 13219.6 lane-steps/s, 2.033e+07 lane-instructions/s (1538 instructions a step), 49.2 ns a lane-instruction; load before [4, 11, 0]
+load before program j2-rk4-fp256: Windows CPU load % sampled 3 times: [4, 2, 5]
+  j2-rk4-fp256: time runs 3 seconds 0.250600 fold_only_seconds 0.000003 checksum 84e8c7296420be05 fold_checksum 66a475dc9e457386
+PASS: C3 j2-rk4-fp256 timed 0.2506 s >= 10 x fold-only 0.000003 s
+PASS: C4 j2-rk4-fp256: the timed program's first 8 lanes equal Q2's segment 1
+  RATE j2-rk4-fp256: lanes 32 runs 3 steps/run 24: 9193.9 lane-steps/s, 1.432e+07 lane-instructions/s (1558 instructions a step), 69.8 ns a lane-instruction; load before [4, 2, 5]
+load before program j2dragrot-rk4-fp64: Windows CPU load % sampled 3 times: [3, 3, 3]
+  j2dragrot-rk4-fp64: time runs 3 seconds 0.757436 fold_only_seconds 0.000001 checksum f45e7f29dccc9e4d fold_checksum d0f3bc815525968e
+PASS: C3 j2dragrot-rk4-fp64 timed 0.7574 s >= 10 x fold-only 0.000001 s
+PASS: C4 j2dragrot-rk4-fp64: the timed program's first 8 lanes equal Q2's segment 1
+  RATE j2dragrot-rk4-fp64: lanes 32 runs 3 steps/run 24: 3041.8 lane-steps/s, 1.381e+07 lane-instructions/s (4541 instructions a step), 72.4 ns a lane-instruction; load before [3, 3, 3]
+load before program j2dragrot-rk4-fp128: Windows CPU load % sampled 3 times: [1, 7, 1]
+  j2dragrot-rk4-fp128: time runs 3 seconds 0.899663 fold_only_seconds 0.000002 checksum 78d73f67cfec985d fold_checksum 0739a41a162e600e
+PASS: C3 j2dragrot-rk4-fp128 timed 0.8997 s >= 10 x fold-only 0.000002 s
+PASS: C4 j2dragrot-rk4-fp128: the timed program's first 8 lanes equal Q2's segment 1
+  RATE j2dragrot-rk4-fp128: lanes 32 runs 3 steps/run 24: 2561.0 lane-steps/s, 1.154e+07 lane-instructions/s (4505 instructions a step), 86.7 ns a lane-instruction; load before [1, 7, 1]
+load before program j2dragrot-rk4-fp256: Windows CPU load % sampled 3 times: [8, 5, 2]
+  j2dragrot-rk4-fp256: time runs 3 seconds 1.322273 fold_only_seconds 0.000003 checksum 6a2eae93f7c97675 fold_checksum 8ac4dc5fe4ba3626
+PASS: C3 j2dragrot-rk4-fp256 timed 1.3223 s >= 10 x fold-only 0.000003 s
+PASS: C4 j2dragrot-rk4-fp256: the timed program's first 8 lanes equal Q2's segment 1
+  RATE j2dragrot-rk4-fp256: lanes 32 runs 3 steps/run 24: 1742.5 lane-steps/s, 8.024e+06 lane-instructions/s (4605 instructions a step), 124.6 ns a lane-instruction; load before [8, 5, 2]
+load before program field8-rk4-fp64: Windows CPU load % sampled 3 times: [5, 1, 1]
+  field8-rk4-fp64: time runs 2 seconds 0.310737 fold_only_seconds 0.000000 checksum 596f16dc9f4595a5 fold_checksum 331a198e225f9bc4
+PASS: C3 field8-rk4-fp64 timed 0.3107 s >= 10 x fold-only 0.000000 s
+  RATE field8-rk4-fp64: lanes 8 runs 2 steps/run 24: 1235.8 lane-steps/s, 1.163e+07 lane-instructions/s (9415 instructions a step), 85.9 ns a lane-instruction; load before [5, 1, 1]
+load before program field8-rk4-fp128: Windows CPU load % sampled 3 times: [1, 6, 5]
+  field8-rk4-fp128: time runs 2 seconds 0.350199 fold_only_seconds 0.000000 checksum 70ac7e1c79ebcaf5 fold_checksum 45eb4b76b0b01ea8
+PASS: C3 field8-rk4-fp128 timed 0.3502 s >= 10 x fold-only 0.000000 s
+  RATE field8-rk4-fp128: lanes 8 runs 2 steps/run 24: 1096.5 lane-steps/s, 1.031e+07 lane-instructions/s (9404 instructions a step), 97.0 ns a lane-instruction; load before [1, 6, 5]
+program field8-rk4-fp256: no image, skipped
+program field20lane-rk4-fp64: no image, skipped
+load end: Windows CPU load % sampled 3 times: [4, 7, 6]
+# failures: 0
+# finished 2026-11-12 21:21:18 (local)

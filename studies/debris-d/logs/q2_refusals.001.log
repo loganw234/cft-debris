@@ -1,0 +1,13 @@
+# log q2_refusals.001.log
+# written by q2_refusals.py, sha256 13a33469fd372fc90e2ae312bdcaf5b7008207801959ea8f669ecbf547e15596
+# helper dd.py sha256 9f81a395c7ec1c51b372af18dff263c9abee89bd7e80ebb5d5e33a30d26ceb58
+# started 2026-11-12 21:37:03 (local)
+# python 3.12.15
+# CRITERIA (stated before any data):
+#   each compile exits 3 and names the refusal LANGUAGE.md gives: transcendental, time-dependence, power, verlet-not-separable
+PASS: case0.cftl: exit 3, refused transcendental: C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-D\work\refusals\case0.cftl:5: pow is not computed by a program in v1
+PASS: case1.cftl: exit 3, refused time-dependence: ris-scratch\DEBRIS-D\work\refusals\case1.cftl:5: t is not declared, and v1 has no explicit time: carry it in the state (state t, d/dt t = 1)
+PASS: case2.cftl: exit 3, refused power: bris-scratch\DEBRIS-D\work\refusals\case2.cftl:5: ^ is not an operator: write x * x for a square, and a longer product in the order you mean
+PASS: j2dragrot-sv.cftl: exit 3, refused verlet-not-separable: es\debris-d\systems\j2dragrot-sv.cftl:62: stormer-verlet needs a momentum's right-hand side to read positions only: d/dt vx reads vx, vy, vz
+# failures: 0
+# finished 2026-11-12 21:37:05 (local)

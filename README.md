@@ -9,6 +9,7 @@ Space-debris tracking and simulation, held to the methods of [HonestFramework](h
 | DEBRIS-A | Does REBOUND, and which of its integrators, suit long-term debris prediction? Received from cft-rebound's lead. | verified by verifier-A; its numbers reproduce, and the report lists its errata | `DEBRIS-A-rebound-for-debris.md`, `debris-a/`, `DEBRIS-A-verifier-A-report.md`, `PROVENANCE.md` |
 | DEBRIS-B | What would a custom debris model stand on, cost and buy? It includes whether binary256 arithmetic buys anything. | verified by verifier-B; eight passages narrowed at the merge, each marked | `DEBRIS-B-plan.md`, `DEBRIS-B-custom-model.md`, `debris-b/`, `DEBRIS-B-report.md`, `DEBRIS-B-verifier-B-report.md`, `DEBRIS-B-round-record.md` |
 | DEBRIS-C | The measurements that would decide between building, adopting existing tools, and a hybrid | checked by verifier-C; one defect, an attribution, and eight passages narrowed at the merge, each marked | `DEBRIS-C-plan.md`, `DEBRIS-C-measurements.md`, `debris-c/`, `DEBRIS-C-report.md`, `DEBRIS-C-verifier-C-report.md`, `DEBRIS-C-round-record.md` |
+| DEBRIS-D | What a real-time, wide-precision propagator on a consumer GPU would cost, written in cft-fp256's language, and what it needs from cft-fp256 | checked by verifier-D; one defect, a marking bound that reached past its evidence; six narrowings and one addition at the merge, each marked | `DEBRIS-D-plan.md`, `DEBRIS-D-architecture.md`, `debris-d/`, `DEBRIS-D-report.md`, `DEBRIS-D-verifier-D-report.md`, `DEBRIS-D-round-record.md` |
 
 Every claim in a study carries one of four labels: MEASURED, COMPUTED, READ or BELIEVED.
 
@@ -16,18 +17,18 @@ Every claim in a study carries one of four labels: MEASURED, COMPUTED, READ or B
 
 Each study's records come with SHA-256 manifests:
 - DEBRIS-A: run `sha256sum -c SHA256SUMS` from `studies/`;
-- DEBRIS-B and DEBRIS-C: run `sha256sum -c MANIFEST.sha256` from `studies/debris-b/` and `studies/debris-c/`.
+- DEBRIS-B, DEBRIS-C and DEBRIS-D: run `sha256sum -c MANIFEST.sha256` from `studies/debris-b/`, `studies/debris-c/` and `studies/debris-d/`.
 
 `.gitattributes` turns off line-ending conversion, so every file is checked out with its exact bytes. Many records end their lines with CRLF, and the checksums hold on any platform.
 
 ## Licence
 
 MIT (`LICENSE`). It covers this repository's own work: the studies, their scripts and their records. The software and data the studies used are not included, and they keep their own licences:
-- **Called through their interfaces, never copied in:** REBOUND (GPL-3.0), and Orekit and Hipparchus (Apache-2.0).
+- **Called through their interfaces, never copied in:** REBOUND (GPL-3.0); Orekit and Hipparchus (Apache-2.0); and cft-fp256's libcft and its compiler, cftc (Apache-2.0), built from a pinned commit outside this repository. The systems in `studies/debris-d/systems/` are written in cft-fp256's language and are this repository's own. The images cftc compiles from them carry cft-fp256's routines, so they are not included; the records give each image's SHA-256 and the command that rebuilds it.
 - **Named with their sources, never redistributed:** JPL's DE421, EIGEN-6C4 and Lasser et al.'s benchmark data.
 
 ## What is not here
 
 - **Machine-specific paths:** the paths inside the records are those of the machine where the runs were made.
-- **Third-party inputs** are not redistributed: Orekit and Hipparchus, JPL's DE421, and the files of Lasser et al.'s 2020 benchmark. Each study names where they came from.
+- **Third-party inputs** are not redistributed: Orekit and Hipparchus, JPL's DE421, the files of Lasser et al.'s 2020 benchmark, cft-fp256's sources, and the gravity-field sources DEBRIS-D generated from EIGEN-6C4. Each study names where they came from, and `studies/debris-d/q2/gen_field.py` regenerates the field sources byte for byte.
 - **The project's ledger** is not part of this repository. It holds the hashes recorded at download, and the lead's rulings during each round.

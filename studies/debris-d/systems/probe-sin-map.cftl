@@ -1,0 +1,8 @@
+; DEBRIS-D (cft-debris, MIT): a one-call map, next x = sin(x), to count the lanes the
+; sin routine marks on chosen arguments (Q3's replay budget). Compiled with --steps 1.
+system probesin
+format fp64
+round  rne
+state  x
+next x = sin(x)
+step   map
