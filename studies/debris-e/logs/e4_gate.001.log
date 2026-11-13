@@ -1,0 +1,61 @@
+# e4_gate, log 001, written 2026-11-13 06:25:20 -0700
+# script e4_gate.py sha256 e2e32a823da0582a350bfef0b05df1c58338bfb1c24796b3b8dc843dd37cbe9d
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 5bbd9462da124c80746d72560edd071b9e5c4d9ffa815b2c7651464ee5f0859d
+# m1run_O0.exe sha256 b9729bb3b36bbfd14432b8df387e59444b4a6f288a2c77754781f253206bfaad
+# m1run_fast.exe sha256 5732f688efff81bc9b9a1d4dca4c11eef555c135f2eb938f9f1133412bb6fe61
+# m1run_negctl.exe sha256 282af50b970588a7ba3248540c6e7efe88c194b32eb96c5c61c6a1d0287acf37
+# host load at start: 11% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   TOL = 1e-11 m/s^2 on max over the epochs of |a - a_Lasser| (the vector difference's norm): DEBRIS-C's
+#      tolerance, the threshold the COST-G packages met for each force (READ via WebFetch by DEBRIS-C, Lasser et
+#      al. 2020).
+#   T1 gravity, degrees 2..180, Earth-fixed, at the TRF positions (each kind converts the file's decimal
+#      positions): native64 and cft64 at every epoch (2,880), cft128 and cft256 at every tenth epoch (288):
+#      max |da| < TOL for each.
+#   T2 the direct tides of the Sun and the Moon as point masses, a = GM (d/|d|^3 - s/|s|^3), at the CRF
+#      positions, GROOPS's GM values (the README), DE421, TDB = TT + 0.001657 sin g + 0.000014 sin 2g s and
+#      TT = GPS + 51.184 s (DEBRIS-C's convention): the same kinds and epochs: max |da| < TOL for the Sun and for
+#      the Moon, each.
+#   T3 REPORTED, no pass condition: cft32 at every tenth epoch, gravity and tides; native64 against cft64,
+#      bit for bit or not.
+#   C1 NEGATIVE CONTROL (DEBRIS-C's): the field truncated at degree 173 (degrees 2..173) must FAIL, max
+#      |da| > TOL, at native64 (every epoch) and at cft64 (every tenth epoch).
+# input 00orbit_itrf.txt sha256 ff7d151c16fdfe325d1d3a50ca59d260be73d122711ef2297b6fe98994b1b783
+# input 02gravityfield_itrf.txt sha256 dc74fcdefcd8818cde4213938f9bd312e18ffe63e7fbf8471aa0acbf723bb38c
+# input 00orbit_icrf.txt sha256 57bf1735f584ba9c40d0e3854caf3be30c42fde05177af15463a71546156b2e5
+# input 03directTideSun_icrf.txt sha256 8fa2218f7f52b9ef53e9c53be57960ae022e88dab2599aabc411c72125ad5521
+# input 03directTideMoon_icrf.txt sha256 20ba052a965cd5666774455743d9fef78834af65865195358207ae9af415e0cc
+# input EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715
+# input lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+PASS the benchmark files hold 2,880 epochs each
+# ran (0.56 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser native64 1 2 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_native64_s1.txt
+# ran (0.07 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser3 native64 1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser3_native64_s1.txt
+PASS T1 native64 gravity 2..180 against Lasser et al.: max |da| 2.281e-15 m/s^2 (epoch 1789) < 1e-11 over 2880 epochs
+PASS T2 native64 Sun: max |da| 1.263e-17 m/s^2 (epoch 388) < 1e-11 over 2880 epochs
+PASS T2 native64 Moon: max |da| 4.342e-16 m/s^2 (epoch 208) < 1e-11
+# ran (331.27 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser cft64 1 2 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_cft64_s1.txt
+# ran (0.36 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser3 cft64 1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser3_cft64_s1.txt
+PASS T1 cft64 gravity 2..180 against Lasser et al.: max |da| 2.281e-15 m/s^2 (epoch 1789) < 1e-11 over 2880 epochs
+PASS T2 cft64 Sun: max |da| 1.263e-17 m/s^2 (epoch 388) < 1e-11 over 2880 epochs
+PASS T2 cft64 Moon: max |da| 4.342e-16 m/s^2 (epoch 208) < 1e-11
+# ran (44.20 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser cft128 10 2 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_cft128_s10.txt
+# ran (0.10 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser3 cft128 10 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser3_cft128_s10.txt
+PASS T1 cft128 gravity 2..180 against Lasser et al.: max |da| 1.488e-15 m/s^2 (epoch 1580) < 1e-11 over 288 epochs
+PASS T2 cft128 Sun: max |da| 1.046e-17 m/s^2 (epoch 680) < 1e-11 over 288 epochs
+PASS T2 cft128 Moon: max |da| 3.913e-16 m/s^2 (epoch 770) < 1e-11
+# ran (58.42 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser cft256 10 2 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_cft256_s10.txt
+# ran (0.21 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser3 cft256 10 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser3_cft256_s10.txt
+PASS T1 cft256 gravity 2..180 against Lasser et al.: max |da| 1.488e-15 m/s^2 (epoch 1580) < 1e-11 over 288 epochs
+PASS T2 cft256 Sun: max |da| 1.046e-17 m/s^2 (epoch 680) < 1e-11 over 288 epochs
+PASS T2 cft256 Moon: max |da| 3.913e-16 m/s^2 (epoch 770) < 1e-11
+# ran (29.32 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser cft32 10 2 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_cft32_s10.txt
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser3 cft32 10 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser3_cft32_s10.txt
+REPORTED T3 cft32 (every tenth epoch): gravity max |da| 6.662e-08 m/s^2, Sun 2.104e-09, Moon 1.423e-11
+REPORTED T3 native64 against cft64 over 2,880 epochs: gravity bit for bit, tides bit for bit
+# ran (0.50 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser native64 1 2 173 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_native64_s1_d173.txt
+PASS C1 control: native64 truncated at degree 173 is REPORTED, max |da| 9.772e-10 m/s^2 = 97.7 x TOL
+# ran (30.14 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe lasser cft64 10 2 173 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e4\lasser_cft64_s10_d173.txt
+PASS C1 control: cft64 truncated at degree 173 is REPORTED, max |da| 8.882e-10 m/s^2 = 88.8 x TOL
+# PASS 

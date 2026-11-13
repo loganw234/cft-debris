@@ -1,0 +1,24 @@
+# e7_diag, log 001, written 2026-11-13 06:34:24 -0700
+# script e7_diag.py sha256 c799d7b7c784a531521a54f38eb9972e03af0e7a5ff6874495ba634185d528c8
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 5bbd9462da124c80746d72560edd071b9e5c4d9ffa815b2c7651464ee5f0859d
+# m1run_O0.exe sha256 b9729bb3b36bbfd14432b8df387e59444b4a6f288a2c77754781f253206bfaad
+# m1run_fast.exe sha256 5732f688efff81bc9b9a1d4dca4c11eef555c135f2eb938f9f1133412bb6fe61
+# m1run_negctl.exe sha256 282af50b970588a7ba3248540c6e7efe88c194b32eb96c5c61c6a1d0287acf37
+# host load at start: 8% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   No pass condition (a diagnosis). The same day and model as E7. Reported: rk4 at 5, 2.5, 1.25 and 0.625 s against
+#      one another (does rk4 converge, and at what order?) and against IAS15 at epsilon 1e-9 and 1e-10 (does IAS15
+#      move with its epsilon?).
+MEASURED rk4 5 s against 2.5 s: 2.1226e-02 m
+MEASURED rk4 2.5 s against 1.25 s: 2.5212e-03 m
+MEASURED rk4 1.25 s against 0.625 s: 3.9569e-06 m
+MEASURED IAS15 epsilon 1e-09: 560 steps, 16464 evaluations
+MEASURED IAS15 epsilon 1e-10: 778 steps, 21694 evaluations
+MEASURED IAS15 1e-9 against 1e-10: 2.0591e-01 m
+MEASURED rk4 5 s against IAS15 1e-9: 1.1380e-01 m; against IAS15 1e-10: 9.2135e-02 m
+MEASURED rk4 2.5 s against IAS15 1e-9: 9.2573e-02 m; against IAS15 1e-10: 1.1336e-01 m
+MEASURED rk4 1.25 s against IAS15 1e-9: 9.0053e-02 m; against IAS15 1e-10: 1.1588e-01 m
+MEASURED rk4 0.625 s against IAS15 1e-9: 9.0057e-02 m; against IAS15 1e-10: 1.1587e-01 m
+# PASS 

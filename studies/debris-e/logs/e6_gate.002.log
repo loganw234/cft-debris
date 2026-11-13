@@ -1,0 +1,81 @@
+# e6_gate, log 002, written 2026-11-13 06:32:44 -0700
+# script e6_gate.py sha256 863881d838190d1722a4f6f236fd90f1a1421c261ac2b07cc2de378d8c2cde88
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 5bbd9462da124c80746d72560edd071b9e5c4d9ffa815b2c7651464ee5f0859d
+# m1run_O0.exe sha256 b9729bb3b36bbfd14432b8df387e59444b4a6f288a2c77754781f253206bfaad
+# m1run_fast.exe sha256 5732f688efff81bc9b9a1d4dca4c11eef555c135f2eb938f9f1133412bb6fe61
+# m1run_negctl.exe sha256 282af50b970588a7ba3248540c6e7efe88c194b32eb96c5c61c6a1d0287acf37
+# host load at start: 7% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   The states (tests/m1run.c mode e6, seed 0xE6): 1,000 LEO states 300 to 800 km up, directions uniform, speed
+#      0.99 to 1.01 of circular perpendicular to r, epochs 0 to 20 days after 2008-07-03 00:00 TDB in whole seconds,
+#      area 0.5 to 20 m^2, mass 50 to 2000 kg, Cd 2.0 to 2.4, Cr 1.0 to 1.8. Ours at native64 and at cft64; Orekit
+#      on the same binary64 states. Matched inputs are listed by tests/e6_orekit.js's header, copied below.
+#   VERSION 2: log 001 FAILED D1 (|da| up to 7.5e-11 m/s^2, growing with the epoch): tests/e6_orekit.js turned the
+#      frame with Orekit's durationFrom(T0), TAI seconds, while ours turns on TDB seconds; the two drift apart by up to
+#      5.7e-4 s over the 20 days, 4.2e-8 rad of angle, which the tesseral terms feel. Version 2 of e6_orekit.js turns
+#      Orekit's frame on TDB seconds (durationFrom plus the change of TDB - TAI). The criteria are unchanged.
+#   TOLERANCES, each with its basis, each below the planted change it must catch:
+#   D1 gravity (EIGEN-6C4 degrees 2..20, our Cunningham recursion against Orekit's Holmes-Featherstone, both on
+#      the uniform frame): |da| <= 1e-14 m/s^2 at every state. Basis: DEBRIS-C measured the two to 2.3e-15 m/s^2
+#      at degree 180 on the benchmark day; the frame's rounding adds about |a| x 4e-16 = 6e-18. The plant: C20 x
+#      1.01, about 1.2e-4 m/s^2, 1e10 TOL.
+#   D2 drag (one band, matched): |da| <= 1e-9 x |a_drag(Orekit)| at every state. Basis: the same formula both
+#      sides; rounding differences of a few 1e-16 and Orekit's altitude from its ellipsoid at flattening 0
+#      (BELIEVED within 1e-6 m, 2e-11 relative in density). The plant: Cd x 1.01, 1e-2 relative, 1e7 TOL.
+#   D3 radiation pressure, where both models call the state sunlit (our nu = 1 and Orekit's lighting ratio = 1):
+#      |da| <= 1e-9 x |a_srp(Orekit)|; where both call it umbra (0 and 0): |da| <= 1e-20 m/s^2 (both exactly 0).
+#      Basis: the same formula; two readers of DE421 agree to about 1.5e-14 AU (DEBRIS-C, Orekit's reader against
+#      testpo.421 once dates are built right), 2.2 m of 1.5e11 m, 1.5e-11 relative. The plant: Cr x 1.01, 1e-2.
+#   D4 the three planted controls must each break their tolerance at some state: drag (Cd 1% off, our side),
+#      radiation (Cr 1% off, our side) and gravity (C20 1% off, our side), each at cft64.
+#   REPORTED, no pass condition: penumbra states (|da| and the two shadow functions); states the two models
+#      classify differently; native64 against cft64 bit for bit; the Sun positions of the two readers; and as a
+#      figure only, NRLMSISE00's density (F10.7 150, Ap 15) against the one-band exponential atmosphere.
+# gravity file for Orekit: C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/gfc_dedup/EIGEN6-C4.gfc sha256 bf296183bf9c9180e58c64a2fca22ece0124d6c7f82448508b8599a944010852
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e6 native64 1000 0xE6 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\states_native64.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\forces_native64.txt
+# ran (3.78 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e6 cft64 1000 0xE6 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\states_cft64.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\forces_cft64.txt
+PASS the same 1,000 states at native64 and cft64
+# jar orekit-13.1.9.jar sha256 a1dbec163c1119459cf79e2dfe32ff74b446f7a8d457e2d4d9761cd6cd820fbe
+# jar hipparchus-core-4.0.3.jar sha256 5af54dc3c21b8d85e1264157ee91d93fa67e68c825cfb38834dc2bbb9b0f6583
+# jar hipparchus-geometry-4.0.3.jar sha256 19594d5106ec6a46951e859e2924bfcade02a834c06c56bd3d2130a74f0fbb7e
+# jar hipparchus-ode-4.0.3.jar sha256 75f0f0b3fdcd99d13e9c394b7ae809cce5a9c22f1c14b1b90a5109ed951467fe
+# jar hipparchus-fitting-4.0.3.jar sha256 3712c3b4f43d9c12bf7b7aad187764f4b3c09cc962504899d8951eb310b1e4be
+# jar hipparchus-optim-4.0.3.jar sha256 4bc0dbb5c6d5fefda5db9d92141c6cbb807174a1d491a85df46bcc57a67b8992
+# jar hipparchus-filtering-4.0.3.jar sha256 279eece43411f372bd8340355cb89101def0bf9b1b6824231b76181d1ec63a81
+# jar hipparchus-stat-4.0.3.jar sha256 8b066e3060dc119efcce241fb0720a3b9e59c026d0f5fe9e70abfd5e22d3817b
+# ran (1.90 s): C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\e6_orekit.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\states_cft64.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\orekit.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/gfc_dedup C:/Users/logan/source/repos/cft-debris-downloads/lnxp1900p2053.421
+# e6_orekit: 1000 states written to C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\orekit.txt
+# orekit header: e6_orekit: java 1.8.0_411; mu 398600441500000 ae 6378136.46 degree 20 order 20 tide TIDE_FREE
+# orekit header: matched: OMEGA 0.00007292115 THETA0 0.3 T0 2008-07-03T00:00:00.000 TDB; R_EARTH 6378136.3 flattening 0; R_SUN 696000000; kRef = P_SUN AU^2 = 102050624505961088; rho0 3.725e-12 h0 400000 H 58515; Sun: Orekit's DE421 reader (C:/Users/logan/source/repos/cft-debris-downloads/lnxp1900p2053.421); gravity file directory C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/gfc_dedup
+# orekit header: columns: i grav(3) drag(3) srp(3) lighting_ratio sun_gcrf(3) rho_exp rho_nrlmsise00 (Java hex doubles)
+# orekit header: states 1000
+PASS Orekit evaluated all 1000 states
+REPORTED native64 against cft64 (C library transcendentals at native64): 998 of 1000 states bit for bit
+REPORTED the Sun, our DE421 reader against Orekit's: max |d| 7.667e-05 m (5.125e-16 AU)
+# cft64: classes {'sunlit': 673, 'umbra': 324, 'penumbra': 3, 'disagree': 0}; worst: gravity 7.345e-17 m/s^2, drag 6.844e-14 relative, radiation sunlit 1.332e-15 relative, umbra 0.000e+00 m/s^2
+PASS D1 cft64 gravity: max |da| 7.345e-17 m/s^2 <= 1e-14 at all 1000 states
+PASS D2 cft64 drag: max |da|/|a| 6.844e-14 <= 1e-9 at all 1000 states
+PASS D3 cft64 radiation: sunlit 673 states, max |da|/|a| 1.332e-15 <= 1e-9; umbra 324 states, max |da| 0.000e+00 <= 1e-20
+REPORTED cft64 penumbra or disagreement, state 38: our nu 0.033444165452, Orekit's ratio 0.033444165391, |da| 8.233e-19 m/s^2 of |a| 4.572e-10
+REPORTED cft64 penumbra or disagreement, state 133: our nu 0.029247654741, Orekit's ratio 0.029247654771, |da| 1.827e-18 m/s^2 of |a| 1.774e-09
+REPORTED cft64 penumbra or disagreement, state 574: our nu 0.374412596333, Orekit's ratio 0.374412596410, |da| 4.541e-18 m/s^2 of |a| 2.206e-08
+# native64: classes {'sunlit': 673, 'umbra': 324, 'penumbra': 3, 'disagree': 0}; worst: gravity 7.345e-17 m/s^2, drag 6.821e-14 relative, radiation sunlit 1.332e-15 relative, umbra 0.000e+00 m/s^2
+PASS D1 native64 gravity: max |da| 7.345e-17 m/s^2 <= 1e-14 at all 1000 states
+PASS D2 native64 drag: max |da|/|a| 6.821e-14 <= 1e-9 at all 1000 states
+PASS D3 native64 radiation: sunlit 673 states, max |da|/|a| 1.332e-15 <= 1e-9; umbra 324 states, max |da| 0.000e+00 <= 1e-20
+REPORTED native64 penumbra or disagreement, state 38: our nu 0.033444165452, Orekit's ratio 0.033444165391, |da| 8.233e-19 m/s^2 of |a| 4.572e-10
+REPORTED native64 penumbra or disagreement, state 133: our nu 0.029247654741, Orekit's ratio 0.029247654771, |da| 1.827e-18 m/s^2 of |a| 1.774e-09
+REPORTED native64 penumbra or disagreement, state 574: our nu 0.374412596333, Orekit's ratio 0.374412596410, |da| 4.541e-18 m/s^2 of |a| 2.206e-08
+# ran (3.78 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e6 cft64 1000 0xE6 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\states_cft64_drag.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\forces_cft64_drag.txt --plant drag
+# cft64 plant drag: classes {'sunlit': 673, 'umbra': 324, 'penumbra': 3, 'disagree': 0}; worst: gravity 7.345e-17 m/s^2, drag 1.000e-02 relative, radiation sunlit 1.332e-15 relative, umbra 0.000e+00 m/s^2
+PASS D4 control: drag planted 1% off breaks its tolerance at 1000 of 1000 states
+# ran (3.76 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e6 cft64 1000 0xE6 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\states_cft64_srp.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\forces_cft64_srp.txt --plant srp
+# cft64 plant srp: classes {'sunlit': 673, 'umbra': 324, 'penumbra': 3, 'disagree': 0}; worst: gravity 7.345e-17 m/s^2, drag 6.844e-14 relative, radiation sunlit 1.000e-02 relative, umbra 0.000e+00 m/s^2
+PASS D4 control: srp planted 1% off breaks its tolerance at 673 of 1000 states
+# ran (3.58 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e6 cft64 1000 0xE6 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\states_cft64_grav.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e6\forces_cft64_grav.txt --plant grav
+# cft64 plant grav: classes {'sunlit': 673, 'umbra': 324, 'penumbra': 3, 'disagree': 0}; worst: gravity 2.460e-04 m/s^2, drag 6.844e-14 relative, radiation sunlit 1.332e-15 relative, umbra 0.000e+00 m/s^2
+PASS D4 control: grav planted 1% off breaks its tolerance at 1000 of 1000 states
+REPORTED figure: NRLMSISE00 (F10.7 150, Ap 15) over the one-band exponential density at the 1,000 states: min 0.454, median 1.06, max 6.79
+# PASS 

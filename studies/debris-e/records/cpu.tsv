@@ -1,0 +1,29 @@
+2026-11-13 05:50:34	build-libcft	12.613	28440035268	11.376	2.688	2.688	110	110	0	C:/msys64/usr/bin/make.exe -C host CC=gcc OS=Windows_NT TMP=C:/Users/logan/AppData/Local/Temp TEMP=C:/Users/logan/AppData/Local/Temp libcft.a
+2026-11-13 06:15:21	build-main	10.685	25611563672	10.245	2.828	2.828	70	70	1	C:/Program Files/Git/usr/bin/bash.exe tests/build.sh C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/cft-fp256/host C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+2026-11-13 06:16:25	build-main	43.730	103509892514	41.404	12.203	12.219	341	341	0	C:/Program Files/Git/usr/bin/bash.exe tests/build.sh C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/cft-fp256/host C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+2026-11-13 06:20:13	e1-gate	155.143	375300520654	150.120	44.344	44.344	78	78	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e1_gate.py 10000
+2026-11-13 06:20:16	e1-fma	2.549	4006893294	1.603	0.297	0.297	16	16	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e1_fma.py
+2026-11-13 06:22:38	e2-gate	23.308	55962514127	22.385	6.281	6.281	10	10	1	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e2_gate.py
+2026-11-13 06:24:41	build-main-2	39.695	98784115703	39.514	9.781	9.781	341	341	0	C:/Program Files/Git/usr/bin/bash.exe tests/build.sh C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/cft-fp256/host C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+2026-11-13 06:25:14	e2-gate-v2	28.726	67908424183	27.163	7.719	7.719	12	12	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e2_gate.py
+2026-11-13 06:26:45	e3-gate	82.178	196843923297	78.738	24.594	24.594	7	7	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e3_gate.py
+2026-11-13 06:30:48	e8-gate	242.508	583945261155	233.578	74.219	74.219	43	43	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e8_gate.py
+2026-11-13 06:30:55	e5-gate	1.114	1625680715	0.650	0.141	0.141	7	7	1	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e5_gate.py
+2026-11-13 06:31:45	e6-gate	19.339	52795918922	21.118	6.562	6.562	8	8	1	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e6_gate.py
+2026-11-13 06:33:02	e6-gate-v2	18.269	52063373915	20.825	5.062	5.062	8	8	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e6_gate.py
+2026-11-13 06:33:22	e7-rebound	1.587	2417353823	0.967	0.250	0.250	2	2	1	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e7_rebound.py
+2026-11-13 06:33:37	e4-gate	497.303	1194598945768	477.840	134.484	134.484	14	14	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e4_gate.py
+2026-11-13 06:33:46	e7-rebound-v2	3.776	6146881500	2.459	0.453	0.453	2	2	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e7_rebound.py
+2026-11-13 06:34:32	e7-diag	7.814	17690768254	7.076	1.047	1.047	2	2	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e7_diag.py
+2026-11-13 06:36:14	build-main-3	39.544	98674144105	39.470	10.094	10.078	343	343	0	C:/Program Files/Git/usr/bin/bash.exe tests/build.sh C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/cft-fp256/host C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+2026-11-13 06:36:30	e5-gate-v2	1.150	1518848560	0.608	0.141	0.141	7	7	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e5_gate.py
+2026-11-13 06:37:03	e7-diag-v2	13.302	31231207113	12.492	3.297	3.297	2	2	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e7_diag.py
+2026-11-13 06:40:30	e1_gate-b3	174.744	406399893428	162.560	55.016	55.016	78	78	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e1_gate.py
+2026-11-13 06:41:00	e2_gate-b3	29.827	71267284422	28.507	8.859	8.859	12	12	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e2_gate.py
+2026-11-13 06:41:38	e1-fma-b3	2.715	4314419319	1.726	0.391	0.391	16	16	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e1_fma.py
+2026-11-13 06:41:43	e8_gate-b3	246.869	582707686845	233.083	77.156	77.156	43	43	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e8_gate.py
+2026-11-13 06:43:06	e3_gate-b3	82.837	192499938420	77.000	23.500	23.500	7	7	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e3_gate.py
+2026-11-13 06:43:25	e6_gate-b3	18.530	53569378984	21.428	7.094	7.094	8	8	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e6_gate.py
+2026-11-13 06:43:29	e7_rebound-b3	3.445	6412353096	2.565	0.875	0.875	2	2	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e7_rebound.py
+2026-11-13 06:44:23	e7-diag-v3	19.561	45648328064	18.259	5.609	5.609	2	2	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e7_diag.py
+2026-11-13 06:52:08	e9-time	127.905	252575065981	101.030	31.328	31.328	26	26	0	C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B tests/e9_time.py B0030 2

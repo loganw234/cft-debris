@@ -1,0 +1,29 @@
+# e1_penumbra, log 001, written 2026-11-13 06:41:35 -0700
+# script e1_penumbra.py sha256 4797a798a5cd266f7af746ad856c0c71cc8f85180658c4a70ac89aaeca89d0bd
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 12% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   No pass condition. Reads E1's work files O2_srp_native64.txt and O2_srp_cft64.txt (seed 0xE1, 10,000 lanes) and
+#      reports: the number of penumbra lanes (0 < nu < 1 at cft64), the lanes whose outputs differ, each lane's nu at
+#      both kinds and the relative difference of nu.
+# inputs: C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_native64.txt sha256 c96834be4833b52a44ec7c1f47e349f5a6f59faab6c8e2e458eb1dcde8382cfb; C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_cft64.txt sha256 eda11c6813db8925fdcd61cc3cde7b88e3f35759ff2d53e75dc79a4fec0445b0
+MEASURED 10000 lanes, 49 in penumbra (0 < nu < 1 at cft64), 12 differ
+MEASURED lane 76: nu cft64 0.998344752169, native64 (C library) 0.998344752185, relative difference 1.62e-11
+MEASURED lane 321: nu cft64 0.338915343396, native64 (C library) 0.338915343395, relative difference 2.57e-12
+MEASURED lane 768: nu cft64 0.575249857930, native64 (C library) 0.575249856668, relative difference 2.19e-09
+MEASURED lane 2485: nu cft64 0.002874509415, native64 (C library) 0.002874513519, relative difference 1.43e-06
+MEASURED lane 2924: nu cft64 0.078622771954, native64 (C library) 0.078622771949, relative difference 7.00e-11
+MEASURED lane 2948: nu cft64 0.885802450083, native64 (C library) 0.885802450081, relative difference 3.09e-12
+MEASURED lane 4376: nu cft64 0.203733307061, native64 (C library) 0.203733308086, relative difference 5.03e-09
+MEASURED lane 4759: nu cft64 0.951268965407, native64 (C library) 0.951268965402, relative difference 4.81e-12
+MEASURED lane 5782: nu cft64 0.335766216844, native64 (C library) 0.335766216109, relative difference 2.19e-09
+MEASURED lane 8706: nu cft64 0.026477747495, native64 (C library) 0.026477747495, relative difference 4.82e-13
+MEASURED lane 9642: nu cft64 0.994082703446, native64 (C library) 0.994082703462, relative difference 1.57e-11
+MEASURED lane 9961: nu cft64 0.462822809647, native64 (C library) 0.462822809647, relative difference 4.45e-13
+MEASURED differing lanes in penumbra: 12 of 12
+# PASS 

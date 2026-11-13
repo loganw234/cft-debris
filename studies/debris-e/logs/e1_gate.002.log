@@ -1,0 +1,216 @@
+# e1_gate, log 002, written 2026-11-13 06:37:36 -0700
+# script e1_gate.py sha256 c5b03e470ff356685c6fcd62190c22f6a5f787ad2356a38e11290ac3474fe869
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 9% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   C1 constants and derived tables (to degree 180): native64's every entry equals cft64's, and native32's
+#      equals cft32's, bit for bit - so every constant's C-library conversion (strtod, strtof) equals libcft's
+#      correctly rounded cft_from_decimal_char, and every derived table matches across kinds.
+#   C2 kernels of +, -, x, FMA, / and sqrt only - gravity at degree 2 and 20 (N lanes), gravity at degree 180
+#      (64 lanes), the central term, the third body, the Chebyshev reader with its body sums, the shadow geometry
+#      before its inverse trigonometry: native equals cft bit for bit on every lane and output, at binary64 and
+#      binary32 (the NaN rule: NaNs agree as NaNs).
+#   C3 kernels that call transcendentals - drag (exp), the rotation (sin, cos), radiation pressure (asin, acos):
+#      with the C library, each differing output is REPORTED in ulps (a measurement, no pass condition); in the
+#      control, where the native kinds route those calls to libcft's correctly rounded host functions, native
+#      equals cft bit for bit on every lane and output.
+#   C4 the NaN report: every lane with a NaN output is reported (counted per kernel); none is expected.
+#   C5 hand check: gravity at degree 2 (native64 and cft64) within 1e-13 x |a| of an independent evaluation
+#      (the closed-form degree-2 potential's gradient, in exact rational arithmetic from the same decimal
+#      coefficients) on the first 100 lanes; native32 and cft32 within 1e-5 x |a|.
+#   C6 NEGATIVE CONTROL: the negctl build reorders one division in the native kinds alone (cos C =
+#      (r.d/|r|)/|d| instead of r.d/(|r||d|)). It must break bit-identity in the shadow geometry at binary64
+#      and at binary32 (at least one lane), every differing shadow-geometry output must be cos C (column 3),
+#      and the gate must say where (kernel, column, first lane, count); the kernels that do not use the
+#      geometry (gravity 20, central, third body, reader, drag, rotation) must stay bit-identical.
+# lanes: 10000 per kernel (gravity at degree 180: 64), seed 0xE1
+# ran (0.27 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe tables native64 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\tables_native64.txt
+# ran (1.01 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe tables cft64 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\tables_cft64.txt
+# tables native64/cft64: 166103 entries in 44 tables (ATM_H0 ATM_HS ATM_RHO0 AU_KM AU_M An Bn Cbar Dg EMRAT F1 FA FB FEM FZ GM_FIELD GM_MOON GM_SUN HALF KACC KM NHALF NOMEGA NONE OMEGA_E ONE P1 PI PZ0 P_SUN RE2 RE_FIELD R_EARTH R_SUN SIX SUBLEN Sbar Sd THETA0 TWO ZERO hFA hFB nhFA)
+PASS C1 native64 = cft64 on all 166103 entries
+# ran (0.26 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe tables native32 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\tables_native32.txt
+# ran (0.90 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe tables cft32 180 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\tables_cft32.txt
+# tables native32/cft32: 166103 entries in 44 tables (ATM_H0 ATM_HS ATM_RHO0 AU_KM AU_M An Bn Cbar Dg EMRAT F1 FA FB FEM FZ GM_FIELD GM_MOON GM_SUN HALF KACC KM NHALF NOMEGA NONE OMEGA_E ONE P1 PI PZ0 P_SUN RE2 RE_FIELD R_EARTH R_SUN SIX SUBLEN Sbar Sd THETA0 TWO ZERO hFA hFB nhFA)
+PASS C1 native32 = cft32 on all 166103 entries
+PASS C1 hand value: PI at binary64 is 0x400921fb54442d18
+PASS C1 hand value: Dg[1] = sqrt(3) at binary64 is 0x3ffbb67ae8584caa
+# ran (0.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav2_native64.txt --nmin 2 --nmax 2
+# ran (0.45 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav2_cft64.txt --nmin 2 --nmax 2
+# grav2 native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 grav2 native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 grav2 native64 = cft64 bit for bit on 10000 lanes
+# ran (0.13 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav20_native64.txt --nmin 2 --nmax 20
+# ran (17.82 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav20_cft64.txt --nmin 2 --nmax 20
+# grav20 native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 grav20 native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 grav20 native64 = cft64 bit for bit on 10000 lanes
+# ran (0.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav native64 64 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav180_native64.txt --nmin 2 --nmax 180
+# ran (9.81 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft64 64 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav180_cft64.txt --nmin 2 --nmax 180
+# grav180 native64/cft64, C library: 64 lanes, 0 differ; NaN lanes 0/0
+PASS C4 grav180 native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 grav180 native64 = cft64 bit for bit on 64 lanes
+# ran (0.10 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 central native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_central_native64.txt
+# ran (0.34 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 central cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_central_cft64.txt
+# central native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 central native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 central native64 = cft64 bit for bit on 10000 lanes
+# ran (0.19 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 third native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_third_native64.txt
+# ran (1.01 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 third cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_third_cft64.txt
+# third native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 third native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 third native64 = cft64 bit for bit on 10000 lanes
+# ran (0.23 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 cheb native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_cheb_native64.txt
+# ran (1.98 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 cheb cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_cheb_cft64.txt
+# cheb native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 cheb native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 cheb native64 = cft64 bit for bit on 10000 lanes
+# ran (0.14 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 shadowgeom native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_shadowgeom_native64.txt
+# ran (0.42 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 shadowgeom cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_shadowgeom_cft64.txt
+# shadowgeom native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 shadowgeom native64/cft64: no NaN output (0, 0 lanes)
+PASS C2 shadowgeom native64 = cft64 bit for bit on 10000 lanes
+# ran (0.13 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 drag native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_drag_native64.txt
+# ran (1.66 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 drag cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_drag_cft64.txt
+# drag native64/cft64, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 drag native64/cft64: no NaN output (0, 0 lanes)
+MEASURED C3 drag native64 against cft64 with the C library's transcendentals: 0 of 10000 lanes differ
+# ran (1.50 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 drag native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_drag_native64_cr.txt --cr
+PASS C3 control drag native64 (libcft's transcendentals) = cft64 bit for bit on 10000 lanes
+# ran (0.11 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 rot native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_rot_native64.txt
+# ran (6.33 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 rot cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_rot_cft64.txt
+# rot native64/cft64, C library: 10000 lanes, 5 differ (col 1: 4 lanes, max 1 ulps, first lane 1338; col 2: 3 lanes, max 2 ulps, first lane 2194); NaN lanes 0/0
+PASS C4 rot native64/cft64: no NaN output (0, 0 lanes)
+MEASURED C3 rot native64 against cft64 with the C library's transcendentals: 5 of 10000 lanes differ: col 1: 4 lanes, max 1 ulps, first lane 1338; col 2: 3 lanes, max 2 ulps, first lane 2194
+# ran (6.02 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 rot native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_rot_native64_cr.txt --cr
+PASS C3 control rot native64 (libcft's transcendentals) = cft64 bit for bit on 10000 lanes
+# ran (0.12 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 srp native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_native64.txt
+# ran (8.19 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 srp cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_cft64.txt
+# srp native64/cft64, C library: 10000 lanes, 12 differ (col 1: 12 lanes, max 6687958327 ulps, first lane 76; col 2: 12 lanes, max 11951863306 ulps, first lane 76; col 3: 12 lanes, max 8938641080 ulps, first lane 76; col 4: 12 lanes, max 9461701888 ulps, first lane 76); NaN lanes 0/0
+PASS C4 srp native64/cft64: no NaN output (0, 0 lanes)
+MEASURED C3 srp native64 against cft64 with the C library's transcendentals: 12 of 10000 lanes differ: col 1: 12 lanes, max 6687958327 ulps, first lane 76; col 2: 12 lanes, max 11951863306 ulps, first lane 76; col 3: 12 lanes, max 8938641080 ulps, first lane 76; col 4: 12 lanes, max 9461701888 ulps, first lane 76
+# ran (8.33 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 srp native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_native64_cr.txt --cr
+PASS C3 control srp native64 (libcft's transcendentals) = cft64 bit for bit on 10000 lanes
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav2_native32.txt --nmin 2 --nmax 2
+# ran (0.41 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav2_cft32.txt --nmin 2 --nmax 2
+# grav2 native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 grav2 native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 grav2 native32 = cft32 bit for bit on 10000 lanes
+# ran (0.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav20_native32.txt --nmin 2 --nmax 20
+# ran (13.94 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav20_cft32.txt --nmin 2 --nmax 20
+# grav20 native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 grav20 native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 grav20 native32 = cft32 bit for bit on 10000 lanes
+# ran (0.07 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav native32 64 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav180_native32.txt --nmin 2 --nmax 180
+# ran (7.44 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft32 64 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav180_cft32.txt --nmin 2 --nmax 180
+# grav180 native32/cft32, C library: 64 lanes, 0 differ; NaN lanes 0/0
+PASS C4 grav180 native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 grav180 native32 = cft32 bit for bit on 64 lanes
+# ran (0.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 central native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_central_native32.txt
+# ran (0.18 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 central cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_central_cft32.txt
+# central native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 central native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 central native32 = cft32 bit for bit on 10000 lanes
+# ran (0.13 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 third native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_third_native32.txt
+# ran (0.50 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 third cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_third_cft32.txt
+# third native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 third native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 third native32 = cft32 bit for bit on 10000 lanes
+# ran (0.14 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 cheb native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_cheb_native32.txt
+# ran (1.60 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 cheb cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_cheb_cft32.txt
+# cheb native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 cheb native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 cheb native32 = cft32 bit for bit on 10000 lanes
+# ran (0.11 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 shadowgeom native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_shadowgeom_native32.txt
+# ran (0.32 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 shadowgeom cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_shadowgeom_cft32.txt
+# shadowgeom native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 shadowgeom native32/cft32: no NaN output (0, 0 lanes)
+PASS C2 shadowgeom native32 = cft32 bit for bit on 10000 lanes
+# ran (0.11 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 drag native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_drag_native32.txt
+# ran (0.99 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 drag cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_drag_cft32.txt
+# drag native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 drag native32/cft32: no NaN output (0, 0 lanes)
+MEASURED C3 drag native32 against cft32 with the C library's transcendentals: 0 of 10000 lanes differ
+# ran (0.74 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 drag native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_drag_native32_cr.txt --cr
+PASS C3 control drag native32 (libcft's transcendentals) = cft32 bit for bit on 10000 lanes
+# ran (0.13 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 rot native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_rot_native32.txt
+# ran (2.80 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 rot cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_rot_cft32.txt
+# rot native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 rot native32/cft32: no NaN output (0, 0 lanes)
+MEASURED C3 rot native32 against cft32 with the C library's transcendentals: 0 of 10000 lanes differ
+# ran (2.69 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 rot native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_rot_native32_cr.txt --cr
+PASS C3 control rot native32 (libcft's transcendentals) = cft32 bit for bit on 10000 lanes
+# ran (0.15 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 srp native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_native32.txt
+# ran (4.55 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 srp cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_cft32.txt
+# srp native32/cft32, C library: 10000 lanes, 0 differ; NaN lanes 0/0
+PASS C4 srp native32/cft32: no NaN output (0, 0 lanes)
+MEASURED C3 srp native32 against cft32 with the C library's transcendentals: 0 of 10000 lanes differ
+# ran (3.76 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 srp native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_srp_native32_cr.txt --cr
+PASS C3 control srp native32 (libcft's transcendentals) = cft32 bit for bit on 10000 lanes
+PASS C5 hand check, degree 2, native64: worst |da|/|a| 1.377e-15 <= 1e-13 on 100 lanes
+PASS C5 hand check, degree 2, cft64: worst |da|/|a| 1.377e-15 <= 1e-13 on 100 lanes
+PASS C5 hand check, degree 2, native32: worst |da|/|a| 7.653e-07 <= 1e-05 on 100 lanes
+PASS C5 hand check, degree 2, cft32: worst |da|/|a| 7.653e-07 <= 1e-05 on 100 lanes
+# ran (0.17 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 shadowgeom native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_shadowgeom_native64.txt
+# ran (0.36 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 shadowgeom cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_shadowgeom_cft64.txt
+# negctl shadowgeom native64 against cft64: 3264 lanes differ (col 3: 3264 lanes, max 2 ulps, first lane 1)
+PASS C6 negative control breaks bit-identity in the shadow geometry, native64: 3264 lanes, all in column 3 (cos C); first lane 1
+# ran (7.07 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 srp native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_srp_native64_cr.txt --cr
+# negctl srp native64 against cft64: 4 lanes differ (col 1: 4 lanes, max 16676617 ulps, first lane 768; col 2: 4 lanes, max 11968078 ulps, first lane 768; col 3: 4 lanes, max 15603345 ulps, first lane 768; col 4: 4 lanes, max 11369373 ulps, first lane 768)
+# C6 (reported) radiation pressure uses the geometry: 4 lanes differ
+# ran (0.12 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 grav native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_grav20_native64.txt --nmin 2 --nmax 20
+# ran (14.98 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav20_cft64.txt --nmin 2 --nmax 20
+# negctl grav20 native64 against cft64: 0 lanes differ (none)
+PASS C6 negative control leaves grav20 untouched at native64
+# ran (0.10 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 central native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_central_native64.txt
+# ran (0.20 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 central cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_central_cft64.txt
+# negctl central native64 against cft64: 0 lanes differ (none)
+PASS C6 negative control leaves central untouched at native64
+# ran (0.17 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 third native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_third_native64.txt
+# ran (0.78 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 third cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_third_cft64.txt
+# negctl third native64 against cft64: 0 lanes differ (none)
+PASS C6 negative control leaves third untouched at native64
+# ran (0.21 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 cheb native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_cheb_native64.txt
+# ran (1.61 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 cheb cft64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_cheb_cft64.txt
+# negctl cheb native64 against cft64: 0 lanes differ (none)
+PASS C6 negative control leaves cheb untouched at native64
+# ran (1.60 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 drag native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_drag_native64_cr.txt --cr
+# negctl drag native64 against cft64: 0 lanes differ (none)
+PASS C6 negative control leaves drag untouched at native64
+# ran (5.22 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 rot native64 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_rot_native64_cr.txt --cr
+# negctl rot native64 against cft64: 0 lanes differ (none)
+PASS C6 negative control leaves rot untouched at native64
+# ran (0.11 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 shadowgeom native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_shadowgeom_native32.txt
+# ran (0.35 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 shadowgeom cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_shadowgeom_cft32.txt
+# negctl shadowgeom native32 against cft32: 3246 lanes differ (col 3: 3246 lanes, max 2 ulps, first lane 0)
+PASS C6 negative control breaks bit-identity in the shadow geometry, native32: 3246 lanes, all in column 3 (cos C); first lane 0
+# ran (3.67 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 srp native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_srp_native32_cr.txt --cr
+# negctl srp native32 against cft32: 2 lanes differ (col 1: 2 lanes, max 69665 ulps, first lane 4641; col 2: 2 lanes, max 62429 ulps, first lane 4641; col 3: 2 lanes, max 58369 ulps, first lane 4641; col 4: 2 lanes, max 85142 ulps, first lane 4641)
+# C6 (reported) radiation pressure uses the geometry: 2 lanes differ
+# ran (0.11 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 grav native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_grav20_native32.txt --nmin 2 --nmax 20
+# ran (13.56 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 grav cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_grav20_cft32.txt --nmin 2 --nmax 20
+# negctl grav20 native32 against cft32: 0 lanes differ (none)
+PASS C6 negative control leaves grav20 untouched at native32
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 central native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_central_native32.txt
+# ran (0.17 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 central cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_central_cft32.txt
+# negctl central native32 against cft32: 0 lanes differ (none)
+PASS C6 negative control leaves central untouched at native32
+# ran (0.14 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 third native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_third_native32.txt
+# ran (0.52 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 third cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_third_cft32.txt
+# negctl third native32 against cft32: 0 lanes differ (none)
+PASS C6 negative control leaves third untouched at native32
+# ran (0.15 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 cheb native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_cheb_native32.txt
+# ran (1.60 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe e1 cheb cft32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\O2_cheb_cft32.txt
+# negctl cheb native32 against cft32: 0 lanes differ (none)
+PASS C6 negative control leaves cheb untouched at native32
+# ran (1.24 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 drag native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_drag_native32_cr.txt --cr
+# negctl drag native32 against cft32: 0 lanes differ (none)
+PASS C6 negative control leaves drag untouched at native32
+# ran (3.30 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_negctl.exe e1 rot native32 10000 0xE1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e1\negctl_rot_native32_cr.txt --cr
+# negctl rot native32 against cft32: 0 lanes differ (none)
+PASS C6 negative control leaves rot untouched at native32
+# PASS 

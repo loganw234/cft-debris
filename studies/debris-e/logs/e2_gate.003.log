@@ -1,0 +1,75 @@
+# e2_gate, log 003, written 2026-11-13 06:40:30 -0700
+# script e2_gate.py sha256 2e5400caad14b359611c3d5a1d4d596b8e9474e5c51260ee438f3414826cabf5
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 13% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   G1 THE GATE: in the control configuration (the native kinds route exp, sin, cos, asin and acos to libcft's
+#      correctly rounded host functions), native64's state equals cft64's bit for bit at every step (100 steps,
+#      8 lanes, 6 components, the NaN rule), and native32's equals cft32's.
+#   M1 MEASUREMENT (no pass condition): with the C library's transcendentals, native against cft at each step:
+#      the lanes that differ, and the largest position difference |dr| (m) - how the difference grows.
+#   C1 NEGATIVE CONTROL as first stated: native64 (control configuration) with one ulp planted in lane 3's x
+#      against cft64 unplanted: lane 3 differs at the start and at every step from the first on, and every other
+#      lane is identical at every step; the same at native32 against cft32. It FAILED as specified in log 001: the
+#      planted ulp vanished at the first step (lane 3's x grows from 9.04e5 m through 2^20 m in that step, so the
+#      ulp of the result doubles and rounding absorbed the half-ulp difference; the accelerations did not move).
+#      Version 2 keeps it as REPORTED (re-run, no pass condition) and adds C1b.
+#   C1b NEGATIVE CONTROL, version 2, stated before its data: the same with the ulp planted in lane 3's z
+#      (6.90e6 m, which stays inside [2^22, 2^23) m through the first step, so rounding cannot absorb it):
+#      lane 3 differs at the start and at every step from the first on, every other lane identical at every
+#      step; at native64 against cft64 and native32 against cft32.
+# run: 100 steps of 60 s, 8 lanes, degree 20 and every force
+# ran (8.64 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\cft64_plain.txt
+# ran (2.98 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native64_cr.txt --cr
+PASS G1 native64 (control) = cft64 bit for bit at all 101 steps x 8 lanes x 6 components
+# ran (0.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native64_libm.txt
+MEASURED M1 native64 (C library) against cft64: first differing step None
+#   step   0 (t =     0 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  10 (t =   600 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  20 (t =  1200 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  30 (t =  1800 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  40 (t =  2400 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  50 (t =  3000 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  60 (t =  3600 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  70 (t =  4200 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  80 (t =  4800 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  90 (t =  5400 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step 100 (t =  6000 s): 0 lanes differ, max |dr| 0.000e+00 m
+# ran (2.80 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native64_plant0.txt --cr --plant 3 --plant-comp 0
+# control (x) native64: lanes differing per step: [(), (3,)]
+# control (x) native64: |dr| of lane 3 at steps 0, 1, 2, 10, 100: 1.164e-10, 0.000e+00, 0.000e+00, 0.000e+00, 0.000e+00
+REPORTED C1 (as first stated; FAILED in log 001) native64: one ulp planted in lane 3's x breaks bit-identity in that lane alone, from the start and at every step - it does NOT
+# ran (2.99 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native64_plant2.txt --cr --plant 3 --plant-comp 2
+# control (z) native64: lanes differing per step: [(3,)]
+# control (z) native64: |dr| of lane 3 at steps 0, 1, 2, 10, 100: 9.313e-10, 9.313e-10, 9.313e-10, 1.863e-09, 2.672e-08
+PASS C1b control native64: one ulp planted in lane 3's z breaks bit-identity in that lane alone, from the start and at every step
+# ran (6.71 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\cft32_plain.txt
+# ran (1.51 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native32_cr.txt --cr
+PASS G1 native32 (control) = cft32 bit for bit at all 101 steps x 8 lanes x 6 components
+# ran (0.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native32_libm.txt
+MEASURED M1 native32 (C library) against cft32: first differing step None
+#   step   0 (t =     0 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  10 (t =   600 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  20 (t =  1200 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  30 (t =  1800 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  40 (t =  2400 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  50 (t =  3000 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  60 (t =  3600 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  70 (t =  4200 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  80 (t =  4800 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step  90 (t =  5400 s): 0 lanes differ, max |dr| 0.000e+00 m
+#   step 100 (t =  6000 s): 0 lanes differ, max |dr| 0.000e+00 m
+# ran (1.73 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native32_plant0.txt --cr --plant 3 --plant-comp 0
+# control (x) native32: lanes differing per step: [(), (3,)]
+# control (x) native32: |dr| of lane 3 at steps 0, 1, 2, 10, 100: 6.250e-02, 0.000e+00, 0.000e+00, 0.000e+00, 0.000e+00
+REPORTED C1 (as first stated; FAILED in log 001) native32: one ulp planted in lane 3's x breaks bit-identity in that lane alone, from the start and at every step - it does NOT
+# ran (1.49 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e2\native32_plant2.txt --cr --plant 3 --plant-comp 2
+# control (z) native32: lanes differing per step: [(3,)]
+# control (z) native32: |dr| of lane 3 at steps 0, 1, 2, 10, 100: 5.000e-01, 5.000e-01, 5.000e-01, 5.000e-01, 1.372e+01
+PASS C1b control native32: one ulp planted in lane 3's z breaks bit-identity in that lane alone, from the start and at every step
+# PASS 

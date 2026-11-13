@@ -1,0 +1,33 @@
+# e7_diag, log 003, written 2026-11-13 06:44:04 -0700
+# script e7_diag.py sha256 479a460f0cd2f711bbf4fa3f35d72f7228dc9a21fd20e5481ac9ba0714d2718a
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 12% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   No pass condition (a diagnosis). The same day and model as E7. Reported: rk4 at 5, 2.5, 1.25 and 0.625 s against
+#      one another (does rk4 converge, and at what order?) and against IAS15 at epsilon 1e-9 and 1e-10 (does IAS15
+#      move with its epsilon?).
+#   Version 2 adds, with m1x_init2: the same comparisons (rk4 at 1.25 s; IAS15 at 1e-9 and 1e-10) for the model made
+#      smooth in turn - radiation pressure off, the atmosphere one continuous band, and both - to see which of the
+#      model's non-smooth parts (the shadow's edges, the 28-band table's density steps) IAS15 does not resolve.
+#   Version 3 adds, for the smooth model (radiation off, one band): rk4 at 0.625 s against rk4 at 1.25 s and against
+#      IAS15, to see whether the 5.9e-5 m left between rk4 at 1.25 s and IAS15 there is rk4's own truncation.
+MEASURED rk4 5 s against 2.5 s: 2.1226e-02 m
+MEASURED rk4 2.5 s against 1.25 s: 2.5212e-03 m
+MEASURED rk4 1.25 s against 0.625 s: 3.9569e-06 m
+MEASURED IAS15 epsilon 1e-09: 560 steps, 16464 evaluations
+MEASURED IAS15 epsilon 1e-10: 778 steps, 21694 evaluations
+MEASURED IAS15 1e-9 against 1e-10: 2.0591e-01 m
+MEASURED rk4 5 s against IAS15 1e-9: 1.1380e-01 m; against IAS15 1e-10: 9.2135e-02 m
+MEASURED rk4 2.5 s against IAS15 1e-9: 9.2573e-02 m; against IAS15 1e-10: 1.1336e-01 m
+MEASURED rk4 1.25 s against IAS15 1e-9: 9.0053e-02 m; against IAS15 1e-10: 1.1588e-01 m
+MEASURED rk4 0.625 s against IAS15 1e-9: 9.0057e-02 m; against IAS15 1e-10: 1.1587e-01 m
+MEASURED radiation off, 28 bands: IAS15 1e-9 against 1e-10 3.8072e-05 m (560 and 778 steps); rk4 1.25 s against IAS15 1e-9 6.6273e-05 m, against 1e-10 1.0434e-04 m
+MEASURED radiation on, one band: IAS15 1e-9 against 1e-10 2.0590e-01 m (560 and 778 steps); rk4 1.25 s against IAS15 1e-9 9.0043e-02 m, against 1e-10 1.1588e-01 m
+MEASURED radiation off, one band: IAS15 1e-9 against 1e-10 1.0677e-06 m (560 and 778 steps); rk4 1.25 s against IAS15 1e-9 5.8767e-05 m, against 1e-10 5.9835e-05 m
+MEASURED radiation off, one band: rk4 1.25 s against 0.625 s 8.1335e-05 m; rk4 0.625 s against IAS15 1e-9 2.2573e-05 m; rk4 1.25 s against IAS15 1e-9 5.8767e-05 m
+# PASS 

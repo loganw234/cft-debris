@@ -1,0 +1,31 @@
+# e7_rebound, log 002, written 2026-11-13 06:33:43 -0700
+# script e7_rebound.py sha256 33a57d842beaefc2754e1b5272dd8f9b9c6673663d8d5305dee82a41aa917859
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 5bbd9462da124c80746d72560edd071b9e5c4d9ffa815b2c7651464ee5f0859d
+# m1run_O0.exe sha256 b9729bb3b36bbfd14432b8df387e59444b4a6f288a2c77754781f253206bfaad
+# m1run_fast.exe sha256 5732f688efff81bc9b9a1d4dca4c11eef555c135f2eb938f9f1133412bb6fe61
+# m1run_negctl.exe sha256 282af50b970588a7ba3248540c6e7efe88c194b32eb96c5c61c6a1d0287acf37
+# host load at start: 7% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   The run: one object-day (86,400 s) from E2's lane 0 (400 km circular, inclination 51.6 degrees; bc 0.011,
+#      cram 0.02 m^2/kg), our whole model at native64 with the C library's transcendentals: the central term,
+#      EIGEN-6C4 degrees 2..20 in the uniformly turning Earth, the Sun and the Moon from DE421, the 28-band
+#      exponential atmosphere, radiation pressure with the conical shadow; epoch 2008-07-03 00:00 TDB.
+#   I1 our rk4 at h = 5 s (chosen before the data) against IAS15 at epsilon 1e-9 (REBOUND 5.1.1, gravity "none",
+#      force_is_velocity_dependent = 1, every acceleration from our callback): |r_rk4 - r_IAS15| <= TOL = 0.5 m at
+#      the day's end. Basis: DEBRIS-D's rk4 table, 0.148 m an object-day at 7.5 s (degree 20 with drag, a similar
+#      LEO orbit), times (5/7.5)^4 = 0.029 m by rk4's h^4 law; IAS15 itself 4.0e-7 m (DEBRIS-D); a margin of 17 for
+#      the forces DEBRIS-D's run lacked (the Sun, the Moon, radiation pressure and its shadow's kinks) and the
+#      different orbit.
+#   C1 NEGATIVE CONTROL: J2 planted 1e-3 off relatively (C20-bar x 1.001) in the IAS15 run alone must break TOL.
+#   REPORTED: IAS15's steps and evaluations; rk4 at 2.5 s against rk4 at 5 s (the h^4 law predicts a ratio near
+#      16 between 5 s's and 2.5 s's errors).
+# m1x.dll sha256 52d2766f24fd1240ce23ff372f5228d4cd26919578e3c641b67c34352e329f46
+# rk4 h 5 s: 69120 evaluations; final r ['-5866030.715399', '-1771684.215875', '-2870281.639793']
+# IAS15 (REBOUND 5.1.1, epsilon 1e-09): 560 steps, 16464 evaluations, t 86400.000 s; final r ['-5866030.774187', '-1771684.152393', '-2870281.565873']
+PASS IAS15 ran to t = 86400 s at epsilon 1e-9
+PASS I1 |r_rk4(5 s) - r_IAS15| = 1.1380e-01 m <= 0.5 m at the day's end
+PASS C1 control: J2 planted 1e-3 off in IAS15 alone gives 1.1104e+03 m > 0.5 m (2221 TOL)
+REPORTED rk4 2.5 s (138240 evaluations) against rk4 5 s: 2.1226e-02 m; against IAS15: 9.2573e-02 m; ratio of rk4 5 s's and 2.5 s's distances from IAS15: 1.2
+# PASS 

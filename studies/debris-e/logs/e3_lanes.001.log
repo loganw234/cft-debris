@@ -1,0 +1,52 @@
+# e3_lanes, log 001, written 2026-11-13 06:48:13 -0700
+# script e3_lanes.py sha256 ad52a857f5cd42850c495e7cea2714df00e5e46e78001ce277ca78d104aac3de
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 10% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   No pass condition. (1) From E3's work files cft64_plain.txt and cft128_plain.txt: each lane's |r64 - r128| at
+#      steps 0, 1, 2, 5, 10, 20, 50 and 100, and each lane's altitude above R_EARTH = 6378136.3 m at step 0.
+#   (2) COMPUTED from DEBRIS-B's table (src/m1_consts.h): at each band edge h_k, the density the band below
+#      gives there, rho_(k-1) exp(-(h_k - h_(k-1))/H_(k-1)), against the band's own base density rho_k, as a
+#      relative step.
+# inputs: C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e3\cft64_plain.txt sha256 832931bf43fc4e6b779e97a2de686fb8fdb3b53839c20545cf69a9785b1a675f; C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e3\cft128_plain.txt sha256 d851e7619c0576681f228a391b1d089ebce71577249b91b6d6d7552795f15819
+MEASURED lane 0 (altitude at t = 0: 400.000000 km): |r64 - r128| at steps 0:1.86e-10 1:3.64e-10 2:4.24e-10 5:6.85e-10 10:1.13e-09 20:7.97e-10 50:3.21e-09 100:5.81e-08
+MEASURED lane 1 (altitude at t = 0: 350.000000 km): |r64 - r128| at steps 0:1.79e-10 1:1.31e-08 2:2.63e-08 5:6.52e-08 10:1.28e-07 20:3.14e-07 50:2.33e-06 100:3.58e-06
+MEASURED lane 2 (altitude at t = 0: 500.000000 km): |r64 - r128| at steps 0:3.67e-10 1:5.14e-10 2:7.39e-10 5:8.38e-10 10:7.77e-10 20:9.40e-10 50:5.63e-09 100:4.11e-08
+MEASURED lane 3 (altitude at t = 0: 600.000000 km): |r64 - r128| at steps 0:3.21e-11 1:3.57e-10 2:6.43e-10 5:1.75e-09 10:3.51e-09 20:8.90e-09 50:6.68e-08 100:1.02e-07
+MEASURED lane 4 (altitude at t = 0: 450.000000 km): |r64 - r128| at steps 0:1.20e-10 1:2.75e-10 2:5.12e-10 5:2.27e-10 10:1.43e-09 20:3.03e-09 50:1.81e-08 100:3.60e-08
+MEASURED lane 5 (altitude at t = 0: 700.000000 km): |r64 - r128| at steps 0:2.02e-10 1:3.53e-10 2:4.76e-10 5:8.37e-10 10:1.67e-09 20:4.92e-09 50:3.94e-08 100:6.59e-08
+MEASURED lane 6 (altitude at t = 0: 550.000000 km): |r64 - r128| at steps 0:2.10e-10 1:2.25e-10 2:5.21e-10 5:5.67e-10 10:7.12e-10 20:1.87e-09 50:1.03e-08 100:2.01e-08
+MEASURED lane 7 (altitude at t = 0: 380.000000 km): |r64 - r128| at steps 0:3.33e-10 1:3.26e-10 2:2.84e-10 5:9.15e-10 10:5.60e-10 20:1.73e-09 50:1.13e-08 100:3.86e-08
+COMPUTED band edge   25 km: the band below gives 3.89370e-02, the band 3.89900e-02; relative step +1.36e-03
+COMPUTED band edge   30 km: the band below gives 1.77392e-02, the band 1.77400e-02; relative step +4.24e-05
+COMPUTED band edge   40 km: the band below gives 3.97198e-03, the band 3.97200e-03; relative step +5.69e-06
+COMPUTED band edge   50 km: the band below gives 1.05703e-03, the band 1.05700e-03; relative step -3.31e-05
+COMPUTED band edge   60 km: the band below gives 3.20588e-04, the band 3.20600e-04; relative step +3.69e-05
+COMPUTED band edge   70 km: the band below gives 8.76937e-05, the band 8.77000e-05; relative step +7.20e-05
+COMPUTED band edge   80 km: the band below gives 1.90482e-05, the band 1.90500e-05; relative step +9.59e-05
+COMPUTED band edge   90 km: the band below gives 3.39611e-06, the band 3.39600e-06; relative step -3.36e-05
+COMPUTED band edge  100 km: the band below gives 5.29699e-07, the band 5.29700e-07; relative step +2.60e-06
+COMPUTED band edge  110 km: the band below gives 9.66177e-08, the band 9.66100e-08; relative step -8.01e-05
+COMPUTED band edge  120 km: the band below gives 2.43819e-08, the band 2.43800e-08; relative step -7.76e-05
+COMPUTED band edge  130 km: the band below gives 8.48357e-09, the band 8.48400e-09; relative step +5.07e-05
+COMPUTED band edge  140 km: the band below gives 3.84507e-09, the band 3.84500e-09; relative step -1.88e-05
+COMPUTED band edge  150 km: the band below gives 2.06998e-09, the band 2.07000e-09; relative step +8.39e-06
+COMPUTED band edge  180 km: the band below gives 5.46390e-10, the band 5.46400e-10; relative step +1.92e-05
+COMPUTED band edge  200 km: the band below gives 2.78901e-10, the band 2.78900e-10; relative step -3.06e-06
+COMPUTED band edge  250 km: the band below gives 7.24811e-11, the band 7.24800e-11; relative step -1.53e-05
+COMPUTED band edge  300 km: the band below gives 2.41798e-11, the band 2.41800e-11; relative step +6.43e-06
+COMPUTED band edge  350 km: the band below gives 9.51793e-12, the band 9.51800e-12; relative step +7.67e-06
+COMPUTED band edge  400 km: the band below gives 3.72499e-12, the band 3.72500e-12; relative step +3.61e-06
+COMPUTED band edge  450 km: the band below gives 1.58500e-12, the band 1.58500e-12; relative step -6.88e-07
+COMPUTED band edge  500 km: the band below gives 6.96696e-13, the band 6.96700e-13; relative step +5.09e-06
+COMPUTED band edge  600 km: the band below gives 1.45401e-13, the band 1.45400e-13; relative step -8.51e-06
+COMPUTED band edge  700 km: the band below gives 3.61403e-14, the band 3.61400e-14; relative step -9.21e-06
+COMPUTED band edge  800 km: the band below gives 1.17000e-14, the band 1.17000e-14; relative step +3.87e-06
+COMPUTED band edge  900 km: the band below gives 5.24502e-15, the band 5.24500e-15; relative step -2.95e-06
+COMPUTED band edge 1000 km: the band below gives 3.01905e-15, the band 3.01900e-15; relative step -1.60e-05
+# PASS 

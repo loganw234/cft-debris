@@ -1,0 +1,71 @@
+# e9_time, log 001, written 2026-11-13 06:50:01 -0700
+# script e9_time.py sha256 dc9efdd0c8f9c40d63d4582afd0e80f938fd2dab51e6c1d997a9124607cc6089
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 11% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   A measurement, with no pass condition. For each kind (native32 and native64 with the C library's
+#      transcendentals and, separately, with libcft's; cft32, cft64, cft128, cft256) and each batch (1, 8, 64
+#      lanes): m1run's time mode repeats the whole force evaluation (central, degrees 2..20, Sun, Moon, 28-band
+#      drag, radiation pressure; the Sun, the Moon and the frame once a batch) for at least min_seconds, then rk4
+#      steps at 15 s for at least min_seconds. Reported: wall microseconds a lane-evaluation, and wall seconds an
+#      object-day (5,760 steps of 15 s) a lane, COMPUTED from the measured time a step. The host load is sampled
+#      before and after each run and stated beside it. Beside them, DEBRIS-D's Q3 prices (MEASURED then, its log
+#      q3_host.001.log): FMA 195, 235 and 313 ns at binary64, 128 and 256; and an ESTIMATE of this kernel's cost,
+#      our measured lane-ops an evaluation times that FMA price (basis: DEBRIS-D's FMA price for every operation;
+#      range: x 1 for add and multiply, which DEBRIS-D did not time, to x 20 for divide).
+#   The sanity checks (asserted): every run ends 0 and prints both lines.
+# TimeSheet booking B0030; min_seconds 2
+# ran (4.04 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native32 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native32_1.txt
+PASS native32 lanes 1: 5.3 us a lane-evaluation (374339 evaluations), 0.1 s an object-day a lane (from 79787 rk4 steps); about 7845 lane-ops an evaluation; load 15% before, 9% after
+# ran (4.04 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native32 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native32_8.txt
+PASS native32 lanes 8: 2.8 us a lane-evaluation (89817 evaluations), 0.1 s an object-day a lane (from 22049 rk4 steps); about 7607 lane-ops an evaluation; load 12% before, 9% after
+# ran (4.04 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native32 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native32_64.txt
+PASS native32 lanes 64: 2.2 us a lane-evaluation (14448 evaluations), 0.1 s an object-day a lane (from 3335 rk4 steps); about 7577 lane-ops an evaluation; load 9% before, 14% after
+# ran (4.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native32 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native32_cr_1.txt --cr
+PASS native32 (libcft transcendentals) lanes 1: 650.0 us a lane-evaluation (3077 evaluations), 17.9 s an object-day a lane (from 643 rk4 steps); about 7846 lane-ops an evaluation; load 14% before, 5% after
+# ran (4.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native32 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native32_cr_8.txt --cr
+PASS native32 (libcft transcendentals) lanes 8: 394.8 us a lane-evaluation (634 evaluations), 10.6 s an object-day a lane (from 136 rk4 steps); about 7608 lane-ops an evaluation; load 14% before, 12% after
+# ran (4.07 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native32 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native32_cr_64.txt --cr
+PASS native32 (libcft transcendentals) lanes 64: 355.6 us a lane-evaluation (88 evaluations), 10.1 s an object-day a lane (from 18 rk4 steps); about 7578 lane-ops an evaluation; load 10% before, 14% after
+# ran (4.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native64 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native64_1.txt
+PASS native64 lanes 1: 5.5 us a lane-evaluation (364180 evaluations), 0.1 s an object-day a lane (from 85502 rk4 steps); about 7845 lane-ops an evaluation; load 17% before, 13% after
+# ran (4.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native64 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native64_8.txt
+PASS native64 lanes 8: 2.3 us a lane-evaluation (109837 evaluations), 0.1 s an object-day a lane (from 21620 rk4 steps); about 7607 lane-ops an evaluation; load 12% before, 15% after
+# ran (4.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native64 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native64_64.txt
+PASS native64 lanes 64: 2.0 us a lane-evaluation (15740 evaluations), 0.1 s an object-day a lane (from 3588 rk4 steps); about 7577 lane-ops an evaluation; load 15% before, 35% after
+# ran (4.06 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native64 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native64_cr_1.txt --cr
+PASS native64 (libcft transcendentals) lanes 1: 1168.9 us a lane-evaluation (1711 evaluations), 35.0 s an object-day a lane (from 330 rk4 steps); about 7847 lane-ops an evaluation; load 16% before, 13% after
+# ran (4.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native64 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native64_cr_8.txt --cr
+PASS native64 (libcft transcendentals) lanes 8: 739.4 us a lane-evaluation (339 evaluations), 18.2 s an object-day a lane (from 79 rk4 steps); about 7608 lane-ops an evaluation; load 14% before, 8% after
+# ran (4.20 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time native64 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_native64_cr_64.txt --cr
+PASS native64 (libcft transcendentals) lanes 64: 676.8 us a lane-evaluation (47 evaluations), 19.0 s an object-day a lane (from 10 rk4 steps); about 7578 lane-ops an evaluation; load 12% before, 28% after
+# ran (4.06 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft32 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft32_1.txt
+PASS cft32 lanes 1: 2339.4 us a lane-evaluation (855 evaluations), 60.1 s an object-day a lane (from 192 rk4 steps); about 7850 lane-ops an evaluation; load 11% before, 11% after
+# ran (4.07 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft32 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft32_8.txt
+PASS cft32 lanes 8: 1957.3 us a lane-evaluation (128 evaluations), 48.1 s an object-day a lane (from 30 rk4 steps); about 7611 lane-ops an evaluation; load 14% before, 20% after
+# ran (4.40 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft32 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft32_64.txt
+PASS cft32 lanes 64: 1617.8 us a lane-evaluation (20 evaluations), 41.0 s an object-day a lane (from 5 rk4 steps); about 7580 lane-ops an evaluation; load 21% before, 16% after
+# ran (4.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft64 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft64_1.txt
+PASS cft64 lanes 1: 3287.0 us a lane-evaluation (609 evaluations), 97.0 s an object-day a lane (from 120 rk4 steps); about 7851 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 1531 us; load 12% before, 10% after
+# ran (4.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft64 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft64_8.txt
+PASS cft64 lanes 8: 2342.3 us a lane-evaluation (107 evaluations), 56.0 s an object-day a lane (from 26 rk4 steps); about 7611 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 1484 us; load 21% before, 12% after
+# ran (4.53 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft64 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft64_64.txt
+PASS cft64 lanes 64: 2240.4 us a lane-evaluation (14 evaluations), 55.1 s an object-day a lane (from 4 rk4 steps); about 7582 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 1478 us; load 17% before, 20% after
+# ran (4.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft128 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft128_1.txt
+PASS cft128 lanes 1: 5173.4 us a lane-evaluation (387 evaluations), 141.1 s an object-day a lane (from 82 rk4 steps); about 7855 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 1846 us; load 29% before, 14% after
+# ran (4.15 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft128 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft128_8.txt
+PASS cft128 lanes 8: 4410.1 us a lane-evaluation (57 evaluations), 106.1 s an object-day a lane (from 14 rk4 steps); about 7615 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 1790 us; load 14% before, 17% after
+# ran (5.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft128 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft128_64.txt
+PASS cft128 lanes 64: 3974.5 us a lane-evaluation (8 evaluations), 87.6 s an object-day a lane (from 3 rk4 steps); about 7584 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 1782 us; load 21% before, 16% after
+# ran (4.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft256 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft256_1.txt
+PASS cft256 lanes 1: 13491.1 us a lane-evaluation (149 evaluations), 340.1 s an object-day a lane (from 34 rk4 steps); about 7870 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 2463 us; load 10% before, 21% after
+# ran (4.29 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft256 8 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft256_8.txt
+PASS cft256 lanes 8: 9584.7 us a lane-evaluation (27 evaluations), 221.5 s an object-day a lane (from 7 rk4 steps); about 7623 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 2386 us; load 13% before, 13% after
+# ran (7.48 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe time cft256 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e9\time_cft256_64.txt
+PASS cft256 lanes 64: 9455.7 us a lane-evaluation (4 evaluations), 223.5 s an object-day a lane (from 2 rk4 steps); about 7589 lane-ops an evaluation; ESTIMATE from DEBRIS-D's FMA price: 2375 us; load 22% before, 14% after
+# PASS 

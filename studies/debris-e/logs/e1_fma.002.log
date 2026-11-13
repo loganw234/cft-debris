@@ -1,0 +1,33 @@
+# e1_fma, log 002, written 2026-11-13 06:41:36 -0700
+# script e1_fma.py sha256 0c15f13d837f2563b0f4302514947315c97825158d689992dad414ffd44fdb5b
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 10% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   F1 the cases are the lead's: tests/fmacheck.c's a, b, c equal, case for case, those of the lead's generator
+#      compiled here (20,000 cases), and each build's fma() result equals the lead's same build's.
+#   F2 the reference: libcft's CFT_FMA equals round-to-nearest-even(a*b + c), computed exactly (Fraction), on
+#      every case. (If it did not, holding the native results to it would mean nothing.)
+#   F3 CONTROL (the checker can fail): the unfused a*b + c, two roundings, must be reported not correctly rounded
+#      on at least one case, and the count is reported.
+#   FINDING (no pass condition): for the build without -mfma (the C library's fma) and with it (vfmadd), the
+#      number of cases not correctly rounded, and the number that differ from CFT_FMA.
+# the lead's generator C:/Users/logan/source/repos/cft-debris-ledger/tools/fmacheck/fmacheck.c sha256 7e8c06da7972f96d2f2076f1ccdf9c8bb55eccb15180d87cd7b45d1c07f9fe80
+# ran (0.40 s): C:/msys64/mingw64/bin/gcc.exe -O2 -ffp-contract=off C:/Users/logan/source/repos/cft-debris-ledger/tools/fmacheck/fmacheck.c -o C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work/e1_fma/lead_fmacheck_nofma.exe -lm
+# ran (0.25 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work/e1_fma/lead_fmacheck_nofma.exe
+# ran (0.28 s): C:/msys64/mingw64/bin/gcc.exe -O2 -ffp-contract=off -mfma C:/Users/logan/source/repos/cft-debris-ledger/tools/fmacheck/fmacheck.c -o C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work/e1_fma/lead_fmacheck_fma.exe -lm
+# ran (0.12 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work/e1_fma/lead_fmacheck_fma.exe
+# ran (0.31 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main\fmacheck_nofma.exe
+# fmacheck_nofma.exe sha256 1bb8ca6a702e819b0b6f1ae736a3392248e6ac21f001b01fb86d9b901dba3a52
+# ran (0.13 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main\fmacheck_fma.exe
+# fmacheck_fma.exe sha256 28dc7d56998d367dadb09647c73c519a10e1b2d8185a7db37f8f6e568768e0a7
+PASS F1 the same 20000 cases as the lead's generator, and the same fma() results build for build
+PASS F2 libcft's CFT_FMA is correctly rounded on 20000 of 20000 cases
+PASS F3 control: the unfused a*b + c is reported wrong on 5094 of 20000 cases (first: ('0x1.dc1b77ae0bf34p+0', '0x1.64f0eeb9026e6p+0', '0x1.7b07ce91e5906p-21', '0x1.4beb2a000bf06p+1', '0x1.4beb2a000bf07p+1'))
+MEASURED FINDING: without -mfma (the C library's fma): 6559 of 20000 not correctly rounded; 6559 differ from CFT_FMA; first: a b c got want = ('0x1.dc1b77ae0bf34p+0', '0x1.64f0eeb9026e6p+0', '0x1.7b07ce91e5906p-21', '0x1.4beb2a000bf06p+1', '0x1.4beb2a000bf07p+1')
+MEASURED FINDING: with -mfma (vfmadd): 0 of 20000 not correctly rounded; 0 differ from CFT_FMA
+# PASS 

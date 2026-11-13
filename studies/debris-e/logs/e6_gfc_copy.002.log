@@ -1,0 +1,11 @@
+# e6_gfc_copy.py sha256 88689302e5e2a213159e14998dfdf7d405215b6c8c97c3e9ca09df8fad018418 (log 001, by the same script, lacks this header line)
+# original: C:/Users/logan/source/repos/cft-debris-downloads/EIGEN6-C4.gfc/EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715 (1219371 bytes)
+# line 16 removed: b'gfc    0    0  0.10000000000E+01  0.00000000000E+00 0.0000E+00 0.0000E+00\n'
+# line 15 kept:    b'gfc    0    0  1.00000000000E+00  0.00000000000E+00 0.0000E+00 0.0000E+00\n'
+# original: 16470 gfc lines, 16469 distinct keys, duplicated keys: [(0, 0)]
+# check on the copy: PASS (exactly line 16 removed; 16469 keys, each once; no value changed)
+# control, a changed value on the (180,180) line: check() FAILED as it must (copy is not the original minus line 16)
+# control, the (2,0) line removed too: check() FAILED as it must (copy is not the original minus line 16)
+# copy already present; bytes equal the derived bytes; not rewritten
+# copy: C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/gfc_dedup/EIGEN6-C4.gfc sha256 bf296183bf9c9180e58c64a2fca22ece0124d6c7f82448508b8599a944010852 (1219297 bytes)
+# DERIVE PASS

@@ -1,0 +1,46 @@
+# e5_gate, log 002, written 2026-11-13 06:36:29 -0700
+# script e5_gate.py sha256 db1a790f22fffeb13660a1b1078a3e8003a0ff62e24747c80fa9f71b4ffbd563
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 7% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   TOL = 1e-13 AU on |computed - testpo| for each coordinate, DEBRIS-C's tolerance (testpo.421 prints 17
+#      significant digits, so E5 tests the reader, not the formats' precision).
+#   The points: every line of testpo.421 whose target and centre are both among the Earth (3), the Moon (10),
+#      the Sun (11), the solar-system barycentre (12) and the Earth-Moon barycentre (13), coordinates 1 to 3
+#      (positions; the propagator uses no velocity of a body), inside the binary's coverage (JED 2414992.5 to
+#      2469808.5); points outside it are counted and skipped. Librations and nutations are left out (the
+#      propagator uses neither; DEBRIS-C's failures were librations). (10, 3) and (3, 10) use the geocentric Moon
+#      directly; every other pair is target minus centre, each relative to the barycentre.
+#   P1 at cft64, cft128 and cft256: every point within TOL.
+#   P2 NEGATIVE CONTROL as first stated: the Moon's first x coefficient, in the sub-interval of the first selected
+#      point that involves the Moon, raised by 1e-3 km in the record (6.7e-12 AU, 67 TOL): the check must fail at
+#      cft64, every failure in that record. It FAILED as specified in log 001 (no point moved: the plant was in x
+#      whatever the point tested). Version 2 keeps the failure on record and states P2b.
+#   P2b NEGATIVE CONTROL, version 2, stated before its data: the same plant made in the coordinate that first
+#      point tests (tests/m1run.c version 2): the check must fail at cft64 (at least one point beyond TOL), every
+#      failure in the planted record, the planted point among them.
+#   REPORTED: native64 at every point (not gated by E5; E1 holds it to cft64 bit for bit).
+# input testpo.421 sha256 aed0bc7f41d5b279dfe39eb264dbb83f702b570237a84ee5c93440ee14619d18
+# input lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# input header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+# ran (0.12 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe testpo cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e5\testpo_cft64.txt
+# cft64: # testpo points 109 (bodies 3 10 11 12 13, coordinates 1-3, inside JED 2414992.5..2469808.5), skipped outside 3, plant 0 (record -1 sub 0 coordinate 1 line -1)
+PASS P1 cft64: 109 points (pairs 10-11 10-12 10-13 10-3 11-10 11-12 11-13 11-3 12-10 12-11 12-13 12-3 13-10 13-11 13-12 13-3 3-10 3-11 3-12 3-13), worst |d| 4.889e-16 AU < 1e-13
+# ran (0.07 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe testpo cft128 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e5\testpo_cft128.txt
+# cft128: # testpo points 109 (bodies 3 10 11 12 13, coordinates 1-3, inside JED 2414992.5..2469808.5), skipped outside 3, plant 0 (record -1 sub 0 coordinate 1 line -1)
+PASS P1 cft128: 109 points (pairs 10-11 10-12 10-13 10-3 11-10 11-12 11-13 11-3 12-10 12-11 12-13 12-3 13-10 13-11 13-12 13-3 3-10 3-11 3-12 3-13), worst |d| 4.160e-16 AU < 1e-13
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe testpo cft256 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e5\testpo_cft256.txt
+# cft256: # testpo points 109 (bodies 3 10 11 12 13, coordinates 1-3, inside JED 2414992.5..2469808.5), skipped outside 3, plant 0 (record -1 sub 0 coordinate 1 line -1)
+PASS P1 cft256: 109 points (pairs 10-11 10-12 10-13 10-3 11-10 11-12 11-13 11-3 12-10 12-11 12-13 12-3 13-10 13-11 13-12 13-3 3-10 3-11 3-12 3-13), worst |d| 4.160e-16 AU < 1e-13
+# ran (0.04 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe testpo native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e5\testpo_native64.txt
+# native64: # testpo points 109 (bodies 3 10 11 12 13, coordinates 1-3, inside JED 2414992.5..2469808.5), skipped outside 3, plant 0 (record -1 sub 0 coordinate 1 line -1)
+REPORTED native64: 109 points, worst 4.889e-16 AU, 0 beyond TOL
+# ran (0.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe testpo cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e5\testpo_cft64_plant.txt --plant
+# plant: # testpo points 109 (bodies 3 10 11 12 13, coordinates 1-3, inside JED 2414992.5..2469808.5), skipped outside 3, plant 1 (record 12 sub 2 coordinate 3 line 25)
+PASS P2b control: the planted coefficient is REPORTED - 1 points beyond TOL (lines [25]), all in record [12] (planted in record 12, for line 25), worst 6.603e-12 AU
+# PASS 

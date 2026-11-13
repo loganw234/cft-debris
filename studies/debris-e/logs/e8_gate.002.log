@@ -1,0 +1,84 @@
+# e8_gate, log 002, written 2026-11-13 06:37:37 -0700
+# script e8_gate.py sha256 40f7ba431e7b86f6532d0ba5452e223e71d268ee8d11fa7342742b51f9f65afb
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main
+# m1run_O2.exe sha256 307c68657e1ea7d1a0a262df28539668c6e3e62372cec39f7f126b7178905d3b
+# m1run_O0.exe sha256 8012987911b5cb2c24a7411cbe7afb1c5a90649e0887a0ef3b8b843b38baa29b
+# m1run_fast.exe sha256 0a6473d98f30b562b2d3f20785c4e9e94f18a27060e8659c890d69a85e897e45
+# m1run_negctl.exe sha256 7f6fc9bc73f0ec7fa0b8dabf6db345a69755dff06eaa4cd95cdcf186ca1c6884
+# host load at start: 11% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   R1 every kind's run reproduces bit for bit across two runs of the O2 build: native32 and native64 (both in
+#      the control configuration, libcft's transcendentals, and with the C library's), cft32, cft64, cft128 and
+#      cft256 - every step, lane and component.
+#   R2 the O0 build (-O0, contraction off, the FMA instruction on) equals the O2 build bit for bit, every kind and
+#      configuration of R1.
+#   R3 NEGATIVE CONTROL: the fast build (-ffp-contract=fast with -mfma; the build holds 23 vfmadd per native
+#      object against O2's 12) must DIFFER from the O2 build for native64 and for native32 (control
+#      configuration), in at least one component at the final step.
+#   R4 the segments, designed for certificates: the run cut into five segments of 20 steps, each restarted from
+#      the previous segment's boundary state as written (hex) and its step index, equals the continuous run bit
+#      for bit at every step, at native64 (control configuration), cft64 and cft128.
+# ran (3.22 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_cr_1.txt --cr
+# ran (2.95 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_cr_2.txt --cr
+# ran (4.32 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_native64_cr.txt --cr
+PASS R1 native64 (cr) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 native64 (cr): -O0 equals -O2 bit for bit
+# ran (0.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_libm_1.txt
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_libm_2.txt
+# ran (0.12 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_native64_libm.txt
+PASS R1 native64 (libm) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 native64 (libm): -O0 equals -O2 bit for bit
+# ran (2.37 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native32_cr_1.txt --cr
+# ran (1.66 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native32_cr_2.txt --cr
+# ran (1.54 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_native32_cr.txt --cr
+PASS R1 native32 (cr) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 native32 (cr): -O0 equals -O2 bit for bit
+# ran (0.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native32_libm_1.txt
+# ran (0.05 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native32_libm_2.txt
+# ran (0.09 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_native32_libm.txt
+PASS R1 native32 (libm) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 native32 (libm): -O0 equals -O2 bit for bit
+# ran (7.66 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft32_plain_1.txt
+# ran (7.67 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft32_plain_2.txt
+# ran (7.98 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj cft32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_cft32_plain.txt
+PASS R1 cft32 (plain) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 cft32 (plain): -O0 equals -O2 bit for bit
+# ran (9.83 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_plain_1.txt
+# ran (9.69 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_plain_2.txt
+# ran (10.15 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj cft64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_cft64_plain.txt
+PASS R1 cft64 (plain) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 cft64 (plain): -O0 equals -O2 bit for bit
+# ran (14.81 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_plain_1.txt
+# ran (14.65 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_plain_2.txt
+# ran (14.61 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj cft128 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_cft128_plain.txt
+PASS R1 cft128 (plain) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 cft128 (plain): -O0 equals -O2 bit for bit
+# ran (34.28 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft256 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft256_plain_1.txt
+# ran (35.16 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft256 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft256_plain_2.txt
+# ran (33.58 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O0.exe traj cft256 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O0_cft256_plain.txt
+PASS R1 cft256 (plain) reproduces bit for bit across two runs (808 lane-steps)
+PASS R2 cft256 (plain): -O0 equals -O2 bit for bit
+# ran (2.66 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_fast.exe traj native64 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\fast_native64_cr.txt --cr
+PASS R3 control: the contracted build differs from O2 at native64: 647 of 808 lane-steps, 8 of 8 lanes at the final step
+# ran (1.34 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_fast.exe traj native32 100 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\fast_native32_cr.txt --cr
+PASS R3 control: the contracted build differs from O2 at native32: 706 of 808 lane-steps, 8 of 8 lanes at the final step
+# ran (0.61 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg000.txt --cr
+# ran (0.62 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg020.txt --cr --step0 20 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg000.txt
+# ran (0.56 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg040.txt --cr --step0 40 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg020.txt
+# ran (0.60 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg060.txt --cr --step0 60 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg040.txt
+# ran (0.53 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj native64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg080.txt --cr --step0 80 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_native64_seg060.txt
+PASS R4 native64: five segments restarted from their boundary states equal the continuous run at every step
+# ran (1.59 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg000.txt
+# ran (1.75 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg020.txt --step0 20 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg000.txt
+# ran (1.66 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg040.txt --step0 40 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg020.txt
+# ran (1.64 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg060.txt --step0 60 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg040.txt
+# ran (1.76 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft64 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg080.txt --step0 80 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft64_seg060.txt
+PASS R4 cft64: five segments restarted from their boundary states equal the continuous run at every step
+# ran (2.65 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg000.txt
+# ran (2.79 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg020.txt --step0 20 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg000.txt
+# ran (2.89 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg040.txt --step0 40 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg020.txt
+# ran (2.79 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg060.txt --step0 60 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg040.txt
+# ran (2.74 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/build/main/m1run_O2.exe traj cft128 20 60 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg080.txt --step0 80 --from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/work\e8\O2_cft128_seg060.txt
+PASS R4 cft128: five segments restarted from their boundary states equal the continuous run at every step
+# PASS 

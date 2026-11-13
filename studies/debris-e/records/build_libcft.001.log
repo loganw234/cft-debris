@@ -1,0 +1,22 @@
+make: Entering directory '/c/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/cft-fp256/host'
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/bigint.c -o src/bigint.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/softfloat.c -o src/softfloat.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/device.c -o src/device.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/divsqrt.c -o src/divsqrt.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/clause5.c -o src/clause5.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/chars.c -o src/chars.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/augmented.c -o src/augmented.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/mpfloat.c -o src/mpfloat.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/transcend.c -o src/transcend.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/program.c -o src/program.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/reduce.c -o src/reduce.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/formatof.c -o src/formatof.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/conformance.c -o src/conformance.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/sha256.c -o src/sha256.o
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/backend_remote.c -o src/backend_remote.o
+build id: unknown - git cannot place .. in a work tree: fatal: not a git repository (or any of the parent directories): .git (gen/cft_build_id.h)
+gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude  -DCFT_BUILD_ID_H='"../gen/cft_build_id.h"' -c src/build_id.c -o src/build_id.o
+ar rcs libcft.a src/bigint.o src/softfloat.o src/device.o src/divsqrt.o src/clause5.o src/chars.o src/augmented.o src/mpfloat.o src/transcend.o src/program.o src/reduce.o src/formatof.o src/conformance.o src/sha256.o src/backend_remote.o src/build_id.o
+make: Leaving directory '/c/Users/logan/source/repos/cft-debris-scratch/DEBRIS-E/cft-fp256/host'
+[cpurun] build-libcft wall 12.61s cycles/2.5e9 11.38s procs-times 2.69s job 2.69s processes 110 caught 110 exit 0
+exit 0
