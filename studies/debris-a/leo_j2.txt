@@ -1,0 +1,7 @@
+# DEBRIS-A: LEO 400 km, i = 51.6 deg, about a point-mass Earth with J2 (J4 = 0); km, s, G = 1
+name leo_j2
+G 0x1p+0
+active 1
+zonal 0 0x1.8ea23126e978dp+12 0x1.1bcdd8bccd56ep-10 0x0p+0
+body earth 0x1.85421c467381dp+18 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0
+body sat 0x0p+0 0x1.0d8d657f21937p+11 0x1.36696d3bcb252p+12 0x1.fc4c904874bf7p+11 -0x1.a8047622977f8p+2 -0x1.25c81ff9e2c66p-2 0x1.eeda08c6b52a8p+1

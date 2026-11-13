@@ -1,0 +1,56 @@
+
+=== J2  reference: IAS15 dt20 vs BS 1e-13 differ by 5.481e-05 m (t=86400.0, 86400.0)
+IAS15 eps1e-9 (adaptive)   fwd_err  1.396e-07 m | round trip  2.413e-07 m  2.784e-07 mm/s bit=False | fwd   0.08 s,  12452 fevals,    559 steps | t_turn=86400.0 t_end=0.0
+IAS15 eps1e-6 (adaptive)   fwd_err  2.997e-07 m | round trip  6.811e-08 m  6.555e-08 mm/s bit=False | fwd   0.04 s,   7686 fevals,    210 steps | t_turn=86400.0 t_end=0.0
+WHFast dt10                fwd_err  4.064e+00 m | round trip  6.717e-06 m  7.560e-06 mm/s bit=False | fwd   0.06 s,   8640 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+WHFast dt30                fwd_err  3.658e+01 m | round trip  7.070e-06 m  7.998e-06 mm/s bit=False | fwd   0.03 s,   2880 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+WHFast c11 dt30            fwd_err  1.129e+00 m | round trip  7.316e-06 m  8.216e-06 mm/s bit=False | fwd   0.85 s, 118080 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+SABA(10,6,4) dt30          fwd_err  1.526e-06 m | round trip  1.296e-05 m  1.479e-05 mm/s bit=False | fwd   0.13 s,  23040 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+EOS LF/LF n2 dt30          fwd_err  1.600e+04 m | round trip  7.672e-06 m  8.653e-06 mm/s bit=False | fwd   0.02 s,   2880 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+TRACE dt30                 fwd_err  6.977e+01 m | round trip  1.476e-06 m  1.619e-06 mm/s bit=False | fwd   0.04 s,   5760 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+MERCURIUS dt30             fwd_err  6.977e+01 m | round trip  1.476e-06 m  1.619e-06 mm/s bit=False | fwd   0.04 s,   5760 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+JANUS o6 dt10              fwd_err  6.229e-06 m | round trip  0.000e+00 m  0.000e+00 mm/s bit=True | fwd   0.49 s,  77760 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+JANUS o6 dt30              fwd_err  4.395e-03 m | round trip  0.000e+00 m  0.000e+00 mm/s bit=True | fwd   0.16 s,  25920 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+BS eps1e-8 (adaptive)      fwd_err  5.688e-01 m | round trip  1.089e+00 m  1.235e+00 mm/s bit=False | fwd   0.05 s,   8121 fevals,     63 steps | t_turn=86400.0 t_end=0.0
+BS eps1e-12 (adaptive)     fwd_err  3.322e-05 m | round trip  5.434e-05 m  6.214e-05 mm/s bit=False | fwd   0.08 s,  13692 fevals,    106 steps | t_turn=86400.0 t_end=0.0
+LEAPFROG o2 dt10           fwd_err  2.839e+04 m | round trip  1.476e-05 m  1.679e-05 mm/s bit=False | fwd   0.05 s,   8640 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+LEAPFROG o6 dt10           fwd_err  1.700e-05 m | round trip  3.008e-05 m  3.401e-05 mm/s bit=False | fwd   0.54 s,  77760 fevals,   8640 steps | t_turn=86399.99999999948 t_end=-8.72635297355373e-13
+
+=== J2+drag  reference: IAS15 dt20 vs BS 1e-13 differ by 7.315e-05 m (t=86400.0, 86400.0)
+IAS15 eps1e-9 (adaptive)   fwd_err  7.407e-08 m | round trip  7.069e-07 m  8.082e-07 mm/s bit=False | fwd   0.10 s,  12459 fevals,    559 steps | t_turn=86400.0 t_end=0.0
+IAS15 eps1e-6 (adaptive)   fwd_err  1.969e-07 m | round trip  9.277e-07 m  1.048e-06 mm/s bit=False | fwd   0.05 s,   7630 fevals,    210 steps | t_turn=86400.0 t_end=0.0
+WHFast dt10                fwd_err  4.074e+00 m | round trip  4.926e-03 m  5.617e-03 mm/s bit=False | fwd   0.06 s,   8640 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+WHFast dt30                fwd_err  3.667e+01 m | round trip  1.480e-02 m  1.687e-02 mm/s bit=False | fwd   0.02 s,   2880 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+WHFast c11 dt30            fwd_err  1.754e+00 m | round trip  1.436e-02 m  1.639e-02 mm/s bit=False | fwd   0.78 s, 118080 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+SABA(10,6,4) dt30          fwd_err  1.590e+00 m | round trip  1.045e+01 m  1.217e+01 mm/s bit=False | fwd   0.24 s,  23040 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+EOS LF/LF n2 dt30          fwd_err  1.602e+04 m | round trip  1.480e-02 m  1.688e-02 mm/s bit=False | fwd   0.02 s,   2880 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+TRACE dt30                 fwd_err  6.988e+01 m | round trip  7.398e-03 m  8.435e-03 mm/s bit=False | fwd   0.04 s,   5760 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+MERCURIUS dt30             fwd_err  6.988e+01 m | round trip  7.398e-03 m  8.435e-03 mm/s bit=False | fwd   0.04 s,   5760 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+JANUS o6 dt10              fwd_err  4.587e+00 m | round trip  8.203e+00 m  9.554e+00 mm/s bit=False | fwd   0.51 s,  77760 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+JANUS o6 dt30              fwd_err  1.366e+01 m | round trip  2.444e+01 m  2.847e+01 mm/s bit=False | fwd   0.19 s,  25920 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+BS eps1e-8 (adaptive)      fwd_err  1.285e+00 m | round trip  6.115e-01 m  6.927e-01 mm/s bit=False | fwd   0.05 s,   8045 fevals,     63 steps | t_turn=86400.0 t_end=0.0
+BS eps1e-12 (adaptive)     fwd_err  3.838e-05 m | round trip  3.836e-05 m  4.151e-05 mm/s bit=False | fwd   0.08 s,  13295 fevals,    105 steps | t_turn=86400.0 t_end=0.0
+LEAPFROG o2 dt10           fwd_err  2.848e+04 m | round trip  3.752e+00 m  4.373e+00 mm/s bit=False | fwd   0.06 s,   8640 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+LEAPFROG o6 dt10           fwd_err  6.384e+00 m | round trip  1.142e+01 m  1.330e+01 mm/s bit=False | fwd   0.53 s,  77760 fevals,   8640 steps | t_turn=86399.99999999948 t_end=-8.72635297355373e-13
+
+=== J2+moon(t)  reference: IAS15 dt20 vs BS 1e-13 differ by 1.348e-05 m (t=86400.0, 86400.0)
+IAS15 eps1e-9 (adaptive)   fwd_err  9.238e-08 m | round trip  1.128e-06 m  1.277e-06 mm/s bit=False | fwd   0.09 s,  12382 fevals,    559 steps | t_turn=86400.0 t_end=0.0
+IAS15 eps1e-6 (adaptive)   fwd_err  4.967e-07 m | round trip  1.101e-06 m  1.239e-06 mm/s bit=False | fwd   0.04 s,   7665 fevals,    210 steps | t_turn=86400.0 t_end=0.0
+JANUS o6 dt10              fwd_err  8.586e-04 m | round trip  8.482e-04 m  3.981e-04 mm/s bit=False | fwd   0.52 s,  77760 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+JANUS o6 dt30              fwd_err  6.776e-03 m | round trip  2.545e-03 m  1.194e-03 mm/s bit=False | fwd   0.18 s,  25920 fevals,   2880 steps | t_turn=86400.0 t_end=0.0
+LEAPFROG o2 dt10           fwd_err  2.839e+04 m | round trip  1.162e-06 m  1.229e-06 mm/s bit=False | fwd   0.07 s,   8640 fevals,   8640 steps | t_turn=86400.0 t_end=0.0
+LEAPFROG o6 dt10           fwd_err  9.582e-06 m | round trip  1.018e-05 m  1.159e-05 mm/s bit=False | fwd   0.58 s,  77760 fevals,   8640 steps | t_turn=86399.99999999948 t_end=-8.72635297355373e-13
+
+physics scale, one day: drag on vs off moves the object 24899.0 m; density x1.2 moves it 4991.4 m
+
+cost floor IAS15 eps1e-9      30 days:    0.082 s,   16752 steps,   4.88 us/step,   2.725 ms per object-day
+cost floor WHFast dt10        30 days:    0.119 s,  259200 steps,   0.46 us/step,   3.972 ms per object-day
+cost floor BS eps1e-12        30 days:    0.024 s,    3035 steps,   7.86 us/step,   0.795 ms per object-day
+cost floor LEAPFROG o2 dt10   30 days:    0.047 s,  259200 steps,   0.18 us/step,   1.563 ms per object-day
+cost floor JANUS o6 dt10      30 days:    0.168 s,  259200 steps,   0.65 us/step,   5.613 ms per object-day
+
+global step: LEO 400 km       alone      559 IAS15 steps a day
+global step: MEO (GPS-like)   alone       74 IAS15 steps a day
+global step: GEO              alone       39 IAS15 steps a day
+global step: GTO              alone      172 IAS15 steps a day
+global step: all four together    572 IAS15 steps a day (each particle takes every one)

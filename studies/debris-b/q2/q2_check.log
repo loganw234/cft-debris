@@ -1,0 +1,47 @@
+# 2026-11-12 16:19:13 -0700  q2_check.py, all kernels
+grav N=8                           P_nm recursion vs mpmath.legenp, rel     2.480e-61  (tolerance 1.0e-45)  ok
+grav N=8                           degrees 2..N vs mpmath, rel, worst of 4  7.432e-16  (tolerance 1.0e-12)  ok
+grav N=8                           degrees N/2+1..N vs mpmath, rel          1.242e-15  (tolerance 1.0e-11)  ok
+grav N=8                           full field vs mpmath, rel                5.751e-16  (tolerance 1.0e-14)  ok
+grav N=20                          P_nm recursion vs mpmath.legenp, rel     3.117e-61  (tolerance 1.0e-45)  ok
+grav N=20                          degrees 2..N vs mpmath, rel, worst of 4  9.091e-16  (tolerance 1.0e-12)  ok
+grav N=20                          degrees N/2+1..N vs mpmath, rel          5.106e-15  (tolerance 1.0e-11)  ok
+grav N=20                          full field vs mpmath, rel                1.176e-15  (tolerance 1.0e-14)  ok
+grav N=36                          P_nm recursion vs mpmath.legenp, rel     8.351e-61  (tolerance 1.0e-45)  ok
+grav N=36                          degrees 2..N vs mpmath, rel, worst of 4  1.888e-15  (tolerance 1.0e-12)  ok
+grav N=36                          degrees N/2+1..N vs mpmath, rel          3.556e-15  (tolerance 1.0e-11)  ok
+grav N=36                          full field vs mpmath, rel                1.599e-15  (tolerance 1.0e-14)  ok
+grav N=70                          P_nm recursion vs mpmath.legenp, rel     9.513e-61  (tolerance 1.0e-45)  ok
+grav N=70                          degrees 2..N vs mpmath, rel, worst of 4  2.133e-15  (tolerance 1.0e-12)  ok
+grav N=70                          degrees N/2+1..N vs mpmath, rel          8.968e-15  (tolerance 1.0e-11)  ok
+grav N=70                          full field vs mpmath, rel                3.009e-15  (tolerance 1.0e-14)  ok
+gravq N=8                          P_nm recursion vs mpmath.legenp, rel     2.480e-61  (tolerance 1.0e-45)  ok
+gravq N=8                          degrees 2..N vs mpmath, rel, worst of 4  6.409e-33  (tolerance 1.0e-28)  ok
+gravq N=8                          degrees N/2+1..N vs mpmath, rel          9.003e-33  (tolerance 1.0e-27)  ok
+gravq N=8                          full field vs mpmath, rel                3.526e-34  (tolerance 1.0e-31)  ok
+gravq N=20                         P_nm recursion vs mpmath.legenp, rel     3.117e-61  (tolerance 1.0e-45)  ok
+gravq N=20                         degrees 2..N vs mpmath, rel, worst of 4  7.196e-33  (tolerance 1.0e-28)  ok
+gravq N=20                         degrees N/2+1..N vs mpmath, rel          1.207e-32  (tolerance 1.0e-27)  ok
+gravq N=20                         full field vs mpmath, rel                5.467e-34  (tolerance 1.0e-31)  ok
+cheb                               vs cos(k acos tau) in mpmath, / sum|c|   4.023e-15  (tolerance 1.0e-14)  ok
+frame_full                         X,Y,s (kernel's args) vs mpmath, /sum|amp| 1.261e-16  (tolerance 1.0e-14)  ok
+frame_full                         X,Y,s (exact args): error / bound        7.970e-02  (tolerance 1.0e+00)  ok
+frame_full                         X,Y,s (exact args), / sum|amp|           1.857e-12 (reported, not asserted)
+frame_full                         ERA vs numpy, rad                        0.000e+00  (tolerance 1.0e-09)  ok
+frame_full                         matrix vs numpy rotations; orthogonality 2.220e-16  (tolerance 1.0e-14)  ok
+frame_full                         rotated vector vs numpy, / |r|           1.370e-16  (tolerance 1.0e-14)  ok
+frame_interp                       6-point Lagrange vs mpmath, / max node   2.215e-16  (tolerance 1.0e-15)  ok
+frame_interp                       interpolated minus full series           9.750e-14 rad (reported, not asserted)
+frame_interp                       ERA vs numpy, rad                        0.000e+00  (tolerance 1.0e-09)  ok
+frame_interp                       matrix vs numpy rotations; orthogonality 4.441e-16  (tolerance 1.0e-14)  ok
+frame_interp                       rotated vector vs numpy, / |r|           1.370e-16  (tolerance 1.0e-14)  ok
+atmos                              drag vs mpmath, rel, worst of 16         1.673e-14  (tolerance 1.0e-13)  ok
+srp set 0 sunlit 9,umbra 7,annular 1 shadow fraction vs quadrature, abs       4.449e-17  (tolerance 1.0e-08)  ok
+srp set 0 sunlit 9,umbra 7,annular 1 acceleration error / unshadowed force    4.272e-16  (tolerance 1.0e-08)  ok
+srp set 0 sunlit 9,umbra 7,annular 1 acceleration, rel to itself              4.272e-16 at nu = 1 (reported, not asserted)
+srp set 1 umbra 1,penumbra 15,annular 1 closed-form lens in mpmath vs quadrature 8.837e-25  (tolerance 1.0e-20)  ok
+srp set 1 umbra 1,penumbra 15,annular 1 shadow fraction vs quadrature, abs       7.152e-10  (tolerance 1.0e-08)  ok
+srp set 1 umbra 1,penumbra 15,annular 1 acceleration error / unshadowed force    7.152e-10  (tolerance 1.0e-08)  ok
+srp set 1 umbra 1,penumbra 15,annular 1 acceleration, rel to itself              2.678e-08 at nu = 0.0236 (reported, not asserted)
+ALL 40 ASSERTIONS PASSED
+rc=0

@@ -1,0 +1,35 @@
+# DEBRIS-C log: m2_table
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m2\m2_table.py sha256 8b71ea3f5402e15d51d594fb0681cc10067f8177570418a6a9141875b45baf97 (kept as scripts\m2_table.8b71ea3f5402.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m2/m2_table.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:40:23 -0700
+# ---- stdout ----
+# DEBRIS-C M2 table, COMPUTED (inputs in the header). Ranges are run 003 to run 002.
+# check: DEBRIS-B's LEO rows reproduce
+  degree  8: 1171 ns per evaluation, 46.3 CPU-hours a year (DEBRIS-B: 1171 ns)
+  degree 20: 1852 ns per evaluation, 87.0 CPU-hours a year (DEBRIS-B: 1852 ns)
+  degree 36: 3606 ns per evaluation, 184.3 CPU-hours a year (DEBRIS-B: 3606 ns)
+  degree 70: 11027 ns per evaluation, 634.4 CPU-hours a year (DEBRIS-B: 11027 ns)
+# the density models against DEBRIS-B's break-even (1852 ns, degree 20):
+  NRLMSISE00 7317 to 7529 ns a call = 4.0 to 4.1 x the break-even
+  JB2008     29914 to 31623 ns a call = 16.2 to 17.1 x the break-even
+         | C gravity, exp. air    | C gravity + NRLMSISE00 | C gravity + JB2008     | Orekit HF + NRLMSISE00
+degree   | ns/eval  CPU-h/yr      | ns/eval  CPU-h/yr      | ns/eval  CPU-h/yr      | ns/eval  CPU-h/yr     
+8        |   1171        46       |  8488- 8700  336- 344  | 31085-32794 1229-1296  |  8846- 9090  350- 359 
+20       |   1852        87       |  9169- 9381  431- 441  | 31766-33475 1493-1573  | 10051-10679  472- 502 
+36       |   3606       184       | 10923-11135  558- 569  | 33520-35229 1714-1801  | 12782-14134  653- 723 
+70       |  11027       634       | 18343-18556 1055-1068  | 40941-42650 2355-2454  | 23224-24528 1336-1411 
+# Java figures: the density costs in columns 2-4, and the gravity in column 4. All else is DEBRIS-B's C or BELIEVED split.
+# gravity alone, Orekit (Java) over DEBRIS-B's C kernel timed in the same hours (language and algorithm together):
+  degree  8: Orekit 541-573 ns, C 165 ns: 3.3-3.5 x
+  degree 20: Orekit 1746-2162 ns, C 831 ns: 2.1-2.6 x
+  degree 36: Orekit 4478-5617 ns, C 2555 ns: 1.8-2.2 x
+  degree 70: Orekit 14919-16011 ns, C 9683 ns: 1.5-1.7 x
+# COMPUTED PASS (DEBRIS-B's rows reproduced)
+# ---- stderr ----
+# end: 2026-11-12 18:40:23 -0700
+# exit code: 0
+# wall: 0.071 s; child CPU (GetProcessTimes): user 0.000 s + kernel 0.000 s = 0.000 s
+# child CPU cycles (QueryProcessCycleTime): 137641776 = 0.055 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 23.2%; 1 s samples n=0 min - max -

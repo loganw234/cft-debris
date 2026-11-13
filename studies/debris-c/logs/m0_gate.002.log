@@ -1,0 +1,29 @@
+# DEBRIS-C log: m0_gate
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m0\m0_gate.js sha256 3bd42c2f3b3422aaa83d979aa326ca6651d2f7240aa5aaea801342bfa33e154e (kept as scripts\m0_gate.3bd42c2f3b34.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m0/m0_gate.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/gfc_dedup
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:09:14 -0700
+# ---- stdout ----
+# M0 gate | criterion: every call returns finite values
+# java 1.8.0_411 | Java HotSpot(TM) 64-Bit Server VM 25.411-b09 | os.arch amd64
+# orekit.data.path property: null
+# providers before: 0
+# providers after: 2 (DirectoryCrawler on C:/Users/logan/source/repos/cft-debris-downloads/lnxp1900p2053.421 and C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/gfc_dedup)
+PASS UTC: TimeScalesFactory.getUTC() and offsetFromTAI(2008-07-03T00:00:00 GPS) | UTC-TAI = -33 s; loader called 1 time(s); T0 in UTC = 2008-07-02T23:59:46.000
+PASS body frame: getTransformTo(GCRF) at T0 + 1 h, applied to the position | r = {2,893,951.338810348; 6,057,599.599441356; -1,300,567.0083210038}, rate z = -0.00007292115000000003
+PASS gravity provider: GravityFieldFactory.getNormalizedProvider(180, 180) | mu 398600441500000, ae 6378136.46, degree 180, order 180, tide system TIDE_FREE
+PASS HolmesFeatherstoneAttractionModel(body, provider 180): gradient at the position, in the body frame | gradient -0.006225677514401426 -0.007330352263083676 0.006318050127231711 m/s^2
+PASS gravity provider: GravityFieldFactory.getNormalizedProvider(20, 20) | degree 20
+PASS Sun: CelestialBodyFactory.getSun().getPosition(T0, GCRF) | r = {-29,879,391,168.398556; 136,833,968,055.19772; 59,322,099,020.228226} m, |r| = 152103334159.67847 m
+PASS OneAxisEllipsoid(WGS84 a, f, body).transform(position, GCRF, T0) | lat -0.19253001780269294 rad, lon 0.8625994774049447 rad, alt 460837.23236074805 m
+PASS NRLMSISE00(inputs, Sun, ellipsoid, script UTC).getDensity(T0, position, GCRF) | rho = 1.0719410819223821e-12 kg/m^3 (local solar time mode APPARENT)
+PASS JB2008(inputs, Sun, ellipsoid, script UTC).getDensity(T0, position, GCRF) | rho = 8.034405664894539e-13 kg/m^3
+PASS NumericalPropagator, DP853, HolmesFeatherstone 20x20 + NRLMSISE00 drag: propagate T0 -> T0 + 30 s | r = {4,389,451.5187072; 5,131,459.987021387; -1,074,789.432048778}, v = {672.3200480965; 984.3281876011; 7,547.5131825962}
+# loaded data names: [C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-C\gfc_dedup\EIGEN6-C4.gfc, C:\Users\logan\source\repos\cft-debris-downloads\lnxp1900p2053.421\lnxp1900p2053.421]
+# M0 PASS: 10 of 10 calls returned finite values (criterion: every call returns finite values)
+# ---- stderr ----
+# end: 2026-11-12 18:09:15 -0700
+# exit code: 0
+# wall: 1.914 s; child CPU (GetProcessTimes): user 3.266 s + kernel 0.297 s = 3.562 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 75.5%; 1 s samples n=1 min 62% max 62%

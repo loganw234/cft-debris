@@ -1,0 +1,16 @@
+
+=== MEO (GPS-like), one year, J2 + Moon(t) + Sun(t) + SRP; reference IAS15 fixed 300 s, t=31557600.0
+IAS15 eps1e-9 (adaptive)   fwd_err  1.005e-03 m | round trip  3.701e-05 m |   4.09 s,  581683 fevals,  26296 steps | t=31557600.0
+WHFast dt600               fwd_err  1.124e+04 m | round trip  6.528e-03 m |   0.39 s,   52596 fevals,  52596 steps | t=31557600.0
+WHFast dt1800              fwd_err  1.020e+05 m | round trip  3.622e-04 m |   0.13 s,   17532 fevals,  17532 steps | t=31557600.0
+SABA(10,6,4) dt1800        fwd_err  5.628e+02 m | round trip  9.149e+03 m |   1.09 s,  140256 fevals,  17532 steps | t=31557600.0
+SABA(10,6,4) dt3600        fwd_err  2.451e+02 m | round trip  1.828e+04 m |   0.49 s,   70128 fevals,   8766 steps | t=31557600.0
+LEAPFROG o6 dt600          fwd_err  4.153e+02 m | round trip  4.958e-03 m |   3.27 s,  473364 fevals,  52596 steps | t=31557600.000314187
+
+=== GEO, one year, J2 + Moon(t) + Sun(t) + SRP; reference IAS15 fixed 300 s, t=31557600.0
+IAS15 eps1e-9 (adaptive)   fwd_err  1.240e-04 m | round trip  3.689e-04 m |   2.01 s,  289401 fevals,  13146 steps | t=31557600.0
+WHFast dt600               fwd_err  1.610e+03 m | round trip  4.497e-03 m |   0.38 s,   52596 fevals,  52596 steps | t=31557600.0
+WHFast dt1800              fwd_err  1.452e+04 m | round trip  6.924e-04 m |   0.13 s,   17532 fevals,  17532 steps | t=31557600.0
+SABA(10,6,4) dt1800        fwd_err  1.307e+02 m | round trip  3.671e+04 m |   1.02 s,  140256 fevals,  17532 steps | t=31557600.0
+SABA(10,6,4) dt3600        fwd_err  1.784e+03 m | round trip  7.338e+04 m |   0.48 s,   70128 fevals,   8766 steps | t=31557600.0
+LEAPFROG o6 dt600          fwd_err  4.966e+00 m | round trip  1.390e-02 m |   3.24 s,  473364 fevals,  52596 steps | t=31557600.000314187

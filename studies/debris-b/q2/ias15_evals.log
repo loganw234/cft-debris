@@ -1,0 +1,21 @@
+# 2026-11-12 16:21:12 -0700
+# REBOUND 5.1.1, IAS15 epsilon 1e-9, own J2 force and counter
+OVERLAP LEO 400 km one day: 12410 force evaluations (4472 distinct times), 559 steps, t_end=86400.0, adaptive_mode=PRS23, wall 0.070 s
+# the spread: other mean anomalies and starting steps, one day
+LEO M=  0.0 dt0=60:  12439 evaluations,  560 steps
+LEO M= 90.0 dt0=60:  12459 evaluations,  559 steps
+LEO M=180.0 dt0=60:  12432 evaluations,  560 steps
+LEO M=270.0 dt0=60:  12397 evaluations,  560 steps
+LEO M= 10.0 dt0= 10:  12433 evaluations,  561 steps
+LEO M= 10.0 dt0=300:  12416 evaluations,  558 steps
+# ten days, and the other regimes (J2 only), for the budget
+LEO 400 km             ten days:   123717 evaluations,   5585 steps,  12371.7 evaluations per object-day,  558.5 steps a day
+LEO 800 km             ten days:   113400 evaluations,   5117 steps,  11340.0 evaluations per object-day,  511.7 steps a day
+MEO GPS-like           ten days:    16010 evaluations,    722 steps,   1601.0 evaluations per object-day,   72.2 steps a day
+GEO                    ten days:     8014 evaluations,    363 steps,    801.4 evaluations per object-day,   36.3 steps a day
+GEO graveyard +300 km  ten days:     7933 evaluations,    359 steps,    793.3 evaluations per object-day,   35.9 steps a day
+
+real	0m3.071s
+user	0m0.000s
+sys	0m0.031s
+rc=0

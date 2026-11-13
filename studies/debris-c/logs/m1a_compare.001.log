@@ -1,0 +1,32 @@
+# DEBRIS-C log: m1a_compare
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_compare.py sha256 4d173f134d6bc63101a2f170b452fcd707b5fe80d995678ad89473690b9271a6 (kept as scripts\m1a_compare.4d173f134d6b.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1a/m1a_compare.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:11:57 -0700
+# ---- stdout ----
+# M1a: TOL = 1e-11 m/s^2 on max |delta a| over the day (vector norm); control: truncation at D = 173
+# input C:/Users/logan/source/repos/cft-debris-downloads/02gravityfield_itrf.txt/02gravityfield_itrf.txt sha256 dc74fcdefcd8818cde4213938f9bd312e18ffe63e7fbf8471aa0acbf723bb38c
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1a/out/c_O2_2_180.txt sha256 e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1a/out/c_O2_2_180_copy.txt sha256 e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1a/out/c_O2_2_173.txt sha256 2c1d770676dac387d0019017485acf1385c860019642c0d7d4e51c5786598010
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1a/out/orekit_2_180.txt sha256 65919d618fe6b6b3270af4e998e4d786f8de392d676272bdde6451828e132bd3
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1a/out/orekit_2_173.txt sha256 b545d6f1532477a37007dff092a8c1af12ff6e999016fb7b60ebe9df66dbffb2
+# the custom kernel's output from the copy is bit-identical to its output from the download
+custom C (2..180) vs Lasser et al.           max |da| 2.278e-15 m/s^2 (epoch 1789), RMS 4.373e-16; per component max 1.77e-15 1.50e-15 1.19e-15; max |a| 2.407e-02
+Orekit HF (2..180) vs Lasser et al.          max |da| 2.210e-15 m/s^2 (epoch 1789), RMS 4.291e-16; per component max 1.79e-15 1.51e-15 1.13e-15; max |a| 2.407e-02
+custom C vs Orekit (two of ours)             max |da| 3.238e-16 m/s^2 (epoch 2784), RMS 8.346e-17; per component max 2.55e-16 2.53e-16 3.23e-16; max |a| 2.407e-02
+CONTROL custom C (2..173) vs Lasser et al.   max |da| 9.772e-10 m/s^2 (epoch   12), RMS 1.796e-10; per component max 5.61e-10 9.21e-10 5.93e-10; max |a| 2.407e-02
+CONTROL Orekit HF (2..173) vs Lasser et al.  max |da| 9.772e-10 m/s^2 (epoch   12), RMS 1.796e-10; per component max 5.61e-10 9.21e-10 5.93e-10; max |a| 2.407e-02
+custom C (2..173) vs Orekit (2..173)         max |da| 3.066e-16 m/s^2 (epoch  704), RMS 8.009e-17; per component max 2.62e-16 2.39e-16 3.05e-16; max |a| 2.407e-02
+PASS custom vs Lasser: max 2.278e-15 < TOL 1e-11
+PASS Orekit vs Lasser: max 2.210e-15 < TOL 1e-11
+PASS custom vs Orekit: max 3.238e-16 < TOL 1e-11
+PASS control, custom truncated at 173: the comparison reports it (max 9.772e-10 = 97.7 x TOL)
+PASS control, Orekit truncated at 173: the comparison reports it (max 9.772e-10 = 97.7 x TOL)
+# M1a PASS
+# ---- stderr ----
+# end: 2026-11-12 18:11:57 -0700
+# exit code: 0
+# wall: 0.210 s; child CPU (GetProcessTimes): user 0.016 s + kernel 0.000 s = 0.016 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 16.9%; 1 s samples n=0 min - max -

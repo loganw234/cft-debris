@@ -1,0 +1,4 @@
+# 2026-11-12 16:22:37 -0700
+J2 in the textbook order: 12410 force evaluations in one LEO day, 559 steps
+J2 in the 2020     order: 12452 force evaluations in one LEO day, 559 steps
+rc=0

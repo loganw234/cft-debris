@@ -1,0 +1,47 @@
+# DEBRIS-C log: m2_c_grav
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m2\run_c_grav.sh sha256 43765911914454035e89cb7c3383bd8c09e2d542be0c60bdf813bd97c4a9cced (kept as scripts\run_c_grav.437659119144.sh)
+# command: C:/Program Files/Git/usr/bin/bash.exe m2/run_c_grav.sh
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# timesheet check desktop --short (rc 0):
+#   FREE: desktop for short unbooked work from 2026-11-12 18:30 -0700 to 2026-11-12 18:40 -0700
+#     note, a notice in that window: B0013  desktop        notice    2026-11-12 17:55 -0700 -> 2026-11-12 22:05 -0700  cft-debris/DEBRIS-C: round DEBRIS-C: the study parcel's short runs (each under 10 minutes; every timing checks --short first)
+# start: 2026-11-12 18:30:32 -0700
+# ---- stdout ----
+q2bench.c: copy 97429ff7081e9e7dafebea92f536e485cf4b5fb16ec865ec229b9548096724da, DEBRIS-B manifest 97429ff7081e9e7dafebea92f536e485cf4b5fb16ec865ec229b9548096724da
+grav_body.inc: copy f7a43b9169d4b27c767d837d14a48e248854d9f18d283636abf41806e4c6aa0e, DEBRIS-B manifest f7a43b9169d4b27c767d837d14a48e248854d9f18d283636abf41806e4c6aa0e
+71283966b0fc503968f57ba067993983ab410672483fe4ad774694bdbdc33414 *q2bench.exe
+== grav N=8, ncall 1400000, 5 repetitions
+# force grav param=8 ncall=1400000 reps=5
+rep 0 wall_ns_per_call 216.614 cpu_ns_per_call 44.643 cycles_per_call 491.1 host_load_pct 23 wall_s 0.3033 checksum 122.02078593211068
+rep 1 wall_ns_per_call 181.245 cpu_ns_per_call 66.964 cycles_per_call 442.1 host_load_pct 10 wall_s 0.2537 checksum 122.02078593211068
+rep 2 wall_ns_per_call 179.124 cpu_ns_per_call 44.643 cycles_per_call 438.1 host_load_pct 10 wall_s 0.2508 checksum 122.02078593211068
+rep 3 wall_ns_per_call 170.248 cpu_ns_per_call 66.964 cycles_per_call 418.8 host_load_pct 12 wall_s 0.2383 checksum 122.02078593211068
+rep 4 wall_ns_per_call 165.297 cpu_ns_per_call 33.482 cycles_per_call 405.2 host_load_pct 9 wall_s 0.2314 checksum 122.02078593211068
+== grav N=20, ncall 300000, 5 repetitions
+# force grav param=20 ncall=300000 reps=5
+rep 0 wall_ns_per_call 831.054 cpu_ns_per_call 156.250 cycles_per_call 2038.7 host_load_pct 8 wall_s 0.2493 checksum 26.156849442701159
+rep 1 wall_ns_per_call 889.287 cpu_ns_per_call 156.250 cycles_per_call 2165.5 host_load_pct 11 wall_s 0.2668 checksum 26.156849442701159
+rep 2 wall_ns_per_call 917.892 cpu_ns_per_call 312.500 cycles_per_call 2175.1 host_load_pct 16 wall_s 0.2754 checksum 26.156849442701159
+rep 3 wall_ns_per_call 945.242 cpu_ns_per_call 208.333 cycles_per_call 2215.3 host_load_pct 13 wall_s 0.2836 checksum 26.156849442701159
+rep 4 wall_ns_per_call 916.076 cpu_ns_per_call 364.583 cycles_per_call 2189.2 host_load_pct 16 wall_s 0.2748 checksum 26.156849442701159
+== grav N=36, ncall 100000, 5 repetitions
+# force grav param=36 ncall=100000 reps=5
+rep 0 wall_ns_per_call 2677.854 cpu_ns_per_call 781.250 cycles_per_call 6506.7 host_load_pct 9 wall_s 0.2678 checksum 8.8049912141619675
+rep 1 wall_ns_per_call 2833.694 cpu_ns_per_call 1250.000 cycles_per_call 6849.4 host_load_pct 14 wall_s 0.2834 checksum 8.8049912141619675
+rep 2 wall_ns_per_call 2803.194 cpu_ns_per_call 937.500 cycles_per_call 6826.5 host_load_pct 11 wall_s 0.2803 checksum 8.8049912141619675
+rep 3 wall_ns_per_call 2555.180 cpu_ns_per_call 1406.250 cycles_per_call 6273.6 host_load_pct 15 wall_s 0.2555 checksum 8.8049912141619675
+rep 4 wall_ns_per_call 3457.667 cpu_ns_per_call 781.250 cycles_per_call 7499.6 host_load_pct 39 wall_s 0.3458 checksum 8.8049912141619675
+== grav N=70, ncall 25000, 5 repetitions
+# force grav param=70 ncall=25000 reps=5
+rep 0 wall_ns_per_call 13016.716 cpu_ns_per_call 3750.000 cycles_per_call 28187.8 host_load_pct 24 wall_s 0.3254 checksum 2.2666218583969733
+rep 1 wall_ns_per_call 12387.340 cpu_ns_per_call 4375.000 cycles_per_call 27534.6 host_load_pct 28 wall_s 0.3097 checksum 2.2666218583969733
+rep 2 wall_ns_per_call 10673.128 cpu_ns_per_call 1250.000 cycles_per_call 25897.2 host_load_pct 11 wall_s 0.2668 checksum 2.2666218583969733
+rep 3 wall_ns_per_call 10843.968 cpu_ns_per_call 1875.000 cycles_per_call 26218.0 host_load_pct 12 wall_s 0.2711 checksum 2.2666218583969733
+rep 4 wall_ns_per_call 9683.228 cpu_ns_per_call 625.000 cycles_per_call 23815.2 host_load_pct 10 wall_s 0.2421 checksum 2.2666218583969733
+# ---- stderr ----
+# end: 2026-11-12 18:30:40 -0700
+# exit code: 0
+# wall: 8.611 s; child CPU (GetProcessTimes): user 0.000 s + kernel 0.016 s = 0.016 s
+# child CPU cycles (QueryProcessCycleTime): 314627252 = 0.126 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 15.8%; 1 s samples n=8 min 10% max 23%

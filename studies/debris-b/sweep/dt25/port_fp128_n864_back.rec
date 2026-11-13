@@ -1,0 +1,16 @@
+# cft-rebound ias15 record v1
+# program=cft impl=libcft-0.18 format=fp128 backend=software problem=leo_j2 N=2 steps=864 sample=864 cs=kahan arith=rebound engine=loop pc_tol_shift=60 max_iter=24
+# identity libcft_build=commit=922c2ade78fad995a0871bf07cebf8b9fbcb2b9f,tracked=clean,untracked=none image=none
+# dt0= -0x1.9p+4 epsilon= 0x0p+0 G= 0x1p+0 pc_tol= 0x1.cd2b297d889bc2b6985d7cd0f313p-114
+# active 1 of 2 bodies a system: 1 pairs a force evaluation, a system
+# zonal body 0 of every system, about z: R= 0x1.8ea23126e978dp+12 J2= 0x1.1bcdd8bccd56ep-10 J4= 0x0p+0; it acts on 1 bodies a system, and body 0 takes the reaction of 0
+# body 0 earth m= 0x1.85421c467381dp+18
+# body 1 sat m= 0x0p+0
+# columns: sample step t dt_next dt_last E then per body x y z vx vy vz ; then exact-time pair t_hi t_lo
+sample 0 0 0x0p+0 -0x1.9p+4 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x1.54a17bb9fa208261820998ad3f57p+12 0x1.e69bce3e77e09decbbc3b8ff9cebp+11 0x1.f4f1a342c817955134ad5611c9f4p+9 -0x1.c310a8acf9816510d5903ef17d98p+1 0x1.b4163e41960e2a02ecda1f1c729fp+1 0x1.7a5267a22b605e97dc6cb69c6f8cp+2 | 0x0p+0 0x0p+0
+sample 1 864 -0x1.518p+14 -0x1.9p+4 -0x1.9p+4 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x1.0d8d657f2193700000000000002ap+11 0x1.36696d3bcb252p+12 0x1.fc4c904874bf6fffffffffffffe5p+11 -0x1.a8047622977f7ffffffffffffff8p+2 -0x1.25c81ff9e2c65ffffffffffffeacp-2 0x1.eeda08c6b52a8000000000000022p+1 | -0x1.518p+14 0x0p+0
+# steps_done=864 iterations_max_exceeded=0 steps_rejected=0 mean_pc_iterations=5.007 max_pc_iterations=8 flags_seen=0x10 calls=4773083 divsqrt_calls=786473 seconds=42.319 steps_per_s=20.42 wall_seconds=42.318 t_program=6.173 t_elem=4.679 t_divsqrt=31.017 t_gravity=15.511 program_calls=124584 staged_bytes=809587424 t_g_copy=0.019 t_g_accum=1.329 t_g_lib=15.267 t_g_divsqrt=8.363 t_reduce=0.000 nextstep_calls=0
+# route scalar=off by=opt_in calls=0 fallbacks=611652
+# route indexed=off by=opt_in calls=0 fallbacks=31146
+# route reduce_seg=off by=opt_in calls=0 fallbacks=8652
+# route pair_gather=off by=opt_in calls=0 fallbacks=31146

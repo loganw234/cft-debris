@@ -1,0 +1,11 @@
+PORT fp64  dt=100 steps=216: round trip 3.827e-08 m, 4.155e-08 mm/s (|dx|/r 5.65e-15) bits_identical=False | fwd 3.8 s wall (trailer 3.788 s, 57.02 steps/s, mean_pc 2.819), back 3.9 s wall | t_turn=0x1.518p+14 t_end=-0x1.518p+14
+   cmd: C:\Users\logan\source\repos\cft-rebound-seam\build\ias15_cft.exe --format fp64 --problem C:\Users\logan\AppData\Local\Temp\claude\443d8e8619fd4f31\fa64df2f-560a-4117-8348-b3ce1b89172a\scratchpad\studies\debris-a\leo_j2.txt --dt 100 --epsilon 0 --steps 216 --sample 216 --max-iter 12 --quiet
+PORT fp128 dt=100 steps=216: round trip 8.909e-22 m, 9.415e-22 mm/s (|dx|/r 1.32e-28) bits_identical=False | fwd 11.7 s wall (trailer 11.702 s, 18.46 steps/s, mean_pc 7.120), back 11.8 s wall | t_turn=0x1.518p+14 t_end=-0x1.518p+14
+   cmd: C:\Users\logan\source\repos\cft-rebound-seam\build\ias15_cft.exe --format fp128 --problem C:\Users\logan\AppData\Local\Temp\claude\443d8e8619fd4f31\fa64df2f-560a-4117-8348-b3ce1b89172a\scratchpad\studies\debris-a\leo_j2.txt --dt 100 --epsilon 0 --steps 216 --sample 216 --max-iter 24 --quiet
+PORT fp256 dt=100 steps=216: round trip 8.909e-22 m, 9.414e-22 mm/s (|dx|/r 1.32e-28) bits_identical=False | fwd 39.2 s wall (trailer 39.149 s, 5.52 steps/s, mean_pc 18.023), back 34.9 s wall | t_turn=0x1.518p+14 t_end=-0x1.518p+14
+   cmd: C:\Users\logan\source\repos\cft-rebound-seam\build\ias15_cft.exe --format fp256 --problem C:\Users\logan\AppData\Local\Temp\claude\443d8e8619fd4f31\fa64df2f-560a-4117-8348-b3ce1b89172a\scratchpad\studies\debris-a\leo_j2.txt --dt 100 --epsilon 0 --steps 216 --sample 216 --max-iter 60 --quiet
+REBOUND 5.1.1 IAS15 (Python J2), same steps: round trip 3.827e-08 m; forward 0.023 s wall
+bitwise, port fp64 against REBOUND 5.1.1 + Python J2: turn-around IDENTICAL, return IDENTICAL
+forward state at the turn, fp64 against fp128: 1.808e-08 m
+forward state at the turn, fp128 against fp256: 1.162e-27 m
+forward state at the turn, fp64 against fp256: 1.808e-08 m

@@ -1,0 +1,16 @@
+# cft-rebound ias15 record v1
+# program=cft impl=libcft-0.18 format=fp256 backend=software problem=leo_j2 N=2 steps=216 sample=216 cs=kahan arith=rebound engine=loop pc_tol_shift=184 max_iter=60
+# identity libcft_build=commit=922c2ade78fad995a0871bf07cebf8b9fbcb2b9f,tracked=clean,untracked=none image=none
+# dt0= -0x1.9p+6 epsilon= 0x0p+0 G= 0x1p+0 pc_tol= 0x1.cd2b297d889bc2b6985d7cd0f31353677ee2d835ba4fe10a4799a6909b7p-238
+# active 1 of 2 bodies a system: 1 pairs a force evaluation, a system
+# zonal body 0 of every system, about z: R= 0x1.8ea23126e978dp+12 J2= 0x1.1bcdd8bccd56ep-10 J4= 0x0p+0; it acts on 1 bodies a system, and body 0 takes the reaction of 0
+# body 0 earth m= 0x1.85421c467381dp+18
+# body 1 sat m= 0x0p+0
+# columns: sample step t dt_next dt_last E then per body x y z vx vy vz ; then exact-time pair t_hi t_lo
+sample 0 0 0x0p+0 -0x1.9p+6 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x1.54a17bb9fa208261820998aff30137b1eca62b9392e3499f0dbd249f3bdp+12 0x1.e69bce3e77e09decbbc3b8f82466b7264610cb3de61746ef34ceeea8cdap+11 0x1.f4f1a342c817955134ad55e3afa6776d68e6b6f379e0a96758c5fdaa809p+9 -0x1.c310a8acf9816510d5903ee5479388af28e8e5705c8407e1469ef277ef7p+1 0x1.b4163e41960e2a02ecda1f26cfb52a0d715a53001489fc90521c81251b2p+1 0x1.7a5267a22b605e97dc6cb69ea0d991ef05fbe45998f0777639820887cf8p+2 | 0x0p+0 0x0p+0
+sample 1 216 -0x1.518p+14 -0x1.9p+6 -0x1.9p+6 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x1.0d8d657f21936fffffffffe191c7217a6b833d198567f54f01fb43ba29p+11 0x1.36696d3bcb251ffffffffffe3be498f78f1133c56a0867bab42485d39c2p+12 0x1.fc4c904874bf70000000000fc9bc023e86a5a954346fbe6159ec853eb74p+11 -0x1.a8047622977f800000000007a4b017b3b58c7be0f9ba74a5b3d6b3a6b64p+2 -0x1.25c81ff9e2c66000000000dbb1b781b134fd0dd6a30c1e93192cf2dd126p-2 0x1.eeda08c6b52a7fffffffffebecbea033b5916f9158879e722263d59de34p+1 | -0x1.518p+14 0x0p+0
+# steps_done=216 iterations_max_exceeded=0 steps_rejected=0 mean_pc_iterations=18.028 max_pc_iterations=21 flags_seen=0x10 calls=4126811 divsqrt_calls=691649 seconds=34.910 steps_per_s=6.19 wall_seconds=34.910 t_program=3.114 t_elem=3.827 t_divsqrt=27.717 t_gravity=10.356 program_calls=109896 staged_bytes=1381844416 t_g_copy=0.008 t_g_accum=0.832 t_g_lib=10.225 t_g_divsqrt=6.525 t_reduce=0.000 nextstep_calls=0
+# route scalar=off by=opt_in calls=0 fallbacks=526980
+# route indexed=off by=opt_in calls=0 fallbacks=27474
+# route reduce_seg=off by=opt_in calls=0 fallbacks=7788
+# route pair_gather=off by=opt_in calls=0 fallbacks=27474

@@ -1,0 +1,21 @@
+# DEBRIS-C log: m2_cpu_check
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m2\m2_cpu_check.js sha256 ae90eaac7f29bcc9e78c561a0a0cfe72db6dc04c6f8a27d4aa0bf06bc0405b13 (kept as scripts\m2_cpu_check.ae90eaac7f29.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m2/m2_cpu_check.js
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# timesheet check desktop --short (rc 0):
+#   FREE: desktop for short unbooked work from 2026-11-12 18:28 -0700 to 2026-11-12 18:38 -0700
+#     note, a notice in that window: B0013  desktop        notice    2026-11-12 17:55 -0700 -> 2026-11-12 22:05 -0700  cft-debris/DEBRIS-C: round DEBRIS-C: the study parcel's short runs (each under 10 minutes; every timing checks --short first)
+# start: 2026-11-12 18:28:11 -0700
+# ---- stdout ----
+span 0: wall 2.049 s, sorts 9 (227.6 ms each), thread CPU 0.594 s (0.29), process CPU 0.844 s, system load 0%, checksum 0.0043209928729971425
+span 1: wall 2.184 s, sorts 11 (198.6 ms each), thread CPU 0.453 s (0.21), process CPU 0.469 s, system load 21%, checksum 0.005281213511440952
+span 2: wall 2.091 s, sorts 11 (190.1 ms each), thread CPU 0.266 s (0.13), process CPU 0.266 s, system load 16%, checksum 0.005281213511440952
+span 3: wall 2.199 s, sorts 11 (199.9 ms each), thread CPU 0.438 s (0.20), process CPU 0.469 s, system load 18%, checksum 0.005281213511440952
+span 4: wall 2.006 s, sorts 9 (222.9 ms each), thread CPU 0.813 s (0.40), process CPU 0.813 s, system load 53%, checksum 0.0043209928729971425
+span 5: wall 2.014 s, sorts 10 (201.4 ms each), thread CPU 0.281 s (0.14), process CPU 0.281 s, system load 18%, checksum 0.004801103192219047
+# ---- stderr ----
+# end: 2026-11-12 18:28:25 -0700
+# exit code: 0
+# wall: 14.448 s; child CPU (GetProcessTimes): user 3.828 s + kernel 0.203 s = 4.031 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 26.6%; 1 s samples n=14 min 11% max 59%

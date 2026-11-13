@@ -1,0 +1,7 @@
+# turn-around state of fp128 at t = 0x1.518p+16
+name leo_j2
+G 0x1p+0
+active 1
+zonal 0 0x1.8ea23126e978dp+12 0x1.1bcdd8bccd56ep-10 0x0p+0
+body earth 0x1.85421c467381dp+18 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0
+body sat 0x0p+0 -0x1.8a327c41918574c8f7880c78968p+4 -0x1.1789225db5c6fab58f708cb2d9abp+12 -0x1.3eb4e98e8cf51565eb486b04a2bep+12 0x1.ceaac6c0c30f17746c5a6fc6a953p+2 0x1.e4c27321616b34d4ba2f2804b8fbp+0 -0x1.afae2a9c029ac46691c312b4e78ep+0

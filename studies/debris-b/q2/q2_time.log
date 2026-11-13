@@ -1,0 +1,22 @@
+# 2026-11-12 16:19:19 -0700 q2_time.py: binary64 kernels (gravq at binary128), 5 reps of ~0.25 s; host i5-12400F, 12 threads
+grav N=8                     ncall  1748251 | force: min      183.0 ns, median      189.6 ns, cpu       35.8 ns,       446 cycles a call | per unit    183.00 ns | no-force min     0.50 ns | ratio    365.3 | load % 22/22/18/21/22 | checksums 152.31218799732451
+grav N=20                    ncall   353857 | force: min      864.0 ns, median      940.7 ns, cpu      176.6 ns,      2110 cycles a call | per unit    863.97 ns | no-force min     0.50 ns | ratio   1721.0 | load % 17/16/22/31/13 | checksums 30.896921066178511
+grav N=36                    ncall   119674 | force: min     2617.8 ns, median     2649.3 ns, cpu      652.8 ns,      6356 cycles a call | per unit   2617.81 ns | no-force min     0.50 ns | ratio   5225.2 | load % 18/18/20/15/16 | checksums 10.41892996279303
+grav N=70                    ncall    17084 | force: min    10038.6 ns, median    10379.7 ns, cpu     2743.8 ns,     24650 cycles a call | per unit  10038.56 ns | no-force min     0.50 ns | ratio  19957.4 | load % 17/28/18/15/20 | checksums 1.5928317740367697
+cheb Sun+Moon                ncall  2631551 | force: min      129.4 ns, median      152.3 ns, cpu       29.7 ns,       318 cycles a call | per unit    129.37 ns | no-force min     8.67 ns | ratio     14.9 | load % 22/69/28/26/36 | checksums 79302163463933.938
+frame full series            ncall     1757 | force: min   146936.4 ns, median   148135.8 ns, cpu    26679.0 ns,    358523 cycles a call | per unit 146936.43 ns | no-force min    14.00 ns | ratio  10494.7 | load % 19/29/21/23/21 | checksums 668062.6316226268
+frame interp 3600 s          ncall   581395 | force: min      511.8 ns, median      532.0 ns, cpu      268.8 ns,      1239 cycles a call | per unit    511.82 ns | no-force min    13.83 ns | ratio     37.0 | load % 31/52/33/31/55 | checksums 240177419.02588353
+srp LEO orbit points         ncall  1893939 | force: min       34.6 ns, median       38.5 ns, cpu        0.0 ns,        85 cycles a call | per unit     34.57 ns | no-force min     0.50 ns | ratio     69.0 | load % 26/24/10/19/14 | checksums 0.0010181896981986279
+srp penumbra band            ncall  3759398 | force: min       74.9 ns, median       75.9 ns, cpu       20.8 ns,       184 cycles a call | per unit     74.92 ns | no-force min     0.50 ns | ratio    149.0 | load % 23/18/27/18/26 | checksums 0.0016423601279713005
+gravq N=8 binary128          ncall     7359 | force: min    32397.9 ns, median    33252.4 ns, cpu     4246.5 ns,     78741 cycles a call | per unit  32397.87 ns | no-force min     0.53 ns | ratio  61128.1 | load % 23/26/21/23/26 | checksums 0.73303677841583048
+gravq N=20 binary128         ncall     1374 | force: min   184820.8 ns, median   196323.1 ns, cpu    34115.7 ns,    439596 cycles a call | per unit 184820.82 ns | no-force min     0.73 ns | ratio 253874.7 | load % 21/61/45/37/39 | checksums 0.24495059766030258
+gravq N=36 binary128         ncall     1000 | force: min   539250.4 ns, median   551900.4 ns, cpu   125000.0 ns,   1319937 cycles a call | per unit 539250.40 ns | no-force min     0.60 ns | ratio 898750.7 | load % 20/23/20/20/27 | checksums 0.077366024443663223
+gravq N=70 binary128         ncall     1000 | force: min  1954158.8 ns, median  2060176.4 ns, cpu   562500.0 ns,   4780290 cycles a call | per unit 1954158.80 ns | no-force min     0.60 ns | ratio 3256931.3 | load % 30/18/27/22/19 | checksums 0.077351027491144184
+atmos K=1                    ncall  2824858 | force: min       79.5 ns, median       81.7 ns, cpu       16.6 ns,       195 cycles a call | per unit     79.52 ns | no-force min     0.74 ns | ratio    108.0 | load % 14/22/22/23/17 | checksums 0.00026978187864656856
+# atmosphere: the control passes at K = 1 objects a call
+ALL CONTROLS PASSED (every force/no-force ratio >= 10; checksums identical across repetitions)
+
+real	0m34.121s
+user	0m0.000s
+sys	0m0.000s
+rc=0

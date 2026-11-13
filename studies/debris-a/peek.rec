@@ -1,0 +1,18 @@
+# cft-rebound ias15 record v1
+# program=cft impl=libcft-0.18 format=fp64 backend=software problem=zonal_saturn N=3 steps=4 sample=2 cs=kahan arith=rebound engine=loop pc_tol_shift=0 max_iter=12
+# identity libcft_build=commit=922c2ade78fad995a0871bf07cebf8b9fbcb2b9f,tracked=clean,untracked=none image=none
+# dt0= 0x1.9p+6 epsilon= 0x0p+0 G= 0x1p+0 pc_tol= 0x1.cd2b297d889bcp-54
+# active 2 of 3 bodies a system: 3 pairs a force evaluation, a system
+# zonal body 0 of every system, about z: R= 0x1.d754p+15 J2= 0x1.0ae79d91288f7p-6 J4= -0x1.ea5fb854f9344p-11; it acts on 2 bodies a system, and body 0 takes the reaction of 1
+# body 0 saturn m= 0x1.2163fcp+25
+# body 1 mimas m= 0x1.40725c3dee782p+1
+# body 2 ring m= 0x0p+0
+# columns: sample step t dt_next dt_last E then per body x y z vx vy vz ; then exact-time pair t_hi t_lo
+sample 0 0 0x0p+0 0x1.9p+6 0x0p+0 -0x1.ff766a1c3498ap+7 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 -0x1.67e53105dc68p+16 0x1.32c60b77d514cp+17 0x1.260bb01771736p+13 -0x1.92b6575ae7dadp+3 -0x1.d51c1d2c0496fp+2 0x1.0992f322ff685p-3 -0x1.ea6ebc08f2789p+15 0x1.cfb8ed3cc919fp+16 -0x1.2254dd195b9b9p+12 -0x1.d4db5e42e90f4p+3 -0x1.0322741ee3b14p+3 0x1.73a94ed7f14d9p-4 | 0x0p+0 0x0p+0
+sample 1 2 0x1.9p+7 0x1.9p+6 0x1.9p+6 -0x1.ff766a1c3499p+7 -0x1.9d507c53dbec4p-21 0x1.5c0ae62a7faa4p-20 0x1.50c418d2f77cdp-24 -0x1.09b38d7470d93p-27 0x1.bcc6e5041c8acp-27 0x1.af3c8c30df9aep-31 -0x1.71ae7a978b5ebp+16 0x1.2fdf3d0b5aef7p+17 0x1.26d1a9deb6fc9p+13 -0x1.8ef689a84b18cp+3 -0x1.e1a97bf8f8c5ep+2 0x1.e277b80a43eefp-4 -0x1.0095ae2aad09cp+16 0x1.c9402f24713b7p+16 -0x1.211aee87a7fe5p+12 -0x1.ce649821eff26p+3 -0x1.0eff7f833235p+3 0x1.aff9e018ef514p-4 | 0x1.9p+7 0x0p+0
+sample 2 4 0x1.9p+8 0x1.9p+6 0x1.9p+6 -0x1.ff766a1c3498cp+7 -0x1.a0fe2d69cbc6fp-19 0x1.5ae9f379834c6p-18 0x1.51089898d639cp-22 -0x1.0d393a1db8707p-26 0x1.ba986dbd0a4e9p-26 0x1.afbc6490379c8p-30 -0x1.7b6005baf9d57p+16 0x1.2ce4ea3f4fe48p+17 0x1.278499dd17a08p+13 -0x1.8b1d49a6d3bp+3 -0x1.ee17554cb4f0dp+2 0x1.b1acacaeccacbp-4 -0x1.0bcaa736cbb65p+16 0x1.c27dc5868f3e1p+16 -0x1.1fb1f338bca52p+12 -0x1.c7a0e92302503p+3 -0x1.1ab52d12b7fc3p+3 0x1.ec1a3d26df387p-4 | 0x1.9p+8 0x0p+0
+# steps_done=4 iterations_max_exceeded=0 steps_rejected=0 mean_pc_iterations=3.000 max_pc_iterations=4 flags_seen=0x10 calls=14108 divsqrt_calls=2281 seconds=0.145 steps_per_s=27.59 wall_seconds=0.146 t_program=0.032 t_elem=0.015 t_divsqrt=0.099 t_gravity=0.072 program_calls=352 staged_bytes=1882064 t_g_copy=0.000 t_g_accum=0.004 t_g_lib=0.072 t_g_divsqrt=0.037 t_reduce=0.000 nextstep_calls=0
+# route scalar=off by=opt_in calls=0 fallbacks=1773
+# route indexed=off by=opt_in calls=0 fallbacks=88
+# route reduce_seg=off by=opt_in calls=0 fallbacks=24
+# route pair_gather=off by=opt_in calls=0 fallbacks=88

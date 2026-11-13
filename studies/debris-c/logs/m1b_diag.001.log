@@ -1,0 +1,376 @@
+# DEBRIS-C log: m1b_diag
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1b\m1b_diag.py sha256 dc2f9b55fbd62305c828a4f9d2ef26e6cc990b2aa2b39b243bd8395894756393 (kept as scripts\m1b_diag.dc2f9b55fbd6.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1b\m1b_check.py sha256 3499eade26df542eae709d1623a6088e3207e19ad69d4685c8267b9f465aab30 (kept as scripts\m1b_check.3499eade26df.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1b/m1b_diag.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:19:24 -0700
+# ---- stdout ----
+# criterion 1 failures (custom reader), |d| >= 1e-13:
+  line  260 JED 2422537.5 t 15 c  0 x 3 value -4106.710598 |d| 9.095e-13 = 1.00 ulp(value)
+  line  325 JED 2424516.5 t 15 c  0 x 3 value -3651.504320 |d| 9.095e-13 = 2.00 ulp(value)
+  line  441 JED 2428046.5 t 15 c  0 x 3 value -2839.822887 |d| 4.547e-13 = 1.00 ulp(value)
+  line  545 JED 2431211.5 t 15 c  0 x 3 value -2111.851974 |d| 4.547e-13 = 1.00 ulp(value)
+  line  646 JED 2434286.5 t 15 c  0 x 3 value -1404.784359 |d| 6.821e-13 = 3.00 ulp(value)
+  line  667 JED 2434924.5 t 15 c  0 x 3 value -1258.081987 |d| 4.547e-13 = 2.00 ulp(value)
+  line  741 JED 2437178.5 t 15 c  0 x 3 value -739.653753 |d| 1.137e-13 = 1.00 ulp(value)
+  line  921 JED 2442656.5 t 15 c  0 x 3 value 520.062985 |d| 1.137e-13 = 1.00 ulp(value)
+  line 1052 JED 2446643.5 t 15 c  0 x 3 value 1437.034690 |d| 4.547e-13 = 2.00 ulp(value)
+  line 1067 JED 2447100.5 t 15 c  0 x 3 value 1542.103918 |d| 6.821e-13 = 3.00 ulp(value)
+  line 1090 JED 2447800.5 t 15 c  0 x 3 value 1703.041249 |d| 2.274e-13 = 1.00 ulp(value)
+  line 1236 JED 2452244.5 t 15 c  0 x 3 value 2725.135301 |d| 4.547e-13 = 1.00 ulp(value)
+  line 1367 JED 2456232.5 t 15 c  0 x 3 value 3642.146523 |d| 9.095e-13 = 2.00 ulp(value)
+# largest |d| over all custom points, in ulps of the value: 10202.00
+  Orekit line   74 JED 2416877.5 t  1 c 13 x 1 |d| vs testpo 4.307e-12 AU; Orekit - custom 4.307e-12
+  Orekit line  139 JED 2418853.5 t 12 c  1 x 2 |d| vs testpo 4.137e-12 AU; Orekit - custom 4.137e-12
+  Orekit line  181 JED 2420133.5 t  4 c  2 x 1 |d| vs testpo 5.478e-12 AU; Orekit - custom -5.478e-12
+  Orekit line  385 JED 2426342.5 t  6 c  2 x 1 |d| vs testpo 3.671e-12 AU; Orekit - custom 3.670e-12
+  Orekit line  446 JED 2428199.5 t 12 c  1 x 1 |d| vs testpo 3.917e-12 AU; Orekit - custom 3.917e-12
+  Orekit line  523 JED 2430541.5 t  1 c  5 x 1 |d| vs testpo 3.445e-12 AU; Orekit - custom -3.445e-12
+  Orekit line  590 JED 2432582.5 t  5 c  1 x 2 |d| vs testpo 3.152e-12 AU; Orekit - custom -3.153e-12
+  Orekit line  621 JED 2433525.5 t  2 c  4 x 1 |d| vs testpo 3.004e-12 AU; Orekit - custom 3.004e-12
+  Orekit line  931 JED 2442960.5 t  8 c  1 x 2 |d| vs testpo 3.869e-12 AU; Orekit - custom 3.869e-12
+  Orekit line  981 JED 2444483.5 t  1 c  3 x 2 |d| vs testpo 3.483e-12 AU; Orekit - custom 3.483e-12
+  Orekit line  985 JED 2444605.5 t 10 c  7 x 1 |d| vs testpo 3.372e-12 AU; Orekit - custom -3.368e-12
+  Orekit line 1021 JED 2445700.5 t  5 c  1 x 1 |d| vs testpo 6.772e-12 AU; Orekit - custom 6.772e-12
+  Orekit line 1129 JED 2448988.5 t  1 c  2 x 1 |d| vs testpo 5.511e-12 AU; Orekit - custom 5.511e-12
+  Orekit line 1214 JED 2451575.5 t  6 c  1 x 2 |d| vs testpo 3.313e-12 AU; Orekit - custom -3.313e-12
+  Orekit line 1284 JED 2453705.5 t  8 c  1 x 1 |d| vs testpo 4.910e-12 AU; Orekit - custom 4.906e-12
+  Orekit line 1315 JED 2454648.5 t  3 c  2 x 1 |d| vs testpo 5.708e-12 AU; Orekit - custom -5.708e-12
+  Orekit line 1352 JED 2455774.5 t  1 c 11 x 1 |d| vs testpo 3.295e-12 AU; Orekit - custom -3.295e-12
+  Orekit line 1369 JED 2456293.5 t  1 c 10 x 1 |d| vs testpo 6.388e-12 AU; Orekit - custom 6.388e-12
+  Orekit line 1375 JED 2456474.5 t 13 c  4 x 1 |d| vs testpo 4.738e-12 AU; Orekit - custom -4.738e-12
+  Orekit line 1416 JED 2457723.5 t  2 c  5 x 2 |d| vs testpo 3.466e-12 AU; Orekit - custom 3.466e-12
+  Orekit line 1465 JED 2459215.5 t  9 c 13 x 1 |d| vs testpo 3.377e-12 AU; Orekit - custom 3.375e-12
+  Orekit line 1521 JED 2460919.5 t 13 c  1 x 1 |d| vs testpo 3.551e-12 AU; Orekit - custom -3.551e-12
+  Orekit line 1669 JED 2465424.5 t 11 c  2 x 1 |d| vs testpo 3.366e-12 AU; Orekit - custom 3.366e-12
+  Orekit line 1796 JED 2469289.5 t  1 c  8 x 2 |d| vs testpo 3.777e-12 AU; Orekit - custom 3.777e-12
+# Orekit vs testpo by (target, centre, kind): points, failures, max |d|
+  t  1 c  2 pos:   9 points,   8 fail, max 5.51e-12
+  t  1 c  2 vel:   6 points,   4 fail, max 2.79e-13
+  t  1 c  3 pos:   3 points,   3 fail, max 3.48e-12
+  t  1 c  3 vel:   3 points,   0 fail, max 9.67e-15
+  t  1 c  4 pos:  10 points,   9 fail, max 1.77e-12
+  t  1 c  4 vel:   3 points,   2 fail, max 1.40e-13
+  t  1 c  5 pos:  10 points,   8 fail, max 3.45e-12
+  t  1 c  5 vel:   8 points,   5 fail, max 2.72e-13
+  t  1 c  6 pos:   8 points,   8 fail, max 2.27e-12
+  t  1 c  6 vel:   6 points,   3 fail, max 3.25e-13
+  t  1 c  7 pos:   4 points,   4 fail, max 2.75e-12
+  t  1 c  7 vel:   3 points,   1 fail, max 1.70e-13
+  t  1 c  8 pos:   4 points,   4 fail, max 3.78e-12
+  t  1 c  8 vel:   4 points,   1 fail, max 1.56e-13
+  t  1 c  9 pos:   5 points,   4 fail, max 2.79e-12
+  t  1 c  9 vel:   2 points,   0 fail, max 8.45e-14
+  t  1 c 10 pos:   8 points,   8 fail, max 6.39e-12
+  t  1 c 10 vel:   4 points,   2 fail, max 1.93e-13
+  t  1 c 11 pos:   6 points,   6 fail, max 3.30e-12
+  t  1 c 11 vel:   2 points,   2 fail, max 4.60e-13
+  t  1 c 12 pos:   5 points,   4 fail, max 2.14e-12
+  t  1 c 12 vel:   6 points,   1 fail, max 3.04e-13
+  t  1 c 13 pos:   8 points,   8 fail, max 4.31e-12
+  t  1 c 13 vel:   6 points,   3 fail, max 3.46e-13
+  t  2 c  1 pos:   5 points,   5 fail, max 1.98e-12
+  t  2 c  1 vel:   5 points,   2 fail, max 1.18e-13
+  t  2 c  3 pos:   6 points,   6 fail, max 2.23e-12
+  t  2 c  3 vel:   4 points,   1 fail, max 1.06e-13
+  t  2 c  4 pos:   7 points,   5 fail, max 3.00e-12
+  t  2 c  4 vel:   3 points,   0 fail, max 8.41e-14
+  t  2 c  5 pos:   5 points,   5 fail, max 3.47e-12
+  t  2 c  5 vel:   5 points,   0 fail, max 6.63e-14
+  t  2 c  6 pos:   4 points,   4 fail, max 2.45e-12
+  t  2 c  6 vel:   5 points,   0 fail, max 5.83e-14
+  t  2 c  7 pos:   3 points,   3 fail, max 2.14e-12
+  t  2 c  7 vel:   4 points,   0 fail, max 4.62e-14
+  t  2 c  8 pos:   2 points,   2 fail, max 2.33e-12
+  t  2 c  8 vel:   7 points,   0 fail, max 7.95e-14
+  t  2 c  9 pos:   4 points,   4 fail, max 2.54e-12
+  t  2 c  9 vel:   3 points,   0 fail, max 7.72e-14
+  t  2 c 10 pos:   4 points,   3 fail, max 1.66e-12
+  t  2 c 10 vel:   6 points,   0 fail, max 6.01e-14
+  t  2 c 11 pos:   9 points,   8 fail, max 1.52e-12
+  t  2 c 11 vel:   3 points,   0 fail, max 2.77e-14
+  t  2 c 12 pos:   5 points,   2 fail, max 2.33e-12
+  t  2 c 13 pos:   7 points,   6 fail, max 1.41e-12
+  t  2 c 13 vel:   8 points,   0 fail, max 8.06e-14
+  t  3 c  1 pos:   6 points,   6 fail, max 1.90e-12
+  t  3 c  1 vel:   4 points,   1 fail, max 1.13e-13
+  t  3 c  2 pos:   4 points,   3 fail, max 5.71e-12
+  t  3 c  2 vel:   5 points,   0 fail, max 2.12e-14
+  t  3 c  4 pos:   6 points,   5 fail, max 1.92e-12
+  t  3 c  4 vel:   3 points,   0 fail, max 8.45e-15
+  t  3 c  5 pos:   6 points,   6 fail, max 9.75e-13
+  t  3 c  5 vel:   5 points,   0 fail, max 2.49e-14
+  t  3 c  6 pos:   6 points,   6 fail, max 2.98e-12
+  t  3 c  6 vel:   1 points,   0 fail, max 4.17e-14
+  t  3 c  7 pos:   5 points,   5 fail, max 2.07e-12
+  t  3 c  7 vel:   5 points,   0 fail, max 3.05e-14
+  t  3 c  8 pos:   4 points,   3 fail, max 1.15e-12
+  t  3 c  8 vel:   8 points,   0 fail, max 4.61e-14
+  t  3 c  9 pos:   5 points,   4 fail, max 7.30e-13
+  t  3 c  9 vel:   4 points,   0 fail, max 2.62e-14
+  t  3 c 10 pos:   5 points,   0 fail, max 8.48e-14
+  t  3 c 10 vel:   5 points,   0 fail, max 7.48e-15
+  t  3 c 11 pos:   2 points,   1 fail, max 1.37e-12
+  t  3 c 11 vel:   5 points,   0 fail, max 1.65e-14
+  t  3 c 12 pos:   9 points,   9 fail, max 2.88e-12
+  t  3 c 12 vel:   5 points,   0 fail, max 2.56e-14
+  t  3 c 13 pos:   3 points,   0 fail, max 3.71e-16
+  t  3 c 13 vel:   3 points,   0 fail, max 1.82e-16
+  t  4 c  1 pos:   3 points,   3 fail, max 1.55e-12
+  t  4 c  1 vel:   2 points,   1 fail, max 1.30e-13
+  t  4 c  2 pos:   3 points,   3 fail, max 5.48e-12
+  t  4 c  2 vel:   4 points,   0 fail, max 3.32e-14
+  t  4 c  3 pos:  10 points,   8 fail, max 2.40e-12
+  t  4 c  3 vel:   6 points,   0 fail, max 3.80e-14
+  t  4 c  5 pos:   7 points,   5 fail, max 1.63e-12
+  t  4 c  5 vel:   4 points,   0 fail, max 1.88e-14
+  t  4 c  6 pos:   6 points,   6 fail, max 1.03e-12
+  t  4 c  6 vel:   5 points,   0 fail, max 9.12e-15
+  t  4 c  7 pos:   7 points,   7 fail, max 2.01e-12
+  t  4 c  7 vel:   5 points,   0 fail, max 1.05e-14
+  t  4 c  8 pos:   6 points,   4 fail, max 1.80e-12
+  t  4 c  8 vel:   5 points,   0 fail, max 1.65e-14
+  t  4 c  9 pos:   4 points,   3 fail, max 1.50e-12
+  t  4 c  9 vel:   3 points,   0 fail, max 5.22e-15
+  t  4 c 10 pos:   4 points,   4 fail, max 1.12e-12
+  t  4 c 10 vel:   8 points,   0 fail, max 4.99e-14
+  t  4 c 11 pos:   5 points,   5 fail, max 1.79e-12
+  t  4 c 11 vel:   6 points,   0 fail, max 1.74e-14
+  t  4 c 12 pos:   7 points,   7 fail, max 1.94e-12
+  t  4 c 12 vel:   1 points,   0 fail, max 8.94e-15
+  t  4 c 13 pos:   7 points,   6 fail, max 1.17e-12
+  t  4 c 13 vel:   4 points,   0 fail, max 2.49e-14
+  t  5 c  1 pos:   6 points,   5 fail, max 6.77e-12
+  t  5 c  1 vel:  10 points,   1 fail, max 1.40e-13
+  t  5 c  2 pos:   4 points,   3 fail, max 8.11e-13
+  t  5 c  2 vel:   6 points,   0 fail, max 6.83e-14
+  t  5 c  3 pos:   1 points,   1 fail, max 1.70e-12
+  t  5 c  3 vel:   9 points,   0 fail, max 3.67e-14
+  t  5 c  4 pos:   3 points,   2 fail, max 2.07e-12
+  t  5 c  4 vel:   3 points,   0 fail, max 9.38e-15
+  t  5 c  6 pos:   7 points,   3 fail, max 7.09e-13
+  t  5 c  6 vel:   3 points,   0 fail, max 1.17e-15
+  t  5 c  7 pos:   4 points,   1 fail, max 6.96e-13
+  t  5 c  7 vel:  10 points,   0 fail, max 1.90e-15
+  t  5 c  8 pos:   1 points,   1 fail, max 5.90e-13
+  t  5 c  8 vel:   8 points,   0 fail, max 1.32e-15
+  t  5 c  9 pos:   9 points,   7 fail, max 5.40e-13
+  t  5 c  9 vel:   4 points,   0 fail, max 1.61e-15
+  t  5 c 10 pos:   3 points,   1 fail, max 1.24e-12
+  t  5 c 10 vel:   5 points,   0 fail, max 4.34e-14
+  t  5 c 11 pos:   6 points,   4 fail, max 3.86e-13
+  t  5 c 11 vel:   4 points,   0 fail, max 1.18e-15
+  t  5 c 12 pos:   8 points,   5 fail, max 7.86e-13
+  t  5 c 13 pos:   5 points,   4 fail, max 1.12e-12
+  t  5 c 13 vel:   4 points,   0 fail, max 3.10e-14
+  t  6 c  1 pos:   5 points,   5 fail, max 3.31e-12
+  t  6 c  1 vel:   6 points,   2 fail, max 1.77e-13
+  t  6 c  2 pos:   4 points,   3 fail, max 3.67e-12
+  t  6 c  2 vel:   6 points,   0 fail, max 2.89e-14
+  t  6 c  3 pos:  10 points,   7 fail, max 2.16e-12
+  t  6 c  3 vel:   5 points,   0 fail, max 3.59e-14
+  t  6 c  4 vel:   3 points,   0 fail, max 1.50e-14
+  t  6 c  5 pos:   4 points,   3 fail, max 7.12e-13
+  t  6 c  5 vel:   6 points,   0 fail, max 1.90e-15
+  t  6 c  7 pos:   3 points,   0 fail, max 7.82e-14
+  t  6 c  7 vel:   5 points,   0 fail, max 4.09e-16
+  t  6 c  8 pos:   1 points,   1 fail, max 3.22e-13
+  t  6 c  8 vel:   7 points,   0 fail, max 5.22e-16
+  t  6 c  9 pos:   7 points,   4 fail, max 7.11e-13
+  t  6 c  9 vel:   7 points,   0 fail, max 2.56e-16
+  t  6 c 10 pos:   8 points,   8 fail, max 1.41e-12
+  t  6 c 10 vel:   4 points,   0 fail, max 2.06e-14
+  t  6 c 11 pos:   6 points,   5 fail, max 4.36e-13
+  t  6 c 11 vel:   5 points,   0 fail, max 1.54e-16
+  t  6 c 12 pos:   6 points,   4 fail, max 6.39e-13
+  t  6 c 12 vel:   7 points,   0 fail, max 5.37e-16
+  t  6 c 13 pos:   4 points,   3 fail, max 1.75e-12
+  t  6 c 13 vel:   1 points,   0 fail, max 2.61e-14
+  t  7 c  1 pos:   6 points,   5 fail, max 1.91e-12
+  t  7 c  1 vel:   3 points,   2 fail, max 2.92e-13
+  t  7 c  2 pos:   6 points,   5 fail, max 2.19e-12
+  t  7 c  2 vel:   6 points,   0 fail, max 6.47e-14
+  t  7 c  3 pos:   6 points,   5 fail, max 2.16e-12
+  t  7 c  3 vel:   3 points,   0 fail, max 3.60e-14
+  t  7 c  4 pos:   5 points,   4 fail, max 2.45e-12
+  t  7 c  4 vel:   6 points,   0 fail, max 1.30e-14
+  t  7 c  5 pos:   4 points,   2 fail, max 7.43e-13
+  t  7 c  5 vel:   4 points,   0 fail, max 6.86e-16
+  t  7 c  6 pos:   5 points,   5 fail, max 1.08e-12
+  t  7 c  6 vel:   2 points,   0 fail, max 3.30e-16
+  t  7 c  8 pos:  10 points,   6 fail, max 8.88e-13
+  t  7 c  8 vel:   4 points,   0 fail, max 1.61e-16
+  t  7 c  9 pos:   7 points,   4 fail, max 4.55e-13
+  t  7 c  9 vel:   5 points,   0 fail, max 5.98e-17
+  t  7 c 10 pos:   5 points,   1 fail, max 2.08e-13
+  t  7 c 10 vel:   2 points,   0 fail, max 2.50e-14
+  t  7 c 11 pos:   4 points,   3 fail, max 5.71e-13
+  t  7 c 11 vel:   8 points,   0 fail, max 9.45e-17
+  t  7 c 12 pos:   8 points,   5 fail, max 3.77e-13
+  t  7 c 12 vel:   5 points,   0 fail, max 1.05e-16
+  t  7 c 13 pos:   3 points,   2 fail, max 4.76e-13
+  t  7 c 13 vel:   5 points,   0 fail, max 2.97e-14
+  t  8 c  1 pos:   4 points,   4 fail, max 4.91e-12
+  t  8 c  1 vel:   5 points,   2 fail, max 2.05e-13
+  t  8 c  2 pos:   3 points,   3 fail, max 1.46e-12
+  t  8 c  2 vel:   4 points,   0 fail, max 4.83e-14
+  t  8 c  3 pos:   3 points,   3 fail, max 1.15e-12
+  t  8 c  3 vel:   8 points,   0 fail, max 3.09e-14
+  t  8 c  4 vel:   5 points,   0 fail, max 6.44e-15
+  t  8 c  5 pos:   3 points,   3 fail, max 4.95e-13
+  t  8 c  5 vel:   4 points,   0 fail, max 1.08e-15
+  t  8 c  6 pos:   6 points,   4 fail, max 1.22e-12
+  t  8 c  6 vel:   2 points,   0 fail, max 1.28e-16
+  t  8 c  7 pos:   9 points,   5 fail, max 5.01e-13
+  t  8 c  7 vel:   5 points,   0 fail, max 6.67e-17
+  t  8 c  9 pos:   7 points,   6 fail, max 4.20e-13
+  t  8 c  9 vel:   1 points,   0 fail, max 4.34e-19
+  t  8 c 10 pos:   3 points,   2 fail, max 2.32e-12
+  t  8 c 10 vel:   7 points,   0 fail, max 2.01e-14
+  t  8 c 11 pos:   5 points,   4 fail, max 4.23e-13
+  t  8 c 11 vel:   4 points,   0 fail, max 4.85e-17
+  t  8 c 12 pos:   4 points,   3 fail, max 4.07e-13
+  t  8 c 12 vel:   6 points,   0 fail, max 2.19e-17
+  t  8 c 13 pos:   9 points,   8 fail, max 2.52e-12
+  t  8 c 13 vel:   2 points,   0 fail, max 1.48e-14
+  t  9 c  1 pos:   7 points,   6 fail, max 2.79e-12
+  t  9 c  1 vel:  11 points,   4 fail, max 3.13e-13
+  t  9 c  2 pos:   6 points,   6 fail, max 2.60e-12
+  t  9 c  2 vel:   6 points,   0 fail, max 7.77e-14
+  t  9 c  3 pos:   7 points,   6 fail, max 1.88e-12
+  t  9 c  3 vel:   9 points,   0 fail, max 3.38e-14
+  t  9 c  4 pos:   5 points,   4 fail, max 1.08e-12
+  t  9 c  4 vel:   3 points,   0 fail, max 4.22e-15
+  t  9 c  5 pos:   7 points,   5 fail, max 1.42e-12
+  t  9 c  5 vel:   4 points,   0 fail, max 1.24e-15
+  t  9 c  6 pos:   2 points,   2 fail, max 1.04e-12
+  t  9 c  6 vel:   3 points,   0 fail, max 2.19e-16
+  t  9 c  7 pos:   2 points,   2 fail, max 6.86e-13
+  t  9 c  7 vel:   3 points,   0 fail, max 9.67e-17
+  t  9 c  8 pos:   8 points,   5 fail, max 3.69e-13
+  t  9 c  8 vel:   3 points,   0 fail, max 4.12e-17
+  t  9 c 10 pos:   8 points,   7 fail, max 2.28e-12
+  t  9 c 10 vel:   7 points,   0 fail, max 5.02e-14
+  t  9 c 11 pos:   5 points,   4 fail, max 2.74e-13
+  t  9 c 11 vel:   6 points,   0 fail, max 4.28e-17
+  t  9 c 12 pos:   6 points,   4 fail, max 4.62e-13
+  t  9 c 12 vel:   6 points,   0 fail, max 4.14e-17
+  t  9 c 13 pos:   3 points,   2 fail, max 3.38e-12
+  t  9 c 13 vel:   5 points,   0 fail, max 4.20e-14
+  t 10 c  1 pos:   6 points,   5 fail, max 2.72e-12
+  t 10 c  1 vel:   2 points,   1 fail, max 2.18e-13
+  t 10 c  2 pos:   7 points,   5 fail, max 2.98e-12
+  t 10 c  2 vel:   6 points,   2 fail, max 1.19e-13
+  t 10 c  3 pos:   2 points,   0 fail, max 1.96e-14
+  t 10 c  3 vel:   2 points,   0 fail, max 8.54e-15
+  t 10 c  4 pos:   7 points,   4 fail, max 1.80e-12
+  t 10 c  4 vel:  12 points,   0 fail, max 2.93e-14
+  t 10 c  5 pos:   6 points,   3 fail, max 2.39e-12
+  t 10 c  5 vel:   2 points,   0 fail, max 2.53e-15
+  t 10 c  6 pos:   7 points,   6 fail, max 2.99e-12
+  t 10 c  6 vel:   5 points,   0 fail, max 5.03e-14
+  t 10 c  7 pos:   6 points,   6 fail, max 3.37e-12
+  t 10 c  7 vel:   1 points,   0 fail, max 2.45e-16
+  t 10 c  8 pos:   3 points,   2 fail, max 6.81e-13
+  t 10 c  8 vel:   4 points,   0 fail, max 4.66e-14
+  t 10 c  9 pos:  10 points,   9 fail, max 2.68e-12
+  t 10 c  9 vel:   4 points,   0 fail, max 1.52e-14
+  t 10 c 11 pos:   7 points,   7 fail, max 2.33e-12
+  t 10 c 11 vel:   6 points,   0 fail, max 4.62e-14
+  t 10 c 12 pos:  10 points,   8 fail, max 2.77e-12
+  t 10 c 12 vel:   6 points,   0 fail, max 5.92e-14
+  t 10 c 13 pos:   6 points,   0 fail, max 8.09e-14
+  t 10 c 13 vel:   4 points,   0 fail, max 1.74e-14
+  t 11 c  1 pos:   4 points,   2 fail, max 1.64e-12
+  t 11 c  1 vel:   3 points,   2 fail, max 4.04e-13
+  t 11 c  2 pos:   5 points,   5 fail, max 3.37e-12
+  t 11 c  2 vel:   5 points,   0 fail, max 8.25e-14
+  t 11 c  3 pos:   7 points,   7 fail, max 1.92e-12
+  t 11 c  3 vel:   4 points,   0 fail, max 3.69e-14
+  t 11 c  4 pos:   6 points,   3 fail, max 2.17e-12
+  t 11 c  4 vel:   6 points,   0 fail, max 1.52e-14
+  t 11 c  5 pos:   1 points,   1 fail, max 5.28e-13
+  t 11 c  5 vel:   4 points,   0 fail, max 1.12e-15
+  t 11 c  6 pos:   5 points,   2 fail, max 3.38e-13
+  t 11 c  6 vel:   7 points,   0 fail, max 2.84e-16
+  t 11 c  7 pos:  10 points,   7 fail, max 5.45e-13
+  t 11 c  7 vel:   6 points,   0 fail, max 7.37e-17
+  t 11 c  8 pos:   6 points,   3 fail, max 4.62e-13
+  t 11 c  8 vel:  10 points,   0 fail, max 4.65e-17
+  t 11 c  9 pos:   4 points,   3 fail, max 4.26e-13
+  t 11 c  9 vel:   1 points,   0 fail, max 1.24e-17
+  t 11 c 10 pos:   3 points,   2 fail, max 1.40e-12
+  t 11 c 10 vel:   4 points,   0 fail, max 1.76e-14
+  t 11 c 12 pos:   5 points,   0 fail, max 6.20e-16
+  t 11 c 12 vel:   5 points,   0 fail, max 1.58e-18
+  t 11 c 13 pos:   8 points,   8 fail, max 2.88e-12
+  t 11 c 13 vel:   8 points,   0 fail, max 1.62e-14
+  t 12 c  1 pos:   8 points,   7 fail, max 4.14e-12
+  t 12 c  1 vel:   9 points,   3 fail, max 1.73e-13
+  t 12 c  2 pos:   3 points,   3 fail, max 2.58e-12
+  t 12 c  2 vel:   2 points,   0 fail, max 8.68e-14
+  t 12 c  3 pos:   3 points,   3 fail, max 1.44e-12
+  t 12 c  3 vel:   8 points,   0 fail, max 3.10e-14
+  t 12 c  4 pos:   7 points,   6 fail, max 1.79e-12
+  t 12 c  4 vel:   3 points,   0 fail, max 1.89e-14
+  t 12 c  5 pos:   6 points,   4 fail, max 5.00e-13
+  t 12 c  5 vel:   5 points,   0 fail, max 6.61e-16
+  t 12 c  6 pos:   4 points,   4 fail, max 8.42e-13
+  t 12 c  6 vel:   4 points,   0 fail, max 5.18e-16
+  t 12 c  7 pos:   5 points,   4 fail, max 6.28e-13
+  t 12 c  7 vel:   6 points,   0 fail, max 1.07e-16
+  t 12 c  8 pos:   3 points,   3 fail, max 4.71e-13
+  t 12 c  8 vel:   7 points,   0 fail, max 5.40e-17
+  t 12 c  9 pos:   2 points,   0 fail, max 3.55e-14
+  t 12 c  9 vel:   6 points,   0 fail, max 2.78e-17
+  t 12 c 10 pos:   5 points,   4 fail, max 1.87e-12
+  t 12 c 10 vel:   5 points,   0 fail, max 3.08e-14
+  t 12 c 11 pos:   7 points,   0 fail, max 1.03e-15
+  t 12 c 11 vel:   7 points,   0 fail, max 1.28e-18
+  t 12 c 13 pos:   6 points,   5 fail, max 9.02e-13
+  t 12 c 13 vel:   8 points,   0 fail, max 3.07e-14
+  t 13 c  1 pos:   4 points,   4 fail, max 3.55e-12
+  t 13 c  1 vel:   6 points,   3 fail, max 2.72e-13
+  t 13 c  2 pos:   5 points,   5 fail, max 1.68e-12
+  t 13 c  2 vel:   5 points,   0 fail, max 3.83e-14
+  t 13 c  3 pos:   7 points,   0 fail, max 5.04e-16
+  t 13 c  3 vel:   7 points,   0 fail, max 1.83e-16
+  t 13 c  4 pos:   4 points,   4 fail, max 4.74e-12
+  t 13 c  4 vel:   2 points,   0 fail, max 5.62e-14
+  t 13 c  5 pos:   5 points,   4 fail, max 8.02e-13
+  t 13 c  5 vel:   7 points,   0 fail, max 3.74e-14
+  t 13 c  6 pos:   3 points,   2 fail, max 1.88e-12
+  t 13 c  6 vel:   4 points,   0 fail, max 3.58e-14
+  t 13 c  7 pos:   5 points,   3 fail, max 1.03e-12
+  t 13 c  7 vel:   3 points,   0 fail, max 1.71e-14
+  t 13 c  8 pos:   4 points,   4 fail, max 2.12e-12
+  t 13 c  8 vel:   2 points,   0 fail, max 4.64e-14
+  t 13 c  9 pos:   7 points,   7 fail, max 2.05e-12
+  t 13 c  9 vel:   7 points,   0 fail, max 3.59e-14
+  t 13 c 10 pos:   2 points,   0 fail, max 4.55e-14
+  t 13 c 10 vel:   9 points,   0 fail, max 2.11e-14
+  t 13 c 11 pos:   5 points,   5 fail, max 7.81e-13
+  t 13 c 11 vel:   4 points,   0 fail, max 2.64e-14
+  t 13 c 12 pos:   7 points,   6 fail, max 2.20e-12
+  t 13 c 12 vel:   4 points,   0 fail, max 1.55e-14
+# Orekit vs testpo, max position |d| by decade from J2000 (index = decades):
+  decade  -9: 4.31e-12 AU
+  decade  -8: 5.48e-12 AU
+  decade  -7: 2.45e-12 AU
+  decade  -6: 3.92e-12 AU
+  decade  -5: 3.45e-12 AU
+  decade  -4: 3.00e-12 AU
+  decade  -3: 2.75e-12 AU
+  decade  -2: 3.87e-12 AU
+  decade  -1: 6.77e-12 AU
+  decade   0: 5.71e-12 AU
+  decade   1: 6.39e-12 AU
+  decade   2: 3.55e-12 AU
+  decade   3: 3.37e-12 AU
+  decade   4: 3.78e-12 AU
+# ---- stderr ----
+# end: 2026-11-12 18:19:24 -0700
+# exit code: 0
+# wall: 0.274 s; child CPU (GetProcessTimes): user 0.062 s + kernel 0.031 s = 0.094 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 14.5%; 1 s samples n=0 min - max -

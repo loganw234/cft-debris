@@ -1,0 +1,19 @@
+# DEBRIS-C log: m3_prop_jit3
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m3\m3_prop.js sha256 5e5c0cfcec24458bc526a6852bd98a739c858bae30be6ead11b3abf40e7e7559 (kept as scripts\m3_prop.5e5c0cfcec24.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m3/m3_prop.js -- m3/out/v2/steps_jit3.txt
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:34:48 -0700
+# ---- stdout ----
+# M3 run | java 1.8.0_411 | JVM args [] | plant: none
+# initial x bits 4150a87917208663 (0x1.0a87917208663p22)
+# tolerances: absolute [0.001, 0.001, 0.001, 1.1156760878872936E-6, 1.1156760878872936E-6, 1.1156760878872936E-6, 1.0E-6] relative [1.4623737245415277E-10, 1.4623737245415277E-10, 1.4623737245415277E-10, 1.4623737245415277E-10, 1.4623737245415277E-10, 1.4623737245415277E-10, 1.4623737245415277E-10]
+# steps 358, propagation wall 0.62 s
+FINAL t 0x1.518p16 x -0x1.5a504bc4aa17dp20 y -0x1.6c5b8a8f1cc82p20 z 0x1.8db0640e14989p22 vx -0x1.262151548a1d4p12 vy -0x1.5bcba937f7742p12 vz -0x1.1d136427b4e46p11
+STEPHASH b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872
+# ---- stderr ----
+# end: 2026-11-12 18:34:50 -0700
+# exit code: 0
+# wall: 1.808 s; child CPU (GetProcessTimes): user 1.672 s + kernel 0.031 s = 1.703 s
+# child CPU cycles (QueryProcessCycleTime): 12708734830 = 5.083 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 22.8%; 1 s samples n=1 min 18% max 18%

@@ -1,0 +1,15 @@
+# DEBRIS-C log: m1a_orekit_173
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_orekit.js sha256 58224aeb6014da177aef492038509a83126068a7b65f600837084ae39ae15a76 (kept as scripts\m1a_orekit.58224aeb6014.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m1a/m1a_orekit.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/gfc_dedup C:/Users/logan/source/repos/cft-debris-downloads/00orbit_itrf.txt/00orbit_itrf.txt 173 m1a/out/orekit_2_173.txt
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:11:22 -0700
+# ---- stdout ----
+# provider: degree 173, order 173, mu 0x1.6a8665b9116p48 (398600441500000), ae 6378136.46, tide system TIDE_FREE
+# loaded: [C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-C\gfc_dedup\EIGEN6-C4.gfc]
+# epochs: 2880, degree 173, written to m1a/out/orekit_2_173.txt
+# ---- stderr ----
+# end: 2026-11-12 18:11:23 -0700
+# exit code: 0
+# wall: 1.715 s; child CPU (GetProcessTimes): user 1.344 s + kernel 0.219 s = 1.562 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 25.5%; 1 s samples n=1 min 26% max 26%

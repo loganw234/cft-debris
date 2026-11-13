@@ -1,0 +1,21 @@
+# DEBRIS-C log: m4_criteria
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m4\m4_criteria.py sha256 1a9d3f97a3c77c5c8ee8e53fe1636c64e423a89fad735ba03bfb03358640c8b6 (kept as scripts\m4_criteria.1a9d3f97a3c7.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m4/m4_criteria.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:43:52 -0700
+# ---- stdout ----
+k = 1: P(|z| <= k) 1-D = 0.6827; P(d^2 <= k^2) 3-D = 0.1987
+k = 2: P(|z| <= k) 1-D = 0.9545; P(d^2 <= k^2) 3-D = 0.7385
+k = 3: P(|z| <= k) 1-D = 0.9973; P(d^2 <= k^2) 3-D = 0.9707
+N =  50: (a) |z| <= 2 count in [43, 50] (fraction 0.860 to 1.000); (b) mean z^2 in [0.560, 1.590]
+N =  86: (a) |z| <= 2 count in [76, 86] (fraction 0.884 to 1.000); (b) mean z^2 in [0.651, 1.436]
+N = 200: (a) |z| <= 2 count in [183, 198] (fraction 0.915 to 0.990); (b) mean z^2 in [0.761, 1.276]
+N = 500: (a) |z| <= 2 count in [464, 488] (fraction 0.928 to 0.976); (b) mean z^2 in [0.845, 1.170]
+# COMPUTED
+# ---- stderr ----
+# end: 2026-11-12 18:44:24 -0700
+# exit code: 0
+# wall: 31.818 s; child CPU (GetProcessTimes): user 14.609 s + kernel 0.219 s = 14.828 s
+# child CPU cycles (QueryProcessCycleTime): 65817507061 = 26.327 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 56.5%; 1 s samples n=31 min 26% max 100%

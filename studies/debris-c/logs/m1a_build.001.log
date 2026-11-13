@@ -1,0 +1,36 @@
+# DEBRIS-C log: m1a_build
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\build.sh sha256 b2e255cb2c16d8db1c150a003e08cd6a4e68a795ef2486d4467db0d078acf09e (kept as scripts\build.b2e255cb2c16.sh)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_grav.c sha256 58d06ddf4249810bcb7030b8ef149fe46fedbda23edc8204715d92ead96431fa (kept as scripts\m1a_grav.58d06ddf4249.c)
+# command: C:/Program Files/Git/usr/bin/bash.exe m1a/build.sh
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:10:27 -0700
+# ---- stdout ----
+gcc -dumpmachine: x86_64-w64-mingw32
+gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+GNU objdump (GNU Binutils) 2.46
+build 1: gcc -O2 -o m1a_grav_O2.exe m1a_grav.c -lm
+build 2: gcc -O2 -march=native -ffp-contract=fast -o m1a_grav_native.exe m1a_grav.c -lm
+predefined macros, gcc -O2 (FMA-related):
+  (none)
+predefined macros, gcc -O2 -march=native (FMA-related):
+#define __FP_FAST_FMA 1
+#define __FMA__ 1
+#define __AVX2__ 1
+-march=native resolves to: alderlake
+FMA instructions in m1a_grav_O2.exe: whole binary 0; in main (grav inlined) 0; in tables() 0
+FMA instructions in m1a_grav_native.exe: whole binary 29; in main (grav inlined) 29; in tables() 0
+objdump -d --disassemble=main | grep -E vfmadd... (first 5 lines of the native build):
+   140011dec:	c4 e2 e5 98 cc       	vfmadd132pd %ymm4,%ymm3,%ymm1
+   140011df9:	c4 e2 e5 98 c4       	vfmadd132pd %ymm4,%ymm3,%ymm0
+   140011e38:	c4 c2 a1 99 c4       	vfmadd132sd %xmm12,%xmm11,%xmm0
+   140011e98:	c4 c2 c9 99 d4       	vfmadd132sd %xmm12,%xmm6,%xmm2
+   140011e9d:	c4 c2 a1 99 cc       	vfmadd132sd %xmm12,%xmm11,%xmm1
+ASSERT PASS: -O2 build has no FMA in main; native build has 29
+6809dc363c2f002b2c87d0815e5ef3f24095358e52630f59d67fa5837bea67ae *C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/bin/m1a_grav_O2.exe
+95bb8e90a829afec9924125e04202a43420a43941aa3584446c92f31916434c2 *C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/bin/m1a_grav_native.exe
+# ---- stderr ----
+# end: 2026-11-12 18:10:30 -0700
+# exit code: 0
+# wall: 3.293 s; child CPU (GetProcessTimes): user 0.000 s + kernel 0.031 s = 0.031 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 17.7%; 1 s samples n=3 min 17% max 19%

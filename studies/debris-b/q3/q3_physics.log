@@ -1,0 +1,16 @@
+# 2026-11-12 16:36:53 -0700
+# REBOUND 5.1.1, IAS15 epsilon 1e-9; position differences in metres
+LEO 400 km, density (or B) x1.2,   1 days: 4991 m at the end, 4991 m max
+LEO 400 km, density (or B) x1.2,   7 days: 2.516e+05 m at the end, 2.516e+05 m max
+LEO 800 km, density (or B) x1.2,   1 days: 15.56 m at the end, 15.56 m max
+LEO 800 km, density (or B) x1.2,   7 days: 766.2 m at the end, 766.2 m max
+LEO 800 km, density (or B) x1.2,  30 days: 1.407e+04 m at the end, 1.407e+04 m max
+MEO, C_R A/m x1.2,   7 days: 202.2 m at the end, 202.2 m max over daily samples
+MEO, C_R A/m x1.2, 365 days: 5293 m at the end, 7063 m max over daily samples
+GEO, C_R A/m x1.2,   7 days: 336.7 m at the end, 336.7 m max over daily samples
+GEO, C_R A/m x1.2, 365 days: 5326 m at the end, 6518 m max over daily samples
+
+real	0m28.352s
+user	0m0.000s
+sys	0m0.015s
+rc=0

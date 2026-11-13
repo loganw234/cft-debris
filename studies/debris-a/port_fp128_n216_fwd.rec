@@ -1,0 +1,16 @@
+# cft-rebound ias15 record v1
+# program=cft impl=libcft-0.18 format=fp128 backend=software problem=leo_j2 N=2 steps=216 sample=216 cs=kahan arith=rebound engine=loop pc_tol_shift=60 max_iter=24
+# identity libcft_build=commit=922c2ade78fad995a0871bf07cebf8b9fbcb2b9f,tracked=clean,untracked=none image=none
+# dt0= 0x1.9p+6 epsilon= 0x0p+0 G= 0x1p+0 pc_tol= 0x1.cd2b297d889bc2b6985d7cd0f313p-114
+# active 1 of 2 bodies a system: 1 pairs a force evaluation, a system
+# zonal body 0 of every system, about z: R= 0x1.8ea23126e978dp+12 J2= 0x1.1bcdd8bccd56ep-10 J4= 0x0p+0; it acts on 1 bodies a system, and body 0 takes the reaction of 0
+# body 0 earth m= 0x1.85421c467381dp+18
+# body 1 sat m= 0x0p+0
+# columns: sample step t dt_next dt_last E then per body x y z vx vy vz ; then exact-time pair t_hi t_lo
+sample 0 0 0x0p+0 0x1.9p+6 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x1.0d8d657f21937p+11 0x1.36696d3bcb252p+12 0x1.fc4c904874bf7p+11 -0x1.a8047622977f8p+2 -0x1.25c81ff9e2c66p-2 0x1.eeda08c6b52a8p+1 | 0x0p+0 0x0p+0
+sample 1 216 0x1.518p+14 0x1.9p+6 0x1.9p+6 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x0p+0 0x1.54a17bb9fa208261820998aff301p+12 0x1.e69bce3e77e09decbbc3b8f82468p+11 0x1.f4f1a342c817955134ad55e3af9cp+9 -0x1.c310a8acf9816510d5903ee54792p+1 0x1.b4163e41960e2a02ecda1f26cfb6p+1 0x1.7a5267a22b605e97dc6cb69ea0dbp+2 | 0x1.518p+14 0x0p+0
+# steps_done=216 iterations_max_exceeded=0 steps_rejected=0 mean_pc_iterations=7.120 max_pc_iterations=11 flags_seen=0x10 calls=1669503 divsqrt_calls=276993 seconds=11.702 steps_per_s=18.46 wall_seconds=11.704 t_program=1.437 t_elem=1.319 t_divsqrt=8.847 t_gravity=4.088 program_calls=43928 staged_bytes=281694432 t_g_copy=0.003 t_g_accum=0.343 t_g_lib=4.034 t_g_divsqrt=2.387 t_reduce=0.000 nextstep_calls=0
+# route scalar=off by=opt_in calls=0 fallbacks=213632
+# route indexed=off by=opt_in calls=0 fallbacks=10982
+# route reduce_seg=off by=opt_in calls=0 fallbacks=3076
+# route pair_gather=off by=opt_in calls=0 fallbacks=10982

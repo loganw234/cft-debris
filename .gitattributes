@@ -1,0 +1,3 @@
+# No end-of-line conversion on check-in or checkout: the studies' SHA-256 manifests are over the files' exact bytes,
+# and many records (Python logs and outputs written on Windows) end their lines with CRLF.
+* -text

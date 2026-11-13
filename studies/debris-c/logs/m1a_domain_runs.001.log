@@ -1,0 +1,33 @@
+# DEBRIS-C log: m1a_domain_runs
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_domain.sh sha256 8f5dcf14a3d38e9a6fafeeaa64bd241a8a548f500e26a84e538eb27c4570b8d3 (kept as scripts\m1a_domain.8f5dcf14a3d3.sh)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_grav.c sha256 7dde7c0997e58d24c565d18b721a4c8b787d944238971384b34ca7afaa68c138 (kept as scripts\m1a_grav.7dde7c0997e5.c)
+# command: C:/Program Files/Git/usr/bin/bash.exe m1a/m1a_domain.sh
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:46:22 -0700
+# ---- stdout ----
+7dde7c0997e58d24c565d18b721a4c8b787d944238971384b34ca7afaa68c138 *C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1a/m1a_grav.c
+451ba43cbf3038e8b5457172230c4d43427a9f2972e0991b289650a121382a44 *C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/bin/m1a_grav_O2_v2.exe
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled without __FMA__
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..179, plant_epoch -1
+# compiled without __FMA__
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# coefficient plant: C(180,90) -3.74003475630e-10 -> -6.50034756300e-11
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled without __FMA__
+e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817 *c_O2_2_180.txt
+e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817 *c_v2_2_180.txt
+3e58438836c2e9240dc3113a471acfc8516047ade89b1b001e4d8462d3be33bf *c_v2_2_179.txt
+f32afb9bd22a94727aa2f5c4af8cf412137267d1c10d72efdc218d9136dbd7b2 *c_v2_2_180_coef180_90.txt
+# ---- stderr ----
+# end: 2026-11-12 18:46:31 -0700
+# exit code: 0
+# wall: 8.982 s; child CPU (GetProcessTimes): user 0.000 s + kernel 0.078 s = 0.078 s
+# child CPU cycles (QueryProcessCycleTime): 294291295 = 0.118 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 99.5%; 1 s samples n=8 min 100% max 100%

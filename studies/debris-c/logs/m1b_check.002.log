@@ -1,0 +1,42 @@
+# DEBRIS-C log: m1b_check
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1b\m1b_check.py sha256 ace5af8fe622b7f6c63456afa04628b561249f6e3d9fd2f0b26255dd13afc783 (kept as scripts\m1b_check.ace5af8fe622.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1b/m1b_check.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:20:51 -0700
+# ---- stdout ----
+# M1b criteria: TOL_TESTPO 1e-13 (file units), TOL 1e-11 m/s^2 (Sun, Moon), TOL_PL 1e-16 m/s^2 (planets)
+# input C:/Users/logan/source/repos/cft-debris-downloads/lnxp1900p2053.421/lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# input C:/Users/logan/source/repos/cft-debris-downloads/header.421/header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+# input C:/Users/logan/source/repos/cft-debris-downloads/testpo.421/testpo.421 sha256 aed0bc7f41d5b279dfe39eb264dbb83f702b570237a84ee5c93440ee14619d18
+# input C:/Users/logan/source/repos/cft-debris-downloads/00orbit_icrf.txt/00orbit_icrf.txt sha256 57bf1735f584ba9c40d0e3854caf3be30c42fde05177af15463a71546156b2e5
+# input C:/Users/logan/source/repos/cft-debris-downloads/03directTideSun_icrf.txt/03directTideSun_icrf.txt sha256 8fa2218f7f52b9ef53e9c53be57960ae022e88dab2599aabc411c72125ad5521
+# input C:/Users/logan/source/repos/cft-debris-downloads/03directTideMoon_icrf.txt/03directTideMoon_icrf.txt sha256 20ba052a965cd5666774455743d9fef78834af65865195358207ae9af415e0cc
+# input C:/Users/logan/source/repos/cft-debris-downloads/03directTidePlanets_icrf.txt/03directTidePlanets_icrf.txt sha256 9486b0bf9a926b056ecf7f746d777a1ae5b03d6cc610d071b3d0da5a919ef135
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1b/out/orekit_testpo.txt sha256 f28d7aed45223003cf603ebf006fa914ead5968b7cd71f1234c078d48101df38
+# input C:/Users/logan/source/repos/cft-debris/studies/debris-c/m1b/out/orekit_bodies.txt sha256 d6b3ac6ac58d3dd28c64c5228bf6dcd94325cf8160acb237b11ada43900664b4
+# DE421 binary: NCOEFF 1018, coverage JED 2414992.5 to 2469808.5, 1713 data records of 32 days, AU 149597870.6996262074 km, EMRAT 81.3005690699153
+testpo, custom reader                        points 1801, skipped (outside coverage) 50, failures (|d| >= 1e-13) 13; max |d|: pos 1.42e-14 AU, vel 1.39e-17 AU/d, nut 1.36e-20 rad, lib 9.09e-13 rad
+FAIL criterion 1 (custom reader vs testpo.421)
+testpo, Orekit's JPL reader                  points 1594, failures (|d| >= 1e-13) 697; max |d|: pos 6.77e-12 AU, vel 4.60e-13 AU/d
+FAIL criterion 2 (Orekit's reader vs testpo.421)
+CONTROL: time shifted by one sub-interval    points 1801, skipped (outside coverage) 50, failures (|d| >= 1e-13) 1801; max |d|: pos 7.26e-01 AU, vel 2.21e-02 AU/d, nut 3.78e-06 rad, lib 1.84e+00 rad
+PASS criterion 3 (control): the check reports the planted shift (1801 of 1801 points fail)
+# signal: max |a| Sun 4.022e-07, Moon 1.158e-06, planets 5.453e-12 m/s^2 (Lasser et al.)
+PASS custom Sun vs Lasser                 max |da| 1.495e-17, RMS 4.799e-18 m/s^2 (tolerance 1e-11)
+PASS custom Moon vs Lasser                max |da| 4.353e-16, RMS 1.757e-16 m/s^2 (tolerance 1e-11)
+PASS custom planets vs Lasser             max |da| 4.683e-22, RMS 1.417e-22 m/s^2 (tolerance 1e-16)
+PASS Orekit-position Sun vs Lasser        max |da| 1.360e-17, RMS 4.783e-18 m/s^2 (tolerance 1e-11)
+PASS Orekit-position Moon vs Lasser       max |da| 4.355e-16, RMS 1.758e-16 m/s^2 (tolerance 1e-11)
+PASS Orekit-position planets vs Lasser    max |da| 4.749e-22, RMS 1.403e-22 m/s^2 (tolerance 1e-16)
+PASS custom vs Orekit, Sun                max |da| 7.839e-18, RMS 2.225e-18 m/s^2 (tolerance 1e-11)
+PASS custom vs Orekit, Moon               max |da| 2.017e-19, RMS 9.489e-20 m/s^2 (tolerance 1e-11)
+PASS custom vs Orekit, planets            max |da| 4.332e-22, RMS 1.277e-22 m/s^2 (tolerance 1e-16)
+PASS CONTROL Moon time argument +600 s: expected effect (own model) 4.054e-09 = 405 x tolerance (needs >= 10); vs Lasser max 4.054e-09: reported
+PASS CONTROL Saturn left out of the planets: expected effect (own model) 9.478e-14 = 948 x tolerance (needs >= 10); vs Lasser max 9.478e-14: reported
+# M1b FAIL
+# ---- stderr ----
+# end: 2026-11-12 18:20:52 -0700
+# exit code: 1
+# wall: 0.943 s; child CPU (GetProcessTimes): user 0.359 s + kernel 0.016 s = 0.375 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 11.8%; 1 s samples n=0 min - max -

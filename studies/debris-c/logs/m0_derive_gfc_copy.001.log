@@ -1,0 +1,21 @@
+# DEBRIS-C log: m0_derive_gfc_copy
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m0\derive_gfc_copy.py sha256 1d7a28bd44698002bc81191d35d2501872b1faafc97e048062492eae3301c5dc (kept as scripts\derive_gfc_copy.1d7a28bd4469.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m0/derive_gfc_copy.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:09:05 -0700
+# ---- stdout ----
+# original: C:/Users/logan/source/repos/cft-debris-downloads/EIGEN6-C4.gfc/EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715 (1219371 bytes)
+# line 16 removed: b'gfc    0    0  0.10000000000E+01  0.00000000000E+00 0.0000E+00 0.0000E+00\n'
+# line 15 kept:    b'gfc    0    0  1.00000000000E+00  0.00000000000E+00 0.0000E+00 0.0000E+00\n'
+# original: 16470 gfc lines, 16469 distinct keys, duplicated keys: [(0, 0)]
+# check on the copy: PASS (exactly line 16 removed; 16469 keys, each once; no value changed)
+# control, a changed value on the (180,180) line: check() FAILED as it must (copy is not the original minus line 16)
+# control, the (2,0) line removed too: check() FAILED as it must (copy is not the original minus line 16)
+# copy: C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/gfc_dedup/EIGEN6-C4.gfc sha256 bf296183bf9c9180e58c64a2fca22ece0124d6c7f82448508b8599a944010852 (1219297 bytes)
+# DERIVE PASS
+# ---- stderr ----
+# end: 2026-11-12 18:09:05 -0700
+# exit code: 0
+# wall: 0.358 s; child CPU (GetProcessTimes): user 0.031 s + kernel 0.047 s = 0.078 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 19.2%; 1 s samples n=0 min - max -

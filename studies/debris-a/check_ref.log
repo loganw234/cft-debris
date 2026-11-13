@@ -1,0 +1,7 @@
+IAS15 dt20 fixed (the table's reference)     against port binary128 at one day: 4.363e-09 m
+IAS15 dt100 fixed, binary64 (= port fp64)    against port binary128 at one day: 1.165e-08 m
+IAS15 eps1e-9 adaptive                       against port binary128 at one day: 1.439e-07 m
+IAS15 eps1e-6 adaptive                       against port binary128 at one day: 2.955e-07 m
+BS eps1e-13                                  against port binary128 at one day: 5.480e-05 m
+SABA(10,6,4) dt30                            against port binary128 at one day: 1.522e-06 m
+JANUS o6 dt10                                against port binary128 at one day: 6.233e-06 m

@@ -1,0 +1,43 @@
+# DEBRIS-C log: m1a_control_degree
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_control_degree.py sha256 fb9186060970c6ed29bac245a1057a748c097f296b096de7356e370b62a8b084 (kept as scripts\m1a_control_degree.fb9186060970.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1a/m1a_control_degree.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:10:02 -0700
+# ---- stdout ----
+# GM 3.9860044150e+14, R 6.3781364600e+06, epochs 2880, radius min 6825921.0 mean 6843727.6 max 6861293.1 m (altitude over R: 447.8 to 483.2 km)
+# tolerance TOL = 1e-11 m/s^2; control needs omitted RMS >= 1e-10
+# per-degree RMS signal |a_n| (m/s^2) at r = mean / max radius; Kaula at mean
+n   2  file: 1.386e-02 / 1.372e-02   Kaula: 1.600e-04
+n  10  file: 2.273e-05 / 2.204e-05   Kaula: 2.930e-05
+n  50  file: 6.981e-07 / 6.110e-07   Kaula: 7.247e-07
+n 100  file: 1.839e-08 / 1.416e-08   Kaula: 1.498e-08
+n 120  file: 4.405e-09 / 3.222e-09   Kaula: 3.335e-09
+n 140  file: 1.017e-09 / 7.066e-10   Kaula: 7.536e-10
+n 150  file: 4.413e-10 / 2.989e-10   Kaula: 3.597e-10
+n 160  file: 2.110e-10 / 1.393e-10   Kaula: 1.721e-10
+n 170  file: 1.084e-10 / 6.974e-11   Kaula: 8.251e-11
+n 175  file: 7.305e-11 / 4.640e-11   Kaula: 5.717e-11
+n 178  file: 5.672e-11 / 3.576e-11   Kaula: 4.588e-11
+n 179  file: 5.755e-11 / 3.619e-11   Kaula: 4.264e-11
+n 180  file: 5.179e-11 / 3.248e-11   Kaula: 3.962e-11
+# omitted RMS signal for truncation at D (degrees D+1..180), at mean / max radius; Kaula at mean
+D 150  file: 1.164e-09 / 7.750e-10   Kaula: 8.972e-10   ratio to TOL at max radius: 77.5
+D 155  file: 7.976e-10 / 5.243e-10   Kaula: 6.167e-10   ratio to TOL at max radius: 52.4
+D 160  file: 5.529e-10 / 3.593e-10   Kaula: 4.208e-10   ratio to TOL at max radius: 35.9
+D 165  file: 3.689e-10 / 2.372e-10   Kaula: 2.825e-10   ratio to TOL at max radius: 23.7
+D 168  file: 2.794e-10 / 1.785e-10   Kaula: 2.187e-10   ratio to TOL at max radius: 17.9
+D 170  file: 2.323e-10 / 1.478e-10   Kaula: 1.820e-10   ratio to TOL at max radius: 14.8
+D 172  file: 1.909e-10 / 1.211e-10   Kaula: 1.489e-10   ratio to TOL at max radius: 12.1
+D 175  file: 1.303e-10 / 8.217e-11   Kaula: 1.037e-10   ratio to TOL at max radius: 8.2
+D 178  file: 7.742e-11 / 4.863e-11   Kaula: 5.820e-11   ratio to TOL at max radius: 4.9
+D 179  file: 5.179e-11 / 3.248e-11   Kaula: 3.962e-11   ratio to TOL at max radius: 3.2
+# per-degree: the highest degree whose own RMS signal at the max radius is >= TOL: 180
+# CHOSEN control truncation D = 173: omitted RMS 1.092e-10 m/s^2 at max radius = 10.9 x TOL (needs >= 10)
+# D = 173 also omits 1.725e-10 at the mean radius
+# COMPUTED PASS
+# ---- stderr ----
+# end: 2026-11-12 18:10:02 -0700
+# exit code: 0
+# wall: 0.119 s; child CPU (GetProcessTimes): user 0.016 s + kernel 0.016 s = 0.031 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 13.7%; 1 s samples n=0 min - max -

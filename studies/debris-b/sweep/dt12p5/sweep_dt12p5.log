@@ -1,0 +1,9 @@
+### 2026-11-12 16:07:43 -0700 start dt=12.5 steps=1728 formats=fp128; host load % 10 3 15
+# DEBRIS-B wrapper: the five .py copies in C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\sweep\dt12p5 match SHA256SUMS; EXE overridden to C:\Users\logan\source\repos\cft-debris-ledger\tools\ias15_cft.exe (sha256 9d5cb048ee63e609bad448237476443c651623a96d7fe5f0340fd8cd5d8aa048)
+# child cpu: user 16.58 s + sys 1.72 s | --format fp128 --problem C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\sweep\dt12p5\leo_j2.txt --dt 12.5 --epsilon 0
+# child cpu: user 18.55 s + sys 1.77 s | --format fp128 --problem C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\sweep\dt12p5\port_fp128_n1728_turn.txt --dt -12.5 --epsilon 0
+PORT fp128 dt=12.5 steps=1728: round trip 2.924e-26 m, 3.315e-26 mm/s (|dx|/r 4.32e-33) bits_identical=False | fwd 63.5 s wall (trailer 63.418 s, 27.25 steps/s, mean_pc 4.004), back 60.7 s wall | t_turn=0x1.518p+14 t_end=-0x1.518p+14
+   cmd: C:\Users\logan\source\repos\cft-debris-ledger\tools\ias15_cft.exe --format fp128 --problem C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\sweep\dt12p5\leo_j2.txt --dt 12.5 --epsilon 0 --steps 1728 --sample 1728 --max-iter 24 --quiet
+REBOUND 5.1.1 IAS15 (Python J2), same steps: round trip 1.451e-08 m; forward 0.185 s wall
+# CPU: children user 35.12 s + sys 3.48 s; this Python process 0.34 s; total 38.95 s; wall 124.9 s
+### 2026-11-12 16:09:54 -0700 end dt=12.5 rc=0; host load % 14 2 39

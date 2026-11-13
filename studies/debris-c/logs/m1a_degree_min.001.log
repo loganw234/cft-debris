@@ -1,0 +1,16 @@
+# DEBRIS-C log: m1a_degree_min
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_degree_min.py sha256 dbe76000510c744bd7581edd53e23a6459ea2d010c784306a20dd09dbc14f020 (kept as scripts\m1a_degree_min.dbe76000510c.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1a/m1a_degree_min.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:52:03 -0700
+# ---- stdout ----
+# largest radius 6861293.1 m; smallest per-degree RMS signal over n = 2..180: degree 180, 3.248e-11 m/s^2 (TOL 1e-11)
+# the five smallest: n 180 3.248e-11, n 178 3.576e-11, n 179 3.619e-11, n 177 3.906e-11, n 176 3.978e-11
+# COMPUTED PASS: every degree's own RMS signal at the largest radius is >= TOL
+# ---- stderr ----
+# end: 2026-11-12 18:52:03 -0700
+# exit code: 0
+# wall: 0.119 s; child CPU (GetProcessTimes): user 0.016 s + kernel 0.000 s = 0.016 s
+# child CPU cycles (QueryProcessCycleTime): 253477360 = 0.101 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 15.3%; 1 s samples n=0 min - max -

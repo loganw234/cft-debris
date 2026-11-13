@@ -1,0 +1,37 @@
+# DEBRIS-C log: m3_compare
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m3\m3_compare.py sha256 7e5171a896ad8e8c5e75f8a8a1d1f151b3cc630805cf022e4a14575b208f29e7 (kept as scripts\m3_compare.7e5171a896ad.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m3/m3_compare.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:35:13 -0700
+# ---- stdout ----
+jit1  m3_prop_jit1.002.log JVM args [] step hash b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872 (358 steps; m3_prop.js 5e5c0cfcec24...)
+jit2  m3_prop_jit2.002.log JVM args [] step hash b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872 (358 steps; m3_prop.js 5e5c0cfcec24...)
+jit3  m3_prop_jit3.002.log JVM args [] step hash b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872 (358 steps; m3_prop.js 5e5c0cfcec24...)
+xint  m3_prop_xint.002.log JVM args [-Xint] step hash b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872 (358 steps; m3_prop.js 5e5c0cfcec24...)
+c1    m3_prop_c1.002.log JVM args [-XX:TieredStopAtLevel=1] step hash b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872 (358 steps; m3_prop.js 5e5c0cfcec24...)
+c2    m3_prop_c2.002.log JVM args [-XX:-TieredCompilation] step hash b9c1c882bf57593b3cbaad71258322ea40cbb17d4b090083115755681fd6a872 (358 steps; m3_prop.js 5e5c0cfcec24...)
+ulp   m3_prop_ulp.002.log JVM args [] step hash c1700746f6ab571dd95480c165827d3997a539fc122de3267f6da0c0cce65491 (358 steps; m3_prop.js 5e5c0cfcec24...)
+# final state, jit1: t 0x1.518p16 x -0x1.5a504bc4aa17dp20 y -0x1.6c5b8a8f1cc82p20 z 0x1.8db0640e14989p22 vx -0x1.262151548a1d4p12 vy -0x1.5bcba937f7742p12 vz -0x1.1d136427b4e46p11
+identical: jit2 = jit1 (every step, the hash and the final state)
+identical: jit3 = jit1 (every step, the hash and the final state)
+identical: xint = jit1 (every step, the hash and the final state)
+identical: c1 = jit1 (every step, the hash and the final state)
+identical: c2 = jit1 (every step, the hash and the final state)
+PASS M3 Orekit criterion: the six runs are bit-identical
+PASS M3 Orekit control: one ulp in the initial x changes the hash; first differing step 0 (offset 0.07576626378544418 s); |dr| there 9.313e-10 m; at the end 5.625e-06 m
+# c_O2_2_180.txt sha256 e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817
+# c_native_2_180.txt sha256 fe534418fe2e96eafb6f31f7bea28a4f496a6455b664258acd7091b98505bece
+# c_O2_2_180_rerun.txt sha256 e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817
+# c_native_2_180_rerun.txt sha256 fe534418fe2e96eafb6f31f7bea28a4f496a6455b664258acd7091b98505bece
+# c_O2_2_180_plant1000.txt sha256 273ba9a7b77cbded4197bdda0d96a30f247a04f9c25ba2ddf7801eee0fb86500
+PASS custom: each build reproduces its own output exactly on a rerun
+MEASURED custom: -O2 and -O2 -march=native -ffp-contract=fast outputs are NOT bit-identical; epochs differing 2547 of 2880; max |da| 5.167e-17 m/s^2
+PASS custom control: the one-ulp plant at epoch 1000 changes the hash, and only epoch [1000] differs
+# M3 PASS
+# ---- stderr ----
+# end: 2026-11-12 18:35:14 -0700
+# exit code: 0
+# wall: 0.414 s; child CPU (GetProcessTimes): user 0.047 s + kernel 0.109 s = 0.156 s
+# child CPU cycles (QueryProcessCycleTime): 502703587 = 0.201 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 33.7%; 1 s samples n=0 min - max -

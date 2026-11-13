@@ -1,0 +1,3 @@
+J2 off                        d(pos)/dx0 after one day: variational -84.074858 -27.353313 22.558777 | finite difference -84.074858 -27.353313 22.558777 | relative mismatch 1.36e-09
+J2 on, callback as written    d(pos)/dx0 after one day: variational -47.662411 -14.370362 12.109621 | finite difference -86.176431 -23.122972 18.943602 | relative mismatch 4.39e-01
+J2 on, Jacobian supplied      d(pos)/dx0 after one day: variational -86.176431 -23.122972 18.943602 | finite difference -86.176431 -23.122972 18.943602 | relative mismatch 8.00e-10

@@ -1,0 +1,14 @@
+srp set 1 penumbra 16,annular 1    shadow fraction vs quadrature, abs       7.152e-10  (tolerance 1.0e-08)  ok
+srp set 1 penumbra 16,annular 1    acceleration vs mpmath, rel              2.678e-08  (tolerance 1.0e-08)  FAIL
+Traceback (most recent call last):
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check_v1.py", line 474, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check_v1.py", line 468, in main
+    check_srp(p)
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check_v1.py", line 449, in check_srp
+    record(tag, wa, 1e-8, "acceleration vs mpmath, rel")
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check_v1.py", line 65, in record
+    assert ok, "%s: %s = %.3e exceeds %.1e" % (name, what, float(value), tol)
+           ^^
+AssertionError: srp set 1 penumbra 16,annular 1: acceleration vs mpmath, rel = 2.678e-08 exceeds 1.0e-08

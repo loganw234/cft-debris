@@ -1,0 +1,11 @@
+# 2026-11-12 16:21:47 -0700
+# copy of leo_roundtrip.py in C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\sweep\dt25 matches SHA256SUMS
+dt=100.0 steps= 216: member0 3.827e-08 m | median 2.999e-08  p90 5.476e-08  min 1.640e-09  max 7.286e-08  (32 members, x + k ulps)
+dt= 50.0 steps= 432: member0 5.211e-08 m | median 2.124e-08  p90 5.211e-08  min 2.572e-09  max 7.734e-08  (32 members, x + k ulps)
+dt= 25.0 steps= 864: member0 6.318e-09 m | median 1.521e-08  p90 3.713e-08  min 1.017e-09  max 4.759e-08  (32 members, x + k ulps)
+dt= 12.5 steps=1728: member0 1.451e-08 m | median 1.901e-08  p90 3.982e-08  min 1.017e-09  max 7.005e-08  (32 members, x + k ulps)
+
+real	0m23.035s
+user	0m0.000s
+sys	0m0.015s
+rc=0

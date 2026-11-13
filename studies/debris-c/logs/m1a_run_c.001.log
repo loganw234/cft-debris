@@ -1,0 +1,62 @@
+# DEBRIS-C log: m1a_run_c
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\run_c.sh sha256 5912d3eca5663d0354f59973c6f01307a4789a6fd4b73769c465af68ff872950 (kept as scripts\run_c.5912d3eca566.sh)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_grav.c sha256 58d06ddf4249810bcb7030b8ef149fe46fedbda23edc8204715d92ead96431fa (kept as scripts\m1a_grav.58d06ddf4249.c)
+# command: C:/Program Files/Git/usr/bin/bash.exe m1a/run_c.sh
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:10:49 -0700
+# ---- stdout ----
+6809dc363c2f002b2c87d0815e5ef3f24095358e52630f59d67fa5837bea67ae *C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/bin/m1a_grav_O2.exe
+95bb8e90a829afec9924125e04202a43420a43941aa3584446c92f31916434c2 *C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/bin/m1a_grav_native.exe
+b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715 *C:/Users/logan/source/repos/cft-debris-downloads/EIGEN6-C4.gfc/EIGEN6-C4.gfc
+bf296183bf9c9180e58c64a2fca22ece0124d6c7f82448508b8599a944010852 *C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/gfc_dedup/EIGEN6-C4.gfc
+ff7d151c16fdfe325d1d3a50ca59d260be73d122711ef2297b6fe98994b1b783 *C:/Users/logan/source/repos/cft-debris-downloads/00orbit_itrf.txt/00orbit_itrf.txt
+== run O2 2..180 (download)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled without __FMA__
+== run O2 2..180 (copy)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16469 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 0 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled without __FMA__
+== run O2 2..173 (control: truncation at D = 173)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..173, plant_epoch -1
+# compiled without __FMA__
+== run native 2..180 (download)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled with __FMA__ defined
+# __FP_FAST_FMA defined
+== run native 2..180 again (same binary, same input: run-to-run check)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled with __FMA__ defined
+# __FP_FAST_FMA defined
+== run O2 2..180 again (run-to-run check)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch -1
+# compiled without __FMA__
+== run O2 2..180 with a one-ulp plant at epoch 1000 (M3 control)
+# gfc: model EIGEN-6C4_180, GM 3.9860044150e+14 m^3/s^2, radius 6.3781364600e+06 m, max_degree 180, norm fully_normalized, tide_system tide_free
+# gfc: 16470 gfc lines, 0 non-gfc data lines (time-variable keys would be here), 1 duplicated (n,m) with equal values, 0 (n,m) missing besides degree 1, degree-1 terms missing: 2 (taken as zero)
+# epochs: 2880, degrees 2..180, plant_epoch 1000
+# compiled without __FMA__
+e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817 *c_O2_2_180.txt
+e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817 *c_O2_2_180_copy.txt
+2c1d770676dac387d0019017485acf1385c860019642c0d7d4e51c5786598010 *c_O2_2_173.txt
+fe534418fe2e96eafb6f31f7bea28a4f496a6455b664258acd7091b98505bece *c_native_2_180.txt
+fe534418fe2e96eafb6f31f7bea28a4f496a6455b664258acd7091b98505bece *c_native_2_180_rerun.txt
+e87242fb202839c8ee30cd84faf863c599a17375b7cd1720cc85e6964d5ee817 *c_O2_2_180_rerun.txt
+273ba9a7b77cbded4197bdda0d96a30f247a04f9c25ba2ddf7801eee0fb86500 *c_O2_2_180_plant1000.txt
+# ---- stderr ----
+# end: 2026-11-12 18:10:52 -0700
+# exit code: 0
+# wall: 2.718 s; child CPU (GetProcessTimes): user 0.000 s + kernel 0.000 s = 0.000 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 24.1%; 1 s samples n=2 min 22% max 28%

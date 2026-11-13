@@ -1,0 +1,19 @@
+# DEBRIS-C log: m2_cyclecal
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m2\cyclecal.c sha256 e25a9208e49f71ba8197a72446059e7100b9ddcd6fd211e6957ae28659bb2e6d (kept as scripts\cyclecal.e25a9208e49f.c)
+# command: C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-C/bin/cyclecal.exe
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# timesheet check desktop --short (rc 0):
+#   FREE: desktop for short unbooked work from 2026-11-12 18:29 -0700 to 2026-11-12 18:39 -0700
+#     note, a notice in that window: B0013  desktop        notice    2026-11-12 17:55 -0700 -> 2026-11-12 22:05 -0700  cft-debris/DEBRIS-C: round DEBRIS-C: the study parcel's short runs (each under 10 minutes; every timing checks --short first)
+# start: 2026-11-12 18:29:16 -0700
+# ---- stdout ----
+span 0: wall 2.000 s, thread cycles 4837365736 = 2.419e+09 per wall second, GetThreadTimes CPU 0.578 s (0.29 of wall), x 4.40498e+26
+span 1: wall 2.000 s, thread cycles 4858321886 = 2.429e+09 per wall second, GetThreadTimes CPU 0.531 s (0.27 of wall), x 5.5441e+26
+span 2: wall 2.000 s, thread cycles 4878295652 = 2.439e+09 per wall second, GetThreadTimes CPU 0.453 s (0.23 of wall), x 7.33557e+26
+# ---- stderr ----
+# end: 2026-11-12 18:29:22 -0700
+# exit code: 0
+# wall: 6.217 s; child CPU (GetProcessTimes): user 1.562 s + kernel 0.000 s = 1.562 s
+# child CPU cycles (QueryProcessCycleTime): 14594510761 = 5.838 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 13.3%; 1 s samples n=6 min 11% max 15%

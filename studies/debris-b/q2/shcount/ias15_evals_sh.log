@@ -1,0 +1,15 @@
+# 2026-11-12 16:33:20 -0700
+# REBOUND 5.1.1; LEO 400 km, one day, epsilon 1e-9; Earth-fixed SH field, degrees 2..N
+SH N= 2            :  12403 force evaluations,  559 steps
+SH N= 8            :  13852 force evaluations,  559 steps
+SH N=20            :  16463 force evaluations,  559 steps
+SH N=36            :  17912 force evaluations,  559 steps
+SH N=70            :  20159 force evaluations,  559 steps
+SH N=20 + exp. drag:  16470 force evaluations,  559 steps
+SH N=70 + exp. drag:  20131 force evaluations,  559 steps
+SH N=20, epsilon 1e-6:   9359 force evaluations,  210 steps
+
+real	0m4.572s
+user	0m0.000s
+sys	0m0.000s
+rc=0

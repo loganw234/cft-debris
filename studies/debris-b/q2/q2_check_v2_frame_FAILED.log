@@ -1,0 +1,44 @@
+# 2026-11-12 16:17:21 -0700  q2_check.py, all kernels
+grav N=8                           P_nm recursion vs mpmath.legenp, rel     2.480e-61  (tolerance 1.0e-45)  ok
+grav N=8                           degrees 2..N vs mpmath, rel, worst of 4  7.432e-16  (tolerance 1.0e-12)  ok
+grav N=8                           degrees N/2+1..N vs mpmath, rel          1.242e-15  (tolerance 1.0e-11)  ok
+grav N=8                           full field vs mpmath, rel                5.751e-16  (tolerance 1.0e-14)  ok
+grav N=20                          P_nm recursion vs mpmath.legenp, rel     3.117e-61  (tolerance 1.0e-45)  ok
+grav N=20                          degrees 2..N vs mpmath, rel, worst of 4  9.091e-16  (tolerance 1.0e-12)  ok
+grav N=20                          degrees N/2+1..N vs mpmath, rel          5.106e-15  (tolerance 1.0e-11)  ok
+grav N=20                          full field vs mpmath, rel                1.176e-15  (tolerance 1.0e-14)  ok
+grav N=36                          P_nm recursion vs mpmath.legenp, rel     8.351e-61  (tolerance 1.0e-45)  ok
+grav N=36                          degrees 2..N vs mpmath, rel, worst of 4  1.888e-15  (tolerance 1.0e-12)  ok
+grav N=36                          degrees N/2+1..N vs mpmath, rel          3.556e-15  (tolerance 1.0e-11)  ok
+grav N=36                          full field vs mpmath, rel                1.599e-15  (tolerance 1.0e-14)  ok
+grav N=70                          P_nm recursion vs mpmath.legenp, rel     9.513e-61  (tolerance 1.0e-45)  ok
+grav N=70                          degrees 2..N vs mpmath, rel, worst of 4  2.133e-15  (tolerance 1.0e-12)  ok
+grav N=70                          degrees N/2+1..N vs mpmath, rel          8.968e-15  (tolerance 1.0e-11)  ok
+grav N=70                          full field vs mpmath, rel                3.009e-15  (tolerance 1.0e-14)  ok
+gravq N=8                          P_nm recursion vs mpmath.legenp, rel     2.480e-61  (tolerance 1.0e-45)  ok
+gravq N=8                          degrees 2..N vs mpmath, rel, worst of 4  6.409e-33  (tolerance 1.0e-28)  ok
+gravq N=8                          degrees N/2+1..N vs mpmath, rel          9.003e-33  (tolerance 1.0e-27)  ok
+gravq N=8                          full field vs mpmath, rel                3.526e-34  (tolerance 1.0e-31)  ok
+gravq N=20                         P_nm recursion vs mpmath.legenp, rel     3.117e-61  (tolerance 1.0e-45)  ok
+gravq N=20                         degrees 2..N vs mpmath, rel, worst of 4  7.196e-33  (tolerance 1.0e-28)  ok
+gravq N=20                         degrees N/2+1..N vs mpmath, rel          1.207e-32  (tolerance 1.0e-27)  ok
+gravq N=20                         full field vs mpmath, rel                5.467e-34  (tolerance 1.0e-31)  ok
+cheb                               vs cos(k acos tau) in mpmath, / sum|c|   4.023e-15  (tolerance 1.0e-14)  ok
+frame_full                         X, Y, s vs mpmath term by term, / sum|amp| 1.298e-12  (tolerance 1.0e-12)  FAIL
+Traceback (most recent call last):
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check.py", line 489, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check.py", line 479, in main
+    check_frame(k == "frame_full")
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check.py", line 338, in check_frame
+    record(kernel, wx, 1e-12, "X, Y, s vs mpmath term by term, / sum|amp|")
+  File "C:\Users\logan\source\repos\cft-debris-scratch\DEBRIS-B\q2\q2_check.py", line 65, in record
+    assert ok, "%s: %s = %.3e exceeds %.1e" % (name, what, float(value), tol)
+           ^^
+AssertionError: frame_full: X, Y, s vs mpmath term by term, / sum|amp| = 1.298e-12 exceeds 1.0e-12
+
+real	0m3.973s
+user	0m0.000s
+sys	0m0.000s
+rc=1

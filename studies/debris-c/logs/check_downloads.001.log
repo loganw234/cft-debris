@@ -1,0 +1,35 @@
+# DEBRIS-C log: check_downloads
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\check_downloads.py sha256 9f6fede24bc58efb7251c5b3c71b04192dcc45255eb826802af80472d23281ba (kept as scripts\check_downloads.9f6fede24bc5.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B check_downloads.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:50:40 -0700
+# ---- stdout ----
+# lead.md records 19 files
+  00README_simulation.txt              10736 bytes  3e18481f3e4619984fbdff690285b0d3f3dca24ca059ffb6b9918b3fb671ce59  ok
+  00orbit_icrf.txt                    749397 bytes  57bf1735f584ba9c40d0e3854caf3be30c42fde05177af15463a71546156b2e5  ok
+  00orbit_itrf.txt                    749397 bytes  ff7d151c16fdfe325d1d3a50ca59d260be73d122711ef2297b6fe98994b1b783  ok
+  02gravityfield_itrf.txt             299813 bytes  dc74fcdefcd8818cde4213938f9bd312e18ffe63e7fbf8471aa0acbf723bb38c  ok
+  03directTideMoon_icrf.txt           299813 bytes  20ba052a965cd5666774455743d9fef78834af65865195358207ae9af415e0cc  ok
+  03directTidePlanets_icrf.txt        299813 bytes  9486b0bf9a926b056ecf7f746d777a1ae5b03d6cc610d071b3d0da5a919ef135  ok
+  03directTideSun_icrf.txt            299813 bytes  8fa2218f7f52b9ef53e9c53be57960ae022e88dab2599aabc411c72125ad5521  ok
+  EIGEN6-C4.gfc                      1219371 bytes  b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715  ok
+  header.421                            8423 bytes  34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522  ok
+  hipparchus-core-4.0.3.jar          1959795 bytes  5af54dc3c21b8d85e1264157ee91d93fa67e68c825cfb38834dc2bbb9b0f6583  ok
+  hipparchus-filtering-4.0.3.jar       31650 bytes  279eece43411f372bd8340355cb89101def0bf9b1b6824231b76181d1ec63a81  ok
+  hipparchus-fitting-4.0.3.jar         31076 bytes  3712c3b4f43d9c12bf7b7aad187764f4b3c09cc962504899d8951eb310b1e4be  ok
+  hipparchus-geometry-4.0.3.jar       276264 bytes  19594d5106ec6a46951e859e2924bfcade02a834c06c56bd3d2130a74f0fbb7e  ok
+  hipparchus-ode-4.0.3.jar            282008 bytes  75f0f0b3fdcd99d13e9c394b7ae809cce5a9c22f1c14b1b90a5109ed951467fe  ok
+  hipparchus-optim-4.0.3.jar          228802 bytes  4bc0dbb5c6d5fefda5db9d92141c6cbb807174a1d491a85df46bcc57a67b8992  ok
+  hipparchus-stat-4.0.3.jar           222980 bytes  8b066e3060dc119efcce241fb0720a3b9e59c026d0f5fe9e70abfd5e22d3817b  ok
+  lnxp1900p2053.421                 13966960 bytes  5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096  ok
+  orekit-13.1.9.jar                  8538135 bytes  a1dbec163c1119459cf79e2dfe32ff74b446f7a8d457e2d4d9761cd6cd820fbe  ok
+  testpo.421                          120469 bytes  aed0bc7f41d5b279dfe39eb264dbb83f702b570237a84ee5c93440ee14619d18  ok
+PASS criterion: all 19 files match lead.md
+PASS control: a recorded hash altered by one hex digit is reported (exactly one mismatch)
+# ---- stderr ----
+# end: 2026-11-12 18:50:40 -0700
+# exit code: 0
+# wall: 0.211 s; child CPU (GetProcessTimes): user 0.016 s + kernel 0.047 s = 0.062 s
+# child CPU cycles (QueryProcessCycleTime): 449815565 = 0.180 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 20.8%; 1 s samples n=0 min - max -

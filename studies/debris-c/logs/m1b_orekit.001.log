@@ -1,0 +1,14 @@
+# DEBRIS-C log: m1b_orekit
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1b\m1b_orekit.js sha256 6e0671e180b0957361d01a046b3c3944c04335ffecc6a154f43bf09f92c9333c (kept as scripts\m1b_orekit.6e0671e180b0.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m1b/m1b_orekit.js -- C:/Users/logan/source/repos/cft-debris-downloads/testpo.421/testpo.421 C:/Users/logan/source/repos/cft-debris-downloads/00orbit_icrf.txt/00orbit_icrf.txt m1b/out/orekit_testpo.txt m1b/out/orekit_bodies.txt
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:15:27 -0700
+# ---- stdout ----
+# testpo points written: 1594, skipped (outside coverage, or nutation/libration/centre 0): 257
+# Lasser epochs written: 2880 (Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn; GCRF, m)
+# ---- stderr ----
+# end: 2026-11-12 18:16:32 -0700
+# exit code: 0
+# wall: 64.414 s; child CPU (GetProcessTimes): user 11.250 s + kernel 13.344 s = 24.594 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 25.8%; 1 s samples n=63 min 11% max 91%

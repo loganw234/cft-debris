@@ -1,0 +1,15 @@
+# DEBRIS-C log: m3_prop_ulp
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m3\m3_prop.js sha256 750870d0864bda493f8f7e2e70312b656112623cde14be1856852a3a793790cf (kept as scripts\m3_prop.750870d0864b.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m3/m3_prop.js -- m3/out/steps_ulp.txt ulp
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:34:13 -0700
+# ---- stdout ----
+# M3 run | java 1.8.0_411 | JVM args [] | plant: initial x + 1 ulp
+# ---- stderr ----
+m3/m3_prop.js:87 TypeError: Math.nextUp is not a function
+# end: 2026-11-12 18:34:14 -0700
+# exit code: 102
+# wall: 1.009 s; child CPU (GetProcessTimes): user 0.516 s + kernel 0.094 s = 0.609 s
+# child CPU cycles (QueryProcessCycleTime): 5907362001 = 2.363 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 15.2%; 1 s samples n=1 min 15% max 15%

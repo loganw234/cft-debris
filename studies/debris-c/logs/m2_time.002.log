@@ -1,0 +1,44 @@
+# DEBRIS-C log: m2_time
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m2\m2_time.js sha256 9c71fa78c661f51954cae352e44be47f54018ced9521a807fd432e0cd6566a85 (kept as scripts\m2_time.9c71fa78c661.js)
+# command: C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell m2/m2_time.js
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# timesheet check desktop --short (rc 0):
+#   FREE: desktop for short unbooked work from 2026-11-12 18:30 -0700 to 2026-11-12 18:40 -0700
+#     note, a notice in that window: B0013  desktop        notice    2026-11-12 17:55 -0700 -> 2026-11-12 22:05 -0700  cft-debris/DEBRIS-C: round DEBRIS-C: the study parcel's short runs (each under 10 minutes; every timing checks --short first)
+# start: 2026-11-12 18:30:49 -0700
+# ---- stdout ----
+# M2 | java 1.8.0_411 Java HotSpot(TM) 64-Bit Server VM | JVM args [] | processors 12
+# criterion (control 1): every model loop >= 10 x slower per call than the trivial-call loop
+# points: 64, altitudes 454.9 to 500.5 km
+empty (no call) | n 139315760 | ns/call min 1.20 median 1.31 | system load % 14/14/14/12/12/12/14 | checksums 0x1.05925f68p32 0x1.05925f68p32 0x1.05925f68p32 0x1.05925f68p32 0x1.05925f68p32 0x1.05925f68p32 0x1.05925f68p32
+trivial Java call Vector3D.getX() | n 26073311 | ns/call min 7.31 median 10.54 | system load % 13/16/16/23/23/14/14 | checksums 0x1.d1925e89a0b5bp40 0x1.d1925e89a0b5bp40 0x1.d1925e89a0b5bp40 0x1.d1925e89a0b5bp40 0x1.d1925e89a0b5bp40 0x1.d1925e89a0b5bp40 0x1.d1925e89a0b5bp40
+HolmesFeatherstone gradient, degree 8 | n 97316 | ns/call min 572.61 median 609.30 | system load % 31/31/31/31/31/11/11 | checksums 0x1.f46c81c6f98e1p2 0x1.f46c81c6f98e1p2 0x1.f46c81c6f98e1p2 0x1.f46c81c6f98e1p2 0x1.f46c81c6f98e1p2 0x1.f46c81c6f98e1p2 0x1.f46c81c6f98e1p2
+HolmesFeatherstone gradient, degree 20 | n 118329 | ns/call min 2162.24 median 2800.91 | system load % 14/14/85/85/96/96/79 | checksums 0x1.3e745ee3870c4p3 0x1.3e745ee3870c4p3 0x1.3e745ee3870c4p3 0x1.3e745ee3870c4p3 0x1.3e745ee3870c4p3 0x1.3e745ee3870c4p3 0x1.3e745ee3870c4p3
+HolmesFeatherstone gradient, degree 36 | n 33313 | ns/call min 5616.91 median 6336.62 | system load % 76/76/36/36/36/40/40 | checksums 0x1.6b2809afdf927p1 0x1.6b2809afdf927p1 0x1.6b2809afdf927p1 0x1.6b2809afdf927p1 0x1.6b2809afdf927p1 0x1.6b2809afdf927p1 0x1.6b2809afdf927p1
+HolmesFeatherstone gradient, degree 70 | n 14352 | ns/call min 16010.65 median 17984.39 | system load % 16/16/31/31/13/13/13 | checksums 0x1.3fd466c35351p0 0x1.3fd466c35351p0 0x1.3fd466c35351p0 0x1.3fd466c35351p0 0x1.3fd466c35351p0 0x1.3fd466c35351p0 0x1.3fd466c35351p0
+NRLMSISE00 getDensity (A: ellipsoid on GCRF) | n 22471 | ns/call min 7529.05 median 7928.21 | system load % 18/18/18/19/19/19/13 | checksums 0x1.73095918b7473p-26 0x1.73095918b7473p-26 0x1.73095918b7473p-26 0x1.73095918b7473p-26 0x1.73095918b7473p-26 0x1.73095918b7473p-26 0x1.73095918b7473p-26
+NRLMSISE00 getDensity (B: script body frame) | n 24311 | ns/call min 9536.61 median 9904.64 | system load % 20/24/24/38/38/38/27 | checksums 0x1.911aa2c17391p-26 0x1.911aa2c17391p-26 0x1.911aa2c17391p-26 0x1.911aa2c17391p-26 0x1.911aa2c17391p-26 0x1.911aa2c17391p-26 0x1.911aa2c17391p-26
+JB2008 getDensity (A: ellipsoid on GCRF) | n 7431 | ns/call min 31623.43 median 33739.83 | system load % 15/19/19/30/30/30/15 | checksums 0x1.5e1680b08d332p-28 0x1.5e1680b08d332p-28 0x1.5e1680b08d332p-28 0x1.5e1680b08d332p-28 0x1.5e1680b08d332p-28 0x1.5e1680b08d332p-28 0x1.5e1680b08d332p-28
+JB2008 getDensity (B: script body frame) | n 7189 | ns/call min 31869.13 median 35041.52 | system load % 48/48/18/18/31/31/19 | checksums 0x1.52a6d18aeb95p-28 0x1.52a6d18aeb95p-28 0x1.52a6d18aeb95p-28 0x1.52a6d18aeb95p-28 0x1.52a6d18aeb95p-28 0x1.52a6d18aeb95p-28 0x1.52a6d18aeb95p-28
+# callbacks per call, NRLMSISE00 getDensity (A: ellipsoid on GCRF): input-parameter methods 5, body-frame transforms 0
+# callbacks per call, NRLMSISE00 getDensity (B: script body frame): input-parameter methods 5, body-frame transforms 3
+# callbacks per call, JB2008 getDensity (A: ellipsoid on GCRF): input-parameter methods 14, body-frame transforms 0
+# callbacks per call, JB2008 getDensity (B: script body frame): input-parameter methods 14, body-frame transforms 2
+# callback cost: sort of 200000 Integers, 3269595 comparisons: script comparator 126.2 ms, Java comparator 48.8 ms: 23.7 ns per Java-to-script call (min of 7)
+# SUMMARY (ns per call, min over repetitions; overhead = the trivial call's 7.31 ns, a lower bound)
+PASS HolmesFeatherstone gradient, degree 8: 572.6 ns (median 609.3), 78 x the trivial call; minus the overhead: 565.3 ns
+PASS HolmesFeatherstone gradient, degree 20: 2162.2 ns (median 2800.9), 296 x the trivial call; minus the overhead: 2154.9 ns
+PASS HolmesFeatherstone gradient, degree 36: 5616.9 ns (median 6336.6), 769 x the trivial call; minus the overhead: 5609.6 ns
+PASS HolmesFeatherstone gradient, degree 70: 16010.7 ns (median 17984.4), 2191 x the trivial call; minus the overhead: 16003.3 ns
+PASS NRLMSISE00 getDensity (A: ellipsoid on GCRF): 7529.0 ns (median 7928.2), 1031 x the trivial call; minus the overhead and 5 callbacks at 23.7 ns: 7403.4 ns
+PASS NRLMSISE00 getDensity (B: script body frame): 9536.6 ns (median 9904.6), 1305 x the trivial call; minus the overhead and 8 callbacks at 23.7 ns: 9339.9 ns
+PASS JB2008 getDensity (A: ellipsoid on GCRF): 31623.4 ns (median 33739.8), 4328 x the trivial call; minus the overhead and 14 callbacks at 23.7 ns: 31284.7 ns
+PASS JB2008 getDensity (B: script body frame): 31869.1 ns (median 35041.5), 4362 x the trivial call; minus the overhead and 16 callbacks at 23.7 ns: 31483.1 ns
+# control 1 PASS; empty loop 1.20 ns per iteration
+# ---- stderr ----
+# end: 2026-11-12 18:31:25 -0700
+# exit code: 0
+# wall: 36.619 s; child CPU (GetProcessTimes): user 17.547 s + kernel 0.750 s = 18.297 s
+# child CPU cycles (QueryProcessCycleTime): 110255289583 = 44.102 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 30.7%; 1 s samples n=36 min 12% max 88%

@@ -1,0 +1,40 @@
+# DEBRIS-C log: m1b_diag2
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 9410872e1294f12df7cef61882831a6f2ad572d97e02ec72774773dbc038775e (kept as scripts\run.9410872e1294.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1b\m1b_diag2.py sha256 5d78be806b337ebc465d862a64b89d956be6788576f355aa37a9465957028bc7 (kept as scripts\m1b_diag2.5d78be806b33.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1b\m1b_check.py sha256 ace5af8fe622b7f6c63456afa04628b561249f6e3d9fd2f0b26255dd13afc783 (kept as scripts\m1b_check.ace5af8fe622.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1b/m1b_diag2.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:20:31 -0700
+# ---- stdout ----
+# Orekit - custom, full position vectors (m): |dp|, across-velocity part, implied dt (s), |v| (m/s)
+  |dp| 1.293 m, across 1.402e-05 m, dt +1.448e-05 s, JED 2448257.5, t  1 c  2, |v| 89277 m/s, sub-interval fraction t 0.125 c 0.062
+  |dp| 1.133 m, across 4.349e-05 m, dt -1.399e-05 s, JED 2429080.5, t 13 c  1, |v| 81008 m/s, sub-interval fraction t 0.500 c 0.000
+  |dp| 1.076 m, across 1.358e-05 m, dt +1.449e-05 s, JED 2448988.5, t  1 c  2, |v| 74291 m/s, sub-interval fraction t 0.500 c 0.750
+  |dp| 1.044 m, across 3.085e-05 m, dt -1.399e-05 s, JED 2444786.5, t  1 c  2, |v| 74651 m/s, sub-interval fraction t 0.250 c 0.125
+  |dp| 1.023 m, across 3.724e-05 m, dt +1.448e-05 s, JED 2445700.5, t  5 c  1, |v| 70666 m/s, sub-interval fraction t 0.625 c 0.500
+  |dp| 1.013 m, across 1.379e-05 m, dt -1.399e-05 s, JED 2429445.5, t  1 c  2, |v| 72433 m/s, sub-interval fraction t 0.625 c 0.312
+  |dp| 1.006 m, across 4.582e-05 m, dt +1.449e-05 s, JED 2437665.5, t  1 c  3, |v| 69404 m/s, sub-interval fraction t 0.125 c 0.062
+  |dp| 0.989 m, across 1.852e-05 m, dt +1.448e-05 s, JED 2466520.5, t 10 c  1, |v| 68273 m/s, sub-interval fraction t 0.000 c 0.000
+  |dp| 0.966 m, across 7.596e-05 m, dt +1.449e-05 s, JED 2456293.5, t  1 c 10, |v| 66720 m/s, sub-interval fraction t 0.625 c 0.250
+  |dp| 0.960 m, across 2.887e-05 m, dt -1.176e-05 s, JED 2446582.5, t 10 c  1, |v| 81593 m/s, sub-interval fraction t 0.500 c 0.750
+  |dp| 0.941 m, across 3.572e-05 m, dt +1.448e-05 s, JED 2455197.5, t  3 c  2, |v| 64979 m/s, sub-interval fraction t 0.812 c 0.812
+  |dp| 0.940 m, across 1.521e-04 m, dt +1.450e-05 s, JED 2416846.5, t  1 c  6, |v| 64868 m/s, sub-interval fraction t 0.750 c 0.938
+  |dp| 0.940 m, across 2.751e-05 m, dt +1.274e-05 s, JED 2429660.5, t  3 c  1, |v| 73778 m/s, sub-interval fraction t 0.750 c 0.500
+  |dp| 0.910 m, across 1.098e-04 m, dt +1.282e-05 s, JED 2454497.5, t  5 c  1, |v| 71033 m/s, sub-interval fraction t 0.531 c 0.125
+  |dp| 0.895 m, across 9.170e-06 m, dt -1.399e-05 s, JED 2454648.5, t  3 c  2, |v| 64002 m/s, sub-interval fraction t 0.500 c 0.500
+  |dp| 0.893 m, across 2.648e-05 m, dt +1.449e-05 s, JED 2441683.5, t  3 c  1, |v| 61627 m/s, sub-interval fraction t 0.188 c 0.375
+  |dp| 0.893 m, across 7.656e-05 m, dt -1.264e-05 s, JED 2449565.5, t  1 c  5, |v| 70642 m/s, sub-interval fraction t 0.625 c 0.406
+  |dp| 0.877 m, across 6.726e-05 m, dt +1.273e-05 s, JED 2436600.5, t  1 c 13, |v| 68921 m/s, sub-interval fraction t 0.000 c 0.500
+  |dp| 0.869 m, across 1.209e-04 m, dt +1.274e-05 s, JED 2432582.5, t  5 c  1, |v| 68165 m/s, sub-interval fraction t 0.688 c 0.750
+  |dp| 0.867 m, across 1.772e-05 m, dt -1.397e-05 s, JED 2464509.5, t 10 c  2, |v| 62022 m/s, sub-interval fraction t 0.250 c 0.812
+  |dp| 0.860 m, across 3.921e-05 m, dt -1.257e-05 s, JED 2442991.5, t  1 c 13, |v| 68445 m/s, sub-interval fraction t 0.875 c 0.938
+  |dp| 0.854 m, across 3.111e-06 m, dt +1.448e-05 s, JED 2438395.5, t  1 c 11, |v| 58954 m/s, sub-interval fraction t 0.375 c 0.688
+  |dp| 0.852 m, across 4.282e-05 m, dt -1.398e-05 s, JED 2441133.5, t  2 c 13, |v| 60917 m/s, sub-interval fraction t 0.812 c 0.812
+  |dp| 0.848 m, across 1.108e-06 m, dt +1.449e-05 s, JED 2433647.5, t 12 c  1, |v| 58529 m/s, sub-interval fraction t nan c 0.875
+  |dp| 0.846 m, across 3.170e-04 m, dt +1.263e-05 s, JED 2425643.5, t  6 c  1, |v| 66935 m/s, sub-interval fraction t 0.844 c 0.375
+# over the 1043 points with |dp| > 0.1 m: largest across/|dp| = 1.461e-02; implied |dt| from 6.15e-06 to 1.46e-05 s
+# ---- stderr ----
+# end: 2026-11-12 18:20:31 -0700
+# exit code: 0
+# wall: 0.235 s; child CPU (GetProcessTimes): user 0.047 s + kernel 0.000 s = 0.047 s
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 17.8%; 1 s samples n=0 min - max -

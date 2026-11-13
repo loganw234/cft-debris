@@ -1,0 +1,17 @@
+# DEBRIS-C log: m1a_domain
+# runner: C:\Users\logan\source\repos\cft-debris\studies\debris-c\run.py sha256 24d11c28e65bb28844c918b8781551c2c7e9e649b53efff59757e49039b4df0e (kept as scripts\run.24d11c28e65b.py)
+# script: C:\Users\logan\source\repos\cft-debris\studies\debris-c\m1a\m1a_domain.py sha256 5e0b64be76daa6b72c1f4fbb7d56d6411f72f0529c152b2db1b144bda05e7c99 (kept as scripts\m1a_domain.5e0b64be76da.py)
+# command: C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B m1a/m1a_domain.py
+# cwd: C:\Users\logan\source\repos\cft-debris\studies\debris-c
+# start: 2026-11-12 18:46:32 -0700
+# ---- stdout ----
+PASS 1. version 2 unplanted reproduces version 1 bit for bit
+PASS 2. degree 180 removed: max |da| 1.791e-10, RMS 5.722e-11 m/s^2 vs TOL 1e-11: reported
+PASS 3. C(180,90) + 3.09e-10: max |da| 9.560e-12, RMS 2.150e-12 m/s^2: not reported by the 1e-11 criterion; 4197 x the unplanted maximum
+# M1a domain PASS
+# ---- stderr ----
+# end: 2026-11-12 18:46:32 -0700
+# exit code: 0
+# wall: 0.231 s; child CPU (GetProcessTimes): user 0.031 s + kernel 0.016 s = 0.047 s
+# child CPU cycles (QueryProcessCycleTime): 350260689 = 0.140 s at a 2.5 GHz reference clock (BELIEVED rate)
+# host load (GetSystemTimes, all logical CPUs, includes this child): mean 90.8%; 1 s samples n=0 min - max -

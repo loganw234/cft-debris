@@ -1,0 +1,9 @@
+# 2026-11-12 16:34:13 -0700
+host load % 42
+MEO GPS-like N=2 ten days:  1596.8 evaluations per object-day,  72.2 steps a day
+MEO GPS-like N=8 ten days:  1598.9 evaluations per object-day,  72.2 steps a day
+GEO          N=2 ten days:   800.7 evaluations per object-day,  36.3 steps a day
+GEO          N=8 ten days:   802.1 evaluations per object-day,  36.3 steps a day
+REBOUND C IAS15, point mass, LEO 400 km, 30 days: 0.087 s wall, 16752 steps, 2.887 ms per object-day, 5.171 us per step
+rc=0
+host load % 37

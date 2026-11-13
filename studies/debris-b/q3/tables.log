@@ -1,0 +1,53 @@
+Q3. binary64 arithmetic error (along-track, metres), COMPUTED
+    low: DEBRIS-A's LEO one-day binary64-vs-binary128 difference, grown as t^1.5
+    high: HORIZON.md's p90 law 2.11e-16 * orbits^1.525 (Kepler e = 1/2)
+regime                 horizon       orbits     low (m)    high (m)   equiv. da/a
+LEO 400 km             a week           109    2.18e-07    1.15e-05       1.7e-15
+LEO 400 km             a year          5682    8.20e-05    4.78e-03       1.3e-14
+LEO 400 km             30 years      170470    1.35e-02    8.55e-01       7.8e-14
+LEO 800 km             a week           100    2.03e-07    1.07e-05       1.6e-15
+LEO 800 km             a year          5214    7.63e-05    4.44e-03       1.3e-14
+LEO 800 km             30 years      156422    1.25e-02    7.94e-01       7.5e-14
+MEO / GNSS disposal    a week            14    3.95e-08    1.98e-06       5.6e-16
+MEO / GNSS disposal    a year           733    1.49e-05    8.23e-04       4.5e-15
+MEO / GNSS disposal    30 years       21977    2.44e-03    1.47e-01       2.7e-14
+GEO                    a week             7    2.22e-08    1.09e-06       3.9e-16
+GEO                    a year           366    8.35e-06    4.54e-04       3.1e-15
+GEO                    30 years       10988    1.37e-03    8.12e-02       1.9e-14
+GEO graveyard +300 km  a week             7    2.20e-08    1.08e-06       3.9e-16
+GEO graveyard +300 km  a year           362    8.28e-06    4.50e-04       3.1e-15
+GEO graveyard +300 km  30 years       10871    1.36e-03    8.05e-02       1.9e-14
+    N1 = 15.56 orbits a day at 400 km; PHI1 = 2.759e-16 orbits
+    drag law: 20% density error at 400 km, one day: 0.75 f n |da/dt| t^2 = 5396 m (|da/dt| = 0.00426 m/s); q3_physics.log measured 4991 m
+    same at 800 km: 16.0 m a day (measured 15.56 m)
+    a relative 2^-53 error in the drag term at 400 km for a year (if the object lived): 4.0e-07 m
+
+Q2. per-evaluation cost and the catalogue-year budget, COMPUTED from MEASURED inputs
+regime and model                    ns per eval  evals/day  ms/object-day  objects CPU-hours a year
+LEO, degree 8, exponential air             1171      13852          16.22    28149            46.29
+LEO, degree 20, exponential air            1852      16463          30.49    28149            87.01
+LEO, degree 36, exponential air            3606      17912          64.59    28149           184.33
+LEO, degree 70, exponential air           11027      20159         222.28    28149           634.40
+MEO, degree 8                              1091       1599           1.75     1290             0.23
+GEO, degree 8                              1091        802           0.88      939             0.08
+    per-evaluation terms: integrator 233 ns (BELIEVED split of a MEASURED per-day cost), frame 512, Sun+Moon 129, radiation pressure 35, exponential air 80
+    the other 17015 catalogued objects (GTO, HEO and the rest), priced at LEO degree 20 as an upper bound: 52.6 CPU-hours a year
+    LEO-20 + MEO + GEO catalogued: 87.3 CPU-hours a year; x 68,450/47,393 for MASTER-8's > 10 cm estimate (BELIEVED same regime mix): 126.1
+    a density model costing X ns a call adds X to each LEO evaluation; it doubles LEO degree 20's cost at X = 1852 ns
+      X =   1000 ns: 47 ms per object-day, 134 CPU-hours a year for LEO
+      X =  10000 ns: 195 ms per object-day, 557 CPU-hours a year for LEO
+      X = 100000 ns: 1677 ms per object-day, 4786 CPU-hours a year for LEO
+    the full IAU 2006/2000A series at every evaluation instead of interpolating: 146936 ns, x287 the interpolated transform
+    the series once an hour for a whole catalogue: 1.29 CPU-seconds a year
+    DEBRIS-A's BELIEVED 10-100 us an evaluation: measured here 1.2 to 11.0 us without a full density model
+
+Q3 prices, COMPUTED
+    libquadmath binary128 SH gravity N8: 177x binary64
+    libquadmath binary128 SH gravity N20: 214x binary64
+    libquadmath binary128 SH gravity N36: 206x binary64
+    libquadmath binary128 SH gravity N70: 195x binary64
+    tile binary256, E = 512 (entry 45)      204.4 system-steps/s: a LEO object-day (559 steps) = 2.73 tile-s; the LEO catalogue for a year = 0.89 tile-years (point-mass floor)
+    tile binary128, E = 512 (entry 45)      576.3 system-steps/s: a LEO object-day (559 steps) = 0.97 tile-s; the LEO catalogue for a year = 0.32 tile-years (point-mass floor)
+    tile binary128, E = 4,096 (entry 37)    562.3 system-steps/s: a LEO object-day (559 steps) = 0.99 tile-s; the LEO catalogue for a year = 0.32 tile-years (point-mass floor)
+    tile binary64, E = 4,096 (entry 37)    1405.6 system-steps/s: a LEO object-day (559 steps) = 0.40 tile-s; the LEO catalogue for a year = 0.13 tile-years (point-mass floor)
+    software backend binary256 (62 system-steps/s, E = 1,024): the LEO catalogue for a year = 2.9 core-years (point-mass floor)
