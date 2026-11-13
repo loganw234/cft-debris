@@ -20,6 +20,12 @@ Each study's records come with SHA-256 manifests:
 
 `.gitattributes` turns off line-ending conversion, so every file is checked out with its exact bytes. Many records end their lines with CRLF, and the checksums hold on any platform.
 
+## Licence
+
+MIT (`LICENSE`). It covers this repository's own work: the studies, their scripts and their records. The software and data the studies used are not included, and they keep their own licences:
+- **Called through their interfaces, never copied in:** REBOUND (GPL-3.0), and Orekit and Hipparchus (Apache-2.0).
+- **Named with their sources, never redistributed:** JPL's DE421, EIGEN-6C4 and Lasser et al.'s benchmark data.
+
 ## What is not here
 
 - **Machine-specific paths:** the paths inside the records are those of the machine where the runs were made.
