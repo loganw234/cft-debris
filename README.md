@@ -8,7 +8,7 @@ Space-debris tracking and simulation, held to the methods of [HonestFramework](h
 |---|---|---|---|
 | DEBRIS-A | Does REBOUND, and which of its integrators, suit long-term debris prediction? Received from cft-rebound's lead. | verified by verifier-A; its numbers reproduce, and the report lists its errata | `DEBRIS-A-rebound-for-debris.md`, `debris-a/`, `DEBRIS-A-verifier-A-report.md`, `PROVENANCE.md` |
 | DEBRIS-B | What would a custom debris model stand on, cost and buy? It includes whether binary256 arithmetic buys anything. | verified by verifier-B; eight passages narrowed at the merge, each marked | `DEBRIS-B-plan.md`, `DEBRIS-B-custom-model.md`, `debris-b/`, `DEBRIS-B-report.md`, `DEBRIS-B-verifier-B-report.md`, `DEBRIS-B-round-record.md` |
-| DEBRIS-C | The measurements that would decide between building, adopting existing tools, and a hybrid | **not yet verified**: verifier-C is checking it | `DEBRIS-C-plan.md`, `DEBRIS-C-measurements.md`, `debris-c/`, `DEBRIS-C-report.md` |
+| DEBRIS-C | The measurements that would decide between building, adopting existing tools, and a hybrid | checked by verifier-C; one defect, an attribution, and eight passages narrowed at the merge, each marked | `DEBRIS-C-plan.md`, `DEBRIS-C-measurements.md`, `debris-c/`, `DEBRIS-C-report.md`, `DEBRIS-C-verifier-C-report.md`, `DEBRIS-C-round-record.md` |
 
 Every claim in a study carries one of four labels: MEASURED, COMPUTED, READ or BELIEVED.
 

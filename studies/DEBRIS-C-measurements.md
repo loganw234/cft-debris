@@ -1,6 +1,13 @@
 # DEBRIS-C: the measurements that would decide build, adopt or hybrid
 
-Study parcel DEBRIS-C for cft-debris, 2026-11-12, under the plan of record `studies\DEBRIS-C-plan.md` (draft 3 as corrected in Phase 0, SHA-256 `807e66c6c2218e063f3b766a566d06502812b9c16e71694353f1ea69b4987538`). A study only: nothing was built and no repository changed. Scripts, logs and records are in `studies\debris-c\`; its `MANIFEST.sha256` lists them. `binaries.sha256` hashes the executables and the de-duplicated gravity file, which stay in my scratch; its paths are relative to `cft-debris-scratch\DEBRIS-C\`. Not yet verified: verifier-C checks this study.
+Study parcel DEBRIS-C for cft-debris, 2026-11-12, under the plan of record `studies\DEBRIS-C-plan.md` (draft 3 as corrected in Phase 0, SHA-256 `807e66c6c2218e063f3b766a566d06502812b9c16e71694353f1ea69b4987538`). A study only: nothing was built and no repository changed. Scripts, logs and records are in `studies\debris-c\`; its `MANIFEST.sha256` lists them. `binaries.sha256` hashes the executables and the de-duplicated gravity file, which stay in my scratch; its paths are relative to `cft-debris-scratch\DEBRIS-C\`.
+
+**Checked by verifier-C, 2026-11-12** (`studies\DEBRIS-C-verifier-C-report.md`).
+- It re-ran the study's measurements from clean, and every figure it re-ran reproduced, the timings within the load.
+- It did not check: JB2008's correctness; the claim that GitHub truncates Orekit's test; EDC's data browser and FTP; and the sources cited by search excerpt.
+- It found one defect: the attribution of M1b's Orekit miss, which lies in how the query dates were built, not in Orekit's ephemeris reader.
+
+At the merge the lead narrowed eight passages and wrote this note. Each is marked "(narrowed at the merge)" and listed in the last section. The text as DEBRIS-C reported it (SHA-256 `f6f938598a85bcb7314d1a4f20bdd71aef514e8aba9466a0cc267a9dfca21893`) is kept at `cft-debris-ledger\filed\DEBRIS-C-measurements.as-reported.md`.
 
 > "Im considering how challenging making a custom simulation model might be, considering how specialized of a focus this is and effects REBOUND isnt particularly good at or even supports" (Logan, before DEBRIS-B). After DEBRIS-B he chose "Draft DEBRIS-C".
 
@@ -26,10 +33,14 @@ Labels, as in DEBRIS-B:
    - **Third bodies** on Lasser et al.'s CRF orbit: Sun 1.5e-17, Moon 4.4e-16 and planets 4.7e-22 m/s², from either reader; both planted errors were reported.
    - **JPL's `testpo.421`:** two of my criteria failed as stated.
      - My reader is within 1.4e-14 AU on bodies. It misses my 1e-13 tolerance at 13 libration points, by 1 to 3 ulps of angles up to 4,107 rad; my tolerance's basis overlooked those angles.
-     - Orekit's reader is off by up to 6.8e-12 AU (1.0 m) in testpo's coordinates, at 697 of 1,594 points, and by up to 1.3 m in the full position vector. The miss is a time offset of 6 to 15 µs at TDB-dated queries, cause not determined.
+     - Orekit, queried at dates built with `createJDDate(jd, s, TDB)`, is off by up to 6.8e-12 AU (1.0 m) in testpo's coordinates, at 697 of 1,594 points, and by up to 1.3 m in the full position vector. The criterion failed as run.
+       - verifier-C traced the miss to those dates, which round-trip 11.9 to 14.5 µs off. With each query date corrected, Orekit's reader meets the criterion: 0 failures, at most 1.51e-14 AU (verifier-C, MEASURED; the round trip re-run by the lead).
+       - So the miss lies in the TDB date construction, not in the ephemeris reader. Whether that is an Orekit defect or a misuse of the API is not determined (narrowed at the merge).
      - The planted sub-interval shift fails all 1,801 points, as it must.
 3. **M2, the density models' cost is over DEBRIS-B's break-even** (MEASURED: Java driven from Nashorn, binary64, two runs at 11 to 96% load).
    - **Per call:** NRLMSISE00 costs 7.3 to 7.5 µs, 4.0 to 4.1 times DEBRIS-B's 1.85 µs break-even. JB2008 costs 29.9 to 31.6 µs, 16 to 17 times it.
+     - These are minima over the repetitions; the medians are 8 to 30% higher.
+     - The over-break-even conclusion holds either way (narrowed at the merge).
    - **Both controls pass:**
      - every model loop is at least 67 times slower than the trivial call (7.3 to 8.1 ns, a lower bound on Nashorn's overhead);
      - NRLMSISE00's nine densities match a published run of the C code to 2.7e-16 relative.
@@ -44,7 +55,7 @@ Labels, as in DEBRIS-B:
    - **Truth exists** for defunct objects: the EUROLAS Data Center lists laser data for ENVISAT to 2024-08-08 and for TOPEX/Poseidon to 2025-02-20 (READ via WebFetch).
    - **Both ILRS data centres need an account:** CDDIS needs an Earthdata Login for HTTPS, and EDC needs registration and an API key (READ via WebFetch).
    - **The pilot:** one object-month of ENVISAT needs minutes of CPU (COMPUTED). Its real costs are Logan's credentials, about 0.15 MB of normal points (COMPUTED, from BELIEVED record sizes), and modelling the metre-level spin signature in debris ranges.
-6. **For build, adopt and hybrid** (BELIEVED). M1 shows that layers 3 and 4 can be verified against authorities, and that Orekit can serve as their oracle at the 1e-11 level. M2 shows that the density model, not gravity, sets a LEO catalogue's cost. M3 weakens the bit-reproducibility differentiator on one JVM, and shows that a C model keeps it across builds only if its floating-point contraction is pinned. The evidence does not decide among the three, and I make no recommendation.
+6. **For build, adopt and hybrid** (BELIEVED). M1 shows that layers 3 and 4 can be verified against authorities, and that Orekit can serve as their oracle at the 1e-11 level. That rests on one day of one LEO arc, a static field and point-mass bodies (narrowed at the merge). M2 shows that the density model, not gravity, sets a LEO catalogue's cost. M3 weakens the bit-reproducibility differentiator on one JVM, and shows that a C model keeps it across builds only if its floating-point contraction is pinned. The evidence does not decide among the three, and I make no recommendation.
 
 ---
 
@@ -173,7 +184,11 @@ No convention was found wrong after the data.
 **Why criterion 2 failed** (MEASURED, `logs/m1b_diag2.001.log`, written after the data).
 - Orekit's full position vectors differ from my reader's (which matches testpo to 1.4e-14 AU) by up to 1.29 m.
 - Within 1.5%, the difference lies along the relative velocity: it is a time offset of 6e-6 to 1.46e-5 s, of either sign, and it is independent of where the date falls in the Chebyshev sub-interval.
-- **The cause is not determined.** BELIEVED: the size matches the 14 µs amplitude of the sin 2g term in the usual TDB-TT series, which suggests that the date conversion and the ephemeris reader use different TDB conventions.
+- **The cause, traced by verifier-C** (narrowed at the merge). This replaces DEBRIS-C's BELIEVED guess that the date conversion and the reader use different TDB conventions.
+  - **The query dates.** Built with `AbsoluteDate.createJDDate(jd, s, TDB)`, they come back from `getComponents(TDB)` 11.9 to 14.5 µs off, matching the offsets above. Orekit's TDB-TT itself agrees with the two-term series to 0.9 µs.
+  - **The fix.** With each query date shifted by its round-trip error, Orekit's reader meets criterion 2: 0 of 1,594 failures, at most 1.51e-14 AU. (verifier-C, MEASURED, `studies\DEBRIS-C-verifier-C-report.md`. The round trip was re-run by the lead, who got 11.9 to 14.5 µs (lead.md, 19:13).)
+  - **Not determined:** whether the round trip's error is an Orekit defect or a misuse of the API.
+  - Criterion 2, as run, failed and stays failed.
 - It does not appear at GPS-dated queries: on Lasser et al.'s day, Orekit's and my reader's third-body accelerations agree to 8e-18 m/s² (below).
 
 **Third-body accelerations on Lasser et al.'s CRF orbit**, as direct tides of point masses (the README's convention): a = GM (d/|d|³ - s/|s|³), with s the geocentric body and d = s - r.
@@ -226,7 +241,7 @@ No convention was found wrong after the data.
 (MEASURED, `logs/m2_time.002.log` and `.003.log`; control 1 PASS in both.)
 - **Callbacks.** Each NRLMSISE00 call makes 5 Java-to-script callbacks into the input parameters, and each JB2008 call makes 14. Variant B adds 3 and 2 frame transforms.
   - One callback costs 15.5 to 23.7 ns: a sort of 200,000 Integers with a script comparator, timed against Java's own comparator (MEASURED).
-  - So the callbacks and the overhead together are under 0.4 µs of each density figure (COMPUTED). They are not subtracted in the table below.
+  - So the callbacks and the overhead together come to about 0.5 µs at most, for JB2008's variant B, which is 1.5% of its cost: verifier-C measured 29.7 ns a callback in its own run (narrowed at the merge from "under 0.4 µs"). They are not subtracted in the table below.
 - **Run 001 is set aside, and reported:** its calibration ran cold, so its density repetitions lasted only 19 to 90 ms. It gave 12.6 µs for NRLMSISE00 and 32.0 µs for JB2008 (`logs/m2_time.001.log`). Version 2 changed only the calibration and dropped a thread-CPU column (see "CPU" below).
 
 **Control 2 (MEASURED, `logs/m2_reference.002.log`): PASS.**
@@ -388,9 +403,11 @@ No convention was found wrong after the data.
   - M3 adds a discipline cost. Each C build reproduces its own bits, but two builds of the same source agree only with pinned contraction (`-ffp-contract=off` or an explicit `fma`) and a fixed operation order (DEBRIS-B's J2 finding).
 - **Adopt.**
   - Orekit ran every path used here on Java 8 without orekit-data, met GROOPS at 2.2e-15 m/s², met the third-body accelerations to 4e-16, and reproduced itself to the bit across JIT modes (MEASURED).
-  - Against it, also MEASURED: its reader refused the benchmark's own gravity file, a strictness a pipeline must handle. And its DE421 positions sit 6 to 15 µs off at TDB-dated queries, irrelevant at debris accuracy but a mark against it as a testpo-level oracle.
+  - Against it, also MEASURED: its reader refused the benchmark's own gravity file, a strictness a pipeline must handle.
+  - Dates built with `createJDDate(..., TDB)` round-trip 11.9 to 14.5 µs off, which made its DE421 positions miss testpo. With the dates corrected, its reader meets testpo (verifier-C). So a pipeline must build its dates with care (narrowed at the merge).
 - **Hybrid.**
-  - Orekit is a usable oracle for gravity and third-body forces at the 1e-11 level and well below (MEASURED). It is not one at 1e-13 AU in ephemeris positions, unless the time-offset question is resolved.
+  - Orekit is a usable oracle for gravity and third-body forces at the 1e-11 level and well below (MEASURED). That holds on one day of one LEO arc, a static field to degree 180 and point-mass bodies.
+  - For ephemeris positions, its reader meets 1e-13 AU once each query date is shifted by its round-trip error. That is verifier-C's test (MEASURED); no driver was rewritten. The date-construction question stays open (narrowed at the merge).
   - The custom part would carry its own density model or call Orekit's, and M2 prices that.
 - **Candidate 1, bit-reproducible predictions:** weakened on one JVM and one machine, and unsettled across JVMs, threads and architectures.
 - **Candidate 2, uncertainty with a refusal:** testable with public truth for a handful of defunct objects, at minutes of CPU. It needs Logan's accounts and a debris-specific measurement model for the spin.
@@ -438,7 +455,7 @@ All runs are from `studies\debris-c\`, through `python -I -B run.py --label L [-
 
 ## What this study could not settle
 
-- **Why Orekit's DE421 positions sit 6 to 15 µs off** at TDB-dated queries. The figure is MEASURED, the cause is not.
+- **Why dates built with `createJDDate(..., TDB)` round-trip 11.9 to 14.5 µs off** in Orekit 13.1.9, the jar that ran (`orekit-13.1.9.jar`, SHA-256 in lead.md). verifier-C traced M1b's miss to them, and whether they are an Orekit defect or a misuse of the API is not determined (narrowed at the merge).
 - **Why GROOPS sits 2e-15 m/s² from both of ours** in gravity, 7 times further than they sit from each other.
 - **JB2008's correctness** as timed: there was no reference check (above).
 - **A C density model's cost,** which would price the build option's density term.
@@ -485,3 +502,41 @@ READ via WebFetch unless marked; fetched 2026-11-12.
   - the 3-D χ² practice: https://ntrs.nasa.gov/api/citations/20170003685/downloads/20170003685.pdf
 - **From DEBRIS-B:** [B5] CelesTrak; [B20] Orekit's capabilities (READ via WebFetch by DEBRIS-B).
 - **Local, READ:** DEBRIS-B's study, records and verifier-B's report; the ledger's `lead.md`.
+
+## Narrowed at the merge, and notes (the lead, 2026-11-12)
+
+verifier-C re-ran from clean: M0's gate on a re-derived copy, M1a's comparisons and both domain claims, M1b's checks, M2's timings and both controls, and M3's runs and its C side. Every figure it re-ran reproduced, the timings within the load (`studies\DEBRIS-C-verifier-C-report.md`). It found one defect, which is not a wrong measurement but a wrong attribution. Under Logan's rule the sentences that claimed too much are narrowed here, not sent back. The text as reported is kept at `cft-debris-ledger\filed\DEBRIS-C-measurements.as-reported.md`.
+
+**The header note** replaces "Not yet verified". It says what verifier-C checked and what it did not.
+
+**merge-check-C** (Haiku) checked this narrowing. It found:
+- "Verified" too broad;
+- "12 to 15 µs" rounded up from verifier-C's 11.9 to 14.5;
+- the "corrected dates" being verifier-C's test, not a fixed driver;
+- three smaller points.
+
+All were fixed in its terms, and the fixes were not checked again.
+
+**Narrowed**, each marked in the text:
+1. **Short answer 2:** Orekit's testpo miss is attributed to its query dates, built with `createJDDate(..., TDB)`, which round-trip 11.9 to 14.5 µs off. With them corrected, the reader meets the criterion (verifier-C, MEASURED). The criterion, as run, stays failed.
+2. **Short answer 3:** the density costs are minima, and the medians are 8 to 30% higher.
+3. **Short answer 6:** Orekit as an oracle rests on one day of one LEO arc, a static field and point-mass bodies.
+4. **M1b, why criterion 2 failed:** verifier-C's traced cause replaces the BELIEVED guess of differing TDB conventions. The lead re-ran verifier-C's round-trip test and got 11.9 to 14.5 µs (lead.md, 19:13).
+5. **M2, the callbacks:** about 0.5 µs at most, not "under 0.4 µs" (verifier-C measured 29.7 ns a callback).
+6. **Adopt:** "its DE421 positions sit 6 to 15 µs off" became "dates built with `createJDDate(..., TDB)` round-trip 11.9 to 14.5 µs off".
+7. **Hybrid:** "not [an oracle] at 1e-13 AU in ephemeris positions" became "meets 1e-13 AU once its query dates are built correctly". The scope of the gravity and third-body claim is also stated.
+8. **Could not settle:** the open question is the date round trip, not the reader.
+
+**Notes** from verifier-C, not narrowed:
+- **The gravity-file copy:** both planted changes in `derive_gfc_copy.py` fail on its first assertion. So its second and third assertions are never exercised by a control.
+- **M3's criterion script:** `m3_compare.py` was written at 18:34:44, within about a second of the first version-2 run. The version-1 runs, with the same hash, had already been seen, and the study says so.
+- **M2's set-aside run:** setting aside run 001 was decided after the data. The choice is reported, and verifier-C's re-run supports version 2.
+- **The gravity file's name in the logs:** M2's and M3's logs do not name it. Their scripts hard-code the copy's directory, and the unmodified download throws in Orekit, so the copy was read.
+- **Wording, all READ (via WebFetch) by verifier-C:**
+  - Orekit's Javadoc says "negative gradient";
+  - EDC names the TOPEX row "topex";
+  - the CRD page says v1.01 was "superseded" on 2022-08-01.
+- **DEBRIS-C's report** (`DEBRIS-C-report.md`) is filed verbatim, so it keeps "Orekit's reader FAILED". The attribution there is superseded by item 1 above.
+- **verifier-C's two "brief errors":**
+  - verifier-C counts the brief's `bf296183...` as an error: it is the copy's SHA-256, and the script's is `1d7a28bd...`. The lead reads the brief's "its SHA-256" as the copy's, which is what was meant. The wording was ambiguous.
+  - verifier-C says `lead.md` has no entry at 18:55. It does: the entry headed 18:55 that filed DEBRIS-C's report. That is verifier-C's slip.
