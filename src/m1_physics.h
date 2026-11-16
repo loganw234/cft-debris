@@ -13,6 +13,9 @@
  *   - the third-body form and Earth = EMB - Moon/(1+EMRAT): DEBRIS-C's
  *     studies/debris-c/m1b/m1b_check.py;
  *   - the uniform rotation and rk4: DEBRIS-D's studies/debris-d/q4/q4prop.c.
+ * Extended by DEBRIS-F, 2026-11-16: the IERS 2010 frame from the node table (ph_frame_at, ph_frame_apply),
+ * drag co-rotating with the table's Omega, a run's origin t0, and the final short step (ph_rk4_short). With
+ * model.frame = 0 and t0 = 0 every operation of DEBRIS-E's model is unchanged, in its order.
  * Every lane runs the same operations: no branch depends on a lane's data.
  * The Chebyshev reader's record and sub-interval are chosen on the host and
  * gathered per lane (no counterpart on the GPU route until index tables).
@@ -20,6 +23,7 @@
  * Macros expected from the includer: KR (the element type), K_NATIVE, and
  * the k_* operations of m1_ops_native.h or m1_ops_cft.h.
  */
+#include <math.h>   /* DEBRIS-F: floor() on the host, for the frame table's index */
 #include "m1_consts.h"
 
 enum {
@@ -39,6 +43,11 @@ typedef struct KD {
     KR **cache;
     long nrec;
     int ncoeff;
+    /* DEBRIS-F: the frame table in the kind, and the 6-point Lagrange constants */
+    KR *FT;                   /* ft_nk x 12 */
+    long ft_nk;
+    double ft_t0, ft_h;
+    KR LC[6], LJ[6];          /* 1/prod_{i != j}(j - i) and the offsets j, for j = -2..3 */
 } KD;
 
 #define KK(i) (&D->K[i])
@@ -80,6 +89,7 @@ static void ph_teardown(m1_ctx *c)
         for (long i = 0; i < D->nrec; i++) free(D->cache[i]);
         free(D->cache);
     }
+    free(D->FT);
     free(D);
     c->k = NULL;
     free(c->arena);
@@ -298,6 +308,29 @@ static int ph_setup(m1_ctx *c, const m1_model *model, const m1_gfc *g, const m1_
         k_mul(c, D->hFA, D->FA, KK(C_HALF), tN, M1_S2);
         k_mul(c, D->nhFA, D->FA, KK(C_NHALF), tN, M1_S2);
         k_mul(c, D->hFB, D->FB, KK(C_HALF), tN, M1_S2);
+    }
+    /* DEBRIS-F: the frame table, every node correctly rounded into the kind by libcft's convertFormat (the
+       native kinds receive the same bits as the cft kinds of their width); the 6-point Lagrange constants
+       c_j = 1/D_j, D_j = prod_{i != j}(j - i) for j = -2..3, one division each in the kind */
+    if (model->frame) {
+        const m1_ftab *ft = model->ftab;
+        if (!ft || !ft->raw || ft->ncol != 12 || ft->nk < 8) m1_die("frame mode needs a loaded table");
+        if (ft->jd_epoch != model->jd_epoch) m1_die("the frame table's jd_epoch %.1f is not the model's %.1f", ft->jd_epoch, model->jd_epoch);
+        D->ft_nk = ft->nk;
+        D->ft_t0 = ft->t0;
+        D->ft_h = ft->h;
+        D->FT = kalloc((size_t)ft->nk * 12);
+        if (K_CFTFMT == CFT_FP256) {
+            memcpy(D->FT, ft->raw, (size_t)ft->nk * 12 * 32);
+        } else {
+            uint32_t fl = 0;
+            k_ck(cft_convert(c->dev, CFT_FP256, K_CFTFMT, CFT_RNE, ft->raw, D->FT, (size_t)ft->nk * 12, &fl), "cft_convert");
+        }
+        static const int64_t den[6] = {-120, 24, -12, 12, -24, 120}, off[6] = {-2, -1, 0, 1, 2, 3};
+        KR t[6];
+        k_from_i64(c, t, den, 6);
+        k_div(c, D->LC, KK(C_ONE), t, 6, M1_S1);
+        k_from_i64(c, D->LJ, off, 6);
     }
     c->arena_used = 0;
     return 0;
@@ -631,11 +664,71 @@ static void ph_rotate(m1_ctx *c, KR *const rb[3], KR *const r[3], const KR *t, i
     c->arena_used = mark;
 }
 
+/* ---------------------------------------------------- the IERS 2010 frame (DEBRIS-F) */
+
+/* M (9, row-major, GCRS <- ITRS) and Omega (3) at host time t, interpolated from the table by 6-point Lagrange
+   on the nodes k-2 .. k+3, k = floor((t - t0)/h), u = (t - t0)/h - k (exact on the host: t0 and t are multiples
+   of 2^-21 s and h a power of two). In the kind: d_i = u - j_i; w_j = c_j times the d_i, i != j, in ascending i;
+   each element = w_0 F_{k-2} then fma(w_i, F_{k-2+i}, .) for i = 1..5. Additions, multiplications and FMAs only. */
+static void ph_frame_at(m1_ctx *c, KR *m12, double t)
+{
+    KD *D = (KD *)c->k;
+    if (!D->FT) m1_die("no frame table");
+    const double x = (t - D->ft_t0) / D->ft_h;
+    const long k = (long)floor(x);
+    const double u = x - (double)k;
+    if (k - 2 < 0 || k + 3 >= D->ft_nk) m1_die("t = %.3f s is outside the frame table", t);
+    KR uk, d[6], w[6];
+    k_from_f64(c, &uk, &u, 1);
+    for (int i = 0; i < 6; i++) k_sub(c, &d[i], &uk, &D->LJ[i], 1, 0);
+    for (int j = 0; j < 6; j++) {
+        w[j] = D->LC[j];
+        for (int i = 0; i < 6; i++)
+            if (i != j) k_mul(c, &w[j], &w[j], &d[i], 1, 0);
+    }
+    const KR *F = D->FT + (size_t)(k - 2) * 12;
+    for (int e = 0; e < 12; e++) {
+#if defined(M1_NEGCTL_FRAME) && K_NATIVE
+        /* F1's negative control, built for the native kinds only: element 0 (M00) accumulated from the last
+           node down instead of from the first up */
+        if (e == 0) {
+            k_mul(c, &m12[e], &w[5], &F[5 * 12 + e], 1, 0);
+            for (int i = 4; i >= 0; i--) k_fma(c, &m12[e], &w[i], &F[i * 12 + e], &m12[e], 1, 0);
+            continue;
+        }
+#endif
+        k_mul(c, &m12[e], &w[0], &F[e], 1, 0);
+        for (int i = 1; i < 6; i++) k_fma(c, &m12[e], &w[i], &F[i * 12 + e], &m12[e], 1, 0);
+    }
+}
+
+/* inverse 0: out = M^T in (GCRS -> ITRS), out_i = (M_0i in_0 + M_1i in_1) + M_2i in_2 by a product and two FMAs;
+   inverse 1: out = M in (ITRS -> GCRS), out_i = (M_i0 in_0 + M_i1 in_1) + M_i2 in_2 the same way. m12 is one
+   element set for every lane; out must not alias in. */
+static void ph_frame_apply(m1_ctx *c, KR *const out[3], KR *const in[3], const KR *m12, int inverse, size_t n)
+{
+    for (int i = 0; i < 3; i++) {
+        const KR *a0 = inverse ? &m12[3 * i] : &m12[i], *a1 = inverse ? &m12[3 * i + 1] : &m12[3 + i],
+                 *a2 = inverse ? &m12[3 * i + 2] : &m12[6 + i];
+        k_mul(c, out[i], a0, in[0], n, M1_S1);
+        k_fma(c, out[i], a1, in[1], out[i], n, M1_S1);
+        k_fma(c, out[i], a2, in[2], out[i], n, M1_S1);
+    }
+}
+
 /* ----------------------------------------------------------------- drag */
 
 /* a = -bc rho |v_rel| v_rel, v_rel = v - omega x r, rho from the band whose
-   base is the highest at or below h = |r| - R_EARTH (selects, no branch) */
+   base is the highest at or below h = |r| - R_EARTH (selects, no branch).
+   DEBRIS-F: om NULL is DEBRIS-E's uniform rotation, omega = (0, 0, OMEGA_E), its operations unchanged; om
+   non-NULL is the frame's Omega (3, one set for every lane), and
+   v_rel = (fma(Oz, ry, fma(-Oy, rz, vx)), fma(Ox, rz, fma(-Oz, rx, vy)), fma(Oy, rx, fma(-Ox, ry, vz))). */
+static void ph_drag_g(m1_ctx *c, KR *const a[3], KR *const r[3], KR *const v[3], const KR *bc, const KR *om, size_t n);
 static void ph_drag(m1_ctx *c, KR *const a[3], KR *const r[3], KR *const v[3], const KR *bc, size_t n)
+{
+    ph_drag_g(c, a, r, v, bc, NULL, n);
+}
+static void ph_drag_g(m1_ctx *c, KR *const a[3], KR *const r[3], KR *const v[3], const KR *bc, const KR *om, size_t n)
 {
     KD *D = (KD *)c->k;
     size_t mark = c->arena_used;
@@ -658,9 +751,20 @@ static void ph_drag(m1_ctx *c, KR *const a[3], KR *const r[3], KR *const v[3], c
     k_neg(c, u, u, n);
     k_exp(c, u, u, n);
     k_mul(c, u, rho0, u, n, 0); /* rho */
-    k_fma(c, vr[0], KK(C_OMEGA), r[1], v[0], n, M1_S1);
-    k_fma(c, vr[1], &D->NOMEGA, r[0], v[1], n, M1_S1);
-    memcpy(vr[2], v[2], n * sizeof(KR));
+    if (!om) {
+        k_fma(c, vr[0], KK(C_OMEGA), r[1], v[0], n, M1_S1);
+        k_fma(c, vr[1], &D->NOMEGA, r[0], v[1], n, M1_S1);
+        memcpy(vr[2], v[2], n * sizeof(KR));
+    } else {
+        KR no[3];
+        for (int i = 0; i < 3; i++) k_neg(c, &no[i], &om[i], 1);
+        k_fma(c, vr[0], &no[1], r[2], v[0], n, M1_S1);
+        k_fma(c, vr[0], &om[2], r[1], vr[0], n, M1_S1);
+        k_fma(c, vr[1], &no[2], r[0], v[1], n, M1_S1);
+        k_fma(c, vr[1], &om[0], r[2], vr[1], n, M1_S1);
+        k_fma(c, vr[2], &no[0], r[1], v[2], n, M1_S1);
+        k_fma(c, vr[2], &om[1], r[0], vr[2], n, M1_S1);
+    }
     k_dot3(c, vn, vr[0], vr[1], vr[2], vr[0], vr[1], vr[2], n);
     k_sqrt(c, vn, vn, n);
     k_mul(c, k, bc, u, n, 0);
@@ -819,12 +923,20 @@ static void ph_accel(m1_ctx *c, KR *const a[3], double t, KR *const y[6], const 
         ph_central(c, f, r, n);
         for (int i = 0; i < 3; i++) k_add(c, a[i], a[i], f[i], n, 0);
     }
+    KR fr[12];
+    if (M->frame && (M->nmax >= 2 || M->drag)) ph_frame_at(c, fr, t); /* DEBRIS-F: once a stage time */
     if (M->nmax >= 2) {
-        k_from_f64(c, &tk, &t, 1);
-        ph_angle(c, &ct, &st, &tk, 1);
-        ph_rot_apply(c, g, r, &ct, &st, 1, 0, n);
-        ph_grav(c, f, g, M->nmin, M->nmax, n);
-        ph_rot_apply(c, g, f, &ct, &st, 1, 1, n);
+        if (M->frame) {
+            ph_frame_apply(c, g, r, fr, 0, n);
+            ph_grav(c, f, g, M->nmin, M->nmax, n);
+            ph_frame_apply(c, g, f, fr, 1, n);
+        } else {
+            k_from_f64(c, &tk, &t, 1);
+            ph_angle(c, &ct, &st, &tk, 1);
+            ph_rot_apply(c, g, r, &ct, &st, 1, 0, n);
+            ph_grav(c, f, g, M->nmin, M->nmax, n);
+            ph_rot_apply(c, g, f, &ct, &st, 1, 1, n);
+        }
         for (int i = 0; i < 3; i++) k_add(c, a[i], a[i], g[i], n, 0);
     }
     if (M->sun) {
@@ -838,7 +950,7 @@ static void ph_accel(m1_ctx *c, KR *const a[3], double t, KR *const y[6], const 
         for (int i = 0; i < 3; i++) k_add(c, a[i], a[i], f[i], n, 0);
     }
     if (M->drag) {
-        ph_drag(c, f, r, v, bc, n);
+        ph_drag_g(c, f, r, v, bc, M->frame ? &fr[9] : NULL, n);
         for (int i = 0; i < 3; i++) k_add(c, a[i], a[i], f[i], n, 0);
     }
     if (M->srp) {
@@ -853,8 +965,40 @@ static void ph_accel(m1_ctx *c, KR *const a[3], double t, KR *const y[6], const 
 
 /* ------------------------------------------------------------------ rk4 */
 
+/* one rk4 step at host time t of host length hd (h, h/2 and h/6 given in the kind): k1 at t, k2 and k3 at
+   t + 0.5 hd, k4 at t + hd; the stages fma(h/2, k, y) and fma(h, k3, y); y <- fma(h/6, (k1 + 2 k2 + 2 k3) + k4, y)
+   (DEBRIS-E's step, moved here unchanged so that the final short step shares it) */
+static void ph_rk4_step(m1_ctx *c, KR *const y[6], const KR *bc, const KR *cram, double t, double hd, const KR *h,
+                        const KR *hh, const KR *h6, KR *k[4][6], KR *tmp[6], size_t n)
+{
+    KD *D = (KD *)c->k;
+    /* k1 */
+    for (int i = 0; i < 3; i++) memcpy(k[0][i], y[3 + i], n * sizeof(KR));
+    ph_accel(c, &k[0][3], t, y, bc, cram, n);
+    for (int i = 0; i < 6; i++) k_fma(c, tmp[i], hh, k[0][i], y[i], n, M1_S1);
+    /* k2 */
+    for (int i = 0; i < 3; i++) memcpy(k[1][i], tmp[3 + i], n * sizeof(KR));
+    ph_accel(c, &k[1][3], t + 0.5 * hd, tmp, bc, cram, n);
+    for (int i = 0; i < 6; i++) k_fma(c, tmp[i], hh, k[1][i], y[i], n, M1_S1);
+    /* k3 */
+    for (int i = 0; i < 3; i++) memcpy(k[2][i], tmp[3 + i], n * sizeof(KR));
+    ph_accel(c, &k[2][3], t + 0.5 * hd, tmp, bc, cram, n);
+    for (int i = 0; i < 6; i++) k_fma(c, tmp[i], h, k[2][i], y[i], n, M1_S1);
+    /* k4 */
+    for (int i = 0; i < 3; i++) memcpy(k[3][i], tmp[3 + i], n * sizeof(KR));
+    ph_accel(c, &k[3][3], t + hd, tmp, bc, cram, n);
+    /* y += h/6 (k1 + 2 k2 + 2 k3 + k4) */
+    for (int i = 0; i < 6; i++) {
+        k_fma(c, tmp[i], KK(C_TWO), k[1][i], k[0][i], n, M1_S1);
+        k_fma(c, tmp[i], KK(C_TWO), k[2][i], tmp[i], n, M1_S1);
+        k_add(c, tmp[i], tmp[i], k[3][i], n, 0);
+        k_fma(c, y[i], h6, tmp[i], y[i], n, M1_S1);
+    }
+}
+
 /* classical rk4 at a fixed step h (a decimal string), from step index step0
-   (t = (step0 + j) h on the host's grid) for nsteps steps; cb sees every
+   (t = t0 + (step0 + j) h on the host's grid; t0 the model's origin, 0 in
+   DEBRIS-E's runs) for nsteps steps; cb sees every
    lane's state after every step, so a run cut into segments keeps every
    lane's state at every boundary, and a segment restarted from a boundary
    state with its step0 is the same run (designed for certificates; none is
@@ -875,32 +1019,35 @@ static int ph_rk4(m1_ctx *c, KR *const y[6], const KR *bc, const KR *cram, const
     for (int s = 0; s < 4; s++)
         for (int i = 0; i < 6; i++) k[s][i] = TMP(n);
     for (int i = 0; i < 6; i++) tmp[i] = TMP(n);
+    const double t0 = c->model.t0;
     for (long j = 0; j < nsteps; j++) {
-        const double t = (double)(step0 + j) * hd;
-        /* k1 */
-        for (int i = 0; i < 3; i++) memcpy(k[0][i], y[3 + i], n * sizeof(KR));
-        ph_accel(c, &k[0][3], t, y, bc, cram, n);
-        for (int i = 0; i < 6; i++) k_fma(c, tmp[i], &hh, k[0][i], y[i], n, M1_S1);
-        /* k2 */
-        for (int i = 0; i < 3; i++) memcpy(k[1][i], tmp[3 + i], n * sizeof(KR));
-        ph_accel(c, &k[1][3], t + 0.5 * hd, tmp, bc, cram, n);
-        for (int i = 0; i < 6; i++) k_fma(c, tmp[i], &hh, k[1][i], y[i], n, M1_S1);
-        /* k3 */
-        for (int i = 0; i < 3; i++) memcpy(k[2][i], tmp[3 + i], n * sizeof(KR));
-        ph_accel(c, &k[2][3], t + 0.5 * hd, tmp, bc, cram, n);
-        for (int i = 0; i < 6; i++) k_fma(c, tmp[i], &h, k[2][i], y[i], n, M1_S1);
-        /* k4 */
-        for (int i = 0; i < 3; i++) memcpy(k[3][i], tmp[3 + i], n * sizeof(KR));
-        ph_accel(c, &k[3][3], t + hd, tmp, bc, cram, n);
-        /* y += h/6 (k1 + 2 k2 + 2 k3 + k4) */
-        for (int i = 0; i < 6; i++) {
-            k_fma(c, tmp[i], KK(C_TWO), k[1][i], k[0][i], n, M1_S1);
-            k_fma(c, tmp[i], KK(C_TWO), k[2][i], tmp[i], n, M1_S1);
-            k_add(c, tmp[i], tmp[i], k[3][i], n, 0);
-            k_fma(c, y[i], &h6, tmp[i], y[i], n, M1_S1);
-        }
-        if (cb) cb(u, step0 + j + 1, (double)(step0 + j + 1) * hd, (void *const *)y, n);
+        const double t = t0 + (double)(step0 + j) * hd;
+        ph_rk4_step(c, y, bc, cram, t, hd, &h, &hh, &h6, k, tmp, n);
+        if (cb) cb(u, step0 + j + 1, t0 + (double)(step0 + j + 1) * hd, (void *const *)y, n);
     }
+    c->arena_used = mark;
+    return 0;
+}
+
+/* DEBRIS-F: the final short step: one rk4 step of host length hs from host time ts, landing on ts + hs. hs is
+   a binary64 that a driver forms on the host as e1 - (t0 + N h), both multiples of 2^-20 s, so hs is exact and,
+   being under 16 s, holds in 24 bits: every kind receives it exactly (binary32 included) by conversion from
+   binary64; h/2 and h/6 are then formed in the kind as for the regular step. */
+static int ph_rk4_short(m1_ctx *c, KR *const y[6], const KR *bc, const KR *cram, double ts, double hs, long stepno,
+                        m1_step_cb cb, void *u, size_t n)
+{
+    KD *D = (KD *)c->k;
+    size_t mark = c->arena_used;
+    KR h, hh, h6;
+    k_from_f64(c, &h, &hs, 1);
+    k_mul(c, &hh, &h, KK(C_HALF), 1, 0);
+    k_div(c, &h6, &h, KK(C_SIX), 1, 0);
+    KR *k[4][6], *tmp[6];
+    for (int s = 0; s < 4; s++)
+        for (int i = 0; i < 6; i++) k[s][i] = TMP(n);
+    for (int i = 0; i < 6; i++) tmp[i] = TMP(n);
+    ph_rk4_step(c, y, bc, cram, ts, hs, &h, &hh, &h6, k, tmp, n);
+    if (cb) cb(u, stepno, ts + hs, (void *const *)y, n);
     c->arena_used = mark;
     return 0;
 }

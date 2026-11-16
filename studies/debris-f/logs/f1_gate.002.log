@@ -1,0 +1,49 @@
+# f1_gate, log 002, written 2026-11-16 08:16:18 -0700
+# script f1_gate.py sha256 2775a25d7bf9952b305d075a5151b381e1d29edcedbe455491d9aacbeb47936a
+# f_lib.py sha256 8c87350aad243bb137d3dc2f344dee8df2e2bf473b3e46d88819823c9430ac7a
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 25% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   Lanes: 10,000 (tests/m1f.c mode f1, splitmix64 seed 0xF1), each with its own stage time (uniform over the table's
+#     interior, a multiple of 2^-21 s), position r (6,600 to 8,000 km), vector b (1e-6 to 1e-1), velocity v (7 to 8 km/s)
+#     and bc (0.002 to 0.05 m^2/kg). Columns: the 12 interpolated values (M row-major, Omega), M^T r, M b, and drag at
+#     (r, v, bc) with the lane's Omega and the 28-band atmosphere.
+#   G1 THE GATE: native64 equals cft64 and native32 equals cft32 bit for bit (the NaN rule) in every lane and in the 18
+#      columns of interpolation and application, which use only addition, multiplication and FMA (and a conversion of u
+#      from binary64), in the default configuration.
+#   G2 drag (one exp a lane): native equals cft bit for bit in every lane, in the control configuration (--cr: the native
+#      kinds route exp to libcft's correctly rounded host function). With the C library's exp the differing lanes are
+#      REPORTED (no pass condition).
+#   NEGATIVE CONTROL C1: the negctl build (tests/build_f.sh: -DM1_NEGCTL_FRAME, the native kinds only, M00 accumulated
+#      from the last node down) against cft at each width: it must break bit-identity, the first differing column must be
+#      M00 and the gate names it with its lane count, and the 11 other interpolated values must stay identical in every
+#      lane (only M00 and the columns built from it may differ).
+# m1f_O2.exe sha256 34d4eb5645c42631bfeb6ae18bc74a6e744181d164428f98dbd62996625a3f41
+# m1f_negctl.exe sha256 2d633259658c4831edf5f83f6eb1a06b9724eee941c838cdee74354cc52f623e
+# table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# ran (0.53 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_native64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f1 native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/native64.txt
+# ran (3.35 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_cft64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f1 cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/cft64.txt
+# ran (0.46 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_native32 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f1 native32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/native32.txt
+# ran (2.14 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_cft32 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f1 cft32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/cft32.txt
+# ran (2.14 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_native64_cr C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f1 native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/native64_cr.txt --cr
+# ran (0.63 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_native64_negctl C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_negctl.exe f1 native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/native64_negctl.txt
+# ran (1.25 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_native32_cr C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f1 native32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/native32_cr.txt --cr
+# ran (0.44 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f1_native32_negctl C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_negctl.exe f1 native32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 10000 0xF1 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f1/native32_negctl.txt
+PASS binary64: 10000 lanes on every side
+PASS binary64: native and cft drew the same inputs
+# binary64: NaN values in native's output: 0
+PASS G1 binary64: interpolation and application bit for bit in all 10000 lanes x 18 columns (0 differ)
+REPORTED binary64 drag with the C library's exp: 2 lane-columns differ (drag0 1, drag1 0, drag2 1)
+PASS G2 binary64 (--cr): all 21 columns bit for bit in all 10000 lanes (0 differ)
+# C1 binary64: columns differing: M00 5257, MTr0 2989, Mb0 2986, drag0 1, drag2 1; first differing column M00 (first lane 0)
+PASS C1 binary64 FAILS as specified: M00 differs in 5257 lanes, named first; the other 11 interpolated values identical
+PASS binary32: 10000 lanes on every side
+PASS binary32: native and cft drew the same inputs
+# binary32: NaN values in native's output: 0
+PASS G1 binary32: interpolation and application bit for bit in all 10000 lanes x 18 columns (0 differ)
+REPORTED binary32 drag with the C library's exp: 0 lane-columns differ (drag0 0, drag1 0, drag2 0)
+PASS G2 binary32 (--cr): all 21 columns bit for bit in all 10000 lanes (0 differ)
+# C1 binary32: columns differing: M00 5214, MTr0 2922, Mb0 2913; first differing column M00 (first lane 0)
+PASS C1 binary32 FAILS as specified: M00 differs in 5214 lanes, named first; the other 11 interpolated values identical
+# PASS 

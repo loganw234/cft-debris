@@ -1,0 +1,61 @@
+# f3_gate, log 001, written 2026-11-16 07:23:17 -0700
+# script f3_gate.py sha256 441c2285c3de65e3d7fdcb20cab5bc3a8db975461127c4c5b0353f4bdc85de76
+# f_lib.py sha256 4b0bdd5bbe9260d98bfb6365773a4ed638c41208e2956f3a7756f5407bb14cfb
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# f_orekit.js sha256 ebc33b0a0f9d6de5e20915ea814a74903e1930ae47b5a4c2abf44d990d90c89b
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 15% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   The angle between two GCRS <- ITRS rotations A and B is asin(|D - D^T|_F / (2 sqrt 2)), D = A^T B, in exact
+#   arithmetic from their elements (tests/f_lib.py rot_angle).
+#   (a) THE MODEL: at each of the Earth orientation file's dates MJD 61270 to 61430 at 0h UTC (161 dates; the Phase 0
+#       ruling: no epoch at or past the rows with blank dX, dY from MJD 61438), the node routine at binary256 with no
+#       table against Orekit: every angle <= 50 uas (the brief's bound, used as the tolerance).
+#   (b) THE TABLE AS M1 USES IT: at 1,000 TDB times uniform over the window's table (random.Random(0xF3B), multiples of
+#       2^-21 s inside [0, 34 days)), native64 interpolating the table against Orekit: every angle <= 1 mas. Basis: the
+#       two interpolation schemes - our 4-point Lagrange of the daily rows against Orekit's (the same scheme for UT1-UTC,
+#       F2: 5.6e-17 s; between rows Orekit's pole differs from ours by up to about 12 uas, a development check at three
+#       epochs that are not this gate's), Orekit's own interpolation of its precession-nutation, our table's interpolation
+#       (part (c)'s bound, under a uas) and binary64 rounding (1e-16 rad).
+#   (c) THE TABLE'S INTERPOLATION: at the midpoints of 200 fine intervals (random.Random(0xF3C)) of the table, its
+#       6-point Lagrange interpolant in exact arithmetic from the binary256 nodes against the node routine's direct
+#       evaluation there: every angle <= B_theta and every |Omega_table - Omega_direct| <= B_Omega, both computed below
+#       before any data from the IERS tables, the EOP rows and the scheme (coarse 8-point Lagrange at H = 16384 s, fine
+#       6-point at h = 256 s): the Lagrange remainder with derivative bounds from the series' amplitudes and frequencies,
+#       the EOP interpolants' slope breaks at 0h UTC (their fourth differences), and the Lebesgue constant. Reported too:
+#       native64's interpolation against the direct value (no criterion).
+#   NEGATIVE CONTROL C1: the node routine with dX planted +1 mas (4.84813681e-9 rad, twenty times (a)'s tolerance) must
+#       FAIL (a), with its largest angle within 0.9 to 1.1 mas (expected: the CIP moved by 1 mas, so about 1 mas, plus
+#       or minus (a)'s own differences of at most 50 uas).
+#   NaN: none of our values may be NaN.
+# m1nodes.exe sha256 805d9fcafc25255592261084ed08efb697afb95281c49c924a7ac3fcd5be0083; m1f_O2.exe sha256 7a6bb2c8354b99a5cf817e2ef87b095f67372647427a576527ba4dc762057fa2; table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# (c) bounds: coarse X 5.376e-17, Y 5.787e-17, S 4.782e-22 rad; fine smooth 4.137e-13; EOP breaks 9.326e-10 (Lebesgue 1.3920); element bound 9.331e-10 rad
+# (c) B_theta = 2.13 x element bound = 1.9874e-09 rad = 409.9333 uas; B_Omega = 1.297e-13 rad/s
+PASS (a) 161 dates, MJD 61270..61430
+# ran (99.06 s): C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f3_a C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe direct C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_direct.txt
+# ran (0.19 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe times C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_times.txt
+# ran (6.66 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f_orekit.js -- frames C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_tai.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_ore.txt
+# orekit: # EOP loaded: UT1-UTC at MJD 61360 0h UTC = -0.0704999 (file -0.0704999); EOP 2026-08-18T00:00:00.000 to 2027-02-14T00:00:00.000; interpolation degree 3; simple EOP true
+PASS (a) both sides gave 161 rotations
+# (a) angle: max 0.012 uas (MJD 61427), median 0.003 uas, min 0.000 uas
+PASS (a) no NaN
+PASS (a) every angle <= 50 uas (max 0.012 uas)
+# ran (69.97 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f3_a_plant C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe direct C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_plant_t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/a_plant_direct.txt --plant-dx 4.84813681109536e-09
+# C1 (dX + 1 mas): angle max 1.0000 mas, min 1.0000 mas
+PASS C1 FAILS (a) as specified: largest angle 1.0000 mas, within 0.9 to 1.1 mas
+# ran (0.42 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f3_b_ours C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe frames native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/b_t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/b_ours.txt
+# ran (0.11 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe times C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/b_t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/b_times.txt
+# ran (1.76 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f_orekit.js -- frames C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/b_tai.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/b_ore.txt
+# orekit: # EOP loaded: UT1-UTC at MJD 61360 0h UTC = -0.0704999 (file -0.0704999); EOP 2026-08-18T00:00:00.000 to 2027-02-14T00:00:00.000; interpolation degree 3; simple EOP true
+PASS (b) both sides gave 1000 rotations
+# (b) angle: max 15.802 uas, median 2.913 uas
+PASS (b) no NaN
+PASS (b) every angle <= 1 mas (max 15.802 uas)
+PASS (c) the table's h is 256 s, as the bound assumes
+# ran (102.85 s): C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f3_c C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe direct C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/c_t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/c_direct.txt
+# ran (1.93 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f3_c_n64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe frames native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/c_t64.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f3/c_n64.txt
+# (c) table (exact interpolation) against direct: angle max 1.6403e-14 rad (0.003383 uas), median 1.6074e-18 rad; |dOmega| max 7.876e-16 rad/s
+# (c) REPORTED: native64's interpolation against direct: angle max 1.6400e-14 rad (0.0034 uas)
+PASS (c) every angle <= B_theta = 1.9874e-09 rad (max 1.6403e-14)
+PASS (c) every |dOmega| <= B_Omega = 1.297e-13 rad/s (max 7.876e-16)
+# PASS 

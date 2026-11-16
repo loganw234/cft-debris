@@ -1,0 +1,115 @@
+# f6_hindcast, log 001, written 2026-11-16 09:32:55 -0700
+# script f6_hindcast.py sha256 f26bc8b4c5952b9bae42b5c4f38efd71dc7f5048b127f7b412a9b70a82c98d70
+# f_lib.py sha256 8c87350aad243bb137d3dc2f344dee8df2e2bf473b3e46d88819823c9430ac7a
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# f_fit.py sha256 34c099a805ed7defb934257f9c1e2cc72918dd903653fbbe7029802d5959030f
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# f6_orekit_fit.js sha256 dff140aa87667c2c39c6981bcafbbf4b8538116ba15b15528c772fc5ca5269a6
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 18% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   A MEASUREMENT (no pass condition), fixed before S1 is read; the CONTROLS are asserted.
+#   THE PAIRS: objects in both S0 and S1 (by NORAD_CAT_ID; ephemeris type 0; built by Orekit in both), whose S1 set has an
+#     epoch e1 later than their S0 set's e0 by no more than 3 days (0 < e1 - e0 <= 259200 s, from the EPOCH strings, exact).
+#     If there are more than 200, every `stations` pair is kept and the rest drawn to 200 in all from the other groups in
+#     proportion to their pair counts (largest remainders, ties to the earlier group), by random.Random(0xF6).sample over
+#     each group's pairs in catalogue order. e0q and e1q are e0 and e1 rounded to 2^-20 s (tests/f_fit.py).
+#   THE METHODS, each a GCRF position at e1q:
+#     (A) M1 fitted as B4 to the S0 set's pseudo-observations (a fit of F5(d) reused where the object is in its sample:
+#         the same S0 set, inputs and build), then propagated from its origin O = e0q - 1 day to e1q (native64, the window's
+#         table; whole 15 s steps, then one short step landing on e1q);
+#     (B) SGP4 from the S0 set at e1q;
+#     (C) Orekit fitted on its own (tests/f6_orekit_fit.js: BatchLSEstimator on the same pseudo-observations, estimating
+#         the Cartesian state and the drag coefficient; NRLMSISE00 with CelesTrak's SW-Last5Years.txt, Holmes-Featherstone
+#         20x20 from the same EIGEN-6C4, the Sun and the Moon from the same DE421, radiation pressure with the conical
+#         shadow and cram 0.01 m^2/kg), propagated to e1q with the same forces; on 50 pairs drawn by
+#         random.Random(0xF6C).sample from the pairs in catalogue order (all of them if 50 or fewer), and stopped early when
+#         its JVM's own CPU time reaches 8 minutes (the cycle count, charged by tests/cpurun.py, is kept under 10 minutes).
+#   THE REFERENCE: SGP4 from the S1 set at e1q (at most 0.48 us from e1; the S1 set's own error is part of every miss).
+#   THE MISS: the GCRF distance, and its radial, along-track and cross-track parts in the reference's frame (R along
+#     r_ref, C along r_ref x v_ref, A = C x R).
+#   THE STATISTICS, per method: the median and the 90th percentile (the ceil(0.9 n)-th smallest) of the miss distance,
+#     overall and in each cell of perigee band (the S0 set's a(1 - e) - 6378.137 km: under 500, 500 to 800, 800 and over)
+#     by horizon (e1 - e0: under 6 h, 6 to 24 h, 24 h and over); a cell of fewer than 20 pairs gives its count and median
+#     only. The share of pairs in which (A) misses less than (B) - the pairs cluster by breakup and by update time, so the
+#     share is not a sample of independent trials. The ten largest misses of each method, by object, go to the ledger.
+#   CONTROLS, asserted:
+#     T1 THE TIME TAG, every pair, every method: with the reference moved to e1q + 1 s and the method's position kept at
+#        e1q, the change in the Cartesian GCRF miss vector must equal the reference's velocity times 1 s within 1% of that
+#        velocity's size.
+#     T2 EQUAL SETS: every object (built in both) whose S1 row equals its S0 row in every field gives (B) a miss of exactly
+#        0 at its epoch.
+#     T3 SWAPPED IDENTITIES, every pair: (B)'s position against the S1 reference of the next pair in catalogue order
+#        (cyclically) whose S1 mean motion differs from its own by more than 1e-3 rev/day must miss by more than 100 km.
+# m1f_O2.exe sha256 34d4eb5645c42631bfeb6ae18bc74a6e744181d164428f98dbd62996625a3f41; table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# gp-stations-S0.csv sha256 bfdf8f60f932ae11247c0dd31d361d3f1a3c11cf8505aebedede9b4c08808906
+# gp-stations-S1.csv sha256 9bdadd3ac3472b6dd860c753483ef1aa15ba0c2fc664ae0b4137cc67a0c68b5d
+# gp-fengyun-1c-debris-S0.csv sha256 cabf9ba46a14446ebde737dce4e9d4f9e3930dfb19e428d95c9772029a2df5e2
+# gp-fengyun-1c-debris-S1.csv sha256 3f6092778d026dd6b5c0bb632c40a9d19be6425c9c632724071de1d7e65329da
+# gp-iridium-33-debris-S0.csv sha256 4e794306dd4bd9cc2f9ecd595ac5f55dc82b6083d0cd7b7648b7247b6b499a17
+# gp-iridium-33-debris-S1.csv sha256 5bd57a2ed58e1e10238a5e75aeb4f4badbb6760e22af9ccb9d3604cc34ff70bd
+# gp-cosmos-2251-debris-S0.csv sha256 253e32e87b0be45c2639a8d615808e05093337d395c56bb03da54e4317318f34
+# gp-cosmos-2251-debris-S1.csv sha256 29c6578607b82119650830122211ca695b7b4091f3b54bb89be8f48d09022590
+# objects in both snapshots and built in both: 2696
+# candidate pairs (0 < e1 - e0 <= 3 days): 704 (stations 8, fengyun-1c-debris 526, iridium-33-debris 25, cosmos-2251-debris 145); equal sets: 1647
+# excluded as more than 3 days later: 27; S1 not later: 1965
+# drawn to 200: stations 8, fengyun-1c-debris 145, iridium-33-debris 7, cosmos-2251-debris 40
+PASS F6 has pairs (200)
+# (A) fits reused from F5(d) (f5_gate.001.log, C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/d_fit.txt): 13; new fits: 187
+# ran (4.68 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/a_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/a_pv.txt
+# ran (425.68 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f6_fit C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe fit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/a_fit_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/a_fit.txt --maxit 10
+# (A) fits converged: 178 of 200
+# F7's record written: f6/f6_pairs.json in the scratch (200 pairs)
+# ran (58.60 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f6_prop C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe prop native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/a_prop_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/a_prop_native64.txt
+# ran (1.49 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/b_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/b_pv.txt
+# ran (1.48 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/ref_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/ref_pv.txt
+PASS (C) evaluates no density after 2026-12-30 (its latest e1 is 2723608 s TDB, 2026-12-30 is 6480069 s)
+PASS (C)'s dates, ap history included, lie inside the two-fill check's span (2245271 to 2723608 s TDB)
+# ran (2.89 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/c_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/c_pv.txt
+# ran (244.99 s): C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f6_orekit_fit.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/c_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/c_out.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit_c3 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/gfc_dedup C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/de421 480
+# (C) # f6_orekit_fit: java 1.8.0_411; EOP loaded (UT1-UTC at MJD 61360 = -0.0704999); mu 398600441500000; space weather: Orekit CssiSpaceWeatherData from C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit_c3, 2021-01-01T00:00:00.000 to 2041-10-01T00:00:00.000; CPU limit 480 s
+# (C) # columns: C key x y z (GCRF at e1, m, Java hex) iterations cd_fitted rms_m | X key reason
+# (C) # fitted 50; JVM process CPU 219.3 s
+# (C) subset 50 pairs; fitted and propagated 50
+PASS T1 the time tag: all 450 pair-methods moved by v x 1 s within 1% of |v|
+# ran (1.49 s): C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/eq0_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/eq0_pv.txt
+# ran (1.74 s): C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/eq1_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6/eq1_pv.txt
+PASS T2 equal sets: all 1647 objects with equal S0 and S1 rows give (B) a miss of exactly 0 (0 do not)
+PASS T3 swapped identities: every pair's (B) misses another's S1 reference by more than 100 km (0 do not)
+MEASURED A overall: n 200, median 1.122 km, 90th 2.825 km
+MEASURED A perigee under 500 km, horizon under 6 h: n 7, median 1.346 km
+MEASURED A perigee under 500 km, horizon 6 to 24 h: n 6, median 0.824 km
+MEASURED A perigee under 500 km, horizon 24 h and over: n 1, median 2.664 km
+MEASURED A perigee 500 to 800 km, horizon under 6 h: n 29, median 0.908 km, 90th 1.526 km
+MEASURED A perigee 500 to 800 km, horizon 6 to 24 h: n 88, median 1.200 km, 90th 2.571 km
+MEASURED A perigee 500 to 800 km, horizon 24 h and over: n 19, median 2.929 km
+MEASURED A perigee 800 km and over, horizon under 6 h: n 15, median 0.370 km
+MEASURED A perigee 800 km and over, horizon 6 to 24 h: n 31, median 1.148 km, 90th 2.384 km
+MEASURED A perigee 800 km and over, horizon 24 h and over: n 4, median 5.352 km
+MEASURED A median |radial| 0.094 km, |along| 1.115 km, |cross| 0.095 km
+MEASURED B overall: n 200, median 0.075 km, 90th 0.357 km
+MEASURED B perigee under 500 km, horizon under 6 h: n 7, median 0.061 km
+MEASURED B perigee under 500 km, horizon 6 to 24 h: n 6, median 0.128 km
+MEASURED B perigee under 500 km, horizon 24 h and over: n 1, median 3.846 km
+MEASURED B perigee 500 to 800 km, horizon under 6 h: n 29, median 0.026 km, 90th 0.122 km
+MEASURED B perigee 500 to 800 km, horizon 6 to 24 h: n 88, median 0.084 km, 90th 0.311 km
+MEASURED B perigee 500 to 800 km, horizon 24 h and over: n 19, median 0.357 km
+MEASURED B perigee 800 km and over, horizon under 6 h: n 15, median 0.020 km
+MEASURED B perigee 800 km and over, horizon 6 to 24 h: n 31, median 0.047 km, 90th 0.104 km
+MEASURED B perigee 800 km and over, horizon 24 h and over: n 4, median 0.220 km
+MEASURED B median |radial| 0.013 km, |along| 0.063 km, |cross| 0.014 km
+MEASURED C overall: n 50, median 1.156 km, 90th 2.895 km
+MEASURED C perigee under 500 km, horizon under 6 h: n 1, median 1.971 km
+MEASURED C perigee under 500 km, horizon 6 to 24 h: n 1, median 0.638 km
+MEASURED C perigee under 500 km, horizon 24 h and over: n 0
+MEASURED C perigee 500 to 800 km, horizon under 6 h: n 7, median 0.922 km
+MEASURED C perigee 500 to 800 km, horizon 6 to 24 h: n 23, median 1.111 km, 90th 2.432 km
+MEASURED C perigee 500 to 800 km, horizon 24 h and over: n 6, median 4.018 km
+MEASURED C perigee 800 km and over, horizon under 6 h: n 2, median 0.427 km
+MEASURED C perigee 800 km and over, horizon 6 to 24 h: n 10, median 1.449 km
+MEASURED C perigee 800 km and over, horizon 24 h and over: n 0
+MEASURED C median |radial| 0.074 km, |along| 1.147 km, |cross| 0.078 km
+MEASURED the share of pairs in which (A) misses less than (B): 9 of 200 = 0.045 (the pairs cluster by breakup and update time: not independent trials)
+MEASURED on (C)'s subset of 50: (A) median 1.169 km, (B) 0.096 km, (C) 1.156 km; (A) < (C) in 19
+# per-pair table and the ten largest misses: the ledger's debris-f\f6_pairs.001.tsv, sha256 b548b943a3f4df198e449be29bafd6d4f3c2705db80b759fbf3777c46a7ae84b
+# PASS 

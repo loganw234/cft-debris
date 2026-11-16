@@ -1,0 +1,102 @@
+# f9_box, log 001, written 2026-11-16 14:30:28 -0700
+# script f9_box.py sha256 f00b5f638133628eec197dd6cf3f021b54f3e6e96537286dd087d1df5c266b58
+# host amd-arc-box, Linux 6.8.0-139-generic x86_64
+# cpu Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz, 36 logical processors; governor schedutil, driver intel_cpufreq, max 3600000 kHz, intel_pstate no_turbo 0
+# gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; gcc -dumpmachine x86_64-linux-gnu; python 3.12.3
+# host load at start: 0.0% (/proc/stat, all logical processors, 0.5 s)
+# CRITERIA (stated in the script before its data; asserted below):
+#   A MEASUREMENT (no pass condition; the PASS lines say only that a run completed), single runs, as tests/f9_time.py
+#   makes them, with the load stated per row: the busy share of all the box's logical processors over 0.5 s before and
+#   after each run (/proc/stat; one busy thread of 36 is about 2.8%), and each run's CPU (getrusage, user + system).
+#   T1 each kind's time per lane-force-evaluation with the real frame (m1f time), at 1 and 64 lanes, native32, native64
+#      (the C library's transcendentals and libcft's), cft32, cft64, cft128, cft256; and an object-day's time with rk4 at
+#      15 s, COMPUTED from the measured time of a step. On the box the columns m1f prints as thread_cycles and
+#      per_lane_eval_cycles hold the thread's CPU nanoseconds (the shim's CLOCK_THREAD_CPUTIME_ID), not cycles.
+#   T2 the node table's build: m1nodes build of 2 days of data (675 fine nodes and their coarse nodes), wall time and CPU;
+#      reported per day of data.
+#   T3 a fit's time per object at native64: m1f fit on the first 5 objects of F5(d)'s fit input, wall time per object,
+#      with the iteration counts.
+#   Unlike f9_time.py, each program starts directly, without the cpurun.py wrapper, so T2's and T3's wall times hold no
+#   Python start.
+# TimeSheet booking B0083 (sensitive, box); min seconds per measurement 2
+# m1f_O2 sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319; m1nodes sha256 520956a9e7fdfda5d0ec1d272570d0c83e8c58caa9e41304081f6f9255b5a889; table sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# ran (4.07 s wall, 4.07 s CPU, exit 0): build/m1f_O2 time native32 in/frame_main.bin 1 2 work/f9_001/time_native32_1.txt
+MEASURED T1 native32 lanes 1 (load 0.0% / 0.1%; the process 4.07 s CPU in 4.07 s): accel lanes 1 evals 294324 wall_s 2.000004 per_lane_eval_us 6.795 thread_cycles 2000010228 per_lane_eval_cycles 6795
+MEASURED T1 native32 lanes 1 (load 0.0% / 0.1%; the process 4.07 s CPU in 4.07 s): rk4 lanes 1 steps 73136 wall_s 2.000016 per_step_s 0.000027 per_object_day_s 0.158 thread_cycles 1999977852
+PASS T1 native32_1 completed
+# ran (4.07 s wall, 4.07 s CPU, exit 0): build/m1f_O2 time native32 in/frame_main.bin 64 2 work/f9_001/time_native32_64.txt
+MEASURED T1 native32 lanes 64 (load 0.1% / 0.0%; the process 4.07 s CPU in 4.07 s): accel lanes 64 evals 10902 wall_s 2.000085 per_lane_eval_us 2.867 thread_cycles 2000008586 per_lane_eval_cycles 2866
+MEASURED T1 native32 lanes 64 (load 0.1% / 0.0%; the process 4.07 s CPU in 4.07 s): rk4 lanes 64 steps 2721 wall_s 2.000736 per_step_s 0.000735 per_object_day_s 0.066 thread_cycles 2000705977
+PASS T1 native32_64 completed
+# ran (4.08 s wall, 4.08 s CPU, exit 0): build/m1f_O2 time native64 in/frame_main.bin 1 2 work/f9_001/time_native64_1.txt
+MEASURED T1 native64 lanes 1 (load 0.0% / 0.0%; the process 4.08 s CPU in 4.08 s): accel lanes 1 evals 281146 wall_s 2.000005 per_lane_eval_us 7.114 thread_cycles 1999926301 per_lane_eval_cycles 7113
+MEASURED T1 native64 lanes 1 (load 0.0% / 0.0%; the process 4.08 s CPU in 4.08 s): rk4 lanes 1 steps 72430 wall_s 2.000003 per_step_s 0.000028 per_object_day_s 0.159 thread_cycles 1999968881
+PASS T1 native64_1 completed
+# ran (4.08 s wall, 4.08 s CPU, exit 0): build/m1f_O2 time native64 in/frame_main.bin 64 2 work/f9_001/time_native64_64.txt
+MEASURED T1 native64 lanes 64 (load 0.0% / 0.0%; the process 4.08 s CPU in 4.08 s): accel lanes 64 evals 10714 wall_s 2.000118 per_lane_eval_us 2.917 thread_cycles 2000007990 per_lane_eval_cycles 2917
+MEASURED T1 native64 lanes 64 (load 0.0% / 0.0%; the process 4.08 s CPU in 4.08 s): rk4 lanes 64 steps 2672 wall_s 2.000406 per_step_s 0.000749 per_object_day_s 0.067 thread_cycles 2000372754
+PASS T1 native64_64 completed
+# ran (4.08 s wall, 4.08 s CPU, exit 0): build/m1f_O2 time native64 in/frame_main.bin 1 2 work/f9_001/time_native64_cr_1.txt --cr
+MEASURED T1 native64 libcft-transc lanes 1 (load 0.0% / 0.0%; the process 4.08 s CPU in 4.08 s): accel lanes 1 evals 2393 wall_s 2.000626 per_lane_eval_us 836.032 thread_cycles 2000565124 per_lane_eval_cycles 836007
+MEASURED T1 native64 libcft-transc lanes 1 (load 0.0% / 0.0%; the process 4.08 s CPU in 4.08 s): rk4 lanes 1 steps 517 wall_s 2.003261 per_step_s 0.003875 per_object_day_s 22.319 thread_cycles 2003197933
+PASS T1 native64_cr_1 completed
+# ran (4.24 s wall, 4.24 s CPU, exit 0): build/m1f_O2 time native64 in/frame_main.bin 64 2 work/f9_001/time_native64_cr_64.txt --cr
+MEASURED T1 native64 libcft-transc lanes 64 (load 0.0% / 0.0%; the process 4.24 s CPU in 4.24 s): accel lanes 64 evals 37 wall_s 2.023935 per_lane_eval_us 854.702 thread_cycles 2023864100 per_lane_eval_cycles 854672
+MEASURED T1 native64 libcft-transc lanes 64 (load 0.0% / 0.0%; the process 4.24 s CPU in 4.24 s): rk4 lanes 64 steps 9 wall_s 2.140586 per_step_s 0.237843 per_object_day_s 21.406 thread_cycles 2140540286
+PASS T1 native64_cr_64 completed
+# ran (4.10 s wall, 4.09 s CPU, exit 0): build/m1f_O2 time cft32 in/frame_main.bin 1 2 work/f9_001/time_cft32_1.txt
+MEASURED T1 cft32 lanes 1 (load 0.1% / 0.0%; the process 4.09 s CPU in 4.10 s): accel lanes 1 evals 525 wall_s 2.003568 per_lane_eval_us 3816.321 thread_cycles 2002099331 per_lane_eval_cycles 3813523
+MEASURED T1 cft32 lanes 1 (load 0.1% / 0.0%; the process 4.09 s CPU in 4.10 s): rk4 lanes 1 steps 129 wall_s 2.005770 per_step_s 0.015549 per_object_day_s 89.560 thread_cycles 2004396161
+PASS T1 cft32_1 completed
+# ran (4.64 s wall, 4.64 s CPU, exit 0): build/m1f_O2 time cft32 in/frame_main.bin 64 2 work/f9_001/time_cft32_64.txt
+MEASURED T1 cft32 lanes 64 (load 0.0% / 0.0%; the process 4.64 s CPU in 4.64 s): accel lanes 64 evals 14 wall_s 2.140369 per_lane_eval_us 2388.805 thread_cycles 2140345405 per_lane_eval_cycles 2388778
+MEASURED T1 cft32 lanes 64 (load 0.0% / 0.0%; the process 4.64 s CPU in 4.64 s): rk4 lanes 64 steps 4 wall_s 2.416126 per_step_s 0.604032 per_object_day_s 54.363 thread_cycles 2416030426
+PASS T1 cft32_64 completed
+# ran (4.11 s wall, 4.11 s CPU, exit 0): build/m1f_O2 time cft64 in/frame_main.bin 1 2 work/f9_001/time_cft64_1.txt
+MEASURED T1 cft64 lanes 1 (load 0.1% / 0.0%; the process 4.11 s CPU in 4.11 s): accel lanes 1 evals 417 wall_s 2.002722 per_lane_eval_us 4802.690 thread_cycles 2002410429 per_lane_eval_cycles 4801943
+MEASURED T1 cft64 lanes 1 (load 0.1% / 0.0%; the process 4.11 s CPU in 4.11 s): rk4 lanes 1 steps 101 wall_s 2.012379 per_step_s 0.019925 per_object_day_s 114.765 thread_cycles 2012109380
+PASS T1 cft64_1 completed
+# ran (4.64 s wall, 4.64 s CPU, exit 0): build/m1f_O2 time cft64 in/frame_main.bin 64 2 work/f9_001/time_cft64_64.txt
+MEASURED T1 cft64 lanes 64 (load 0.1% / 0.0%; the process 4.64 s CPU in 4.64 s): accel lanes 64 evals 11 wall_s 2.149473 per_lane_eval_us 3053.229 thread_cycles 2149319153 per_lane_eval_cycles 3053010
+MEASURED T1 cft64 lanes 64 (load 0.1% / 0.0%; the process 4.64 s CPU in 4.64 s): rk4 lanes 64 steps 3 wall_s 2.396435 per_step_s 0.798812 per_object_day_s 71.893 thread_cycles 2396349995
+PASS T1 cft64_64 completed
+# ran (4.14 s wall, 4.14 s CPU, exit 0): build/m1f_O2 time cft128 in/frame_main.bin 1 2 work/f9_001/time_cft128_1.txt
+MEASURED T1 cft128 lanes 1 (load 0.0% / 0.0%; the process 4.14 s CPU in 4.14 s): accel lanes 1 evals 292 wall_s 2.004280 per_lane_eval_us 6863.972 thread_cycles 2004194491 per_lane_eval_cycles 6863680
+MEASURED T1 cft128 lanes 1 (load 0.0% / 0.0%; the process 4.14 s CPU in 4.14 s): rk4 lanes 1 steps 70 wall_s 2.028370 per_step_s 0.028977 per_object_day_s 166.906 thread_cycles 2028148463
+PASS T1 cft128_1 completed
+# ran (5.09 s wall, 5.08 s CPU, exit 0): build/m1f_O2 time cft128 in/frame_main.bin 64 2 work/f9_001/time_cft128_64.txt
+MEASURED T1 cft128 lanes 64 (load 0.0% / 0.0%; the process 5.08 s CPU in 5.09 s): accel lanes 64 evals 7 wall_s 2.313394 per_lane_eval_us 5163.826 thread_cycles 2313327410 per_lane_eval_cycles 5163677
+MEASURED T1 cft128 lanes 64 (load 0.0% / 0.0%; the process 5.08 s CPU in 5.09 s): rk4 lanes 64 steps 2 wall_s 2.669762 per_step_s 1.334881 per_object_day_s 120.139 thread_cycles 2669685116
+PASS T1 cft128_64 completed
+# ran (4.13 s wall, 4.13 s CPU, exit 0): build/m1f_O2 time cft256 in/frame_main.bin 1 2 work/f9_001/time_cft256_1.txt
+MEASURED T1 cft256 lanes 1 (load 0.0% / 0.1%; the process 4.13 s CPU in 4.13 s): accel lanes 1 evals 155 wall_s 2.010076 per_lane_eval_us 12968.234 thread_cycles 2010015160 per_lane_eval_cycles 12967840
+MEASURED T1 cft256 lanes 1 (load 0.0% / 0.1%; the process 4.13 s CPU in 4.13 s): rk4 lanes 1 steps 36 wall_s 2.029998 per_step_s 0.056389 per_object_day_s 324.800 thread_cycles 2029887561
+PASS T1 cft256_1 completed
+# ran (8.23 s wall, 8.23 s CPU, exit 0): build/m1f_O2 time cft256 in/frame_main.bin 64 2 work/f9_001/time_cft256_64.txt
+MEASURED T1 cft256 lanes 64 (load 0.0% / 0.1%; the process 8.23 s CPU in 8.23 s): accel lanes 64 evals 3 wall_s 2.203280 per_lane_eval_us 11475.416 thread_cycles 2203199904 per_lane_eval_cycles 11475000
+MEASURED T1 cft256 lanes 64 (load 0.0% / 0.1%; the process 8.23 s CPU in 8.23 s): rk4 lanes 64 steps 2 wall_s 5.926956 per_step_s 2.963478 per_object_day_s 266.713 thread_cycles 5926730875
+PASS T1 cft256_64 completed
+# ran (2.09 s wall, 2.09 s CPU, exit 0): build/m1nodes build 1000000 256 675 work/f9_001/table_2days.bin --note F9 T2
+MEASURED T2 a 2-day table (675 fine nodes): 2.09 s wall, 2.09 s CPU (load 0.0% / 0.1%), 1.05 s a day of data
+# ran (9.07 s wall, 9.07 s CPU, exit 0): build/m1f_O2 fit in/frame_main.bin work/f9_001/fit5_in.txt work/f9_001/fit5_out.txt
+MEASURED T3 5 fits at native64: 9.07 s wall, 9.07 s CPU (load 0.2% / 0.0%), 1.81 s an object; iterations [3, 3, 3, 3, 3] (0.60 s an iteration)
+PASS T3 five fits reported
+# output work/f9_001/fit5_in.txt sha256 d3fa98299ceaa58af05f1aeefea4005ca66b2a0e3ef3e4d5430160baa07727ff
+# output work/f9_001/fit5_out.txt sha256 4ef775fe11af2a4ca6e900fa91c3fadcf037dccf28c21eb8faa347d16b585cec
+# output work/f9_001/table_2days.bin sha256 e944c2b7340b6eceb438ff8167938638e9eae54edfaf8c789b0f8c068d097bf2
+# output work/f9_001/time_cft128_1.txt sha256 1fc671b50f8a8ff2a20e9d4216c3e027ffc2f6ff5ecf2c622b62aee6dc166277
+# output work/f9_001/time_cft128_64.txt sha256 0ceb0b4e91f67443ecba2f4919d26dedd67d1c676102675f8d8a14bb2adcf6be
+# output work/f9_001/time_cft256_1.txt sha256 388f65af8da20d72dbadd54b0f786e5ba7e8be1f4d0dea17315962cac21e1efd
+# output work/f9_001/time_cft256_64.txt sha256 6c8c230989743750d0bdcc9cfcf6275890f01edb0e38c6ee62742f7ba587679c
+# output work/f9_001/time_cft32_1.txt sha256 ae7cb2ce80e00de9d10a9d26d548351c064eb3958fcdca691963b99cf245b4bc
+# output work/f9_001/time_cft32_64.txt sha256 8f29e08cb4be3c7bf909f10908b5dc4f1ddf67baf04d12706c871efd10a9ef90
+# output work/f9_001/time_cft64_1.txt sha256 e009b465ba5e45a108a682c5bdd346c4c3787037809447212596a91bf5365b91
+# output work/f9_001/time_cft64_64.txt sha256 e95bb365b69a7486592f59a2aadca105900ee98b0a7170ce765ed17338c96819
+# output work/f9_001/time_native32_1.txt sha256 0b8c173055f1ed59673c16c73cca2db6d8909ac67cd5dc68c2b3a2d17a426c71
+# output work/f9_001/time_native32_64.txt sha256 1dee44bd4d2409ac43545b55ec199a91871418b1be7e54c91d033f6f8872c3fd
+# output work/f9_001/time_native64_1.txt sha256 57fc90aba611c20417fd7a2ab68b92fbd7a15607fa9d5c5c0ba20c2811099b26
+# output work/f9_001/time_native64_64.txt sha256 6630aaa2ee355eae4f9737e2cee39c5d25f9caa88a2549b168ab56b90b5a0904
+# output work/f9_001/time_native64_cr_1.txt sha256 08f9b0b5ef4776c58f5ce106b2dcb0f09ca458a9d2f5199743fde66867cc674c
+# output work/f9_001/time_native64_cr_64.txt sha256 72829c068fa6fdd319abb002f9ae6b2829d3228cf0c0d345b93067db6abb5a50
+# host load at end: 0.1%
+# PASS 

@@ -1,0 +1,80 @@
+# f9_time, log 001, written 2026-11-16 08:03:33 -0700
+# script f9_time.py sha256 3dda80f662c0740286e0605f4b6937b2e80ee1789e5b11ef7722d51ecb0eb693
+# f_lib.py sha256 4b0bdd5bbe9260d98bfb6365773a4ed638c41208e2956f3a7756f5407bb14cfb
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 12% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   A MEASUREMENT (no pass condition; the PASS lines say only that a run completed), single runs, the load stated per row
+#   (Windows CPU % over 0.5 s before and after each run; one busy thread of 12 logical processors is about 8%).
+#   T1 each kind's time per lane-force-evaluation with the real frame (tests/m1f.c time: the whole model at degree 20, the
+#      28-band atmosphere, the Sun, the Moon, radiation pressure, the frame interpolated once a stage time), at 1 and 64
+#      lanes, native32, native64 (the C library's transcendentals and libcft's), cft32, cft64, cft128, cft256; and an
+#      object-day's time with rk4 at 15 s, COMPUTED from the measured time of a step; beside DEBRIS-E's E9 (uniform frame).
+#   T2 the node table's build: m1nodes build of 2 days of data (675 fine nodes and their coarse nodes), wall time and
+#      cycles; reported per day of data.
+#   T3 a fit's time per object at native64: tests/m1f.c fit on the first 5 objects of F5(d)'s fit input, wall time per
+#      object, with the iteration counts.
+# TimeSheet booking B0051-notice-sensitive-refused (sensitive, desktop); min seconds per measurement 2
+# m1f_O2.exe sha256 34d4eb5645c42631bfeb6ae18bc74a6e744181d164428f98dbd62996625a3f41; m1nodes.exe sha256 fb54e2091139f86868816211344e0bd390c962667dd8cd0082378b1961dc24b9; table sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# ran (4.30 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_native32_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time native32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_native32_1.txt
+MEASURED T1 native32 lanes 1 (load 14% / 12%): accel lanes 1 evals 334107 wall_s 2.000003 per_lane_eval_us 5.986 thread_cycles 4896706495 per_lane_eval_cycles 14656
+MEASURED T1 native32 lanes 1 (load 14% / 12%): rk4 lanes 1 steps 76763 wall_s 2.000013 per_step_s 0.000026 per_object_day_s 0.150 thread_cycles 4827673655
+PASS T1 native32_1 completed
+# ran (4.22 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_native32_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time native32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_native32_64.txt
+MEASURED T1 native32 lanes 64 (load 15% / 10%): accel lanes 64 evals 13823 wall_s 2.000079 per_lane_eval_us 2.261 thread_cycles 4950641444 per_lane_eval_cycles 5596
+MEASURED T1 native32 lanes 64 (load 15% / 10%): rk4 lanes 64 steps 3236 wall_s 2.000562 per_step_s 0.000618 per_object_day_s 0.056 thread_cycles 4932882969
+PASS T1 native32_64 completed
+# ran (4.23 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_native64_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_native64_1.txt
+MEASURED T1 native64 lanes 1 (load 17% / 18%): accel lanes 1 evals 345994 wall_s 2.000003 per_lane_eval_us 5.780 thread_cycles 4958053290 per_lane_eval_cycles 14330
+MEASURED T1 native64 lanes 1 (load 17% / 18%): rk4 lanes 1 steps 83683 wall_s 2.000002 per_step_s 0.000024 per_object_day_s 0.138 thread_cycles 4957744351
+PASS T1 native64_1 completed
+# ran (4.22 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_native64_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_native64_64.txt
+MEASURED T1 native64 lanes 64 (load 12% / 15%): accel lanes 64 evals 14710 wall_s 2.000187 per_lane_eval_us 2.125 thread_cycles 4940329071 per_lane_eval_cycles 5248
+MEASURED T1 native64 lanes 64 (load 12% / 15%): rk4 lanes 64 steps 3096 wall_s 2.000254 per_step_s 0.000646 per_object_day_s 0.058 thread_cycles 4837414520
+PASS T1 native64_64 completed
+# ran (4.22 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_native64_cr_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_native64_cr_1.txt --cr
+MEASURED T1 native64 libcft-transc lanes 1 (load 21% / 11%): accel lanes 1 evals 3035 wall_s 2.000524 per_lane_eval_us 659.151 thread_cycles 4965755026 per_lane_eval_cycles 1636163
+MEASURED T1 native64 libcft-transc lanes 1 (load 21% / 11%): rk4 lanes 1 steps 612 wall_s 2.000935 per_step_s 0.003270 per_object_day_s 18.832 thread_cycles 4958928116
+PASS T1 native64_cr_1 completed
+# ran (4.35 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_native64_cr_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_native64_cr_64.txt --cr
+MEASURED T1 native64 libcft-transc lanes 64 (load 15% / 13%): accel lanes 64 evals 45 wall_s 2.009376 per_lane_eval_us 697.700 thread_cycles 4959739561 per_lane_eval_cycles 1722132
+MEASURED T1 native64 libcft-transc lanes 64 (load 15% / 13%): rk4 lanes 64 steps 11 wall_s 2.131902 per_step_s 0.193809 per_object_day_s 17.443 thread_cycles 5276836211
+PASS T1 native64_cr_64 completed
+# ran (4.26 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft32_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft32_1.txt
+MEASURED T1 cft32 lanes 1 (load 10% / 28%): accel lanes 1 evals 738 wall_s 2.001086 per_lane_eval_us 2711.499 thread_cycles 4966446265 per_lane_eval_cycles 6729602
+MEASURED T1 cft32 lanes 1 (load 10% / 28%): rk4 lanes 1 steps 185 wall_s 2.007162 per_step_s 0.010850 per_object_day_s 62.493 thread_cycles 4968189105
+PASS T1 cft32_1 completed
+# ran (4.71 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft32_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft32 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft32_64.txt
+MEASURED T1 cft32 lanes 64 (load 29% / 22%): accel lanes 64 evals 18 wall_s 2.088030 per_lane_eval_us 1812.526 thread_cycles 5183567225 per_lane_eval_cycles 4499624
+MEASURED T1 cft32 lanes 64 (load 29% / 22%): rk4 lanes 64 steps 5 wall_s 2.366570 per_step_s 0.473314 per_object_day_s 42.598 thread_cycles 5862707176
+PASS T1 cft32_64 completed
+# ran (4.27 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft64_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft64_1.txt
+MEASURED T1 cft64 lanes 1 (load 22% / 18%): accel lanes 1 evals 620 wall_s 2.004122 per_lane_eval_us 3232.455 thread_cycles 4960703145 per_lane_eval_cycles 8001134
+MEASURED T1 cft64 lanes 1 (load 22% / 18%): rk4 lanes 1 steps 143 wall_s 2.009166 per_step_s 0.014050 per_object_day_s 80.929 thread_cycles 4964968896
+PASS T1 cft64_1 completed
+# ran (4.71 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft64_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft64_64.txt
+MEASURED T1 cft64 lanes 64 (load 19% / 16%): accel lanes 64 evals 13 wall_s 2.014345 per_lane_eval_us 2421.088 thread_cycles 4992482050 per_lane_eval_cycles 6000579
+MEASURED T1 cft64 lanes 64 (load 19% / 16%): rk4 lanes 64 steps 4 wall_s 2.446063 per_step_s 0.611516 per_object_day_s 55.036 thread_cycles 6060371658
+PASS T1 cft64_64 completed
+# ran (4.26 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft128_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft128 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft128_1.txt
+MEASURED T1 cft128 lanes 1 (load 12% / 23%): accel lanes 1 evals 413 wall_s 2.001035 per_lane_eval_us 4845.122 thread_cycles 4960848695 per_lane_eval_cycles 12011740
+MEASURED T1 cft128 lanes 1 (load 12% / 23%): rk4 lanes 1 steps 96 wall_s 2.010053 per_step_s 0.020938 per_object_day_s 120.603 thread_cycles 4981839296
+PASS T1 cft128_1 completed
+# ran (4.47 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft128_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft128 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft128_64.txt
+MEASURED T1 cft128 lanes 64 (load 22% / 16%): accel lanes 64 evals 8 wall_s 2.059709 per_lane_eval_us 4022.870 thread_cycles 5100908213 per_lane_eval_cycles 9962711
+MEASURED T1 cft128 lanes 64 (load 22% / 16%): rk4 lanes 64 steps 2 wall_s 2.134436 per_step_s 1.067218 per_object_day_s 96.050 thread_cycles 5274547830
+PASS T1 cft128_64 completed
+# ran (4.25 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft256_1 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft256 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 1 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft256_1.txt
+MEASURED T1 cft256 lanes 1 (load 21% / 16%): accel lanes 1 evals 193 wall_s 2.010703 per_lane_eval_us 10418.151 thread_cycles 4984849636 per_lane_eval_cycles 25828236
+MEASURED T1 cft256 lanes 1 (load 21% / 16%): rk4 lanes 1 steps 43 wall_s 2.006040 per_step_s 0.046652 per_object_day_s 268.716 thread_cycles 4967264597
+PASS T1 cft256_1 completed
+# ran (7.49 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_cft256_64 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe time cft256 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin 64 2 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/time_cft256_64.txt
+MEASURED T1 cft256 lanes 64 (load 23% / 25%): accel lanes 64 evals 4 wall_s 2.380044 per_lane_eval_us 9297.046 thread_cycles 5904211319 per_lane_eval_cycles 23063325
+MEASURED T1 cft256 lanes 64 (load 23% / 25%): rk4 lanes 64 steps 2 wall_s 4.880857 per_step_s 2.440428 per_object_day_s 219.639 thread_cycles 12100966483
+PASS T1 cft256_64 completed
+# ran (1.92 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_table_2days C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe build 1000000 256 675 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/table_2days.bin --note F9 T2
+MEASURED T2 a 2-day table (675 fine nodes): 1.92 s wall (load 22% / 22%), 0.96 s a day of data; cycles in records/cpu.tsv (f9_table_2days)
+# ran (7.88 s): C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f9_fit5 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe fit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/fit5_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f9/fit5_out.txt
+MEASURED T3 5 fits at native64: 7.88 s wall (load 20% / 15%), 1.58 s an object; iterations [3, 3, 3, 3, 3] (0.53 s an iteration)
+# PASS 

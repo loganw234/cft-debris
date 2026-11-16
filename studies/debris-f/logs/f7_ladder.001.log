@@ -1,0 +1,83 @@
+# f7_ladder, log 001, written 2026-11-16 09:40:17 -0700
+# script f7_ladder.py sha256 41877c96fac60c079b2640334275253a2b2493544dfe6ce1716671a98ca5562e
+# f_lib.py sha256 8c87350aad243bb137d3dc2f344dee8df2e2bf473b3e46d88819823c9430ac7a
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 26% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE OBJECTS: 10 of F6's pairs, the lowest S0 perigees first among those whose (A) fit converged (F6's scratch record
+#     f6/f6_pairs.json); the 3 lowest also at cft256.
+#   THE START: one native64 run carries each object from its fit (origin O, F6's (A) fit) to e0q = O + 86400 s exactly
+#     (5,760 steps of 15 s); that binary64 state, with the fitted bc and cram 0.01, goes to every kind exactly.
+#   THE ARC: from origin e0q, 1,440 rk4 steps of 15 s (6 hours), the full model of B4 in the window's table, at native64
+#     (the C library's transcendentals), cft64, cft128 and (3 objects) cft256; states sampled every hour. Each object runs
+#     as its own batch of one lane: their e0q differ, so no common start epoch exists without a further run.
+#   L1 MEASURED: each kind's |r - r_widest| at each hour, the widest being cft256 where it ran, else cft128.
+#   L2 THE BOUND for cft128, stated before the data as DEBRIS-E's E3: B = N_ops x u128 x R x G, with N_ops the run's own
+#      count of lane-operations, u128 = 2^-113, R = 7.1e6 m and G = 120 (E3's linearised Kepler growth of 30 over one orbit,
+#      times the four orbits of 6 hours); an ESTIMATE-based bound, not a rigorous one. Every |r_cft128 - r_cft256| over the 3
+#      objects and 6 hours must be <= B.
+#   C1 NEGATIVE CONTROL (E3's): the lowest object at cft128 with the central term's -GM/r^3 rounded to binary64 at every
+#      evaluation (m1f prop --round64) must exceed B against cft256 at 6 hours.
+# m1f_O2.exe sha256 34d4eb5645c42631bfeb6ae18bc74a6e744181d164428f98dbd62996625a3f41; table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# F6's record: 200 pairs (sha256 8a61cc8ffcdfcb57929b1b2d40611fbd1c63f171f820559a387d07ff597aa416)
+PASS 10 objects selected (perigees 273 to 441 km)
+# ran (1.78 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f7_start C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe prop native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f7/start_prop_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f7/start_prop_native64.txt
+PASS every object carried to e0q
+# ran f7_o0_cft128 (42.7 s wall, exit 0) [cpurun] f7_o0_cft128 wall 42.33s cycles/2.5e9 41.13s procs-times 33.97s job 33.97s processes 2 caught 2 exit 0
+# ran f7_o1_cft128 (45.4 s wall, exit 0) [cpurun] f7_o1_cft128 wall 45.17s cycles/2.5e9 41.14s procs-times 35.97s job 35.97s processes 2 caught 2 exit 0
+# ran f7_o1_cft256 (89.7 s wall, exit 0) [cpurun] f7_o1_cft256 wall 89.29s cycles/2.5e9 84.25s procs-times 71.41s job 71.41s processes 2 caught 2 exit 0
+# ran f7_o0_cft256 (90.7 s wall, exit 0) [cpurun] f7_o0_cft256 wall 90.31s cycles/2.5e9 85.14s procs-times 72.23s job 72.23s processes 2 caught 2 exit 0
+# ran f7_o2_cft256 (91.7 s wall, exit 0) [cpurun] f7_o2_cft256 wall 91.46s cycles/2.5e9 86.29s procs-times 74.27s job 74.27s processes 2 caught 2 exit 0
+# ran f7_o2_cft128 (44.2 s wall, exit 0) [cpurun] f7_o2_cft128 wall 43.76s cycles/2.5e9 41.89s procs-times 33.89s job 33.89s processes 2 caught 2 exit 0
+# ran f7_o3_cft128 (44.2 s wall, exit 0) [cpurun] f7_o3_cft128 wall 43.78s cycles/2.5e9 41.95s procs-times 34.73s job 34.73s processes 2 caught 2 exit 0
+# ran f7_o4_cft128 (43.7 s wall, exit 0) [cpurun] f7_o4_cft128 wall 43.51s cycles/2.5e9 41.89s procs-times 34.48s job 34.48s processes 2 caught 2 exit 0
+# ran f7_o5_cft128 (44.2 s wall, exit 0) [cpurun] f7_o5_cft128 wall 43.55s cycles/2.5e9 41.97s procs-times 35.05s job 35.05s processes 2 caught 2 exit 0
+# ran f7_o6_cft128 (43.6 s wall, exit 0) [cpurun] f7_o6_cft128 wall 42.91s cycles/2.5e9 41.81s procs-times 33.02s job 33.02s processes 2 caught 2 exit 0
+# ran f7_o0_native64 (0.5 s wall, exit 0) [cpurun] f7_o0_native64 wall 0.17s cycles/2.5e9 0.28s procs-times 0.25s job 0.25s processes 2 caught 2 exit 0
+# ran f7_o7_cft128 (43.2 s wall, exit 0) [cpurun] f7_o7_cft128 wall 42.76s cycles/2.5e9 41.68s procs-times 32.16s job 32.16s processes 2 caught 2 exit 0
+# ran f7_o8_cft128 (42.6 s wall, exit 0) [cpurun] f7_o8_cft128 wall 42.37s cycles/2.5e9 41.28s procs-times 32.86s job 32.86s processes 2 caught 2 exit 0
+# ran f7_o1_native64 (0.5 s wall, exit 0) [cpurun] f7_o1_native64 wall 0.17s cycles/2.5e9 0.30s procs-times 0.17s job 0.17s processes 2 caught 2 exit 0
+# ran f7_o2_native64 (0.5 s wall, exit 0) [cpurun] f7_o2_native64 wall 0.19s cycles/2.5e9 0.29s procs-times 0.31s job 0.31s processes 2 caught 2 exit 0
+# ran f7_o9_cft128 (43.7 s wall, exit 0) [cpurun] f7_o9_cft128 wall 43.03s cycles/2.5e9 41.89s procs-times 33.48s job 33.48s processes 2 caught 2 exit 0
+# ran f7_o3_native64 (0.5 s wall, exit 0) [cpurun] f7_o3_native64 wall 0.17s cycles/2.5e9 0.29s procs-times 0.23s job 0.23s processes 2 caught 2 exit 0
+# ran f7_o0_cft64 (28.7 s wall, exit 0) [cpurun] f7_o0_cft64 wall 28.18s cycles/2.5e9 27.21s procs-times 20.75s job 20.75s processes 2 caught 2 exit 0
+# ran f7_o1_cft64 (28.7 s wall, exit 0) [cpurun] f7_o1_cft64 wall 28.24s cycles/2.5e9 27.30s procs-times 21.62s job 21.62s processes 2 caught 2 exit 0
+# ran f7_o4_native64 (0.5 s wall, exit 0) [cpurun] f7_o4_native64 wall 0.17s cycles/2.5e9 0.28s procs-times 0.33s job 0.33s processes 2 caught 2 exit 0
+# ran f7_o5_native64 (0.5 s wall, exit 0) [cpurun] f7_o5_native64 wall 0.18s cycles/2.5e9 0.29s procs-times 0.27s job 0.27s processes 2 caught 2 exit 0
+# ran f7_o2_cft64 (28.7 s wall, exit 0) [cpurun] f7_o2_cft64 wall 28.27s cycles/2.5e9 27.36s procs-times 21.69s job 21.69s processes 2 caught 2 exit 0
+# ran f7_o6_native64 (0.5 s wall, exit 0) [cpurun] f7_o6_native64 wall 0.17s cycles/2.5e9 0.29s procs-times 0.23s job 0.23s processes 2 caught 2 exit 0
+# ran f7_o3_cft64 (28.7 s wall, exit 0) [cpurun] f7_o3_cft64 wall 28.14s cycles/2.5e9 27.33s procs-times 21.19s job 21.19s processes 2 caught 2 exit 0
+# ran f7_o7_native64 (0.5 s wall, exit 0) [cpurun] f7_o7_native64 wall 0.19s cycles/2.5e9 0.29s procs-times 0.19s job 0.19s processes 2 caught 2 exit 0
+# ran f7_o4_cft64 (28.7 s wall, exit 0) [cpurun] f7_o4_cft64 wall 28.17s cycles/2.5e9 27.27s procs-times 21.25s job 21.25s processes 2 caught 2 exit 0
+# ran f7_o5_cft64 (28.7 s wall, exit 0) [cpurun] f7_o5_cft64 wall 27.99s cycles/2.5e9 27.20s procs-times 22.05s job 22.05s processes 2 caught 2 exit 0
+# ran f7_o8_native64 (0.5 s wall, exit 0) [cpurun] f7_o8_native64 wall 0.22s cycles/2.5e9 0.29s procs-times 0.25s job 0.25s processes 2 caught 2 exit 0
+# ran f7_o9_native64 (0.5 s wall, exit 0) [cpurun] f7_o9_native64 wall 0.18s cycles/2.5e9 0.29s procs-times 0.16s job 0.16s processes 2 caught 2 exit 0
+# ran f7_o6_cft64 (28.7 s wall, exit 0) [cpurun] f7_o6_cft64 wall 28.01s cycles/2.5e9 27.24s procs-times 21.62s job 21.62s processes 2 caught 2 exit 0
+# ran f7_o7_cft64 (28.2 s wall, exit 0) [cpurun] f7_o7_cft64 wall 27.92s cycles/2.5e9 27.13s procs-times 21.42s job 21.42s processes 2 caught 2 exit 0
+# ran f7_o8_cft64 (27.1 s wall, exit 0) [cpurun] f7_o8_cft64 wall 26.86s cycles/2.5e9 26.11s procs-times 18.73s job 18.73s processes 2 caught 2 exit 0
+# ran f7_o9_cft64 (27.6 s wall, exit 0) [cpurun] f7_o9_cft64 wall 26.91s cycles/2.5e9 26.12s procs-times 18.41s job 18.41s processes 2 caught 2 exit 0
+# ran f7_ctl_round64 (39.1 s wall, exit 0) [cpurun] f7_ctl_round64 wall 38.81s cycles/2.5e9 37.80s procs-times 24.83s job 24.83s processes 2 caught 2 exit 0
+# L2 bound: N_ops 45906584 (cft128's own count, the largest of the 3) x 2^-113 x 7.1e6 m x 120 = 3.766e-18 m
+MEASURED L1 native64 against the widest at 1 h: max 4.091e-08 m, median 2.662e-08 m over 10 objects
+MEASURED L1 native64 against the widest at 2 h: max 1.008e-07 m, median 3.015e-08 m over 10 objects
+MEASURED L1 native64 against the widest at 3 h: max 1.614e-07 m, median 1.139e-07 m over 10 objects
+MEASURED L1 native64 against the widest at 4 h: max 3.109e-07 m, median 1.876e-07 m over 10 objects
+MEASURED L1 native64 against the widest at 5 h: max 4.820e-07 m, median 2.808e-07 m over 10 objects
+MEASURED L1 native64 against the widest at 6 h: max 7.255e-07 m, median 3.103e-07 m over 10 objects
+MEASURED L1 cft64 against the widest at 1 h: max 4.091e-08 m, median 2.662e-08 m over 10 objects
+MEASURED L1 cft64 against the widest at 2 h: max 1.008e-07 m, median 3.015e-08 m over 10 objects
+MEASURED L1 cft64 against the widest at 3 h: max 1.614e-07 m, median 1.139e-07 m over 10 objects
+MEASURED L1 cft64 against the widest at 4 h: max 3.109e-07 m, median 1.876e-07 m over 10 objects
+MEASURED L1 cft64 against the widest at 5 h: max 4.820e-07 m, median 2.808e-07 m over 10 objects
+MEASURED L1 cft64 against the widest at 6 h: max 7.255e-07 m, median 3.103e-07 m over 10 objects
+MEASURED L1 cft128 against the widest at 1 h: max 1.752e-26 m, median 1.137e-26 m over 3 objects
+MEASURED L1 cft128 against the widest at 2 h: max 7.256e-26 m, median 2.060e-26 m over 3 objects
+MEASURED L1 cft128 against the widest at 3 h: max 6.851e-26 m, median 4.066e-26 m over 3 objects
+MEASURED L1 cft128 against the widest at 4 h: max 1.415e-25 m, median 1.365e-25 m over 3 objects
+MEASURED L1 cft128 against the widest at 5 h: max 1.725e-25 m, median 8.598e-26 m over 3 objects
+MEASURED L1 cft128 against the widest at 6 h: max 3.115e-25 m, median 7.119e-26 m over 3 objects
+PASS L2 cft128 within B of cft256 over 3 objects and 6 hours (max 3.115e-25 m; B 3.766e-18 m; 8.3e-08 of B)
+PASS C1 the round64 control exceeds B at 6 hours (6.116e-10 m = 1.6e+08 B)
+# per-object table: the ledger's debris-f\f7_ladder.001.tsv, sha256 cbff8bf14416e85ee834ed0b0d49b5e05612d177591d3555b43a65da2abe1a34
+# PASS 

@@ -89,12 +89,31 @@ int m1_de_locate(const m1_de *de, int k, double jd0, double sec, long *rec, int 
 
 /* ---------------------------------------------------------------- the model */
 
+/* the frame table (DEBRIS-F, src/m1_ftab.c): fine nodes t_k = t0 + k h (TDB s from jd_epoch, h a power of
+   two), each with M (9, row-major, GCRS <- ITRS) and Omega (3, rad/s, GCRS components), as binary256 from the
+   node routine (src/m1_nodes.c); every kind receives them correctly rounded at setup */
+typedef struct m1_ftab {
+    double jd_epoch, t0, h;
+    long nk;
+    int ncol;
+    unsigned char *raw;       /* nk x ncol binary256 elements, little-endian */
+    char sha256[65];
+    char note[256];
+    char err[256];
+} m1_ftab;
+int  m1_ftab_load(m1_ftab *ft, const char *path);
+void m1_ftab_free(m1_ftab *ft);
+
 #define M1_MAXBANDS 28
 typedef struct m1_model {
     int central, nmin, nmax, sun, moon, drag, srp;   /* forces on (1) or off (0) */
     int nbands;               /* the exponential atmosphere: 28 (q2bench.c's table) or 1 */
     const char *band_h0, *band_rho0, *band_hs;        /* nbands == 1: decimal strings (m, kg/m^3, m) */
     double jd_epoch;          /* TDB JED of t = 0, a multiple of 1/2 day */
+    /* DEBRIS-F: zero leaves DEBRIS-E's model unchanged */
+    int frame;                /* 0: the uniform rotation (DEBRIS-E); 1: the IERS 2010 frame from ftab */
+    const m1_ftab *ftab;
+    double t0;                /* the run's origin, TDB s from jd_epoch, exact; stage times are t0 + (step0 + j) h */
 } m1_model;
 
 /* ------------------------------------------------------------------ context */
@@ -168,6 +187,16 @@ typedef struct m1_vt {
                   const void *cram, size_t n);
     int  (*rk4)(m1_ctx *c, void *const y[6], const void *bc, const void *cram, const char *h_dec,
                 long step0, long nsteps, m1_step_cb cb, void *u, size_t n);
+    /* DEBRIS-F: the frame table's interpolation at host time t (12 elements: M row-major, then Omega), its
+       application (inverse 0: out = M^T in, GCRS -> ITRS; 1: out = M in, ITRS -> GCRS; m12 one element set for
+       every lane), drag with Omega's co-rotation, and one rk4 step of host length hs from host time ts (the
+       final short step; hs a binary64, converted into the kind) */
+    void (*frame_at)(m1_ctx *c, void *m12, double t);
+    void (*frame_apply)(m1_ctx *c, void *const out[3], const void *const in[3], const void *m12, int inverse, size_t n);
+    void (*drag_om)(m1_ctx *c, void *const a[3], const void *const r[3], const void *const v[3], const void *bc,
+                    const void *om, size_t n);
+    int  (*rk4_short)(m1_ctx *c, void *const y[6], const void *bc, const void *cram, double ts, double hs, long stepno,
+                      m1_step_cb cb, void *u, size_t n);
 } m1_vt;
 
 extern const m1_vt m1_vt_native32, m1_vt_native64, m1_vt_cft32, m1_vt_cft64, m1_vt_cft128, m1_vt_cft256;

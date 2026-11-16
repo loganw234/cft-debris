@@ -1,0 +1,55 @@
+# f5_gate, log 001, written 2026-11-16 07:34:58 -0700
+# script f5_gate.py sha256 c9db1212b58ac6f8e933546947ff225c988c555597ae85758f5a760bfd3c61ac
+# f_lib.py sha256 4b0bdd5bbe9260d98bfb6365773a4ed638c41208e2956f3a7756f5407bb14cfb
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# f_fit.py sha256 34c099a805ed7defb934257f9c1e2cc72918dd903653fbbe7029802d5959030f
+# f5_sample.py sha256 10f3aee8d133eb94b7014b89368a5054fd6099b02dc3c6069aa06f3bc24640d2
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 19% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   (a) THE DECODER'S INPUT: for every S0 row Orekit built (tests/f5_sample.py), each number converted to Orekit's units
+#       (f5_sample.py: n, ndot, nddot, e, i, argp, raan, M, bstar) equals, as a binary64, what the TLE's getter returns;
+#       the catalogue number equals getSatelliteNumber() (6-digit ones included); and the epoch, Orekit's parse of the
+#       EPOCH string, lies within 1e-9 s of ours (exact UTC to TAI from tai-utc.dat; binary64 holds 3e6 s to 4.7e-10 s).
+#   (b) SENSITIVITY CONTROL: for the ISS (25544), SGP4 from its S0 set with the mean motion planted 1e-6 rev/day high
+#       (+7.272e-11 rad/s): at e0 - 1 day the position must move by a dn |dt| within 5% (a = (mu/n^2)^(1/3), the
+#       along-track drift of the mean anomaly over |dt| = 86400 s; COMPUTED in the log before the run), and at e0 by at
+#       most 1 m (only the semi-major axis's -2/3 a dn/n, about 0.3 m).
+#   (c) SYNTHETIC TRUTH: M1 itself (m1f prop, native64, the window's table) makes 721 positions every 120 s over a day
+#       from the state chosen here - r = (6778137, 0, 0) m, v = (0, 4768.2, 6013.4) m/s (about 400 km, 51.6 degrees), at
+#       t0 = 1,000,000 s TDB from JD 2461329.5, bc = 0.005 m^2/kg, cram 0.01 - and B4's fit recovers them from a start
+#       1 km and 0.6 m/s off ((+1000, -500, +300) m, (+0.5, -0.3, +0.2) m/s) with bc starting at 0.01: it must converge
+#       within 10 iterations, and recover |dr| <= 1e-3 m, |dv| <= 1e-6 m/s and |dbc|/bc <= 1e-6 (the pseudo-observations
+#       are the fit model's own, so only rounding and the stopping threshold are left).
+#   (d) THE FIT ON S0's SAMPLE (a measurement, no pass condition): the 100 objects of tests/f5_sample.py; pseudo-
+#       observations from SGP4 at the S0 set; the fit as B4; reported: the counts of fits that converged and that stopped
+#       on the iteration limit, the counts fitting bc (perigee under 1,000 km), and the post-fit RMS of the position
+#       residuals' lengths (median, 90th percentile, largest), overall and by group.
+# m1f_O2.exe sha256 763e7b16ebb8d7485d1c6fde045e9c6d84e04121ca38925857b186a4fd01f291; table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+PASS (a) the S0 build run holds 2696 objects
+# (a) objects with any mismatch: 0 of 2696; largest epoch difference 2.327e-10 s
+PASS (a) every getter equals our converted value, and every epoch within 1e-9 s
+# (b) COMPUTED before the run: a = 6796594.5 m, dn = 7.2722e-11 rad/s, expected |dr| at e0 - 1 day = 42.704 m (5%: 40.569 to 44.839)
+# ran (0.87 s): C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/b_plain_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/b_plain_pv.txt
+# ran (0.85 s): C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/b_plant_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/b_plant_pv.txt
+# (b) measured |dr|: 42.686 m at e0 - 1 day, 0.292 m at e0
+PASS (b) the planted mean motion moved SGP4 as computed
+# ran (0.40 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f5c_truth C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe prop native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/c_truth_prop_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/c_truth_prop_native64.txt
+PASS (c) M1 made 721 pseudo-observations
+# ran (1.79 s): C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f5c_fit C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe fit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/c_fit_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/c_fit.txt
+# (c) converged 1 after 3 iterations; |dr| 3.956e-07 m, |dv| 3.854e-10 m/s, dbc/bc 2.085e-10; post-fit RMS 1.737e-01 m
+PASS (c) the synthetic truth recovered within its tolerances
+PASS (d) the sample holds 100 keys
+# ran (3.59 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- pv C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/d_pv_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/d_pv.txt
+PASS (d) the decoder gave 721 states for each of the 100 (100)
+# ran (193.38 s): -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f5d_fit C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe fit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/d_fit_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f5/d_fit.txt --maxit 10
+PASS (d) 100 fits returned
+MEASURED (d): converged 94, stopped on the iteration limit 6; fitting bc 100; post-fit RMS median 519.1 m, 90th 576.0 m, largest 613.4 m
+MEASURED (d) stations: 17 objects, converged 17, RMS median 450.6 m, largest 530.9 m
+MEASURED (d) fengyun-1c-debris: 62 objects, converged 56, RMS median 530.1 m, largest 613.4 m
+MEASURED (d) iridium-33-debris: 3 objects, converged 3, RMS median 569.7 m, largest 583.2 m
+MEASURED (d) cosmos-2251-debris: 18 objects, converged 18, RMS median 518.8 m, largest 594.9 m
+MEASURED (d): iterations median 3, largest 10
+# per-object table: the ledger's debris-f\f5d_fits.001.tsv, sha256 a85c98129cdd63a2e034496b9769b082b2d04b17587b36e9024a86628e0bcfe9
+# PASS 

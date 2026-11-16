@@ -1,0 +1,69 @@
+gcc -dumpmachine: x86_64-w64-mingw32
+CRITERION 1 PASS
+gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+libcft.a: f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5
+sources built (sha256):
+36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c *src/de421.c
+d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95 *src/gfc.c
+65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4 *src/kind_cft128.c
+1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da *src/kind_cft256.c
+dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb *src/kind_cft32.c
+6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32 *src/kind_cft64.c
+f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14 *src/kind_native32.c
+4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16 *src/kind_native64.c
+88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6 *src/m1_common.c
+4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab *src/m1_ftab.c
+778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce *src/m1_nodes.c
+3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590 *src/m1.h
+5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a *src/m1_consts.h
+091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b *src/m1_kind.h
+9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4 *src/m1_nodes.h
+4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c *src/m1_ops_cft.h
+5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf *src/m1_ops_native.h
+014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f *src/m1_physics.h
+732e85e5f5203d58726bd7dc1a703634581f30f83cfc671b03188afa17c3f686 *tests/m1f.c
+487149af5d06416b304a99ddfc05713fb279be2c8618951603b935b3ab7541fa *tests/m1run.c
+eb0c540636f207c713075e03f5a076add05ffb4d665f5f8fd55360cd0df19960 *tests/m1nodes.c
+CRITERION 5 PASS (the hashes above)
+[O2] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_native32.c
+[O2] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_native64.c
+[O2] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft32.c
+[O2] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft64.c
+[O2] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft128.c
+[O2] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft256.c
+[O2] linked m1f_O2.exe
+[O2] linked m1run_O2.exe
+[O2] native32: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: ''
+[O2] native64: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: ''
+[O0] gcc -std=c11 -O0 -ffp-contract=off -Wall -Wextra -mfma -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_native32.c
+[O0] gcc -std=c11 -O0 -ffp-contract=off -Wall -Wextra -mfma -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_native64.c
+[O0] gcc -std=c11 -O0 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft32.c
+[O0] gcc -std=c11 -O0 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft64.c
+[O0] gcc -std=c11 -O0 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft128.c
+[O0] gcc -std=c11 -O0 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft256.c
+[O0] linked m1f_O0.exe
+[O0] linked m1run_O0.exe
+[O0] native32: vfmadd instructions 1; undefined fma/fmaf/sqrt/sqrtf: ''
+[O0] native64: vfmadd instructions 1; undefined fma/fmaf/sqrt/sqrtf: ''
+[negctl] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -DM1_NEGCTL_FRAME -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_native32.c
+[negctl] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -DM1_NEGCTL_FRAME -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_native64.c
+[negctl] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft32.c
+[negctl] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft64.c
+[negctl] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft128.c
+[negctl] gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -IC:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/cft-fp256/host/include -c src/kind_cft256.c
+[negctl] linked m1f_negctl.exe
+[negctl] linked m1run_negctl.exe
+[negctl] native32: vfmadd instructions 22; undefined fma/fmaf/sqrt/sqrtf: ''
+[negctl] native64: vfmadd instructions 22; undefined fma/fmaf/sqrt/sqrtf: ''
+CRITERION 2 PASS (O2, O0, negctl); CRITERION 3 PASS (the native kinds compiled)
+linked m1nodes.exe
+CRITERION 4 PASS (every compile and link)
+fdc8a6455afffe03a42ac90c370c0b5e11e462defaa7b7d9d420735ecd8f9e38 *m1f_O0.exe
+7a6bb2c8354b99a5cf817e2ef87b095f67372647427a576527ba4dc762057fa2 *m1f_O2.exe
+ed4ba6338efee1f883d6cae6e7528c6e044136dfc1d2b17bb426a7aed2178e60 *m1f_negctl.exe
+805d9fcafc25255592261084ed08efb697afb95281c49c924a7ac3fcd5be0083 *m1nodes.exe
+1970f79b97fd5d07eb23f012baffa0690410c7ece19337f8da3ddc21dead0741 *m1run_O0.exe
+637b7f10211dc74ffbdb63af0ce9b5c1ff5481d2eaa98c7c967a7e02b8412f10 *m1run_O2.exe
+1de31f4f7ebb42845b59ee7a37b6bc4290129b9ccc4d5740f241a291c906d5dd *m1run_negctl.exe
+BUILD PASS
+[cpurun] build_f.002 wall 57.69s cycles/2.5e9 39.21s procs-times 20.30s job 20.30s processes 278 caught 278 exit 0

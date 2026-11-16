@@ -1,0 +1,92 @@
+# f9_box_build, log 001, written 2026-11-16 12:00:39 -0700
+# script f9_box.py sha256 f00b5f638133628eec197dd6cf3f021b54f3e6e96537286dd087d1df5c266b58
+# host amd-arc-box, Linux 6.8.0-139-generic x86_64
+# cpu Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz, 36 logical processors; governor schedutil, driver intel_cpufreq, max 3600000 kHz, intel_pstate no_turbo 0
+# gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; gcc -dumpmachine x86_64-linux-gnu; python 3.12.3
+# host load at start: 0.0% (/proc/stat, all logical processors, 0.5 s)
+# CRITERIA (stated in the script before its data; asserted below):
+#   The build, asserted; the script stops at the first failure:
+#   B1 every file listed in in/EXPECTED.sha256 has its listed SHA-256 (the M1 sources as DEBRIS-F's build_f.004.log
+#      lists them, the shim, this script, the libcft archive and the inputs);
+#   B2 gcc -dumpmachine prints x86_64-linux-gnu;
+#   B3 libcft.a builds from in/cft-fp256-0aa997a3.tar by `make -C cft-fp256/host CC=gcc libcft.a`, one job, as DEBRIS-F
+#      built it on the desktop (there with OS=Windows_NT and mingw64's gcc 16.1.0);
+#   B4 M1 builds at build_f.sh's O2 flags (-std=c11 -O2 -ffp-contract=off -Wall -Wextra; -mfma for the native kinds);
+#      m1f.c alone adds -Ibuild/shim (the shim, as windows.h) and -D_POSIX_C_SOURCE=199309L (clock_gettime under -std=c11);
+#   B5 every native object holds at least one vfmadd and no undefined fma, fmaf, sqrt or sqrtf (build_f.sh's criterion 2).
+# in/src/de421.c sha256 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c
+# in/src/gfc.c sha256 d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95
+# in/src/kind_cft128.c sha256 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4
+# in/src/kind_cft256.c sha256 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da
+# in/src/kind_cft32.c sha256 dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb
+# in/src/kind_cft64.c sha256 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32
+# in/src/kind_native32.c sha256 f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14
+# in/src/kind_native64.c sha256 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16
+# in/src/m1.h sha256 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590
+# in/src/m1_common.c sha256 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6
+# in/src/m1_consts.h sha256 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a
+# in/src/m1_ftab.c sha256 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab
+# in/src/m1_kind.h sha256 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b
+# in/src/m1_nodes.c sha256 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce
+# in/src/m1_nodes.h sha256 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4
+# in/src/m1_ops_cft.h sha256 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c
+# in/src/m1_ops_native.h sha256 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf
+# in/src/m1_physics.h sha256 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f
+# in/tests/m1f.c sha256 635c0fe21957c288f3a37c4a566b3533b08bcc1ec0e167943103383a1a7108ea
+# in/tests/m1nodes.c sha256 eb0c540636f207c713075e03f5a076add05ffb4d665f5f8fd55360cd0df19960
+# in/f9_box.py sha256 f00b5f638133628eec197dd6cf3f021b54f3e6e96537286dd087d1df5c266b58
+# in/f9_box_windows.h sha256 923d4656a18c639e1f2e46035a8c969cdbfb7fa22577073926d68eb5a67343fa
+# in/cft-fp256-0aa997a3.tar sha256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8
+# in/dl/EIGEN6-C4.gfc/EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715
+# in/dl/lnxp1900p2053.421/lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# in/dl/header.421/header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+# in/dl/tab5.2a.txt/tab5.2a.txt sha256 19549252df9eb77c8237dbf5b749de82b7fd7713a8b60b35371538cd36b6aa1d
+# in/dl/tab5.2b.txt/tab5.2b.txt sha256 1f17a3a6ad0b468705b3323bfe72d0320ce996798ec7cba0cdde4405d88f14d9
+# in/dl/tab5.2d.txt/tab5.2d.txt sha256 fe94c83e1ef6f92b15b3f007779ae70c0984c06ee45d5511b4c821ee9a0ecded
+# in/dl/finals2000A.daily/finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+# in/dl/tai-utc.dat/tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# in/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# in/d_fit_in.txt sha256 f57541150d69045926962d06dbc0246689e2de1023355fa6086ad5a1f70d7a79
+PASS B1 33 files as listed, 0 mismatched
+PASS B2 gcc -dumpmachine prints x86_64-linux-gnu
+# ran (6.96 s wall, 6.90 s CPU, exit 0): make --no-print-directory -C cft-fp256/host CC=gcc libcft.a
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/bigint.c -o src/bigint.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/softfloat.c -o src/softfloat.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/device.c -o src/device.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/divsqrt.c -o src/divsqrt.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/clause5.c -o src/clause5.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/chars.c -o src/chars.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/augmented.c -o src/augmented.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/mpfloat.c -o src/mpfloat.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/transcend.c -o src/transcend.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/program.c -o src/program.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/reduce.c -o src/reduce.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/formatof.c -o src/formatof.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/conformance.c -o src/conformance.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/sha256.c -o src/sha256.o
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude   -c src/backend_remote.c -o src/backend_remote.o
+#   make: build id: unknown - git cannot place .. in a work tree: fatal: not a git repository (or any of the parent directories): .git (gen/cft_build_id.h)
+#   make: gcc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude  -DCFT_BUILD_ID_H='"../gen/cft_build_id.h"' -c src/build_id.c -o src/build_id.o
+#   make: ar rcs libcft.a src/bigint.o src/softfloat.o src/device.o src/divsqrt.o src/clause5.o src/chars.o src/augmented.o src/mpfloat.o src/transcend.o src/program.o src/reduce.o src/formatof.o src/conformance.o src/sha256.o src/backend_remote.o src/build_id.o
+PASS B3 libcft.a built (7.0 s wall, 6.9 s CPU), sha256 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+# ran (1.60 s wall, 1.60 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -Icft-fp256/host/include -c in/src/kind_native32.c -o build/obj/kind_native32.o
+# ran (1.57 s wall, 1.57 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -Icft-fp256/host/include -c in/src/kind_native64.c -o build/obj/kind_native64.o
+# ran (0.77 s wall, 0.77 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft32.c -o build/obj/kind_cft32.o
+# ran (0.76 s wall, 0.76 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft64.c -o build/obj/kind_cft64.o
+# ran (0.76 s wall, 0.76 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft128.c -o build/obj/kind_cft128.o
+# ran (0.75 s wall, 0.75 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft256.c -o build/obj/kind_cft256.o
+# ran (0.05 s wall, 0.05 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_common.c -o build/obj/m1_common.o
+# ran (0.09 s wall, 0.09 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/gfc.c -o build/obj/gfc.o
+# ran (0.09 s wall, 0.09 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/de421.c -o build/obj/de421.o
+# ran (0.06 s wall, 0.06 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_ftab.c -o build/obj/m1_ftab.o
+# ran (0.88 s wall, 0.88 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_nodes.c -o build/obj/m1_nodes.o
+# ran (0.58 s wall, 0.58 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -Iin/src -Ibuild/shim -D_POSIX_C_SOURCE=199309L -c in/tests/m1f.c -o build/obj/m1f.o
+# ran (0.04 s wall, 0.04 s CPU, exit 0): gcc -o build/m1f_O2 build/obj/m1f.o build/obj/kind_cft128.o build/obj/kind_cft256.o build/obj/kind_cft32.o build/obj/kind_cft64.o build/obj/kind_native32.o build/obj/kind_native64.o build/obj/m1_common.o build/obj/gfc.o build/obj/de421.o build/obj/m1_ftab.o build/obj/m1_nodes.o cft-fp256/host/libcft.a -lm
+# ran (1.04 s wall, 1.04 s CPU, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -Iin/src -o build/m1nodes in/tests/m1nodes.c in/src/m1_nodes.c cft-fp256/host/libcft.a -lm
+PASS B4 every compile and link
+PASS B5 native32: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: none
+PASS B5 native64: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: none
+# cft-fp256/host/libcft.a sha256 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+# build/m1f_O2 sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319
+# build/m1nodes sha256 520956a9e7fdfda5d0ec1d272570d0c83e8c58caa9e41304081f6f9255b5a889
+# PASS 

@@ -1,0 +1,41 @@
+# f6_swcheck, log 002, written 2026-11-16 07:55:22 -0700
+# script f6_swcheck.py sha256 2c328c72f9c67652a352b47d07b6bfd91e4807af2cbf7735c7e3112a1b423359
+# f_lib.py sha256 4b0bdd5bbe9260d98bfb6365773a4ed638c41208e2956f3a7756f5407bb14cfb
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# f6_swcheck.js sha256 6590aa144e32d7f472b0b1f96aa6a8f27480999b22597989702b683ac9fb1365
+# f6_swcopy.py sha256 0efef5c75aec580c0d52642fd614a525a674e1427b1adc0f838e909f67609c7f
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 100% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   The copies (tests/f6_swcopy.py): the approved SW-Last5Years.txt with its 45 blank DAILY_PREDICTED qualifiers (column
+#     100) filled with 0, or with 4 (the two codes the OBSERVED section uses); and the 0 copy with 2026-11-16's F10.7 set to
+#     150.0 in the adjusted and the observed columns (the control).
+#   Each copy is loaded through Orekit 13.1.9's own CssiSpaceWeatherData (tests/f6_swcheck.js), and getDailyFlux,
+#     getAverageFlux and getAp's seven values are read at every hour from 2026-10-14 00:00 to 2026-11-18 00:00 UTC (841
+#     epochs). The span covers every date (C) can evaluate the density: S0's earliest epoch is 2026-10-18 22:43 UTC, a fit
+#     span starts a day before and NRLMSISE-00's ap history reaches 57 hours further back, to 2026-10-15; and every S1
+#     epoch is before 2026-11-17, which F6 asserts for (C)'s pairs.
+#   K1 the 0 copy and the 4 copy give identical values, bit for bit, at all 841 epochs (all 9 values each).
+#   K2 CONTROL: the planted copy must change at least one compared value against the 0 copy.
+#   Both copies must load. Run with sw_ (the qualifier fill alone, MONTHLY_PREDICTED as served) first; with sw2_ (the
+#     MONTHLY_PREDICTED lines' blank fields filled too) only if the sw_ copies fail to load (the ruling's condition b).
+# the copies: sw2_fill0, sw2_fill4, sw2_plant
+# sw2_fill0/SW-Last5Years.txt sha256 d6b836cd84012b62bd26069955d0990fa6a40cffc9603525fec0abc68c17aa52
+# ran (1.93 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f6_swcheck.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/sw2_fill0 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6sw/sw2_fill0.txt 2026-10-14T00:00:00.000 840
+FAIL command failed (1): C:/Users/logan/AppData/Local/Programs/Miniconda3/python.exe -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f6_swcheck_sw2_fill0 C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f6_swcheck.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/sw2_fill0 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f6sw/sw2_fill0.txt 2026-10-14T00:00:00.000 840
+
+Exception in thread "main" java.lang.NullPointerException
+	at org.orekit.time.TimeOffset.compareTo(TimeOffset.java:918)
+	at org.orekit.models.earth.atmosphere.data.CssiSpaceWeatherData.getDailyAp(CssiSpaceWeatherData.java:387)
+	at org.orekit.models.earth.atmosphere.data.CssiSpaceWeatherData.getAp(CssiSpaceWeatherData.java:294)
+	at jdk.nashorn.internal.scripts.Script$f6_swcheck.:program(C:\Users\logan\source\repos\cft-debris\tests\f6_swcheck.js:26)
+	at jdk.nashorn.internal.runtime.ScriptFunctionData.invoke(ScriptFunctionData.java:637)
+	at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.java:494)
+	at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:393)
+	at jdk.nashorn.tools.Shell.apply(Shell.java:471)
+	at jdk.nashorn.tools.Shell.runScripts(Shell.java:400)
+	at jdk.nashorn.tools.Shell.run(Shell.java:179)
+	at jdk.nashorn.tools.Shell.main(Shell.java:143)
+	at jdk.nashorn.tools.Shell.main(Shell.java:119)
+[cpurun] f6_swcheck_sw2_fill0 wall 1.53s cycles/2.5e9 1.81s procs-times 1.75s job 1.75s processes 2 caught 2 exit 1
+

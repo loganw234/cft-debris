@@ -101,8 +101,26 @@ static int e_rk4(m1_ctx *c, void *const y[6], const void *bc, const void *cram, 
     return ph_rk4(c, (KR *const *)y, (const KR *)bc, (const KR *)cram, h_dec, step0, nsteps, cb, u, n);
 }
 
+/* DEBRIS-F's entry points */
+static void e_frame_at(m1_ctx *c, void *m12, double t) { ph_frame_at(c, (KR *)m12, t); }
+static void e_frame_apply(m1_ctx *c, void *const out[3], const void *const in[3], const void *m12, int inverse, size_t n)
+{
+    ph_frame_apply(c, (KR *const *)out, (KR *const *)in, (const KR *)m12, inverse, n);
+}
+static void e_drag_om(m1_ctx *c, void *const a[3], const void *const r[3], const void *const v[3], const void *bc,
+                      const void *om, size_t n)
+{
+    ph_drag_g(c, (KR *const *)a, (KR *const *)r, (KR *const *)v, (const KR *)bc, (const KR *)om, n);
+}
+static int e_rk4_short(m1_ctx *c, void *const y[6], const void *bc, const void *cram, double ts, double hs, long stepno,
+                       m1_step_cb cb, void *u, size_t n)
+{
+    return ph_rk4_short(c, (KR *const *)y, (const KR *)bc, (const KR *)cram, ts, hs, stepno, cb, u, n);
+}
+
 const m1_vt KCAT2(m1_vt_, KNAME) = {
     KIND_ID, KSTR(KNAME), sizeof(KR), K_NATIVE,
     e_setup, ph_teardown, ph_tables, e_from_f64, e_from_dec, e_to_f64, e_op,
     e_grav, e_central, e_third, e_series, e_bodies, e_pleph, e_rotate, e_drag, e_shadow_geom, e_srp, e_accel, e_rk4,
+    e_frame_at, e_frame_apply, e_drag_om, e_rk4_short,
 };

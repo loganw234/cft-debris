@@ -1,0 +1,21 @@
+# F9's box context, written by the lead: the clean re-run on amd-arc-box under B0083 (box, sensitive, 14:30 to 14:50), on Logan's word
+## the background job's console on the desktop, verbatim: it waited until 14:30:20, listed the box's bookings (timesheet.py list box --days 1),
+## ran `python3 -I -B in/f9_box.py time . B0083 2` on the box over ssh (its console went to logs/f9_box_console.001.txt, byte-identical to
+## logs/f9_box.001.log), then printed the count of MEASURED lines and the log's last 4 lines:
+start 14:30:27 -0700
+B0083  box            sensitive 2026-11-16 14:30 -0700 -> 2026-11-16 14:50 -0700  cft-debris: cft-debris DEBRIS-F: F9's clean re-run on the box, run by the lead on Logan's word: M1's timings (about 3 minutes, one thread); nothing else on the box's CPUs
+B0086  box            shared    2026-11-16 14:52 -0700 -> 2026-11-16 17:00 -0700  cft-fp256: M4RR's re-gate after send-back 2 (box_gate_m4rr2.sh at 22f2fab0): pytest, test_sched build, plants' anchors, verify/run.sh --only docs,innerskips,generated,mpfr,cardstress, every plant whole; the box's CPUs, no card; it waits until 14:52, after cft-debris's B0083
+S003  box            shared    2026-11-16 18:00 -0700 -> 2026-11-17 07:45 -0700  cft-fp256: the nightly card's oracle work (MPFR) on the box's CPUs; others may share, at low priority (standing)
+time rc=0
+30
+# output work/f9_001/time_native64_cr_1.txt sha256 08f9b0b5ef4776c58f5ce106b2dcb0f09ca458a9d2f5199743fde66867cc674c
+# output work/f9_001/time_native64_cr_64.txt sha256 72829c068fa6fdd319abb002f9ae6b2829d3228cf0c0d345b93067db6abb5a50
+# host load at end: 0.1%
+# PASS 
+ssh rc=0
+end 14:32:00 -0700
+
+[exited with code 0]
+## TimeSheet's data/log.jsonl, the two entries for B0083 (its booking and its release), verbatim:
+{"at": "2026-11-16T11:56:18-07:00", "action": "book", "who": "cft-debris", "id": "B0083", "resource": "box", "mode": "sensitive", "start": "2026-11-16T14:30:00-07:00", "end": "2026-11-16T14:50:00-07:00", "why": "cft-debris DEBRIS-F: F9's clean re-run on the box, run by the lead on Logan's word: M1's timings (about 3 minutes, one thread); nothing else on the box's CPUs", "pids": [], "host": "DESKTOP-T33SK86", "pid": 36108}
+{"at": "2026-11-16T14:32:37-07:00", "action": "release", "who": "cft-debris", "id": "B0083", "host": "DESKTOP-T33SK86", "pid": 41512}

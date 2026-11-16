@@ -1,0 +1,42 @@
+# F9 context, written by DEBRIS-F: the lead's ruling (window refused; run under notice B0051 with the load stated)
+## date: 2026-11-16 08:03:14 -0700
+## timesheet.py check desktop --short:
+FREE: desktop for short unbooked work from 2026-11-16 08:03 -0700 to 2026-11-16 08:13 -0700
+  note, a notice in that window: B0051  desktop        notice    2026-11-16 06:33 -0700 -> 2026-11-16 12:33 -0700  cft-debris/DEBRIS-F: cft-debris round DEBRIS-F: DEBRIS-F (Opus) builds M1's real Earth frame, GP-data fit and first hindcast on this CPU; light runs, 95 CPU-minutes over 6 h; timings will ask for a sensitive window
+## timesheet.py list desktop:
+B0045  desktop        shared    2026-11-16 05:51 -0700 -> 2026-11-16 12:30 -0700  QRO-Crate: M1 stage 4: a second full-size local unit of QRO-Crate's contributor kit on the fake backends (CPU), about 4 h, started 05:46; the lead's run, in qro-sbx/lead-m1-s3  pids 38412@DESKTOP-T33SK86 alive, 13548@DESKTOP-T33SK86 alive
+B0047  desktop        shared    2026-11-16 05:56 -0700 -> 2026-11-16 13:56 -0700  QRO-Crate/P32-r1: QRO-Crate P3.2 verifier, round 1: the full runner (over an hour), attacks and mutants on the desktop's CPUs, in qro-sbx/p32-r1; released at its report
+B0049  desktop        shared    2026-11-16 06:06 -0700 -> 2026-11-16 09:06 -0700  cft-REBOUND: round 5 P0 (d7b5047): the full make check in cft-rebound-r5, about 3 h  pids 39768@DESKTOP-T33SK86 alive
+B0051  desktop        notice    2026-11-16 06:33 -0700 -> 2026-11-16 12:33 -0700  cft-debris/DEBRIS-F: cft-debris round DEBRIS-F: DEBRIS-F (Opus) builds M1's real Earth frame, GP-data fit and first hindcast on this CPU; light runs, 95 CPU-minutes over 6 h; timings will ask for a sensitive window
+B0053  desktop        shared    2026-11-16 07:21 -0700 -> 2026-11-16 14:21 -0700  QRO-Crate/P52-build-r2: QRO-Crate P5.2 builder, round 2: fixes, its tests, mutants and the full runner on the desktop's CPUs, in qro-sbx/p52; released at its report
+## typeperf before (10 samples, 1 s):
+
+"(PDH-CSV 4.0)","\\DESKTOP-T33SK86\Processor(_Total)\% Processor Time"
+"11/16/2026 08:03:17.122","27.302541"
+"11/16/2026 08:03:18.128","23.806283"
+"11/16/2026 08:03:19.137","20.512014"
+"11/16/2026 08:03:20.153","20.121356"
+"11/16/2026 08:03:21.161","18.128897"
+"11/16/2026 08:03:22.175","15.192634"
+"11/16/2026 08:03:23.189","18.470818"
+"11/16/2026 08:03:24.196","13.216485"
+"11/16/2026 08:03:25.203","12.135667"
+"11/16/2026 08:03:26.213","9.853599"
+Exiting, please wait...                         
+The command completed successfully.
+## typeperf after (10 samples, 1 s), 2026-11-16 08:05:03 -0700:
+
+"(PDH-CSV 4.0)","\\DESKTOP-T33SK86\Processor(_Total)\% Processor Time"
+"11/16/2026 08:05:05.170","19.810712"
+"11/16/2026 08:05:06.179","17.728356"
+"11/16/2026 08:05:07.189","18.225343"
+"11/16/2026 08:05:08.199","16.867569"
+"11/16/2026 08:05:09.208","16.888887"
+"11/16/2026 08:05:10.215","21.987953"
+"11/16/2026 08:05:11.222","18.341366"
+"11/16/2026 08:05:12.230","22.340863"
+"11/16/2026 08:05:13.244","17.388389"
+"11/16/2026 08:05:14.258","20.025990"
+Exiting, please wait...                         
+The command completed successfully.
+

@@ -1,0 +1,63 @@
+# f4_gate, log 001, written 2026-11-16 07:30:56 -0700
+# script f4_gate.py sha256 d841faa881685fc44912f95a7708a26b2cb1f39067db14cb10d473d8ab9dc6b1
+# f_lib.py sha256 4b0bdd5bbe9260d98bfb6365773a4ed638c41208e2956f3a7756f5407bb14cfb
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# f4_orekit.js sha256 31a0a7fa781620820874d2d0f84a3e8217ea9de47e6879e258a8ae815ebfddb3
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 17% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   States: 1,000 LEO states (random.Random(0xF4)): 300 to 800 km up, direction uniform, speed circular times 0.99 to 1.01
+#     in a random direction perpendicular to r; area 0.5 to 20 m^2, mass 50 to 2,000 kg, Cd 2.0 to 2.4; bc = Cd A/(2 m).
+#     Epochs: 8 of the Earth orientation file's own dates inside the window, MJD 61330 to 61358 every 4th, at 0h UTC, 125
+#     states each (the window spans 34 days, not the week the plan assumed, so 8 of its 34 dates are used). F4 tests the
+#     forces given a frame; F3(a) tests the frame. Ours: tests/m1f.c mode f4 at native64 and cft64, the table interpolated
+#     at each state's epoch (TDB of 0h UTC, binary64); Orekit's: tests/f4_orekit.js at the same instant (our TAI).
+#   D1 gravity, degrees 2 to 20, inertial: |a_ours - a_Orekit| <= 3.1e-12 m/s^2 at every state, at native64 and cft64.
+#      Basis: F3(a)'s tolerance, 50 uas = 2.42e-10 rad, turns J2's acceleration of about 1.25e-2 m/s^2 by 3.03e-12 m/s^2
+#      (COMPUTED); DEBRIS-E E6's gravity agreement, 7.35e-17 m/s^2, added; rounded up to 3.1e-12.
+#   D2 drag, one band (3.725e-12 kg/m^3 at 400 km, scale height 58,515 m), co-rotating with each side's frame:
+#      |a_ours - a_Orekit| / |a_Orekit| <= 1e-7 at every state, at native64 and cft64. Basis: the co-rotation rates are
+#      defined differently - ours from central differences of our M (UT1-UTC's derivative, the precession-nutation rate),
+#      Orekit's from its LOD (its file column, filled where blank) and its interpolated precession-nutation rate; LOD of up
+#      to 3 ms is 3.5e-8 of omega and that rate at most 2e-11 rad/s; |omega x r|/|v| is about 0.07, and a ~ |v_rel| v_rel
+#      doubles a relative change, so one side lacking both would differ by at most about 4.5e-8; E6's drag agreement,
+#      6.8e-14, added.
+#   C1 NEGATIVE CONTROL: bc planted 1% high on our side (m1f --plant-bc 0.01) must break D2 at every state (expected
+#      about 1e-2 relative).
+#   C2 NEGATIVE CONTROL: a pole tilt of ten times F3(a)'s tolerance in our frame alone - a table built with xp + 500 uas
+#      (2.424e-9 rad) - must break D1 (expected largest difference about 3e-11 m/s^2, ten times D1's basis).
+#   REPORTED: native64 against cft64 bit for bit (gravity has no transcendental; drag has exp, the C library's in native).
+# m1f_O2.exe sha256 7a6bb2c8354b99a5cf817e2ef87b095f67372647427a576527ba4dc762057fa2; m1nodes.exe sha256 805d9fcafc25255592261084ed08efb697afb95281c49c924a7ac3fcd5be0083; table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+PASS the gfc file's lines 15 and 16 are both the (0, 0) coefficient
+PASS the copy equals the original less line 16
+PASS the copy's sha256 bf296183bf9c9180e58c64a2fca22ece0124d6c7f82448508b8599a944010852 equals DEBRIS-C's and DEBRIS-E's
+PASS 8 epochs: [61330, 61334, 61338, 61342, 61346, 61350, 61354, 61358]
+# ran (0.08 s): C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe times C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/t.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/times.txt
+# ran (1.62 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f4_orekit.js -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ore_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ore.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/gfc_dedup
+# # f4_orekit: java 1.8.0_411; EOP loaded: UT1-UTC at MJD 61360 = -0.0704999; mu 398600441500000 ae 6378136.46 degree 20 order 20; body frame CIO/2010-based ITRF simple EOP
+PASS Orekit gave 1000 states
+# ran (20.68 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1nodes.exe build -1024 256 11484 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_plant_xp500uas.bin --plant-xp 2.42406840554768e-09 --note F4 C2: xp + 500 uas
+# C2 table C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_plant_xp500uas.bin sha256 8f1fff7c8f4c54627541488fa78c325745116335208bc69ec571d690a63748a0
+# ran (0.23 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f4_native64_plain C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f4 native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_native64_plain.txt
+# ran (0.23 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f4_native64_bc C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f4 native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_native64_bc.txt --plant-bc 0.01
+# ran (0.23 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f4_native64_tilt C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f4 native64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_plant_xp500uas.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_native64_tilt.txt
+# ran (2.03 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f4_cft64_plain C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f4 cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_cft64_plain.txt
+# ran (1.93 s): C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f4_cft64_bc C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f4 cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_main.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_cft64_bc.txt --plant-bc 0.01
+# ran (1.87 s): -I -B C:\Users\logan\source\repos\cft-debris\tests\cpurun.py f4_cft64_tilt C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main/m1f_O2.exe f4 cft64 C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/tables/frame_plant_xp500uas.bin C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/f4/ours_cft64_tilt.txt
+# native64 plain: gravity |da| max 1.057e-14 m/s^2 (median 4.945e-15); drag relative max 2.317e-10 (median 8.522e-11); NaN 0
+PASS D1 native64 gravity within 3.1e-12 m/s^2 at all 1000 states (max 1.057e-14)
+PASS D2 native64 drag within 1e-7 relative at all 1000 states (max 2.317e-10)
+# native64 bc: gravity |da| max 1.057e-14 m/s^2 (median 4.945e-15); drag relative max 1.000e-02 (median 1.000e-02); NaN 0
+PASS C1 native64 FAILS D2 as specified at every state (min 1.000e-02, max 1.000e-02)
+# native64 tilt: gravity |da| max 9.341e-11 m/s^2 (median 5.546e-11); drag relative max 2.317e-10 (median 8.522e-11); NaN 0
+PASS C2 native64 FAILS D1 as specified (max 9.341e-11 m/s^2 = 30.1 x the tolerance)
+# cft64 plain: gravity |da| max 1.057e-14 m/s^2 (median 4.945e-15); drag relative max 2.317e-10 (median 8.522e-11); NaN 0
+PASS D1 cft64 gravity within 3.1e-12 m/s^2 at all 1000 states (max 1.057e-14)
+PASS D2 cft64 drag within 1e-7 relative at all 1000 states (max 2.317e-10)
+# cft64 bc: gravity |da| max 1.057e-14 m/s^2 (median 4.945e-15); drag relative max 1.000e-02 (median 1.000e-02); NaN 0
+PASS C1 cft64 FAILS D2 as specified at every state (min 1.000e-02, max 1.000e-02)
+# cft64 tilt: gravity |da| max 9.341e-11 m/s^2 (median 5.546e-11); drag relative max 2.317e-10 (median 8.522e-11); NaN 0
+PASS C2 cft64 FAILS D1 as specified (max 9.341e-11 m/s^2 = 30.1 x the tolerance)
+REPORTED native64 against cft64: 999 of 1000 states bit for bit in all six columns
+# REPORTED Orekit's |omega| (ITRF in GCRF, as its transform gives it): 7.292115010140e-05 to 7.292115095797e-05 rad/s
+# PASS 

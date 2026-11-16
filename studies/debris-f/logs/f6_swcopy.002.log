@@ -1,0 +1,13 @@
+f6_swcopy.py sha256 0efef5c75aec580c0d52642fd614a525a674e1427b1adc0f838e909f67609c7f (kept as studies/debris-f/scripts/f6_swcopy.0efef5c75aec.py)
+original C:/Users/logan/source/repos/cft-debris-downloads/SW-Last5Years.txt/SW-Last5Years.txt sha256 718bae83ef2786d77b5e5d11647bf5b984986f0d0213b1080c5d4d6b514948fb (313862 bytes, 2394 lines, 2394 CRLF)
+DAILY_PREDICTED data lines: 45 (2026 11 16 to 2026 12 30)
+fill 0: PASS the check (45 bytes: the 45 qualifiers at column 100; each blank in the original; lines and CRLF unchanged)
+fill 4: PASS the check (45 bytes: the 45 qualifiers at column 100; each blank in the original; lines and CRLF unchanged)
+control: a planted second change (the first OBSERVED line, column 4) FAILS the check, as it must
+C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/sw_fill0/SW-Last5Years.txt sha256 4ab54f8b809a7a88d07ab1317f0476f729056d34513f7bc896f9e95906b92a6c
+C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/sw_fill4/SW-Last5Years.txt sha256 66f6a995fa72ba155285e7a75a8a6bd7778fee9bf5f55cb0329328cd6589e00a
+C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/sw_plant/SW-Last5Years.txt sha256 9b71d9f2d46bebbbd9ad7fc0d43af86db1f942bbe69105ddda48b54a231286fd
+orekit_c/finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+orekit_c/tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+orekit_c/SW-Last5Years.txt sha256 4ab54f8b809a7a88d07ab1317f0476f729056d34513f7bc896f9e95906b92a6c
+PASS

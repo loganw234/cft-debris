@@ -1,0 +1,33 @@
+# f5_sample_S1, log 001, written 2026-11-16 09:32:49 -0700
+# script f5_sample.py sha256 cc139416787167b4394fadd957d4288c1827f695f07e94a2eb455ca61c8f9a55
+# f_lib.py sha256 8c87350aad243bb137d3dc2f344dee8df2e2bf473b3e46d88819823c9430ac7a
+# gatelib.py sha256 96ce87cc250e2e90e9e8c7aa31c70e9b414f66c07db700d1e49cf28c802d37b2 (DEBRIS-E's, unchanged)
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/build/main
+# host load at start: 15% (Windows CPU %, 0.5 s sample)
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE PARSER: each snapshot file's header must be exactly CelesTrak's 17 columns, in this order: OBJECT_NAME, OBJECT_ID,
+#     EPOCH, MEAN_MOTION, ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, ARG_OF_PERICENTER, MEAN_ANOMALY, EPHEMERIS_TYPE,
+#     CLASSIFICATION_TYPE, NORAD_CAT_ID, ELEMENT_SET_NO, REV_AT_EPOCH, BSTAR, MEAN_MOTION_DOT, MEAN_MOTION_DDOT; every row is
+#     read by those names (the csv module; OBJECT_NAME may hold commas inside quotes); NORAD_CAT_ID is read as an integer
+#     of any width (6-digit numbers included); every number is kept as its decimal string.
+#   THE UNITS Orekit's TLE constructor takes (by reflection and a probe of its own TLE parser, DEBRIS-F's scratch):
+#     n = MEAN_MOTION x pi / 43200 rad/s; ndot = MEAN_MOTION_DOT x pi / 1.86624e9 rad/s^2 (the field is ndot/2 in
+#     rev/day^2, as in the TLE); nddot = MEAN_MOTION_DDOT x pi / 5.3747712e13 rad/s^3 (the field is nddot/6 in rev/day^3);
+#     angles x pi / 180; BSTAR as given (1/earth radii); e as given; each a binary64 from Python float arithmetic in that
+#     order; the epoch is the EPOCH string itself, parsed by Orekit as UTC.
+#   THE SAMPLE (F5(d)), fixed here before S0's values are read:
+#     - ephemeris type 0 only; rows of another type are excluded and counted;
+#     - an object in two groups is kept once, in the first of stations, fengyun-1c-debris, iridium-33-debris,
+#       cosmos-2251-debris (counted);
+#     - any object Orekit cannot build (its TLE constructor or TLEPropagator.selectExtrapolator throws) is excluded and
+#       counted;
+#     - 100 objects: every remaining `stations` object, and the rest drawn from the other three groups in proportion to
+#       their remaining sizes (largest remainders, ties to the earlier group), each group's share drawn by
+#       random.Random(0xF5D).sample over its keys in file order.
+# S1 rows read: 2696 (stations 17, fengyun-1c-debris 1989, iridium-33-debris 109, cosmos-2251-debris 581)
+# excluded: ephemeris type not 0: 0; duplicates across groups: 0; largest catalogue number 101031 (digits 6)
+# ran (1.72 s): C:\Users\logan\source\repos\cft-debris\studies\debris-f\records\cpu.tsv -- C:/Program Files/Java/jre-1.8/bin/java.exe -cp C:/Users/logan/source/repos/cft-debris-downloads/orekit-13.1.9.jar/orekit-13.1.9.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-core-4.0.3.jar/hipparchus-core-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-geometry-4.0.3.jar/hipparchus-geometry-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-ode-4.0.3.jar/hipparchus-ode-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-fitting-4.0.3.jar/hipparchus-fitting-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-optim-4.0.3.jar/hipparchus-optim-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-filtering-4.0.3.jar/hipparchus-filtering-4.0.3.jar;C:/Users/logan/source/repos/cft-debris-downloads/hipparchus-stat-4.0.3.jar/hipparchus-stat-4.0.3.jar jdk.nashorn.tools.Shell C:\Users\logan\source\repos\cft-debris\tests\f5_sgp4.js -- build C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/data/orekit C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/gp/S1_orekit_in.txt C:/Users/logan/source/repos/cft-debris-scratch/DEBRIS-F/work/gp/S1_built.txt
+# Orekit built 2696; refused 0
+PASS every kept row was tried (2696 + 0 = 2696)
+# PASS 
