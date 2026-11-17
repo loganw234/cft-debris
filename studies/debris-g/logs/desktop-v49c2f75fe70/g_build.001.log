@@ -1,0 +1,138 @@
+# g_build, log 001, written 2026-11-17 06:53:13 -0700
+# script g_harness.py sha256 49c2f75fe70806af73977db578088988abc4fb2044a341c1c4c61a915aea501d
+# host DESKTOP-T33SK86, Windows 11 AMD64
+# cpu Intel64 Family 6 Model 151 Stepping 2, GenuineIntel, 12 logical; governor (absent), driver (absent), max (absent) kHz; python 3.12.15
+# desktop: the Linux-only parts (affinity, pinning, /proc, frequency, foreign load) are skipped in this log
+# CRITERIA (stated in the script before its data; asserted below):
+#   Every criterion is fixed here, before any data, and asserted in code. The NaN rule holds throughout: non-NaN results
+#   agree bit for bit, and NaN results agree as NaNs.
+#   BUILD (mode build):
+#    B1 every file in in/EXPECTED.sha256 has its listed SHA-256 (the 18 files of src/ as commit 1646c96 holds them, the
+#       sources of this round, this script, the libcft archive and the inputs), each hash printed;
+#    B2 gcc -dumpmachine prints the platform's triple (x86_64-linux-gnu on the box, x86_64-w64-mingw32 on the desktop);
+#    B3 libcft.a builds from in/cft-fp256-0aa997a3.tar, one job;
+#    B4 M1 and the round's programs build at build_f.sh's O2 flags (-std=c11 -O2 -ffp-contract=off -Wall -Wextra; -mfma for
+#       the native kinds), every compile and link succeeding;
+#    B5 every native object holds at least one vfmadd and no undefined fma, fmaf, sqrt or sqrtf;
+#    B6 the clock loop's disassembly is kept in the log and holds at least 8 dependent adds and a store;
+#    C1 (control) a copy of one source with one byte changed must FAIL the source check of B1.
+#   LINUX PRE-CHECK (before anything is pinned): this process's affinity is CPUs 0 to 35; for every c from 0 to 17,
+#    cpu c's thread_siblings_list is {c, c+18} and cpu c+18's is the same set.
+#   G1 smoke: every kind-mode, 4 lanes, 2 steps, one worker: exit 0, end checks pass, 4 states of the right size.
+#   G1 calibration (box): the loop's implied clock (additions / wall) beside the kernel's scaling_cur_freq reading, at 1 and
+#    at 36 busy workers; if they differ by more than 5% the clock is given as the kernel's reading only.
+#   G1 controls, each of which must FAIL as specified (the harness asserts it), exempt from G4's repeat rule:
+#    C1 above; C2 (box) W=9, a busy loop pinned to CPU 35 for the whole run: void on foreign load; C3 (box) W=2, both
+#    workers on CPU 0: void on the CPU share; C4 the planted early clock: void on the start time; C5 a paced run of
+#    native64-cr, 1 worker, 64 lanes at 1,000 times real time: the lag criterion fails, within 120 s.
+#   G2 (box): the first 64 objects, 40 steps, at every kind-mode, under Q1 (1 worker, 1 batch of 64), Q2 (8 workers of 8,
+#    object i in worker i mod 8), Q3 (36 workers, round-robin, 1 or 2 lanes), Q4 (1 worker, 64 batches of 1), Q5 (1 worker, 64
+#    lanes in reverse order). PASS: every object's final state equals Q1's, bit for bit, in Q2 to Q5. CONTROL: Q1 with object
+#    23's initial x moved by one ulp of the kind's input format: exactly object 23's final state differs, no other.
+#   G3: the first 16 objects, 240 steps, every kind-mode, one worker, one batch of 16. The inputs' SHA-256 first (the
+#    population, the frame table, the gfc, DE421 and its header, and each driver's hash of the values it parsed) must be
+#    equal on the two machines. PASS: cft32, cft64, cft128, cft256, native32-cr and native64-cr equal bit for bit across the
+#    two machines; on each machine native64-cr equals cft64 and native32-cr equals cft32 bit for bit. NO pass condition for
+#    native32 and native64 with the C library: the count of objects that differ, and the largest position difference.
+#    CONTROL: the comparison on a copy of one machine's output with one bit flipped in one object's state flags exactly that
+#    object.
+#   G4 (sweep): the validity criteria below; the configurations, S and the statistics are in this script (see CFG, FIG).
+#    A run is valid only if: V1 every worker exits 0 and its end checks pass; V2 every worker read its release byte within 50
+#    ms of the harness's release and no worker's timed region began before the release (start time); V3 each worker used under
+#    10 ms of CPU between READY and its release, and CPU for at least 95% of its timed wall time (cpu share); V4 each ran on
+#    its own CPU: affinity that CPU alone, on it at its start and at its end (pinning); V5 the foreign load is at most 2%
+#    (foreign load); V6 the wall time is at least 20 s. A run failing V5 alone is repeated once; failing again, it is void.
+#    Worker 0's slice's final-state SHA-256 is equal across all L=64 runs of a kind-mode (check D).
+#   G5 (paced): decision 4's rule, asserted from G4's capacities; the population's base objects; 36 workers; real time; 20
+#    minutes. PASS: every worker's lag at most 15 s at every step; every worker exits 0; end checks pass; V2, V4, V5 and V6
+#    hold (V3's 95% share does not apply: a paced worker sleeps when ahead).
+# cft-fp256-0aa997a3.tar sha256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8
+# dl/EIGEN6-C4.gfc/EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715
+# dl/header.421/header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+# dl/lnxp1900p2053.421/lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# frame_main.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# g_calib.c sha256 7b06abcbb3e0bd1b84c1d3a9cfebfe44a08bde4e01bb32aaea5145f000bccc0b
+# g_harness.py sha256 49c2f75fe70806af73977db578088988abc4fb2044a341c1c4c61a915aea501d
+# m1g.c sha256 f227dd5b5abb4db6eeba5c32f138a47d9ea27df20707a82bdba4a18cad641102
+# population.001.txt sha256 016f380e74ad4c090add550ad59d52229f4b6b1214e403fb6ac77a7aea6f5428
+# src/de421.c sha256 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c
+# src/gfc.c sha256 d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95
+# src/kind_cft128.c sha256 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4
+# src/kind_cft256.c sha256 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da
+# src/kind_cft32.c sha256 dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb
+# src/kind_cft64.c sha256 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32
+# src/kind_native32.c sha256 f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14
+# src/kind_native64.c sha256 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16
+# src/m1.h sha256 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590
+# src/m1_common.c sha256 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6
+# src/m1_consts.h sha256 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a
+# src/m1_ftab.c sha256 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab
+# src/m1_kind.h sha256 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b
+# src/m1_nodes.c sha256 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce
+# src/m1_nodes.h sha256 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4
+# src/m1_ops_cft.h sha256 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c
+# src/m1_ops_native.h sha256 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf
+# src/m1_physics.h sha256 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f
+PASS B1 27 files as listed, 0 mismatched
+PASS C1 control: the copy's changed source fails the source check (mismatch), its untouched one passes (match) - failed as specified
+PASS B2 gcc -dumpmachine prints x86_64-w64-mingw32
+# gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+# ran (10.77 s wall, exit 0): C:/msys64/usr/bin/make.exe --no-print-directory -C cft-fp256/host CC=gcc OS=Windows_NT TMP=/tmp TEMP=/tmp libcft.a
+PASS B3 libcft.a built (10.8 s wall), sha256 f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5
+# ran (1.77 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -Icft-fp256/host/include -c in/src/kind_native32.c -o build/obj/kind_native32.o
+# ran (1.87 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -Icft-fp256/host/include -c in/src/kind_native64.c -o build/obj/kind_native64.o
+# ran (0.78 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft32.c -o build/obj/kind_cft32.o
+# ran (0.82 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft64.c -o build/obj/kind_cft64.o
+# ran (0.84 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft128.c -o build/obj/kind_cft128.o
+# ran (0.85 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft256.c -o build/obj/kind_cft256.o
+# ran (0.15 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_common.c -o build/obj/m1_common.o
+# ran (0.19 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/gfc.c -o build/obj/gfc.o
+# ran (0.17 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/de421.c -o build/obj/de421.o
+# ran (0.13 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_ftab.c -o build/obj/m1_ftab.o
+# ran (0.96 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_nodes.c -o build/obj/m1_nodes.o
+# ran (1.29 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -Iin/src -c in/m1g.c -o build/obj/m1g.o
+# ran (0.23 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -o build/m1g.exe build/obj/m1g.o build/obj/kind_cft128.o build/obj/kind_cft256.o build/obj/kind_cft32.o build/obj/kind_cft64.o build/obj/kind_native32.o build/obj/kind_native64.o build/obj/m1_common.o build/obj/gfc.o build/obj/de421.o build/obj/m1_ftab.o build/obj/m1_nodes.o cft-fp256/host/libcft.a -lm -lpsapi
+# ran (1.05 s wall, exit 0): C:/msys64/mingw64/bin/gcc.exe -std=c11 -O2 -Wall -Wextra -o build/g_calib.exe in/g_calib.c
+PASS B4 every compile and link
+PASS B5 native32: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: none
+PASS B5 native64: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: none
+# the clock loop's disassembly (objdump -d of calib_loop):
+#      1400015b0:	test   %rcx,%rcx
+#      1400015b3:	je     1400015f0 <calib_loop+0x40>
+#      1400015b5:	xor    %r8d,%r8d
+#      1400015b8:	xor    %eax,%eax
+#      1400015ba:	nopw   0x0(%rax,%rax,1)
+#      1400015c0:	add    %rdx,%rax
+#      1400015c3:	add    %rdx,%rax
+#      1400015c6:	add    %rdx,%rax
+#      1400015c9:	add    %rdx,%rax
+#      1400015cc:	add    %rdx,%rax
+#      1400015cf:	add    %rdx,%rax
+#      1400015d2:	add    %rdx,%rax
+#      1400015d5:	add    %rdx,%rax
+#      1400015d8:	add    $0x1,%r8
+#      1400015dc:	mov    %rax,0xca4d(%rip)        # 14000e030 <sink>
+#      1400015e3:	cmp    %r8,%rcx
+#      1400015e6:	jne    1400015c0 <calib_loop+0x10>
+#      1400015e8:	ret
+#      1400015e9:	nopl   0x0(%rax)
+#      1400015f0:	xor    %eax,%eax
+#      1400015f2:	ret
+#      1400015f3:	nop
+#      1400015f4:	nop
+#      1400015f5:	nop
+#      1400015f6:	nop
+#      1400015f7:	nop
+#      1400015f8:	nop
+#      1400015f9:	nop
+#      1400015fa:	nop
+#      1400015fb:	nop
+#      1400015fc:	nop
+#      1400015fd:	nop
+#      1400015fe:	nop
+#      1400015ff:	nop
+PASS B6 calib_loop holds 9 add instructions and 1 stores to memory
+# cft-fp256/host/libcft.a sha256 f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5
+# build/m1g.exe sha256 7282e5ed55a3bb368f97972c44afd8a36e2e8df876eb56562da86839ecf14dd8
+# build/g_calib.exe sha256 44a009a7e1364c7e3cee1741c2a58744227e909691890a226b0190f8e569a650
+# PASS 

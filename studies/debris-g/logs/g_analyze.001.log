@@ -1,0 +1,185 @@
+# g_analyze.py sha256 cf34d0b8cb75889b2104a070c955e9d32d538243a1af840bde9e8df16ee213a5
+# input log hashes (the lead's copies, equal to the box's):
+#   g_build.001.log e288fdcd716baa8b57e34396953993de1fe0026f6655a7fc1e10d519f06ffbcd
+#   g_smoke.001.log ea8d2c65d77a3cf2207274d48bf915fd9086d9c5e191a52e41c28b255670c089
+#   g_calib.001.log c89c4fbf511163094f6ecf51c86953eaf198d3157375da158d9ca24f0e691271
+#   g_controls.001.log 482fd316fde84dbeac7361537fd1a8ede63b13fdee58e6f404ac89b8dd2d1bd9
+#   g_g2.001.log f5396a5e9163974812b89cca22fd6d84ccc494c7da27864121529525d3476417
+#   g_g3.001.log e856a0e2374c76b05f3320f2b9933ddaec6562196d5536c2a42d2bfa2aa101cd
+#   g_sweep.001.log a4661ab094f561f275aa4430c6d26456248005ed63691aa452384251fc42b712
+#   g_sweep.001.runs.json 118740303da33fda2f23ba2c1310096647fe5ed74cdc0cdb84dd192dc6937628
+#   g_sweep.002.log 44157df887310fe7613224124e55ba5dbf4db410eed5efd4e676b9edc8366b05
+#   g_sweep.002.runs.json 6c37d0a5c0a764db48ef206f1cd0d031301912933c35712a3c653ff02f6e46ed
+#   g_sweep.003.log d04b216b94e406c00e694ddaa3c9a3022ded90f3131a8cb6988c0ba0b821c1cd
+#   g_sweep.003.runs.json 94cc8bcc268295f85e4b6bb0d411d8e6a26f398216393bc09b2356cb35d7cc5b
+#   g_paced.001.log 2bb89a5092e11b75f486d49482fbfec461a34a62a8f94f28d33b6701cf78d696
+PASS A1 59 runs, all valid (59 runs, 59 valid)
+PASS A1 every run has a RUN line with the same kind-mode, W, L, S and X (to 1e-6)
+PASS A7 control: one X changed by 0.1% is flagged by A1's check (1 run flagged)
+PASS A3 native32 has 8 runs (expected 8)
+PASS A3 native32: S equals the plan's rule at every L (S at L=8, 64, 256: [327273, 40910, 10228])
+PASS A2 native32 capacity 18526551.348 = median of its 3 repeats
+PASS A3 native64 has 8 runs (expected 8)
+PASS A3 native64: S equals the plan's rule at every L (S at L=8, 64, 256: [322389, 40299, 10075])
+PASS A2 native64 capacity 18259423.987 = median of its 3 repeats
+PASS A3 native64-cr has 8 runs (expected 8)
+PASS A3 native64-cr: S equals the plan's rule at every L (S at L=8, 64, 256: [1010, 127, 32])
+PASS A2 native64-cr capacity 57040.182 = median of its 3 repeats
+PASS A3 cft32 has 8 runs (expected 8)
+PASS A3 cft32: S equals the plan's rule at every L (S at L=8, 64, 256: [398, 50, 13])
+PASS A2 cft32 capacity 19828.392 = median of its 3 repeats
+PASS A3 cft64 has 11 runs (expected 11)
+PASS A3 cft64: S equals the plan's rule at every L (S at L=8, 64, 256: [301, 38, 10])
+PASS A2 cft64 capacity 15321.624 = median of its 3 repeats
+PASS A3 cft128 has 8 runs (expected 8)
+PASS A3 cft128: S equals the plan's rule at every L (S at L=8, 64, 256: [180, 23, 6])
+PASS A2 cft128 capacity 9563.818 = median of its 3 repeats
+PASS A3 cft256 has 8 runs (expected 8)
+PASS A3 cft256: S equals the plan's rule at every L (S at L=8, 64, 256: [81, 11, 3])
+PASS A2 cft256 capacity 4332.398 = median of its 3 repeats
+
+# G4 TABLES. X = object-seconds summed over the workers / wall time (first release to last end), at L=64 unless stated.
+# Efficiency = X(W)/(W x X(1)); clock-corrected efficiency = efficiency / (mean clock of the run / mean clock of the W=1 run);
+# HT = X(36)/X(18). All divide rates (object-seconds per wall second), none CPU times. Clocks are the kernel's scaling_cur_freq (see G1's calibration).
+
+## native32 (F9's object-day figure 0.066 s; X(1) implied by it 1309090.909)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   1329146.536 1.000   3580 MHz     1.000             23904
+  9   9362658.539 0.783   2805 MHz     0.999             23904
+  18  18552326.395 0.775   2809 MHz     0.988             23904
+  36  18526551.348 0.387   2803 MHz     0.494             23904
+  HT gain X(36)/X(18) = 0.999
+  W=36 L=8   X 16985331.311  (ratio to L=64: 0.917; foreign load 0.067%)
+  W=36 L=64  X 18526551.348  (ratio to L=64: 1.000; foreign load 0.064%)
+  W=36 L=256 X 19656396.647  (ratio to L=64: 1.061; foreign load 0.064%)
+  spread of the 3 repeats (largest/smallest) 1.00037
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 18526551.3 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 19656396.6 at W=36 L=256
+  X(1) / F9-implied X(1) = 1.015  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3580 MHz; W>=9: [2801, 2809] MHz
+
+## native64 (F9's object-day figure 0.067 s; X(1) implied by it 1289552.239)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   1291561.239 1.000   3587 MHz     1.000             24192
+  9   8881204.705 0.764   2804 MHz     0.977             24480
+  18  17613715.930 0.758   2806 MHz     0.969             24480
+  36  18259423.987 0.393   2801 MHz     0.503             24480
+  HT gain X(36)/X(18) = 1.037
+  W=36 L=8   X 16832332.299  (ratio to L=64: 0.922; foreign load 0.062%)
+  W=36 L=64  X 18259423.987  (ratio to L=64: 1.000; foreign load 0.066%)
+  W=36 L=256 X 19154210.038  (ratio to L=64: 1.049; foreign load 0.077%)
+  spread of the 3 repeats (largest/smallest) 1.00114
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 18259424.0 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 19154210.0 at W=36 L=256
+  X(1) / F9-implied X(1) = 1.002  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3587 MHz; W>=9: [2800, 2806] MHz
+
+## native64-cr (F9's object-day figure 21.406 s; X(1) implied by it 4036.252)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   3701.824    1.000   3597 MHz     1.000             23904
+  9   25840.173   0.776   2802 MHz     0.995             24192
+  18  51578.519   0.774   2797 MHz     0.995             24192
+  36  57040.182   0.428   2798 MHz     0.550             24976
+  HT gain X(36)/X(18) = 1.106
+  W=36 L=8   X 56304.880  (ratio to L=64: 0.987; foreign load 0.067%)
+  W=36 L=64  X 57040.182  (ratio to L=64: 1.000; foreign load 0.068%)
+  W=36 L=256 X 56826.079  (ratio to L=64: 0.996; foreign load 0.068%)
+  spread of the 3 repeats (largest/smallest) 1.00060
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 57040.2 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 57048.7 at W=36 L=64
+  X(1) / F9-implied X(1) = 0.917  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3597 MHz; W>=9: [2787, 2802] MHz
+
+## cft32 (F9's object-day figure 54.363 s; X(1) implied by it 1589.316)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   1505.851    1.000   3589 MHz     1.000             23616
+  9   10583.078   0.781   2797 MHz     1.002             23616
+  18  21110.512   0.779   2798 MHz     0.999             23616
+  36  19828.392   0.366   2800 MHz     0.469             23616
+  HT gain X(36)/X(18) = 0.939
+  W=36 L=8   X 18764.025  (ratio to L=64: 0.946; foreign load 0.079%)
+  W=36 L=64  X 19828.392  (ratio to L=64: 1.000; foreign load 0.066%)
+  W=36 L=256 X 19973.537  (ratio to L=64: 1.007; foreign load 0.063%)
+  spread of the 3 repeats (largest/smallest) 1.00044
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 19828.4 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 21110.5 at W=18 L=64
+  X(1) / F9-implied X(1) = 0.947  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3589 MHz; W>=9: [2797, 2800] MHz
+
+## cft64 (F9's object-day figure 71.893 s; X(1) implied by it 1201.786)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   1137.090    1.000   3571 MHz     1.000             24192
+  2   2179.528    0.958   3514 MHz     0.974             24480
+  4   4009.162    0.881   3245 MHz     0.970             24480
+  9   7996.705    0.781   2789 MHz     1.001             24480
+  18  15928.503   0.778   2798 MHz     0.993             24480
+  27  11508.893   0.375   2525 MHz     0.530             24480
+  36  15321.624   0.374   2799 MHz     0.478             24480
+  HT gain X(36)/X(18) = 0.962
+  W=36 L=8   X 14551.053  (ratio to L=64: 0.950; foreign load 0.082%)
+  W=36 L=64  X 15321.624  (ratio to L=64: 1.000; foreign load 0.068%)
+  W=36 L=256 X 15400.255  (ratio to L=64: 1.005; foreign load 0.062%)
+  spread of the 3 repeats (largest/smallest) 1.00235
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 15321.6 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 15928.5 at W=18 L=64
+  X(1) / F9-implied X(1) = 0.946  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3571 MHz; W>=9: [2525, 2800] MHz
+
+## cft128 (F9's object-day figure 120.139 s; X(1) implied by it 719.167)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   683.745     1.000   3595 MHz     1.000             25632
+  9   4811.508    0.782   2797 MHz     1.005             25632
+  18  9587.044    0.779   2793 MHz     1.003             25632
+  36  9563.818    0.389   2800 MHz     0.499             25632
+  HT gain X(36)/X(18) = 0.998
+  W=36 L=8   X 9186.441  (ratio to L=64: 0.961; foreign load 0.070%)
+  W=36 L=64  X 9563.818  (ratio to L=64: 1.000; foreign load 0.068%)
+  W=36 L=256 X 9576.298  (ratio to L=64: 1.001; foreign load 0.080%)
+  spread of the 3 repeats (largest/smallest) 1.00050
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 9563.8 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 9587.0 at W=18 L=64
+  X(1) / F9-implied X(1) = 0.951  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3595 MHz; W>=9: [2793, 2802] MHz
+
+## cft256 (F9's object-day figure 266.713 s; X(1) implied by it 323.944)
+  W   X(W)        eff     mean clock   eff/clock-ratio   max peak resident per worker (kB)
+  1   298.926     1.000   3598 MHz     1.000             28512
+  9   2096.738    0.779   2794 MHz     1.004             28512
+  18  4175.552    0.776   2789 MHz     1.001             28512
+  36  4332.398    0.403   2795 MHz     0.518             28512
+  HT gain X(36)/X(18) = 1.038
+  W=36 L=8   X 4220.121  (ratio to L=64: 0.974; foreign load 0.069%)
+  W=36 L=64  X 4332.398  (ratio to L=64: 1.000; foreign load 0.067%)
+  W=36 L=256 X 4340.087  (ratio to L=64: 1.002; foreign load 0.074%)
+  spread of the 3 repeats (largest/smallest) 1.00028
+  REAL-TIME CAPACITY (W=36, L=64, median of 3): 4332.4 objects at real time; carried in the runs: 2304 objects; an extrapolation of the cost per object above that
+  fastest valid run (beside the capacity, not in its place): X 4340.1 at W=36 L=256
+  X(1) / F9-implied X(1) = 0.923  (G4's W=1, L=64 run over F9's figure; see the build report for the reading)
+  mean clock W=1: 3598 MHz; W>=9: [2789, 2796] MHz
+
+# Foreign load across all 59 runs: largest 0.084% (criterion 2%)
+# Peak resident memory (workers' own reports): largest of all runs 31968 kB
+
+# G5, from g_paced.001.log
+PASS A5 36 workers, 80 steps each
+PASS A5 every worker's maximum lag at most 15 s (the largest is -5.584 s, i.e. every step finished at least 5.584 s before its deadline); 2 G5 PASS lines
+  worker lag medians: smallest -7.399 s, median -5.732 s, largest -5.669 s; worker 35 (61 lanes) is the one with the most slack, worker 17 next
+  a step's compute time = 15 s + lag: median over workers 9.268 s; worst step 9.416 s
+  busy share: mean 0.613, min 0.506, max 0.622; kind-mode cft256, N 2686
+  cross-check: capacity 4332.4 / N 2686 = 1.613; 1 / busy mean 0.613 = 1.631 (both are the headroom factor, from independent runs)
+  mean clock 2455 MHz; G4's cft256 W=36 L=64 runs: 2795 MHz. If the busy fraction 0.613 read as in G4, the idle fraction's mean reading would be 1917 MHz (COMPUTED from the two means; the split is INFERRED: the log holds only the means)
+
+PASS A6 g_build.001.log: 8 PASS lines, 0 FAIL lines
+PASS A6 g_smoke.001.log: 11 PASS lines, 0 FAIL lines
+PASS A6 g_calib.001.log: 5 PASS lines, 0 FAIL lines
+PASS A6 g_controls.001.log: 7 PASS lines, 0 FAIL lines
+PASS A6 g_g2.001.log: 59 PASS lines, 0 FAIL lines
+PASS A6 g_g3.001.log: 12 PASS lines, 0 FAIL lines
+  PASS C4 control: the run with the planted early clock fails V2's start time (failed criteria: ['start_time']) - failed as specified
+  PASS C5 control: native64-cr, 1 worker, 64 lanes at 1000x real time fails the lag criterion (first step over 15 s: 62, steps done 62 of 400, aborted 1) within 16.2 s (limit 120) - failed as specified
+  PASS C2 control: the run with a busy loop on CPU 35 is void on foreign load (foreign 2.84% against 2%; failed criteria: ['foreign_load']) - failed as specified
+  PASS C3 control: both workers on CPU 0 is void on the CPU share (failed criteria: ['cpu_share']) - failed as specified
+  MEASURED calib 1 workers: implied clock (additions per ns, at one addition a cycle, BELIEVED) mean 3.5570 GHz (min 3.5570, max 3.5570); kernel scaling_cur_freq mean 3.4613 GHz; difference +2.76%; AGREE within 5%: the clock may be given as the loop's
+  MEASURED calib 36 workers: implied clock (additions per ns, at one addition a cycle, BELIEVED) mean 2.5894 GHz (min 2.5427, max 2.6340); kernel scaling_cur_freq mean 2.7943 GHz; difference -7.33%; DIFFER by more than 5%: the report gives the clock as the kernel's reading only
+PASS A6 G2: 40 of 40 partition and control lines PASS (8 kind-modes x Q2..Q5 + control)
+# PASS (0 failed)

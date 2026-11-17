@@ -1,0 +1,174 @@
+# g_sweep, log 002, written 2026-11-17 10:25:55 -0700
+# script g_harness.py sha256 52284f71e5093e9e296b77ca5e9fddba2506d4c9df17ceae37381bc159269a6d
+# driver m1g sha256 57c98729034cf51af51bc59c78521c92c5ec7a7b7bcfd8629ef0be2c57e4599f
+# host amd-arc-box, Linux 6.8.0-139-generic x86_64
+# cpu Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz, 36 logical; governor schedutil, driver intel_cpufreq, max 3600000 kHz; python 3.12.3
+# /proc/loadavg at start: 25.28 30.25 24.26 1/1033 2843557
+# CRITERIA (stated in the script before its data; asserted below):
+#   Every criterion is fixed here, before any data, and asserted in code. The NaN rule holds throughout: non-NaN results
+#   agree bit for bit, and NaN results agree as NaNs.
+#   BUILD (mode build):
+#    B1 every file in in/EXPECTED.sha256 has its listed SHA-256 (the 18 files of src/ as commit 1646c96 holds them, the
+#       sources of this round, this script, the libcft archive and the inputs), each hash printed;
+#    B2 gcc -dumpmachine prints the platform's triple (x86_64-linux-gnu on the box, x86_64-w64-mingw32 on the desktop);
+#    B3 libcft.a builds from in/cft-fp256-0aa997a3.tar, one job;
+#    B4 M1 and the round's programs build at build_f.sh's O2 flags (-std=c11 -O2 -ffp-contract=off -Wall -Wextra; -mfma for
+#       the native kinds), every compile and link succeeding;
+#    B5 every native object holds at least one vfmadd and no undefined fma, fmaf, sqrt or sqrtf;
+#    B6 the clock loop's disassembly is kept in the log and holds at least 8 dependent adds and a store;
+#    C1 (control) a copy of one source with one byte changed must FAIL the source check of B1.
+#   LINUX PRE-CHECK (before anything is pinned): this process's affinity is CPUs 0 to 35; for every c from 0 to 17,
+#    cpu c's thread_siblings_list is {c, c+18} and cpu c+18's is the same set.
+#   G1 smoke: every kind-mode, 4 lanes, 2 steps, one worker: exit 0, end checks pass, 4 states of the right size.
+#   G1 calibration (box): the loop's implied clock (additions / wall) beside the kernel's scaling_cur_freq reading, at 1 and
+#    at 36 busy workers; if they differ by more than 5% the clock is given as the kernel's reading only.
+#   G1 controls, each of which must FAIL as specified (the harness asserts it), exempt from G4's repeat rule:
+#    C1 above; C2 (box) W=9, a busy loop pinned to CPU 35 for the whole run: void on foreign load; C3 (box) W=2, both
+#    workers on CPU 0: void on the CPU share; C4 the planted early clock: void on the start time; C5 a paced run of
+#    native64-cr, 1 worker, 64 lanes at 1,000 times real time: the lag criterion fails, within 120 s.
+#   G2 (box): the first 64 objects, 40 steps, at every kind-mode, under Q1 (1 worker, 1 batch of 64), Q2 (8 workers of 8,
+#    object i in worker i mod 8), Q3 (36 workers, round-robin, 1 or 2 lanes), Q4 (1 worker, 64 batches of 1), Q5 (1 worker, 64
+#    lanes in reverse order). PASS: every object's final state equals Q1's, bit for bit, in Q2 to Q5. CONTROL: Q1 with object
+#    23's initial x moved by one ulp of the kind's input format: exactly object 23's final state differs, no other.
+#   G3: the first 16 objects, 240 steps, every kind-mode, one worker, one batch of 16. The inputs' SHA-256 first (the
+#    population, the frame table, the gfc, DE421 and its header, and each driver's hash of the values it parsed) must be
+#    equal on the two machines. PASS: cft32, cft64, cft128, cft256, native32-cr and native64-cr equal bit for bit across the
+#    two machines; on each machine native64-cr equals cft64 and native32-cr equals cft32 bit for bit. NO pass condition for
+#    native32 and native64 with the C library: the count of objects that differ, and the largest position difference.
+#    CONTROL: the comparison on a copy of one machine's output with one bit flipped in one object's state flags exactly that
+#    object.
+#   G4 (sweep): the validity criteria below; the configurations, S and the statistics are in this script (see CFG, FIG).
+#    A run is valid only if: V1 every worker exits 0 and its end checks pass; V2 every worker read its release byte within 50
+#    ms of the harness's release and no worker's timed region began before the release (start time); V3 each worker used under
+#    10 ms of CPU between READY and its release, and CPU for at least 95% of its timed wall time (cpu share); V4 each ran on
+#    its own CPU: affinity that CPU alone, on it at its start and at its end (pinning); V5 the foreign load is at most 2%
+#    (foreign load); V6 the wall time is at least 20 s. A run failing V5 alone is repeated once; failing again, it is void.
+#    Worker 0's slice's final-state SHA-256 is equal across all L=64 runs of a kind-mode (check D).
+#   G5 (paced): decision 4's rule, asserted from G4's capacities; the population's base objects; 36 workers; real time; 20
+#    minutes. PASS: every worker's lag at most 15 s at every step; every worker exits 0; end checks pass; V2, V4, V5 and V6
+#    hold (V3's 95% share does not apply: a paced worker sleeps when ahead).
+PASS the sources still match in/EXPECTED.sha256 (27 files, 0 mismatched)
+PASS pre-check: this process's affinity is CPUs 0 to 35 ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35])
+PASS pre-check: for every c in 0..17, cpu c and cpu c+18 are siblings (36 of 36 CPUs as expected)
+# G4 sweep; TimeSheet booking B0107 (sensitive, box); kind-modes ['cft32', 'cft64']
+# F9's 64-lane object-day figures (s) used for S: {'native32': 0.066, 'native64': 0.067, 'native64-cr': 21.406, 'cft32': 54.363, 'cft64': 71.893, 'cft128': 120.139, 'cft256': 266.713}; S = max(2, ceil(30 / (L x figure/5760))) x 1
+# about to run cft32 W=1 L=64 S=50 (try 1): 1 workers, objects 0..63, pinned to CPUs 0..0; S fixed before the run
+RUN cft32 W=1 L=64 S=50 (try 1): wall 31.88 s, objsec 48000.0, X 1505.851 obj-s/s, foreign load 0.047%, mean clock 3589 MHz (32 samples a CPU), loadavg before: 25.28 30.25 24.26 1/1036 2843560
+    workers 1, peak resident kB (own report) min 23616 max 23616; final_states_sha256 of worker 0: ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9
+    validity: VALID
+PASS D cft32 W=1 L=64: worker 0's final-state SHA-256 equals the first run's (ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9)
+# about to run cft32 W=9 L=64 S=50 (try 1): 9 workers, objects 0..575, pinned to CPUs 0..8; S fixed before the run
+RUN cft32 W=9 L=64 S=50 (try 1): wall 40.82 s, objsec 432000.0, X 10583.078 obj-s/s, foreign load 0.037%, mean clock 2797 MHz (41 samples a CPU), loadavg before: 15.18 27.15 23.44 1/1058 2843672
+    workers 9, peak resident kB (own report) min 23616 max 23616; final_states_sha256 of worker 0: ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9
+    validity: VALID
+PASS D cft32 W=9 L=64: worker 0's final-state SHA-256 equals the first run's (ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9)
+# about to run cft32 W=18 L=64 S=50 (try 1): 18 workers, objects 0..1151, pinned to CPUs 0..17; S fixed before the run
+RUN cft32 W=18 L=64 S=50 (try 1): wall 40.93 s, objsec 864000.0, X 21110.512 obj-s/s, foreign load 0.078%, mean clock 2798 MHz (41 samples a CPU), loadavg before: 12.17 24.87 22.83 1/1084 2843812
+    workers 18, peak resident kB (own report) min 23616 max 23616; final_states_sha256 of worker 0: ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9
+    validity: VALID
+PASS D cft32 W=18 L=64: worker 0's final-state SHA-256 equals the first run's (ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9)
+# about to run cft32 W=36 L=64 S=50 (try 1): 36 workers, objects 0..2303, pinned to CPUs 0..35; S fixed before the run
+RUN cft32 W=36 L=64 S=50 (try 1): wall 87.14 s, objsec 1728000.0, X 19829.179 obj-s/s, foreign load 0.066%, mean clock 2800 MHz (87 samples a CPU), loadavg before: 15.01 24.01 22.62 1/1137 2844087
+    workers 36, peak resident kB (own report) min 23328 max 23616; final_states_sha256 of worker 0: ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9
+    validity: VALID
+PASS D cft32 W=36 L=64: worker 0's final-state SHA-256 equals the first run's (ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9)
+# about to run cft32 W=36 L=64 S=50 (try 1): 36 workers, objects 0..2303, pinned to CPUs 0..35; S fixed before the run
+RUN cft32 W=36 L=64 S=50 (try 1): wall 87.18 s, objsec 1728000.0, X 19820.537 obj-s/s, foreign load 0.082%, mean clock 2800 MHz (87 samples a CPU), loadavg before: 31.38 27.15 23.87 1/1137 2844449
+    workers 36, peak resident kB (own report) min 23328 max 23616; final_states_sha256 of worker 0: ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9
+    validity: VALID
+PASS D cft32 W=36 L=64: worker 0's final-state SHA-256 equals the first run's (ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9)
+# about to run cft32 W=36 L=64 S=50 (try 1): 36 workers, objects 0..2303, pinned to CPUs 0..35; S fixed before the run
+RUN cft32 W=36 L=64 S=50 (try 1): wall 87.15 s, objsec 1728000.0, X 19828.392 obj-s/s, foreign load 0.071%, mean clock 2800 MHz (87 samples a CPU), loadavg before: 34.89 29.34 24.93 1/1142 2844894
+    workers 36, peak resident kB (own report) min 23328 max 23616; final_states_sha256 of worker 0: ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9
+    validity: VALID
+PASS D cft32 W=36 L=64: worker 0's final-state SHA-256 equals the first run's (ad53f5e3b1dbb079758c977f83115dafea038583cecfad703ea54f2bd97d57b9)
+# about to run cft32 W=36 L=8 S=398 (try 1): 36 workers, objects 0..287, pinned to CPUs 0..35; S fixed before the run
+RUN cft32 W=36 L=8 S=398 (try 1): wall 91.63 s, objsec 1719360.0, X 18764.025 obj-s/s, foreign load 0.079%, mean clock 2800 MHz (92 samples a CPU), loadavg before: 33.07 30.53 25.78 1/1145 2845265
+    workers 36, peak resident kB (own report) min 23328 max 23616; final_states_sha256 of worker 0: 4b46c5b4f8669ca3520a606e733f818bffe0ff0bc0f21e18eceb5f4e4cc58704
+    validity: VALID
+# about to run cft32 W=36 L=256 S=13 (try 1): 36 workers, objects 0..9215, pinned to CPUs 0..35; S fixed before the run
+RUN cft32 W=36 L=256 S=13 (try 1): wall 89.98 s, objsec 1797120.0, X 19973.537 obj-s/s, foreign load 0.063%, mean clock 2800 MHz (90 samples a CPU), loadavg before: 35.35 31.96 26.73 1/1147 2845704
+    workers 36, peak resident kB (own report) min 23904 max 24192; final_states_sha256 of worker 0: 8532d705be6d5f56f725956fd455a9fd0b6ebba2e71e65d2720e7f6282444913
+    validity: VALID
+# about to run cft64 W=1 L=64 S=38 (try 1): 1 workers, objects 0..63, pinned to CPUs 0..0; S fixed before the run
+RUN cft64 W=1 L=64 S=38 (try 1): wall 32.08 s, objsec 36480.0, X 1137.090 obj-s/s, foreign load 0.075%, mean clock 3571 MHz (33 samples a CPU), loadavg before: 36.01 33.07 27.61 1/1032 2845970
+    workers 1, peak resident kB (own report) min 24192 max 24192; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=1 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=2 L=64 S=38 (try 1): 2 workers, objects 0..127, pinned to CPUs 0..1; S fixed before the run
+RUN cft64 W=2 L=64 S=38 (try 1): wall 33.48 s, objsec 72960.0, X 2179.528 obj-s/s, foreign load 0.050%, mean clock 3514 MHz (34 samples a CPU), loadavg before: 20.51 29.52 26.62 1/1040 2846146
+    workers 2, peak resident kB (own report) min 24480 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=2 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=4 L=64 S=38 (try 1): 4 workers, objects 0..255, pinned to CPUs 0..3; S fixed before the run
+RUN cft64 W=4 L=64 S=38 (try 1): wall 36.40 s, objsec 145920.0, X 4009.162 obj-s/s, foreign load 0.040%, mean clock 3245 MHz (37 samples a CPU), loadavg before: 13.22 26.89 25.84 1/1043 2846244
+    workers 4, peak resident kB (own report) min 24480 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=4 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=9 L=64 S=38 (try 1): 9 workers, objects 0..575, pinned to CPUs 0..8; S fixed before the run
+RUN cft64 W=9 L=64 S=38 (try 1): wall 41.06 s, objsec 328320.0, X 7996.705 obj-s/s, foreign load 0.062%, mean clock 2789 MHz (42 samples a CPU), loadavg before: 8.73 24.02 24.92 1/1058 2846350
+    workers 9, peak resident kB (own report) min 23904 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=9 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=18 L=64 S=38 (try 1): 18 workers, objects 0..1151, pinned to CPUs 0..17; S fixed before the run
+RUN cft64 W=18 L=64 S=38 (try 1): wall 41.22 s, objsec 656640.0, X 15928.503 obj-s/s, foreign load 0.069%, mean clock 2798 MHz (42 samples a CPU), loadavg before: 8.86 22.14 24.24 1/1084 2846570
+    workers 18, peak resident kB (own report) min 23904 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=18 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=27 L=64 S=38 (try 1): 27 workers, objects 0..1727, pinned to CPUs 0..26; S fixed before the run
+RUN cft64 W=27 L=64 S=38 (try 1): wall 85.58 s, objsec 984960.0, X 11508.893 obj-s/s, foreign load 0.050%, mean clock 2525 MHz (86 samples a CPU), loadavg before: 13.39 21.63 23.98 1/1112 2846824
+    workers 27, peak resident kB (own report) min 23904 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=27 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=36 L=64 S=38 (try 1): 36 workers, objects 0..2303, pinned to CPUs 0..35; S fixed before the run
+RUN cft64 W=36 L=64 S=38 (try 1): wall 85.84 s, objsec 1313280.0, X 15298.954 obj-s/s, foreign load 0.068%, mean clock 2799 MHz (86 samples a CPU), loadavg before: 18.95 21.70 23.82 1/1137 2847180
+    workers 36, peak resident kB (own report) min 23904 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=36 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=36 L=64 S=38 (try 1): 36 workers, objects 0..2303, pinned to CPUs 0..35; S fixed before the run
+RUN cft64 W=36 L=64 S=38 (try 1): wall 85.71 s, objsec 1313280.0, X 15321.624 obj-s/s, foreign load 0.084%, mean clock 2799 MHz (86 samples a CPU), loadavg before: 31.81 25.34 24.92 1/1138 2847545
+    workers 36, peak resident kB (own report) min 23904 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=36 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=36 L=64 S=38 (try 1): 36 workers, objects 0..2303, pinned to CPUs 0..35; S fixed before the run
+RUN cft64 W=36 L=64 S=38 (try 1): wall 85.64 s, objsec 1313280.0, X 15334.922 obj-s/s, foreign load 0.066%, mean clock 2799 MHz (86 samples a CPU), loadavg before: 35.02 28.00 25.90 1/1146 2847990
+    workers 36, peak resident kB (own report) min 24192 max 24480; final_states_sha256 of worker 0: 2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d
+    validity: VALID
+PASS D cft64 W=36 L=64: worker 0's final-state SHA-256 equals the first run's (2a8528407ab94f9cede3b3826d95e6ad28fbc98a0868a38159476f424b74cf2d)
+# about to run cft64 W=36 L=8 S=301 (try 1): 36 workers, objects 0..287, pinned to CPUs 0..35; S fixed before the run
+RUN cft64 W=36 L=8 S=301 (try 1): wall 89.36 s, objsec 1300320.0, X 14551.053 obj-s/s, foreign load 0.082%, mean clock 2795 MHz (90 samples a CPU), loadavg before: 35.76 29.99 26.79 1/1146 2848352
+    workers 36, peak resident kB (own report) min 23904 max 24192; final_states_sha256 of worker 0: 11b5be490c62c0f4411c7d8f5f138bd31678c483374ced3b1151f956310083cb
+    validity: VALID
+# about to run cft64 W=36 L=256 S=10 (try 1): 36 workers, objects 0..9215, pinned to CPUs 0..35; S fixed before the run
+RUN cft64 W=36 L=256 S=10 (try 1): wall 89.76 s, objsec 1382400.0, X 15400.255 obj-s/s, foreign load 0.062%, mean clock 2800 MHz (90 samples a CPU), loadavg before: 36.00 31.58 27.65 1/1145 2848798
+    workers 36, peak resident kB (own report) min 25344 max 25344; final_states_sha256 of worker 0: 5f3110766332f0a028409b481e8892748ed9c8f174400e6712fa77e7a1e9102c
+    validity: VALID
+# FIGURES (X = object-seconds summed over the workers / wall time from the first release to the last end; a ratio divides X, a rate)
+FIG cft32 W=1 L=64: X 1505.851 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 1.000
+FIG cft32 W=9 L=64: X 10583.078 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.781
+FIG cft32 W=18 L=64: X 21110.512 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.779
+FIG cft32 W=36 L=64: X 19828.392 (n=3 valid); parallel efficiency X(W)/(W x X(1)) 0.366
+FIG cft32 hyperthreads: X(36)/X(18) = 0.939 (L=64, medians)
+FIG cft32 W=36 L=8: X 18764.025 (n=1 valid)
+FIG cft32 W=36 L=64: X 19828.392 (n=3 valid)
+FIG cft32 W=36 L=256: X 19973.537 (n=1 valid)
+FIG cft32 spread of the W=36 L=64 repeats: largest/smallest = 1.0004 over 3 valid runs (one after another; says nothing of a later window)
+CAPACITY cft32: real-time capacity (W=36, L=64, median of 3 valid repeats) = 19828.4 objects at real time (a throughput figure; above the 2304 objects the run carried it is an extrapolation of the run's cost per object)
+# cft32: the fastest valid configuration X 21110.512 (reported beside the capacity, never in its place)
+FIG cft64 W=1 L=64: X 1137.090 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 1.000
+FIG cft64 W=2 L=64: X 2179.528 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.958
+FIG cft64 W=4 L=64: X 4009.162 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.881
+FIG cft64 W=9 L=64: X 7996.705 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.781
+FIG cft64 W=18 L=64: X 15928.503 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.778
+FIG cft64 W=27 L=64: X 11508.893 (n=1 valid); parallel efficiency X(W)/(W x X(1)) 0.375
+FIG cft64 W=36 L=64: X 15321.624 (n=3 valid); parallel efficiency X(W)/(W x X(1)) 0.374
+FIG cft64 hyperthreads: X(36)/X(18) = 0.962 (L=64, medians)
+FIG cft64 W=36 L=8: X 14551.053 (n=1 valid)
+FIG cft64 W=36 L=64: X 15321.624 (n=3 valid)
+FIG cft64 W=36 L=256: X 15400.255 (n=1 valid)
+FIG cft64 spread of the W=36 L=64 repeats: largest/smallest = 1.0024 over 3 valid runs (one after another; says nothing of a later window)
+CAPACITY cft64: real-time capacity (W=36, L=64, median of 3 valid repeats) = 15321.6 objects at real time (a throughput figure; above the 2304 objects the run carried it is an extrapolation of the run's cost per object)
+# cft64: the fastest valid configuration X 15928.503 (reported beside the capacity, never in its place)
+# runs: 19, valid 19, void 0
+# per-run aggregates written to logs/g_sweep.002.runs.json, sha256 6c37d0a5c0a764db48ef206f1cd0d031301912933c35712a3c653ff02f6e46ed
+# PASS 

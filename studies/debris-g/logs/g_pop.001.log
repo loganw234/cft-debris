@@ -1,0 +1,21 @@
+# g_pop.py, log 001; script sha256 544d92489b48002606f8f6804c3ddc44a1825fa15cbb3a22faf4a93a7fd718ba
+# fixed before the data: E 2026-11-02T00:00:00 TDB label, jd_epoch 2461329.5, t0 1468800.0 s, seed 20261117, GM 398600441500000.0, perigee screen 200000 m, bc 0.01, cram 0.01, replica 137.50776405 deg
+# input gp-stations-S0.csv sha256 bfdf8f60f932ae11247c0dd31d361d3f1a3c11cf8505aebedede9b4c08808906
+# gp-stations-S0: 17 rows
+# input gp-fengyun-1c-debris-S0.csv sha256 cabf9ba46a14446ebde737dce4e9d4f9e3930dfb19e428d95c9772029a2df5e2
+# gp-fengyun-1c-debris-S0: 1989 rows
+# input gp-iridium-33-debris-S0.csv sha256 4e794306dd4bd9cc2f9ecd595ac5f55dc82b6083d0cd7b7648b7247b6b499a17
+# gp-iridium-33-debris-S0: 109 rows
+# input gp-cosmos-2251-debris-S0.csv sha256 253e32e87b0be45c2639a8d615808e05093337d395c56bb03da54e4317318f34
+# gp-cosmos-2251-debris-S0: 581 rows
+# rows read: 2696, all ephemeris type 0 (P-a)
+# element sets (rows equal on the key, as parsed): 2686; rows dropped as duplicates: 10
+PASS P-b the kept sets are distinct on the key and every row maps to one
+# excluded by the 200 km perigee screen: 0; kept base objects: 2686; smallest kept perigee 270.1 km
+PASS P-c Kepler's equation solved, largest last correction 9.74e-16
+PASS P-d radius vs a(1 - e cos E): 4.05e-16; vis-viva: 1.37e-15 (limit 1e-9)
+PASS P-f the radius test flags a planted 1e-6 relative error (it can fail)
+PASS P-e permutation of 2686 base objects, file of 10744 lines (4 x base)
+# population file: 2272208 bytes, sha256 016f380e74ad4c090add550ad59d52229f4b6b1214e403fb6ac77a7aea6f5428 (the file is in the ledger's debris-g folder, not here)
+# line format: index replica catalogue t0 x y z vx vy vz bc cram, binary64 as hex floats
+# PASS

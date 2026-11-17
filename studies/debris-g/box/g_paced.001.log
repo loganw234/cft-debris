@@ -1,0 +1,100 @@
+# g_paced, log 001, written 2026-11-17 11:06:03 -0700
+# script g_harness.py sha256 52284f71e5093e9e296b77ca5e9fddba2506d4c9df17ceae37381bc159269a6d
+# driver m1g sha256 57c98729034cf51af51bc59c78521c92c5ec7a7b7bcfd8629ef0be2c57e4599f
+# host amd-arc-box, Linux 6.8.0-139-generic x86_64
+# cpu Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz, 36 logical; governor schedutil, driver intel_cpufreq, max 3600000 kHz; python 3.12.3
+# /proc/loadavg at start: 27.69 31.62 29.87 2/1028 2854147
+# CRITERIA (stated in the script before its data; asserted below):
+#   Every criterion is fixed here, before any data, and asserted in code. The NaN rule holds throughout: non-NaN results
+#   agree bit for bit, and NaN results agree as NaNs.
+#   BUILD (mode build):
+#    B1 every file in in/EXPECTED.sha256 has its listed SHA-256 (the 18 files of src/ as commit 1646c96 holds them, the
+#       sources of this round, this script, the libcft archive and the inputs), each hash printed;
+#    B2 gcc -dumpmachine prints the platform's triple (x86_64-linux-gnu on the box, x86_64-w64-mingw32 on the desktop);
+#    B3 libcft.a builds from in/cft-fp256-0aa997a3.tar, one job;
+#    B4 M1 and the round's programs build at build_f.sh's O2 flags (-std=c11 -O2 -ffp-contract=off -Wall -Wextra; -mfma for
+#       the native kinds), every compile and link succeeding;
+#    B5 every native object holds at least one vfmadd and no undefined fma, fmaf, sqrt or sqrtf;
+#    B6 the clock loop's disassembly is kept in the log and holds at least 8 dependent adds and a store;
+#    C1 (control) a copy of one source with one byte changed must FAIL the source check of B1.
+#   LINUX PRE-CHECK (before anything is pinned): this process's affinity is CPUs 0 to 35; for every c from 0 to 17,
+#    cpu c's thread_siblings_list is {c, c+18} and cpu c+18's is the same set.
+#   G1 smoke: every kind-mode, 4 lanes, 2 steps, one worker: exit 0, end checks pass, 4 states of the right size.
+#   G1 calibration (box): the loop's implied clock (additions / wall) beside the kernel's scaling_cur_freq reading, at 1 and
+#    at 36 busy workers; if they differ by more than 5% the clock is given as the kernel's reading only.
+#   G1 controls, each of which must FAIL as specified (the harness asserts it), exempt from G4's repeat rule:
+#    C1 above; C2 (box) W=9, a busy loop pinned to CPU 35 for the whole run: void on foreign load; C3 (box) W=2, both
+#    workers on CPU 0: void on the CPU share; C4 the planted early clock: void on the start time; C5 a paced run of
+#    native64-cr, 1 worker, 64 lanes at 1,000 times real time: the lag criterion fails, within 120 s.
+#   G2 (box): the first 64 objects, 40 steps, at every kind-mode, under Q1 (1 worker, 1 batch of 64), Q2 (8 workers of 8,
+#    object i in worker i mod 8), Q3 (36 workers, round-robin, 1 or 2 lanes), Q4 (1 worker, 64 batches of 1), Q5 (1 worker, 64
+#    lanes in reverse order). PASS: every object's final state equals Q1's, bit for bit, in Q2 to Q5. CONTROL: Q1 with object
+#    23's initial x moved by one ulp of the kind's input format: exactly object 23's final state differs, no other.
+#   G3: the first 16 objects, 240 steps, every kind-mode, one worker, one batch of 16. The inputs' SHA-256 first (the
+#    population, the frame table, the gfc, DE421 and its header, and each driver's hash of the values it parsed) must be
+#    equal on the two machines. PASS: cft32, cft64, cft128, cft256, native32-cr and native64-cr equal bit for bit across the
+#    two machines; on each machine native64-cr equals cft64 and native32-cr equals cft32 bit for bit. NO pass condition for
+#    native32 and native64 with the C library: the count of objects that differ, and the largest position difference.
+#    CONTROL: the comparison on a copy of one machine's output with one bit flipped in one object's state flags exactly that
+#    object.
+#   G4 (sweep): the validity criteria below; the configurations, S and the statistics are in this script (see CFG, FIG).
+#    A run is valid only if: V1 every worker exits 0 and its end checks pass; V2 every worker read its release byte within 50
+#    ms of the harness's release and no worker's timed region began before the release (start time); V3 each worker used under
+#    10 ms of CPU between READY and its release, and CPU for at least 95% of its timed wall time (cpu share); V4 each ran on
+#    its own CPU: affinity that CPU alone, on it at its start and at its end (pinning); V5 the foreign load is at most 2%
+#    (foreign load); V6 the wall time is at least 20 s. A run failing V5 alone is repeated once; failing again, it is void.
+#    Worker 0's slice's final-state SHA-256 is equal across all L=64 runs of a kind-mode (check D).
+#   G5 (paced): decision 4's rule, asserted from G4's capacities; the population's base objects; 36 workers; real time; 20
+#    minutes. PASS: every worker's lag at most 15 s at every step; every worker exits 0; end checks pass; V2, V4, V5 and V6
+#    hold (V3's 95% share does not apply: a paced worker sleeps when ahead).
+PASS the sources still match in/EXPECTED.sha256 (27 files, 0 mismatched)
+PASS pre-check: this process's affinity is CPUs 0 to 35 ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35])
+PASS pre-check: for every c in 0..17, cpu c and cpu c+18 are siblings (36 of 36 CPUs as expected)
+# G4 figures read from logs/g_sweep.001.runs.json, sha256 118740303da33fda2f23ba2c1310096647fe5ed74cdc0cdb84dd192dc6937628
+# G4 figures read from logs/g_sweep.002.runs.json, sha256 6c37d0a5c0a764db48ef206f1cd0d031301912933c35712a3c653ff02f6e46ed
+# G4 figures read from logs/g_sweep.003.runs.json, sha256 94cc8bcc268295f85e4b6bb0d411d8e6a26f398216393bc09b2356cb35d7cc5b
+# G5 under decision 4: base objects N = 2686; G4's capacities (W=36, L=64, median of valid repeats): {'cft256': 4332.398480371597, 'cft128': 9563.818202018829, 'cft64': 15321.623670069974}
+PASS the kind-mode given (cft256) is the one the rule chooses (cft256)
+# G5: cft256, 36 workers, 75 lanes each and 61 on the last, real time, 80 steps (20.0 minutes); booking B0107
+RUN G5 cft256: wall 1200.00 s, objsec 3223200.0, X 2685.998 obj-s/s, foreign load 0.064%, mean clock 2455 MHz (1197 samples a CPU), loadavg before: 27.69 31.62 29.87 1/1136 2854255
+    workers 36, peak resident kB (own report) min 28512 max 28800; final_states_sha256 of worker 0: e75853fe8b66b8463894bc30d81af2df335a28afdd2e94bb2fd02e9d69d8fd2d
+    worker 0 lag: median -5.719 s, p99 -5.591 s, max -5.591 s over 80 steps
+    worker 1 lag: median -5.730 s, p99 -5.584 s, max -5.584 s over 80 steps
+    worker 2 lag: median -5.706 s, p99 -5.634 s, max -5.634 s over 80 steps
+    worker 3 lag: median -5.772 s, p99 -5.667 s, max -5.667 s over 80 steps
+    worker 4 lag: median -5.739 s, p99 -5.662 s, max -5.662 s over 80 steps
+    worker 5 lag: median -5.790 s, p99 -5.710 s, max -5.710 s over 80 steps
+    worker 6 lag: median -5.717 s, p99 -5.659 s, max -5.659 s over 80 steps
+    worker 7 lag: median -5.721 s, p99 -5.656 s, max -5.656 s over 80 steps
+    worker 8 lag: median -5.762 s, p99 -5.622 s, max -5.622 s over 80 steps
+    worker 9 lag: median -5.710 s, p99 -5.643 s, max -5.643 s over 80 steps
+    worker 10 lag: median -5.765 s, p99 -5.692 s, max -5.692 s over 80 steps
+    worker 11 lag: median -5.744 s, p99 -5.644 s, max -5.644 s over 80 steps
+    worker 12 lag: median -5.711 s, p99 -5.647 s, max -5.647 s over 80 steps
+    worker 13 lag: median -5.773 s, p99 -5.637 s, max -5.637 s over 80 steps
+    worker 14 lag: median -5.793 s, p99 -5.716 s, max -5.716 s over 80 steps
+    worker 15 lag: median -5.768 s, p99 -5.700 s, max -5.700 s over 80 steps
+    worker 16 lag: median -5.669 s, p99 -5.618 s, max -5.618 s over 80 steps
+    worker 17 lag: median -6.521 s, p99 -6.370 s, max -6.370 s over 80 steps
+    worker 18 lag: median -5.721 s, p99 -5.597 s, max -5.597 s over 80 steps
+    worker 19 lag: median -5.702 s, p99 -5.595 s, max -5.595 s over 80 steps
+    worker 20 lag: median -5.695 s, p99 -5.651 s, max -5.651 s over 80 steps
+    worker 21 lag: median -5.810 s, p99 -5.750 s, max -5.750 s over 80 steps
+    worker 22 lag: median -5.759 s, p99 -5.699 s, max -5.699 s over 80 steps
+    worker 23 lag: median -5.752 s, p99 -5.688 s, max -5.688 s over 80 steps
+    worker 24 lag: median -5.731 s, p99 -5.653 s, max -5.653 s over 80 steps
+    worker 25 lag: median -5.700 s, p99 -5.658 s, max -5.658 s over 80 steps
+    worker 26 lag: median -5.787 s, p99 -5.661 s, max -5.661 s over 80 steps
+    worker 27 lag: median -5.689 s, p99 -5.636 s, max -5.636 s over 80 steps
+    worker 28 lag: median -5.733 s, p99 -5.696 s, max -5.696 s over 80 steps
+    worker 29 lag: median -5.713 s, p99 -5.646 s, max -5.646 s over 80 steps
+    worker 30 lag: median -5.711 s, p99 -5.663 s, max -5.663 s over 80 steps
+    worker 31 lag: median -5.697 s, p99 -5.619 s, max -5.619 s over 80 steps
+    worker 32 lag: median -5.791 s, p99 -5.745 s, max -5.745 s over 80 steps
+    worker 33 lag: median -5.786 s, p99 -5.701 s, max -5.701 s over 80 steps
+    worker 34 lag: median -5.706 s, p99 -5.618 s, max -5.618 s over 80 steps
+    worker 35 lag: median -7.399 s, p99 -7.270 s, max -7.270 s over 80 steps
+REPORT G5: busy share of wall time per worker: mean 0.613, min 0.506, max 0.622; mean clock 2455 MHz; kind-mode cft256; N 2686
+PASS G5 lag criterion: every worker's lag at most 15 s at every step (worst -5.584 s)
+PASS G5 validity (V1, V2, V4, V5, V6; not V3's share): failed criteria []
+# PASS 

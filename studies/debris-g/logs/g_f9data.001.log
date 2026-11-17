@@ -1,0 +1,5 @@
+# g_f9data.py sha256 2321e3dfeb6d04d296e347a81965fef4a3b6d69964de5b817b9ceb7d457c38d0; driver m1g.exe sha256 9c2e24394c69aad0316c387ba8286b8e6a7340b77ccef4c1ea66b69ed96c5d08; desktop, shared with another session's booking, W=1; functional only
+# g_f9data: per-step process CPU (cycles/2.5e9; desktop, functional; read only as a ratio)
+RESULT native64-cr: population 0.1715, 0.1757 s/step; LANES8 0.1568, 0.1563 s/step; ratio population/LANES8 1.0940, 1.1241 (steps 20)
+RESULT cft64: population 0.5151, 0.5989 s/step; LANES8 0.4755, 0.4767 s/step; ratio population/LANES8 1.0834, 1.2565 (steps 3)
+RESULT cft256: population 2.4523, 2.3946 s/step; LANES8 2.1386, 2.1339 s/step; ratio population/LANES8 1.1467, 1.1222 (steps 2)
