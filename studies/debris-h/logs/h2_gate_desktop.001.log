@@ -1,0 +1,53 @@
+# h2_gate_desktop, log 001, written 2026-11-18 08:34:12 -0700
+# script h2_gate.py sha256 396d2a755716084edb5f45e53dd9fc9ddb441127d9a0a21b20d02d7c22c3e6af
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_service.py sha256 3da83e64b513d4802c9df325d9293c0f7ab51d57d39274899894586ba9071b1a
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   H2 (DEBRIS-H's brief), at the size given: box - the test seed's first 16 objects, 120 steps from T_s, checkpoints
+#   every 40, the kill after step 57, the pause after step 50, R2 with 4 workers; desktop (a functional test) - 4 objects,
+#   12 steps, checkpoints every 4, the kill after step 6, the pause after step 6, R2 with 2 workers. Each kind runs in its own
+#   service (on the desktop the gate, the supervisor and its workers stay within 4 processes; and one PAUSE file serves a run). Every run is tests/h_service.py
+#   with the clock map in the past (every step due at once), cft256 and native64 tracks from seed1.txt, the fetcher off.
+#     R0 unbroken, one worker a kind;
+#     R1 the worker killed by SIGKILL right after the fixed step (between the first and second checkpoints; the driver's
+#        --test-kill-after delivers it to itself, since a native64 worker passes the run in well under a second), and
+#        restarted by the supervisor from the first checkpoint;
+#     R2 run to the second checkpoint and ended (start --stop-at), then restarted from it with more workers (start --workers);
+#     R3 paused for 30 s after the fixed step (the gate's PAUSE file, created before the start and honoured from the step
+#        after the fixed one, --test-pause-from; the gate removes it 30 s after the worker logs the pause), then resumed.
+#   CRITERION: the checkpoints at 1, 2 and 3 intervals (40, 80 and 120 on the box) are bit-identical across R0 to R3, at
+#     each kind: every object's state in the kind's bytes, as binary64, its decay mark, bc and cram (the NaN rule); and R1's
+#     supervisor restarted from the first checkpoint, R2's from the second with the larger worker count.
+#   CONTROLS, each must fail as specified:
+#     C2 a copy of R2's run folder after its first half, with one byte of the cft256 track's second checkpoint changed:
+#        the supervisor refuses that file by its hash and starts that track from the first checkpoint, never the second;
+#     C3 a restart planted one step off - checkpoint 1's states given as step (1 interval + 1), run to 3 intervals by
+#        tests/m1h.c directly - must give a checkpoint at 3 intervals whose bytes differ from R0's for every object;
+#     C4 R3's pause must appear in its step log as a pause record of 25 to 45 s between the fixed step and the next, and
+#        as lag: lag(next) - lag(fixed) + 15 s - compute(next) >= 25 s.
+# build/m1h.exe sha256 27da74fc91413d408ac93d8e080f8427a939866bbc81c126a3e8ceb81294621f
+# in/testseed/seed1.txt sha256 cba8a10af3a6702a2318a3f464794c705886d4b4fb1a1810986c7459cceb0034
+# in/frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# the sub-seed: 4 objects, sha256 45a1a4bccb78b7ec2c08b4230d888a2edbf7545027971a947524588f133dffe0
+PASS R0 cft256: the service ran to its end (exit 0)
+PASS R1 H2c: the worker killed after step 6 exited abnormally (137) and the supervisor restarted it from checkpoint 4
+PASS R1 H2c: the killed worker's last step was 6 (fixed: 6, between 5 and 7)
+PASS R2 cft256: the first half ran to checkpoint 8
+PASS R2 H2c: restarted from checkpoint 8 with 2 workers
+PASS C2 the changed checkpoint 8 of H2c is refused by its hash and the track starts from checkpoint 4 - failed as specified
+PASS C4 R3 H2c: the pause is in the step log between steps 6 and 7 (35.1 s), and as lag (35.1 s added beyond the step) - as specified
+PASS H2 H2c (cft256): checkpoints 4, 8 and 12 bit-identical across R0, R1, R2 and R3 for all 4 objects
+# ran (1.78 s wall, exit 0): m1h.exe run --kind cft256 --table in/frame_h0.bin --track H2c --run h2\gate.001\C3_H2c --first 0 --count 4
+PASS C3 H2c: the restart planted one step off gives checkpoint 12 different from R0's for 4 of 4 objects - failed as specified
+PASS R0 native64: the service ran to its end (exit 0)
+PASS R1 H2n: the worker killed after step 6 exited abnormally (137) and the supervisor restarted it from checkpoint 4
+PASS R1 H2n: the killed worker's last step was 6 (fixed: 6, between 5 and 7)
+PASS R2 native64: the first half ran to checkpoint 8
+PASS R2 H2n: restarted from checkpoint 8 with 2 workers
+PASS C4 R3 H2n: the pause is in the step log between steps 6 and 7 (35.1 s), and as lag (35.1 s added beyond the step) - as specified
+PASS H2 H2n (native64): checkpoints 4, 8 and 12 bit-identical across R0, R1, R2 and R3 for all 4 objects
+# ran (0.19 s wall, exit 0): m1h.exe run --kind native64 --table in/frame_h0.bin --track H2n --run h2\gate.001\C3_H2n --first 0 --count 4
+PASS C3 H2n: the restart planted one step off gives checkpoint 12 different from R0's for 4 of 4 objects - failed as specified
+# CPU: 23.13 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

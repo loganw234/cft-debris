@@ -1,0 +1,6 @@
+h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0; slot 12; live mode
+kept stations: 17 rows, 2808 bytes (915 on the wire, gzip), sha256 f85129e5b312f6156b4eef78ebde057af0ba97f15363309f09ad13f5e7a27844 FINDING equal to the previous body
+kept fengyun-1c-debris: 1992 rows, 303204 bytes (114574 on the wire, gzip), sha256 84f44343fc45717a892a1db8972b67d613f75486beb1154a086dc7ea04c9dbb9 FINDING equal to the previous body
+kept iridium-33-debris: 109 rows, 16937 bytes (6716 on the wire, gzip), sha256 1b98372909a5c0513b121fbd8c6f3902288b16700953b11e68615912baebf807 FINDING equal to the previous body
+slot ended: no response for cosmos-2251-debris (URLError: _ssl.c:983: The handshake operation timed out)
+slot 12: noresponse (exit 4)

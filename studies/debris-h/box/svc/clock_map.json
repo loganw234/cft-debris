@@ -1,0 +1,7 @@
+{
+ "unix_ref": 1795042130.8171728,
+ "t_ref": 2933400.0,
+ "rule": "real: the UTC of T_s (tai-utc.dat and eq. 2.6)",
+ "tdb_minus_utc_at_ts": 69.18282717257033,
+ "made": 1795040602.147106
+}

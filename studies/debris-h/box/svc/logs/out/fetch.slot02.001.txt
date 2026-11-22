@@ -1,0 +1,6 @@
+h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0; slot 2; live mode
+kept stations: 17 rows, 2806 bytes (979 on the wire, gzip), sha256 6571b29a790a6b1e34ab4cdfd3df0117580a11b130493a4ea7d9700e02ea8a56 FINDING equal to the previous body
+kept fengyun-1c-debris: 1992 rows, 301699 bytes (113651 on the wire, gzip), sha256 1a3ef0c52de0854f369f250a31568c39996309eca1d693b830aba5114ba48f6c FINDING equal to the previous body
+kept iridium-33-debris: 109 rows, 16855 bytes (6688 on the wire, gzip), sha256 28ff6a453039400d62fb1ff8e2af78ea9e5e830f4ef9ad8d340b521a836c69f4 FINDING equal to the previous body
+kept cosmos-2251-debris: 583 rows, 89848 bytes (89848 on the wire, none), sha256 feafcb84a2c2a18f8b2487a85e0435030ba886c799127718c305002873f2bf51 FINDING equal to the previous body
+slot 2: ok (exit 0)

@@ -1,0 +1,37 @@
+# h_itest, log 001, written 2026-11-18 08:46:31 -0700
+# script h_itest.py sha256 a5317b360feb3d012771097a4ee59f152854c9c8ff38da9fe3829f0c6c9bfcca
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_service.py sha256 3da83e64b513d4802c9df325d9293c0f7ab51d57d39274899894586ba9071b1a
+# h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0
+# h_check.py sha256 3a9d41ed8a08739e334b03ccff46f77a8f3d46ec94d4bab5d5c27451bba88688
+# h_seed.py sha256 008027abb9afad53b23dc11054e81bcbca04345f9823488638ae2ffc8d414630
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   A FUNCTIONAL TEST (no gate): the supervisor, with the fetcher in test mode against this script's server on 127.0.0.1
+#   and the check on, runs slot 1 (due at the start) on a seed of 10 objects at T_s 2026-11-16 06:00 TDB, a native64
+#   track (A64 from seed 1), 1,680 steps with the clock map such that the end step is due 20 s after
+#   the start (one track, A64, so that this script, the supervisor, its worker and the fetcher stay within the desktop's
+#   4 processes; the check handles the tracks it finds). Expected: slot 1's four bodies kept; the check run for slot 1 with T1 and T3 passing; the per-object table
+#   listing every eligible object as checked; the counts naming the objects whose S1 set is not later than their seed's.
+# objects: 8 with later S1 sets after T_s, 2 with equal rows
+# ran (27.20 s wall, exit 0): python.exe -I -B ..\..\..\..\cft-debris\tests\h_seed.py fit --seed 1 --gp in/gp --tag S0 --ts 2026-11-16T06:00:00 --table
+# ran (13.58 s wall, exit 0): python.exe -I -B ..\..\..\..\cft-debris\tests\h_seed.py fit --seed 2 --gp in/gp --tag S0 --ts 2026-11-16T06:00:00 --table
+# ran (0.25 s wall, exit 0): python.exe -I -B ..\..\..\..\cft-debris\tests\h_seed.py combine --fit1 itest\run.001\seed\fit1.001.tsv --fit2 itest\run.001\seed\fit2.001.tsv --out itest\run.001\seed --logs itest\run.001\logs
+# ran (0.19 s wall, exit 0): python.exe -I -B ..\..\..\..\cft-debris\tests\h_service.py init . itest\run.001\svc --track A64:native64:itest\run.001\seed\seed1.txt:1 --kend 1680 --clock launch:-25180 --fetch
+# ran (33.45 s wall, exit 0): python.exe -I -B ..\..\..\..\cft-debris\tests\h_service.py start . itest\run.001\svc
+# the service ran 33.5 s, exit 0; the server saw 4 requests
+PASS slot 1 fetched: [['1', 'ok', '4', '', '1795016833.528', '1795016863.563']]
+PASS the check of slot 1 ran, T1 and T3 passing
+#   check: # counts: {'absent': 0, 'not_later': 2, 'before_ts': 0, 'decayed': 0, 'no_checkpoint': 0, 'hash_refused': 0, 'eligible': 8}; new sets of objects the seed does not hold: 2686
+#   check: MEASURED slot 1 A256 all: n 0
+#   check: MEASURED slot 1 A256 without flagged fits: n 0
+#   check: MEASURED slot 1 A64 all: n 8, median 0.775 km, 90th 1.125 km; parts' medians |R| 0.067 |A| 0.766 |C| 0.073 km
+#   check: MEASURED slot 1 A64 without flagged fits: n 6, median 0.775 km, 90th 1.125 km; parts' medians |R| 0.067 |A| 0.766 |C| 0.073 km
+#   check: MEASURED slot 1 A64f all: n 0
+#   check: MEASURED slot 1 A64f without flagged fits: n 0
+#   check: MEASURED slot 1 B all: n 8, median 0.053 km, 90th 0.410 km; parts' medians |R| 0.014 |A| 0.049 |C| 0.013 km
+#   check: MEASURED slot 1 B without flagged fits: n 6, median 0.036 km, 90th 0.410 km; parts' medians |R| 0.017 |A| 0.026 |C| 0.017 km
+PASS the per-object table: 8 rows, 8 checked
+PASS the supervisor ran the fetcher, then the check, then ended
+# CPU: 49.52 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

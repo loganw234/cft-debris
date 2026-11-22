@@ -1,0 +1,54 @@
+# h3_gate, log 001, written 2026-11-18 08:37:16 -0700
+# script h3_gate.py sha256 5883fe8055030c848599ff7416937c1424aa0b4445799c543873e3ea03eaf4ba
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0
+# h3_server.py sha256 65eb863673f73f6b00a7bfe44ed4c6454316e5f16d15676386c0a31b57ce6f84
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   H3, the fetcher (tests/h_fetch.py) against tests/h3_server.py on 127.0.0.1, each scenario with a new fetch folder:
+#   A  two slots of planted 200s, two of the four bodies gzip-compressed and two not in each: one request per file per
+#      slot, in the groups' order, each at least 10 s after the previous one started (9.9 s allowed for the server's
+#      clock); every request sends Accept-Encoding: gzip and the fixed User-Agent; every body is stored decompressed, its
+#      SHA-256 equal to the planted CSV's, with both sizes in the request log (the wire size smaller for a gzip body); a
+#      second run of slot 1 is refused with no request, and the stored files are unchanged (no file overwritten). In slot
+#      2, a CSV with a tenth of the previous body's rows is kept and logged as a finding and does not stop the fetcher,
+#      and a body equal to the previous one is logged as a finding.
+#   CONTROLS, each from a planted response, each must fail as specified (asserted):
+#    C6  a 301 for the second request stops the fetcher: STOP written, the slot recorded as stopped, and the server's log
+#        shows no request after it;
+#    C7  a 503 does the same;
+#    C8  a 200 whose body is an HTML page does the same, and the rejected body is archived with its SHA-256;
+#    C9  a response delayed past the 60 s timeout ends its slot only (no STOP); a second such slot in a row writes STOP;
+#    C10 a slot after a stop makes no request (C6, C7, C8 and C9 each try one);
+#    C11 test mode refuses a base URL on any host but 127.0.0.1, and live mode refuses any host but celestrak.org, both
+#        without a request (the CLI's exit and an in-process run whose opener records every call); and live mode makes no
+#        request in a slot whose time has not come.
+# A: slot 1 exit 0, slot 2 exit 0; the server saw 8 requests
+PASS A one request per file per slot, in the groups' order: ['stations', 'fengyun-1c-debris', 'iridium-33-debris', 'cosmos-2251-debris', 'stations', 'fengyun-1c-debris', 'iridium-33-debris', 'cosmos-2251-debris']
+PASS A within a slot each request at least 10 s after the previous (smallest gap 9.99 s)
+PASS A every request sent Accept-Encoding: gzip
+PASS A every request sent the fixed User-Agent (cft-debris-research-client/1.1 (low-volume: four CSV files every 3 hours))
+PASS A each body stored decompressed, its SHA-256 equal to the planted CSV's, with both sizes (the wire size smaller for gzip)
+PASS A slot 2's CSV with a tenth of the rows is kept, logged as a finding (FINDING 10 rows, under half the previous body's 109), and the fetcher goes on
+PASS A slot 2's body equal to the previous one is logged as a finding
+PASS A a second run of slot 1 is refused with no request, and no file is overwritten
+PASS C6 the planted 301 stops the fetcher: STOP written, the slot stopped, 2 request(s) and none after it - failed as specified
+PASS C10 (C6) the slot after the stop makes no request (exit 3)
+PASS C7 the planted 503 stops the fetcher: STOP written, the slot stopped, 1 request(s) and none after it - failed as specified
+PASS C10 (C7) the slot after the stop makes no request (exit 3)
+PASS C8 the planted HTML 200 stops the fetcher: STOP written, the slot stopped, 1 request(s) and none after it; the rejected body archived with its SHA-256 - failed as specified
+PASS C10 (C8) the slot after the stop makes no request (exit 3)
+# C9: slot 1 ended after 60.4 s (exit 4), slot 2 after 60.3 s (exit 2)
+PASS C9 a response delayed past the 60 s timeout ends slot 1 only (no STOP)
+PASS C9 a second such slot in a row writes STOP - as specified
+PASS C10 (C9) the slot after the stop makes no request
+PASS C11 test mode refuses a base URL off 127.0.0.1 without a request (exit 3)
+PASS C11 live mode refuses https://example.org/NORAD/elements/gp.php without a request
+PASS C11 live mode refuses http://celestrak.org/NORAD/elements/gp.php without a request
+PASS C11 live mode refuses https://celestrak.org.example.org/x without a request
+PASS C11 live mode refuses http://127.0.0.1:1/NORAD/elements/gp.php without a request
+PASS C11 live mode accepts its own fixed URL (https://celestrak.org/NORAD/elements/gp.php)
+PASS C11 live mode makes no request in a slot whose time has not come
+# the scenarios' fetch folders and the server's request logs: h3/gate.001 (scratch)
+# CPU: 6.25 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

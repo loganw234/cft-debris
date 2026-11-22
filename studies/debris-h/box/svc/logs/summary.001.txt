@@ -1,0 +1,7 @@
+# h_service summary, 2026-11-21 15:56:25 -0700; log service.001.log
+track A256 kind cft256 state done workers 18 restarts 0 last_step 17280 last_lag_s 454.041053 checkpoints 433 latest 17280
+track A64 kind native64 state done workers 1 restarts 0 last_step 17280 last_lag_s -59.921636 checkpoints 433 latest 17280
+track A64f kind native64 state done workers 1 restarts 0 last_step 17280 last_lag_s -59.919279 checkpoints 433 latest 17280
+fetch: last {'slot': 20, 'code': 2, 'result': {'status': 'stopped', 'bodies': 1, 'note': 'HTTP 500 for fengyun-1c-debris'}, 'time': 1795255221.6887681}; stopped True
+check: last {'slot': 19, 'code': 0, 'time': 1795244498.9596052}
+manifest: 8660 files

@@ -1,0 +1,6 @@
+h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0; slot 16; live mode
+kept stations: 17 rows, 2815 bytes (927 on the wire, gzip), sha256 01bebf4fd6cebedfac192264b7edecc2c7c001ecb84144ba15425db7c7307603 
+kept fengyun-1c-debris: 1991 rows, 304630 bytes (115345 on the wire, gzip), sha256 7a330b89b7d919436818c23950a4c2dd2624fa811fd3dd88eadbd11c2b9c16d9 
+kept iridium-33-debris: 109 rows, 16966 bytes (6754 on the wire, gzip), sha256 31381fab61724d4ec4763ee2d237e4b4815ae5624e917da05961e7664860992e 
+slot ended: no response for cosmos-2251-debris (TimeoutError: The read operation timed out); STOP
+slot 16: noresponse (exit 2)

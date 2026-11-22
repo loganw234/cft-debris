@@ -1,0 +1,155 @@
+# h_build, log 001, written 2026-11-18 11:55:55 -0700
+# script h_build.py sha256 ec39f7c79e3b608872a4e59eb299165e03b67d4d29d551110b6011cd46313b00
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   Every criterion is fixed here, before any data, and asserted in code; the script stops at the first failure of B1 to B5.
+#   B1 every file in in/EXPECTED.sha256 has its listed SHA-256, each printed; and in/src/ holds exactly the 18 files of
+#      src/ with the SHA-256 that commit 1646c96 gives them (listed in this script), so src/ is byte-identical to 1646c96;
+#   C1 (control) a copy of one source with one byte changed must FAIL the source check of B1, its untouched sibling pass;
+#   B2 gcc -dumpmachine prints the platform's triple (x86_64-linux-gnu on the box, x86_64-w64-mingw32 on the desktop);
+#   B3 libcft.a builds from in/cft-fp256-0aa997a3.tar (`make -C cft-fp256/host CC=gcc libcft.a`; on Windows with
+#      OS=Windows_NT TMP=/tmp TEMP=/tmp), one job;
+#   B4 M1, m1h.c and m1f.c build at build_f.sh's O2 flags (-std=c11 -O2 -ffp-contract=off -Wall -Wextra; -mfma for the
+#      native kinds), every compile and link succeeding; on Linux m1f.c alone adds -Ibuild/shim (the lead's
+#      tests/f9_box_windows.h as windows.h) and -D_POSIX_C_SOURCE=199309L, as tests/f9_box.py built it;
+#   B5 every native object holds at least one vfmadd and no undefined fma, fmaf, sqrt or sqrtf;
+#      the SHA-256 of every source compiled and of every program built is printed.
+#   H1 SMOKE, at cft256 and at native64, 4 lanes, 2 steps, from the test seed's objects 0 to 3 (in/testseed/seed1.txt),
+#      the clock map 10^6 s in the past: m1h run exits 0, its step log holds steps 1 and 2, and it writes checkpoints 0
+#      and 2 of 4 objects each, every state finite; m1h seg from checkpoint 0 by 2 whole steps (mode N) gives checkpoint
+#      2's bytes for all 4 objects (the NaN rule), and m1h seg from checkpoint 2 to the epoch t_2 + 7.5 s (mode E) exits
+#      0 with 4 finite states.
+# cft-fp256-0aa997a3.tar sha256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8
+# desktop/h4_decode.txt sha256 a78d569f62311a1091807e498f065a60e43edeaf4326ddd100649f16d6a75a73
+# desktop/h6_fit_f5d.tsv sha256 7884e300b5899cbed1894ef15d0c957092798c85372a333b67e7eb6067f0db4d
+# desktop/h6_fit_f6.tsv sha256 9b8ebbf1e62d4af0757ba55c2cbc811beeef00194ebe9fd111fa4fac64aa3cf4
+# desktop/h6_pairs.tsv sha256 008bad2533d3735a7565d0921b520282c866ea036531dbb1afd4377b8577e1c3
+# dl/EIGEN6-C4.gfc/EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715
+# dl/header.421/header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+# dl/lnxp1900p2053.421/lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# frame_f.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# gp/gp-cosmos-2251-debris-S0.csv sha256 253e32e87b0be45c2639a8d615808e05093337d395c56bb03da54e4317318f34
+# gp/gp-cosmos-2251-debris-S1.csv sha256 29c6578607b82119650830122211ca695b7b4091f3b54bb89be8f48d09022590
+# gp/gp-fengyun-1c-debris-S0.csv sha256 cabf9ba46a14446ebde737dce4e9d4f9e3930dfb19e428d95c9772029a2df5e2
+# gp/gp-fengyun-1c-debris-S1.csv sha256 3f6092778d026dd6b5c0bb632c40a9d19be6425c9c632724071de1d7e65329da
+# gp/gp-iridium-33-debris-S0.csv sha256 4e794306dd4bd9cc2f9ecd595ac5f55dc82b6083d0cd7b7648b7247b6b499a17
+# gp/gp-iridium-33-debris-S1.csv sha256 5bd57a2ed58e1e10238a5e75aeb4f4badbb6760e22af9ccb9d3604cc34ff70bd
+# gp/gp-stations-S0.csv sha256 bfdf8f60f932ae11247c0dd31d361d3f1a3c11cf8505aebedede9b4c08808906
+# gp/gp-stations-S1.csv sha256 9bdadd3ac3472b6dd860c753483ef1aa15ba0c2fc664ae0b4137cc67a0c68b5d
+# jars/hipparchus-core-4.0.3.jar sha256 5af54dc3c21b8d85e1264157ee91d93fa67e68c825cfb38834dc2bbb9b0f6583
+# jars/hipparchus-filtering-4.0.3.jar sha256 279eece43411f372bd8340355cb89101def0bf9b1b6824231b76181d1ec63a81
+# jars/hipparchus-fitting-4.0.3.jar sha256 3712c3b4f43d9c12bf7b7aad187764f4b3c09cc962504899d8951eb310b1e4be
+# jars/hipparchus-geometry-4.0.3.jar sha256 19594d5106ec6a46951e859e2924bfcade02a834c06c56bd3d2130a74f0fbb7e
+# jars/hipparchus-ode-4.0.3.jar sha256 75f0f0b3fdcd99d13e9c394b7ae809cce5a9c22f1c14b1b90a5109ed951467fe
+# jars/hipparchus-optim-4.0.3.jar sha256 4bc0dbb5c6d5fefda5db9d92141c6cbb807174a1d491a85df46bcc57a67b8992
+# jars/hipparchus-stat-4.0.3.jar sha256 8b066e3060dc119efcce241fb0720a3b9e59c026d0f5fe9e70abfd5e22d3817b
+# jars/orekit-13.1.9.jar sha256 a1dbec163c1119459cf79e2dfe32ff74b446f7a8d457e2d4d9761cd6cd820fbe
+# ledger/f5d_fits.001.tsv sha256 a85c98129cdd63a2e034496b9769b082b2d04b17587b36e9024a86628e0bcfe9
+# ledger/f6_pairs.001.tsv sha256 b548b943a3f4df198e449be29bafd6d4f3c2705db80b759fbf3777c46a7ae84b
+# orekit/finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+# orekit/tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# src/de421.c sha256 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c
+# src/gfc.c sha256 d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95
+# src/kind_cft128.c sha256 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4
+# src/kind_cft256.c sha256 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da
+# src/kind_cft32.c sha256 dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb
+# src/kind_cft64.c sha256 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32
+# src/kind_native32.c sha256 f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14
+# src/kind_native64.c sha256 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16
+# src/m1.h sha256 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590
+# src/m1_common.c sha256 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6
+# src/m1_consts.h sha256 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a
+# src/m1_ftab.c sha256 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab
+# src/m1_kind.h sha256 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b
+# src/m1_nodes.c sha256 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce
+# src/m1_nodes.h sha256 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4
+# src/m1_ops_cft.h sha256 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c
+# src/m1_ops_native.h sha256 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf
+# src/m1_physics.h sha256 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f
+# tests/f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# tests/f9_box_windows.h sha256 923d4656a18c639e1f2e46035a8c969cdbfb7fa22577073926d68eb5a67343fa
+# tests/f_orekit.js sha256 ebc33b0a0f9d6de5e20915ea814a74903e1930ae47b5a4c2abf44d990d90c89b
+# tests/h2_gate.py sha256 396d2a755716084edb5f45e53dd9fc9ddb441127d9a0a21b20d02d7c22c3e6af
+# tests/h3_gate.py sha256 5883fe8055030c848599ff7416937c1424aa0b4445799c543873e3ea03eaf4ba
+# tests/h3_server.py sha256 65eb863673f73f6b00a7bfe44ed4c6454316e5f16d15676386c0a31b57ce6f84
+# tests/h4_gate.py sha256 db829b60e87b3b70ba86a5d642523fc0ee704a3ce8b813c568acf6b71950c2fa
+# tests/h5_gate.py sha256 d53d5604e73f25bcbdb3a2bb2061cf8d18c60eaf6854757418c9904567a54f1e
+# tests/h6_gate.py sha256 739c9b0c4f7edbdc86d1bddd3048ad25a3955d57aeb5cc3aaf30cad1ccebaede
+# tests/h_audit.py sha256 8025573f87710594754f83202975b469b33ade90a3cc3794f69c1d5076427435
+# tests/h_build.py sha256 ec39f7c79e3b608872a4e59eb299165e03b67d4d29d551110b6011cd46313b00
+# tests/h_check.py sha256 3a9d41ed8a08739e334b03ccff46f77a8f3d46ec94d4bab5d5c27451bba88688
+# tests/h_env_gate.py sha256 9cad7f9a5c2eb1d2cf70caef655a3b201fef6d6ebf60cbd6963d302141d25884
+# tests/h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0
+# tests/h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# tests/h_paced.py sha256 5cdb2c66db787ae16c8dae1037196b30147e9df9800f51a57f2bb3782b326dc8
+# tests/h_seed.py sha256 d43000d54299f28773b6db57bb923eb4b7caad29ff81a075e3345f7a52acc22d
+# tests/h_service.py sha256 8b1e203fc2978aa9fdfa7d903e3de95ef372d547a0ebe0761f9835dc9c8899c6
+# tests/m1f.c sha256 635c0fe21957c288f3a37c4a566b3533b08bcc1ec0e167943103383a1a7108ea
+# tests/m1h.c sha256 b37aae29b6a9ce91c77aa4aab7e8481730247f19ad679f2fb04e17239e3de2f7
+# testseed/seed1.txt sha256 cba8a10af3a6702a2318a3f464794c705886d4b4fb1a1810986c7459cceb0034
+# testseed/seed2.txt sha256 7fce61d4a7de3a85dfb3fcfc3ec7adca2d978b5578357cdabb990d9b1f723401
+# testseed/seed_meta.tsv sha256 8959ee7bf545c186d3b20a2ae431839714df8222c3ba70e911c2df6c429e7236
+PASS B1 71 files as listed, 0 mismatched; in/src/ is the 18 files of commit 1646c96: True
+PASS C1 control: the copy's changed source fails the source check (mismatch), its untouched one passes (match) - failed as specified
+PASS B2 gcc -dumpmachine prints x86_64-linux-gnu
+# gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+# ran (6.73 s wall, exit 0): make --no-print-directory -C cft-fp256/host CC=gcc libcft.a
+PASS B3 libcft.a built (6.7 s wall), sha256 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+# sources compiled (sha256):
+#   36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c in/src/de421.c
+#   d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95 in/src/gfc.c
+#   65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4 in/src/kind_cft128.c
+#   1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da in/src/kind_cft256.c
+#   dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb in/src/kind_cft32.c
+#   6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32 in/src/kind_cft64.c
+#   f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14 in/src/kind_native32.c
+#   4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16 in/src/kind_native64.c
+#   3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590 in/src/m1.h
+#   88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6 in/src/m1_common.c
+#   5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a in/src/m1_consts.h
+#   4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab in/src/m1_ftab.c
+#   091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b in/src/m1_kind.h
+#   778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce in/src/m1_nodes.c
+#   9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4 in/src/m1_nodes.h
+#   4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c in/src/m1_ops_cft.h
+#   5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf in/src/m1_ops_native.h
+#   014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f in/src/m1_physics.h
+#   b37aae29b6a9ce91c77aa4aab7e8481730247f19ad679f2fb04e17239e3de2f7 in/tests/m1h.c
+#   635c0fe21957c288f3a37c4a566b3533b08bcc1ec0e167943103383a1a7108ea in/tests/m1f.c
+#   923d4656a18c639e1f2e46035a8c969cdbfb7fa22577073926d68eb5a67343fa in/tests/f9_box_windows.h
+# ran (1.60 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -Icft-fp256/host/include -c in/src/kind_native32.c -o build/obj/kind_native32.o
+# ran (1.57 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -mfma -Icft-fp256/host/include -c in/src/kind_native64.c -o build/obj/kind_native64.o
+# ran (0.78 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft32.c -o build/obj/kind_cft32.o
+# ran (0.75 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft64.c -o build/obj/kind_cft64.o
+# ran (0.79 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft128.c -o build/obj/kind_cft128.o
+# ran (0.77 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/kind_cft256.c -o build/obj/kind_cft256.o
+# ran (0.05 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_common.c -o build/obj/m1_common.o
+# ran (0.09 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/gfc.c -o build/obj/gfc.o
+# ran (0.09 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/de421.c -o build/obj/de421.o
+# ran (0.06 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_ftab.c -o build/obj/m1_ftab.o
+# ran (0.94 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -c in/src/m1_nodes.c -o build/obj/m1_nodes.o
+# ran (0.54 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Icft-fp256/host/include -Iin/src -c in/tests/m1h.c -o build/obj/m1h.o
+# ran (0.58 s wall, exit 0): gcc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -Ibuild/shim -D_POSIX_C_SOURCE=199309L -Icft-fp256/host/include -Iin/src -c in/tests/m1f.c -o build/obj/m1f.o
+# ran (0.04 s wall, exit 0): gcc -o build/m1h build/obj/m1h.o build/obj/kind_cft128.o build/obj/kind_cft256.o build/obj/kind_cft32.o build/obj/kind_cft64.o build/obj/kind_native32.o build/obj/kind_native64.o build/obj/m1_common.o build/obj/gfc.o build/obj/de421.o build/obj/m1_ftab.o
+# ran (0.04 s wall, exit 0): gcc -o build/m1f build/obj/m1f.o build/obj/kind_cft128.o build/obj/kind_cft256.o build/obj/kind_cft32.o build/obj/kind_cft64.o build/obj/kind_native32.o build/obj/kind_native64.o build/obj/m1_common.o build/obj/gfc.o build/obj/de421.o build/obj/m1_ftab.o
+PASS B4 every compile and link
+PASS B5 native32: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: none
+PASS B5 native64: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: none
+# cft-fp256/host/libcft.a sha256 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+# build/m1h sha256 5a3b65e56e9d8432923991ce771010400a61f374869c3f1f33023d97e92a86f5
+# build/m1f sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319
+# ran (0.54 s wall, exit 0): m1h run --kind cft256 --table in/frame_h0.bin --track Scft256 --run h1/smoke.001 --first 0 --count 4
+PASS H1 smoke cft256 run: checkpoints 0 and 2 of 4 objects, every state finite, steps ['1', '2']
+# ran (0.54 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --init h1/smoke.001/ckpt/Scft256/k000000.w00of01.txt:f6a94eb3549f32a192a390f95bc6ac95d5011b1fb26625bf76067dd3bf3389df --targets h1/smoke.001/cft256_seg_targets.txt --out h1/smoke.001/cft256_seg_n2.txt --lanes 4
+PASS H1 smoke cft256 seg: checkpoint 0 + 2 whole steps equals checkpoint 2's bytes for all 4 objects
+# ran (0.36 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --init h1/smoke.001/ckpt/Scft256/k000002.w00of01.txt:e7125970bcd8093e5229fdc45c032b973eb9013948e81aff67aea6d194f38bb9 --targets h1/smoke.001/cft256_seg_e_targets.txt --out h1/smoke.001/cft256_seg_e.txt --lanes 4
+PASS H1 smoke cft256 seg to t_2 + 7.5 s: 4 finite states at the epoch
+# ran (0.12 s wall, exit 0): m1h run --kind native64 --table in/frame_h0.bin --track Snative64 --run h1/smoke.001 --first 0 --count 4
+PASS H1 smoke native64 run: checkpoints 0 and 2 of 4 objects, every state finite, steps ['1', '2']
+# ran (0.12 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --init h1/smoke.001/ckpt/Snative64/k000000.w00of01.txt:29597a39bf154236cee2ea4bf19ff810150a8b05ec72b041203bdc2675ccc819 --targets h1/smoke.001/native64_seg_targets.txt --out h1/smoke.001/native64_seg_n2.txt --lanes 4
+PASS H1 smoke native64 seg: checkpoint 0 + 2 whole steps equals checkpoint 2's bytes for all 4 objects
+# ran (0.12 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --init h1/smoke.001/ckpt/Snative64/k000002.w00of01.txt:2f578d21e673e70296507bd055dd0792845e275b925f17ccb8894f45bb0d462c --targets h1/smoke.001/native64_seg_e_targets.txt --out h1/smoke.001/native64_seg_e.txt --lanes 4
+PASS H1 smoke native64 seg to t_2 + 7.5 s: 4 finite states at the epoch
+# PASS 

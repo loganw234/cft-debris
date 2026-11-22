@@ -1,0 +1,4 @@
+h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0; slot 20; live mode
+kept stations: 17 rows, 2804 bytes (953 on the wire, gzip), sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea FINDING equal to the previous body
+STOP: HTTP 500 for fengyun-1c-debris
+slot 20: stopped: HTTP 500 (exit 2)

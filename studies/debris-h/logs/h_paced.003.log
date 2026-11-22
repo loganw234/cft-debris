@@ -1,0 +1,30 @@
+# h_paced, log 003, written 2026-11-18 08:44:20 -0700
+# script h_paced.py sha256 5cdb2c66db787ae16c8dae1037196b30147e9df9800f51a57f2bb3782b326dc8
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_service.py sha256 3da83e64b513d4802c9df325d9293c0f7ab51d57d39274899894586ba9071b1a
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE PACED DRY RUN (DEBRIS-H's brief): the test seed's objects (in/testseed/seed1.txt; 64 on the box) at cft256 on 1
+#   worker and at native64 on 1, through tests/h_service.py, for the given minutes (30 on the box) at the real clock's
+#   pace, the clock map shifted so that T_s falls a minute after the launch, the fetcher off.
+#     P1 no step starts more than 60 s before it is due (start >= due - 60 s, less 1 us for the log's resolution);
+#     P2 in every minute whose foreign load (the supervisor's LOAD line, /proc/stat less the service's own CPU, as a share
+#        of the machine's CPUs) is under 5%, no step finishing in that minute is late (lag <= 0);
+#     P2 is reported NOT DETERMINED (never passed) unless at least half the run's minutes qualify (fixed here, before the
+#        data: the brief sets no count). Reported beside: the share of late steps, the largest lag, by track.
+#   CONTROL C5: the same run (the given steps; 80 on the box) with its clock map 600 s in the past must log late steps from
+#     its start, then catch up. r = 15 s x the late steps / their wall time (the first step's start to the last late
+#     step's finish); the first step that is not late must finish T = 600 / (r - 1) s after the first step's start, the
+#     measured time within 10% of T, for each track (the offset is the map's, D; T = D / (r - 1)). C5's run writes no
+#     checkpoint between T_s and its end (--ckpt-every 1000000): with D = 600 s and 15 s steps it catches up at step 40,
+#     a checkpoint step, and a native64 worker's whole late phase lasts about as long as one checkpoint's write (DEBRIS-H's
+#     desktop functional test, h_paced.002.log, before the box's run).
+# TEST ONLY: minutes 30, objects 4, C5 offset 600 s, C5 steps 44 (the brief's: 30, 64, 600, 80) - a functional test, never the gate
+# seed: 4 objects, sha256 fc994f3f86c881cdf6f2c105c97c1961f11a1ff4c0bb4d8b76764b293fd2d274; m1h sha256 27da74fc91413d408ac93d8e080f8427a939866bbc81c126a3e8ceb81294621f
+PASS C5's run ended (exit 0)
+MEASURED C5 P256: 40 late steps over 6.101 s of wall time, r = 98.341; T = 6.164 s; the first step not late (step 41) finished 6.255 s after the first step's start (ratio 1.0148)
+PASS C5 P256: late from its start, then caught up, at T = D/(r - 1) within 10% - as specified
+MEASURED C5 P64: 40 late steps over 0.008 s of wall time, r = 72036.136; T = 0.008 s; the first step not late (step 41) finished 0.008 s after the first step's start (ratio 1.0183)
+PASS C5 P64: late from its start, then caught up, at T = D/(r - 1) within 10% - as specified
+# CPU: 7.56 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

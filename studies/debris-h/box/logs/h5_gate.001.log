@@ -1,0 +1,63 @@
+# h5_gate, log 001, written 2026-11-18 15:21:52 -0700
+# script h5_gate.py sha256 d53d5604e73f25bcbdb3a2bb2061cf8d18c60eaf6854757418c9904567a54f1e
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_seed.py sha256 d43000d54299f28773b6db57bb923eb4b7caad29ff81a075e3345f7a52acc22d
+# f_orekit.js sha256 ebc33b0a0f9d6de5e20915ea814a74903e1930ae47b5a4c2abf44d990d90c89b
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   H5, for each seed (seed 1: bc fitted below 1,000 km of perigee; seed 2: bc held at 0.01 m^2/kg), all asserted:
+#    (1) every object fitted is counted as converged or flagged (stopped on the iteration limit, or on a singular matrix),
+#        and the counts add up to the objects fitted;
+#    (2) every object left out for its catch-up is counted (stopped early, not finite, or at or below 120 km at T_s), and
+#        the seed files hold exactly the objects whose catch-up succeeded in both seeds, in both files with the same
+#        indices and catalogue numbers;
+#    (3) every seed state is finite and lies more than 6,498.137 km from the centre;
+#    (4) the first seed's cft256 and native64 tracks start identical in binary64: tests/m1h.c run from seed1.txt at both
+#        kinds, k0 = kend = 0, writes checkpoint 0, and its binary64 columns agree bit for bit for every object;
+#    (5) in the second seed every bc is exactly 0.01 m^2/kg;
+#    (6) the clock map's TDB - UTC at T_s (h_lib.clock_map: tai-utc.dat and USNO Circular 179's eq. 2.6) equals Orekit's
+#        (tests/f_orekit.js times: TAI-UTC + TT-TAI + TDB-TT) within 1 ms. Basis: F2 measured Orekit's TDB - TT within
+#        25.35 us of eq. (2.6), and a millisecond is about 7.5 m of an orbit's motion, under every miss this round reports.
+#   CONTROLS, each must fail as specified:
+#    C13 the first seed object's fit run twice (tests/h_seed.py fit --select, --no-catchup): as it is, and with its
+#        pseudo-observation 360 moved by 1 km in x; the fitted state at O must differ;
+#    C14 a copy of the second seed with object 0's bc moved to the next binary64 above must fail (5);
+#    C15 a copy of the native64 track's checkpoint 0 with object 0's x moved by one ulp must fail (4).
+#   THE REGRESSION (--regression, the desktop): tests/h_seed.py's fits (--no-catchup) of five of F5(d)'s objects from S0,
+#    with DEBRIS-F's table (in/frame_f.bin) and Earth orientation file, reproduce the ledger's f5d_fits.001.tsv: the same
+#    iterations and convergence, and bc (%.6g) and the residuals' RMS and largest value (%.3f m) equal at the printed
+#    digits. The five: random.Random(0x45D5).sample over F5(d)'s keys that tests/h_seed.py's rules keep (one object per
+#    set) from S0 at T_s = 2026-11-17 00:00 TDB, in ascending order (fixed before the table's values were compared; its
+#    header and first row had been read once). The decoder's output depends on what its JVM decoded before (DEBRIS-H's
+#    finding, after this gate's log 001 failed), so the fit replays F5(d)'s decode: its 100 objects in its table's order in
+#    one JVM (h_seed.py --decode-order), and fits the five (--select-any).
+# seed/seed1.txt sha256 a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0
+# seed/seed2.txt sha256 dbd9341ffb264ce939640d9195636ae04442ec00987331dba747f8e9a78a8464
+# seed/seed_meta.tsv sha256 c229529c76f557074a667182ea67b7fa26199b83e4d5f59f937a4a15b9ca9f3e
+# seed/fit1.001.tsv sha256 5b010f16a2d3e2b3c14c493475e9d0379ebe4744b79fad225e38657c42bd29a9
+# seed/fit2.001.tsv sha256 abe20a27e2653091fba1e3ed474814b1bbe95e430511deaf223fcc7494e2639c
+# in/frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# build/m1f sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319
+# build/m1h sha256 5a3b65e56e9d8432923991ce771010400a61f374869c3f1f33023d97e92a86f5
+# T_s 0x1.6614c00000000p+21 (2026-11-18 22:50:00 TDB); seed objects 2688
+PASS (1) seed 1: 2688 fitted = 2335 converged + 353 flagged on the iteration limit + 0 flagged singular
+PASS (2) seed 1: catch-up ok 2688, left out 0 (stopped early 0, not finite 0, at or below 120 km 0)
+PASS (1) seed 2: 2688 fitted = 2687 converged + 1 flagged on the iteration limit + 0 flagged singular
+PASS (2) seed 2: catch-up ok 2688, left out 0 (stopped early 0, not finite 0, at or below 120 km 0)
+PASS (2) both seed files hold exactly the 2688 objects whose catch-up succeeded in both seeds, same indices
+PASS (3) seed 1: every state finite, the smallest distance from the centre 6567.811 km (> 6,498.137 km)
+PASS (3) seed 2: every state finite, the smallest distance from the centre 6616.686 km (> 6,498.137 km)
+PASS (5) seed 2: every bc is exactly 0.01 m^2/kg
+PASS C14 a copy of seed 2 with object 0's bc moved to the next binary64 fails (5) - failed as specified
+# ran (0.18 s wall, exit 0): m1h run --kind cft256 --table in/frame_h0.bin --track Icft256 --run h5/identity.001 --first 0 --count 2688
+# ran (0.14 s wall, exit 0): m1h run --kind native64 --table in/frame_h0.bin --track Inative64 --run h5/identity.001 --first 0 --count 2688
+PASS (4) checkpoint 0 of the first seed at cft256 and at native64: identical binary64 states for all 2688 objects
+PASS (4) and both equal the seed's own binary64 states
+PASS C15 a copy of the native64 checkpoint 0 with object 0's x moved by one ulp fails (4) - failed as specified
+# ran (1.00 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f_orekit.js -- times in/orekit h5/identity.001/ts_tai.txt h5/identity.001/ts_orekit.txt
+# clock map: unix_ref 1795042130.817173 for T_s 0x1.6614c00000000p+21; TDB - UTC ours 69.182827173 s, Orekit's 69.182805434 s, difference 2.174e-05 s
+PASS (6) the clock map's TDB - UTC at T_s equals Orekit's within 1 ms (2.174e-05 s)
+# ran (3.77 s wall, exit 0): python3 -I -B in/tests/h_seed.py fit --gp sh0 --tag SH0 --m1f build/m1f --java java --jars
+# ran (3.88 s wall, exit 0): python3 -I -B in/tests/h_seed.py fit --gp sh0 --tag SH0 --m1f build/m1f --java java --jars
+PASS C13 the planted pseudo-observation (1 km in x, observation 360) changes the fitted state at O - failed as specified
+# PASS 

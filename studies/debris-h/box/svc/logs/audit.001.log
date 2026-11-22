@@ -1,0 +1,84 @@
+# audit, log 001, written 2026-11-21 15:57:03 -0700
+# script h_audit.py sha256 8025573f87710594754f83202975b469b33ade90a3cc3794f69c1d5076427435
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   H7(d), fixed before the long run (DEBRIS-H's brief):
+#    (d1) every 40 steps of each track, from 0 to the last step the track reached, a checkpoint whose files are all
+#         present, cover every object once, and each match the manifest's SHA-256 (a file listed twice for one step, a
+#         restart's rewrite, must match too);
+#    (d2) a sample of 10 segments per track - a segment is checkpoint k to checkpoint k + 40 - drawn by
+#         random.Random(0xA0D17) over the track's segments, always including every segment that follows a restart (a
+#         restart from checkpoint k: the segment k to k + 40), and in each 64 objects drawn by the same generator (all,
+#         if fewer); tests/m1h.c seg from checkpoint k by 40 whole steps (mode N, 64 lanes) must equal checkpoint k + 40's
+#         bytes for every object sampled: the kind's bytes, the binary64 bits and the decay mark (the NaN rule).
+PASS (d1) A256: every 40 steps from 0 to 17280 (433 checkpoints) complete, every file matching the manifest (0 problems)
+# A256: 432 segments; the sample (10): every segment after a restart [], and 10 drawn
+# ran (169.65 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k005520_targets.txt --out svc/audit/audit.001/A256_k005520_seg.txt --lanes 64
+# ran (173.91 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k003640_targets.txt --out svc/audit/audit.001/A256_k003640_seg.txt --lanes 64
+# ran (174.75 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k015520_targets.txt --out svc/audit/audit.001/A256_k015520_seg.txt --lanes 64
+# ran (174.90 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k010840_targets.txt --out svc/audit/audit.001/A256_k010840_seg.txt --lanes 64
+# ran (177.42 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k003280_targets.txt --out svc/audit/audit.001/A256_k003280_seg.txt --lanes 64
+# ran (181.12 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k006640_targets.txt --out svc/audit/audit.001/A256_k006640_seg.txt --lanes 64
+# ran (185.13 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k002800_targets.txt --out svc/audit/audit.001/A256_k002800_seg.txt --lanes 64
+# ran (195.40 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k002480_targets.txt --out svc/audit/audit.001/A256_k002480_seg.txt --lanes 64
+# ran (201.79 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k010760_targets.txt --out svc/audit/audit.001/A256_k010760_seg.txt --lanes 64
+# ran (211.60 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/audit/audit.001/A256_k013800_targets.txt --out svc/audit/audit.001/A256_k013800_seg.txt --lanes 64
+# A256 segment 2480 to 2520, 64 objects: equal
+# A256 segment 2800 to 2840, 64 objects: equal
+# A256 segment 3280 to 3320, 64 objects: equal
+# A256 segment 3640 to 3680, 64 objects: equal
+# A256 segment 5520 to 5560, 64 objects: equal
+# A256 segment 6640 to 6680, 64 objects: equal
+# A256 segment 10760 to 10800, 64 objects: equal
+# A256 segment 10840 to 10880, 64 objects: equal
+# A256 segment 13800 to 13840, 64 objects: equal
+# A256 segment 15520 to 15560, 64 objects: equal
+PASS (d2) A256: 10 of 10 sampled segments re-propagated by seg equal the next checkpoint's bytes
+PASS (d1) A64: every 40 steps from 0 to 17280 (433 checkpoints) complete, every file matching the manifest (0 problems)
+# A64: 432 segments; the sample (10): every segment after a restart [], and 10 drawn
+# ran (0.22 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k003040_targets.txt --out svc/audit/audit.001/A64_k003040_seg.txt --lanes 64
+# ran (0.22 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k007440_targets.txt --out svc/audit/audit.001/A64_k007440_seg.txt --lanes 64
+# ran (0.21 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k009080_targets.txt --out svc/audit/audit.001/A64_k009080_seg.txt --lanes 64
+# ran (0.21 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k011240_targets.txt --out svc/audit/audit.001/A64_k011240_seg.txt --lanes 64
+# ran (0.26 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k011680_targets.txt --out svc/audit/audit.001/A64_k011680_seg.txt --lanes 64
+# ran (0.26 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k015200_targets.txt --out svc/audit/audit.001/A64_k015200_seg.txt --lanes 64
+# ran (0.25 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k016080_targets.txt --out svc/audit/audit.001/A64_k016080_seg.txt --lanes 64
+# ran (0.25 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k016320_targets.txt --out svc/audit/audit.001/A64_k016320_seg.txt --lanes 64
+# ran (0.37 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k001280_targets.txt --out svc/audit/audit.001/A64_k001280_seg.txt --lanes 64
+# ran (0.36 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64_k013800_targets.txt --out svc/audit/audit.001/A64_k013800_seg.txt --lanes 64
+# A64 segment 1280 to 1320, 64 objects: equal
+# A64 segment 3040 to 3080, 64 objects: equal
+# A64 segment 7440 to 7480, 64 objects: equal
+# A64 segment 9080 to 9120, 64 objects: equal
+# A64 segment 11240 to 11280, 64 objects: equal
+# A64 segment 11680 to 11720, 64 objects: equal
+# A64 segment 13800 to 13840, 64 objects: equal
+# A64 segment 15200 to 15240, 64 objects: equal
+# A64 segment 16080 to 16120, 64 objects: equal
+# A64 segment 16320 to 16360, 64 objects: equal
+PASS (d2) A64: 10 of 10 sampled segments re-propagated by seg equal the next checkpoint's bytes
+PASS (d1) A64f: every 40 steps from 0 to 17280 (433 checkpoints) complete, every file matching the manifest (0 problems)
+# A64f: 432 segments; the sample (10): every segment after a restart [], and 10 drawn
+# ran (0.22 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k000920_targets.txt --out svc/audit/audit.001/A64f_k000920_seg.txt --lanes 64
+# ran (0.21 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k004800_targets.txt --out svc/audit/audit.001/A64f_k004800_seg.txt --lanes 64
+# ran (0.21 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k011840_targets.txt --out svc/audit/audit.001/A64f_k011840_seg.txt --lanes 64
+# ran (0.27 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k002280_targets.txt --out svc/audit/audit.001/A64f_k002280_seg.txt --lanes 64
+# ran (0.26 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k005480_targets.txt --out svc/audit/audit.001/A64f_k005480_seg.txt --lanes 64
+# ran (0.25 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k016080_targets.txt --out svc/audit/audit.001/A64f_k016080_seg.txt --lanes 64
+# ran (0.32 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k004200_targets.txt --out svc/audit/audit.001/A64f_k004200_seg.txt --lanes 64
+# ran (0.36 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k012120_targets.txt --out svc/audit/audit.001/A64f_k012120_seg.txt --lanes 64
+# ran (0.41 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k008560_targets.txt --out svc/audit/audit.001/A64f_k008560_seg.txt --lanes 64
+# ran (0.40 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/audit/audit.001/A64f_k013160_targets.txt --out svc/audit/audit.001/A64f_k013160_seg.txt --lanes 64
+# A64f segment 920 to 960, 64 objects: equal
+# A64f segment 2280 to 2320, 64 objects: equal
+# A64f segment 4200 to 4240, 64 objects: equal
+# A64f segment 4800 to 4840, 64 objects: equal
+# A64f segment 5480 to 5520, 64 objects: equal
+# A64f segment 8560 to 8600, 64 objects: equal
+# A64f segment 11840 to 11880, 64 objects: equal
+# A64f segment 12120 to 12160, 64 objects: equal
+# A64f segment 13160 to 13200, 64 objects: equal
+# A64f segment 16080 to 16120, 64 objects: equal
+PASS (d2) A64f: 10 of 10 sampled segments re-propagated by seg equal the next checkpoint's bytes
+# PASS 

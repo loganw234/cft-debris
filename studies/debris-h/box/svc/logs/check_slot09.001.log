@@ -1,0 +1,40 @@
+# check_slot09, log 001, written 2026-11-19 18:00:42 -0700
+# script h_check.py sha256 3a9d41ed8a08739e334b03ccff46f77a8f3d46ec94d4bab5d5c27451bba88688
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   H-e, the check (DEBRIS-F's F6 repeated at each slot): the eligibility, the reference, the methods, the miss and its
+#   parts as this script's header states them. ASSERTED for every check: T1 (every method's miss vector moves by the
+#   reference's velocity x 1 s within 1% of |v|) and T3 (each (B) misses the next check's reference, mean motion more
+#   than 1e-3 rev/day apart, by more than 100 km); every checkpoint file used matches the manifest's SHA-256.
+#   MEASURED (no pass condition), per method: the count, median and 90th percentile (the ceil(0.9 n)-th smallest) of the
+#   miss, with and without the flagged fits; the medians of its parts' sizes.
+PASS every seed object's set is found in S_H0 (2688 of 2688)
+# slot 9: 4 files (gp-stations.csv sha256 698186e405293641af8e1cfddad87e50e1f617e4b06ced721235a1b5b1e7804f, gp-fengyun-1c-debris.csv sha256 c8c2bedbe8b60dba07831e51880b09f3010c61222dd28e6a05180e71a9839a84, gp-iridium-33-debris.csv sha256 04b7324514346c2c8e65b9b4827654650cfb7035ada836f6adda5d9a29e96e18, gp-cosmos-2251-debris.csv sha256 1d6be065e64293ab10c787c23526c501ed335ad09d1832bba32a0d01e662e3e8), 2700 objects of ephemeris type 0
+# counts: {'absent': 1, 'not_later': 2157, 'before_ts': 187, 'decayed': 0, 'no_checkpoint': 0, 'hash_refused': 0, 'eligible': 343}; new sets of objects the seed does not hold: 13
+# seg batch A256 00 (cft256): 86 targets, A256_t00.txt sha256 cf884d0f5fe4e12e13b1ec24f21b4aef8421466ec5d32891c8bbc93c3dfbbcb0
+# seg batch A256 01 (cft256): 86 targets, A256_t01.txt sha256 331088b6ea6bc722d098be5a7629606b744b450c92cf13ef5697efc8dd8804c2
+# seg batch A256 02 (cft256): 86 targets, A256_t02.txt sha256 eda50f47e895ca65b9149934887cf6d2fba6c56b513e926e59dfaa04afebd44a
+# seg batch A256 03 (cft256): 85 targets, A256_t03.txt sha256 a84552af4a88449e6b792b5988573b29611f6b7eaeab6e9469bbe6c1fc62efb9
+# ran (135.94 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/checks/work09/A256_t00.txt --out svc/checks/work09/A256_seg00.txt --lanes 1
+# ran (146.19 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/checks/work09/A256_t02.txt --out svc/checks/work09/A256_seg02.txt --lanes 1
+# ran (149.39 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/checks/work09/A256_t03.txt --out svc/checks/work09/A256_seg03.txt --lanes 1
+# ran (150.81 s wall, exit 0): m1h seg --kind cft256 --table in/frame_h0.bin --targets svc/checks/work09/A256_t01.txt --out svc/checks/work09/A256_seg01.txt --lanes 1
+# seg batch A64 00 (native64): 343 targets, A64_t00.txt sha256 bad6eb5f697648977a0dc632fbf44bd0e8b86ee458e35270e0940f3a4d8d1280
+# ran (0.65 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/checks/work09/A64_t00.txt --out svc/checks/work09/A64_seg00.txt --lanes 1
+# seg batch A64f 00 (native64): 343 targets, A64f_t00.txt sha256 bad6eb5f697648977a0dc632fbf44bd0e8b86ee458e35270e0940f3a4d8d1280
+# ran (0.60 s wall, exit 0): m1h seg --kind native64 --table in/frame_h0.bin --targets svc/checks/work09/A64f_t00.txt --out svc/checks/work09/A64f_seg00.txt --lanes 1
+# decode batch sgp4: one JVM, 686 sets, 1029 instants, in the order of sgp4_pv_in.txt, sha256 46b19b469cb262b16fecea00d86104c4e50861f4c817c8d12cd53375a118eb4b
+# ran (1.50 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit svc/checks/work09/sgp4_pv_in.txt svc/checks/work09/sgp4_pv.txt
+PASS T1 the time tag: all 1372 check-methods moved by v x 1 s within 1% of |v| (0 do not)
+PASS T3 swapped identities: 343 of 343 checks compared, 0 within 100 km
+# per-object table slot09.tsv, 343 rows, sha256 566c0997facc3e4fd420d840bc50ee81cf53d45a669c3d0e34858b2ebb1be214
+MEASURED slot 9 A256 all: n 343, median 5.593 km, 90th 12.182 km; parts' medians |R| 0.098 |A| 5.591 |C| 0.113 km
+MEASURED slot 9 A256 without flagged fits: n 296, median 5.886 km, 90th 12.595 km; parts' medians |R| 0.098 |A| 5.883 |C| 0.108 km
+MEASURED slot 9 A64 all: n 343, median 5.593 km, 90th 12.182 km; parts' medians |R| 0.098 |A| 5.591 |C| 0.113 km
+MEASURED slot 9 A64 without flagged fits: n 296, median 5.886 km, 90th 12.595 km; parts' medians |R| 0.098 |A| 5.883 |C| 0.108 km
+MEASURED slot 9 A64f all: n 343, median 3.665 km, 90th 15.422 km; parts' medians |R| 0.093 |A| 3.665 |C| 0.112 km
+MEASURED slot 9 A64f without flagged fits: n 296, median 3.720 km, 90th 16.257 km; parts' medians |R| 0.095 |A| 3.714 |C| 0.109 km
+MEASURED slot 9 B all: n 343, median 0.262 km, 90th 1.264 km; parts' medians |R| 0.038 |A| 0.248 |C| 0.044 km
+MEASURED slot 9 B without flagged fits: n 296, median 0.271 km, 90th 1.270 km; parts' medians |R| 0.039 |A| 0.255 |C| 0.041 km
+# PASS 

@@ -1,0 +1,46 @@
+# h_seed_combine, log 001, written 2026-11-18 08:05:10 -0700
+# script h_seed.py sha256 647638610567a1762fe457588bb28febf1b1986c22feedc19f1fa043f9326e5b
+# h_lib.py sha256 023739172bccc768f7f51078cca7cca9e3831606d28a1fa8ac57e69598483bd7
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE SEED, fixed before S_H0's values are read (DEBRIS-H's brief, H-a):
+#   ROWS: the four groups' CSV files (stations, fengyun-1c-debris, iridium-33-debris, cosmos-2251-debris), each with the
+#     header's 17 columns in CelesTrak's order (asserted); ephemeris type 0 only, rows of another type excluded and counted.
+#   ONE OBJECT PER ELEMENT SET, by DEBRIS-G's key (tests/g_pop.py): the epoch as whole microseconds and MEAN_MOTION,
+#     ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, ARG_OF_PERICENTER, MEAN_ANOMALY, BSTAR, MEAN_MOTION_DOT, MEAN_MOTION_DDOT as
+#     parsed values; the smallest catalogue number of each set is kept, the other rows counted as dropped.
+#   THE SCREENS, in this order, each exclusion counted: perigee a(1 - e) - 6,378,137 m under 200 km, a from the mean motion
+#     with GM = 3.986004415e14 m^3/s^2 (DEBRIS-G's formula); the set's epoch more than 30 days before T_s (TDB); the fit's
+#     origin O after T_s (the set's epoch more than a day after T_s).
+#   T_s: from the command line, a multiple of 600 s on M1's TDB axis, and (but with --test) at least 20 minutes after this
+#     run starts, by the clock of the machine, through the leap seconds of tai-utc.dat and USNO Circular 179's eq. (2.6).
+#   THE FIT, DEBRIS-F's B4 unchanged in its rules: e0q = the epoch in TDB rounded to 2^-20 s; O = e0q - 86,400 s; 721
+#     pseudo-observations at O + 120 k (k = 0 to 720) from Orekit's SGP4 (tests/f5_sgp4.js, GCRF, through DEBRIS-F's Earth
+#     orientation file); tests/m1f.c fit at native64 with its iteration limit of 10; the start state the first
+#     pseudo-observation's, bc from 0.01 m^2/kg, cram fixed at 0.01 m^2/kg; an object Orekit refuses is excluded and counted.
+#     SEED 1: bc estimated where the perigee by tests/f_fit.py's formula (MU = 3.986004418e14) is under 1,000 km, held at
+#     0.01 m^2/kg above (fitbc = 1 or 0). SEED 2 (decision 4(b)): bc held at 0.01 m^2/kg for every object (fitbc = 0).
+#     A fit that stops on the iteration limit, or on a singular matrix, keeps its last iterate and is flagged.
+#   FLAGS (an integer): 1 the fit stopped on the iteration limit; 2 it stopped on a singular matrix; 4 bc was estimated;
+#     8 the fitted bc is negative.
+#   THE CATCH-UP: tests/m1f.c prop at native64 from O to T_s - whole steps of 15 s, then one short step landing on T_s.
+#     An object whose catch-up stops early (its m1f run fails), or whose state at T_s is not finite or lies 6,498.137 km
+#     or less from the centre (120 km), is left out; in combine, an object left out by either seed is left out of every
+#     track, and each is counted.
+#   THE FILES: seed1.txt and seed2.txt, one line an object in ascending catalogue number, "idx cat flags T_s x y z vx vy vz
+#     bc cram", every real a C99 hex float (%a), the same objects and indices in both; seed_meta.tsv beside them.
+# fit tables: fit1.001.tsv sha256 463c30b7a3d83619c8f26379dac9c7e2792caa66c9e6ba4d93067154147c30bc (64 objects); fit2.001.tsv sha256 dc2c5b53db77f1c7ea5a514fec4dcefc269db8b5043beca951a2baf763ac4dc0 (64 objects)
+PASS both seeds fitted the same objects
+# seed 1: left out for its catch-up: 0 (stopped 0, nonfinite 0, below 0, skipped 0)
+# seed 2: left out for its catch-up: 0 (stopped 0, nonfinite 0, below 0, skipped 0)
+# left out by either seed, and so of every track: 0; kept 64
+PASS both fit tables have one T_s (2764800.0)
+PASS objects in the seed: 64
+# seed1.txt: 64 objects, sha256 cba8a10af3a6702a2318a3f464794c705886d4b4fb1a1810986c7459cceb0034
+# seed2.txt: 64 objects, sha256 7fce61d4a7de3a85dfb3fcfc3ec7adca2d978b5578357cdabb990d9b1f723401
+# seed_meta.tsv sha256 8959ee7bf545c186d3b20a2ae431839714df8222c3ba70e911c2df6c429e7236
+PASS seed 2: every bc is exactly 0.01 m^2/kg
+PASS every seed state finite and above 120 km
+# flagged (iteration limit or singular): seed 1 7, seed 2 0; bc negative in seed 1: 30
+# CPU: 0.21 s by cycles / 2.5e9
+# PASS 

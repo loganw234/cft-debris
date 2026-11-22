@@ -1,0 +1,63 @@
+{
+ "ts": 2933400.0,
+ "ts_hex": "0x1.6614c00000000p+21",
+ "nobj": 2688,
+ "kend": 17280,
+ "lanes": 64,
+ "allow": 4,
+ "ckpt_every": 40,
+ "tracks": [
+  {
+   "name": "A256",
+   "kind": "cft256",
+   "seed": "seed/seed1.txt",
+   "seed_sha256": "a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0",
+   "workers": 18
+  },
+  {
+   "name": "A64",
+   "kind": "native64",
+   "seed": "seed/seed1.txt",
+   "seed_sha256": "a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0",
+   "workers": 1
+  },
+  {
+   "name": "A64f",
+   "kind": "native64",
+   "seed": "seed/seed2.txt",
+   "seed_sha256": "dbd9341ffb264ce939640d9195636ae04442ec00987331dba747f8e9a78a8464",
+   "workers": 1
+  }
+ ],
+ "table": "in/frame_h0.bin",
+ "table_sha256": "dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f",
+ "downloads": "in/dl/",
+ "exe": "build/m1h",
+ "clock": "real",
+ "leaps": "in/orekit/tai-utc.dat",
+ "pause_files": [
+  "PAUSE",
+  "PAUSE.disk"
+ ],
+ "disk_pause_gb": 5.0,
+ "disk_resume_gb": 6.0,
+ "max_restarts_per_hour": 6,
+ "fetch": "live",
+ "sh0_unix": 1795039207.0,
+ "sh0_dir": "sh0",
+ "slots": 24,
+ "check": "on",
+ "java": "java",
+ "jars": "in/jars",
+ "orekit": "in/orekit",
+ "decoder": "in/tests/f5_sgp4.js",
+ "seed_meta": "seed/seed_meta.tsv",
+ "check_procs": 4,
+ "divergence": "A256,A64",
+ "created": 1795040602.1460695,
+ "created_by": "h_service.py sha256 8b1e203fc2978aa9fdfa7d903e3de95ef372d547a0ebe0761f9835dc9c8899c6",
+ "test": {
+  "kill_after": {},
+  "pause_from": {}
+ }
+}

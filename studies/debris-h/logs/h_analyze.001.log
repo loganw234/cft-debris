@@ -1,0 +1,589 @@
+# h_analyze, log 001, written 2026-11-21 16:24:03 -0700
+# script h_analyze.py sha256 b1136838b2338581781c742e97fde774f5f8f67731d0920a5707433f6990a9e8
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   INPUTS, before any data is used: the repository's copies (studies/debris-h/box/) equal SHA256SUMS.box; every file read
+#     from the ledger's r2/svc/ but the checkpoints equals MANIFEST.copy-003.sha256, and those folders hold no file it does
+#     not list; every checkpoint equals the run's own svc/manifest.tsv (and copy-003 where it lists it); seed_meta.tsv and
+#     the leap-second file equal their recorded SHA-256.
+#   H7, as the plan fixed it before the run (studies/DEBRIS-H-plan.md, "H7. The long run"):
+#    (a) the fetches: every slot's requests logged; at most one request per file per slot; every 200's body archived with
+#        its SHA-256; any other response stopped the fetcher at once, with no later request. Read from requests.tsv,
+#        slots.tsv, the service log's FETCH and SLOTS lines, the slot folders and the stop files. A request that got no
+#        response is not a response; the plan's fetcher rule stops the fetcher at the second slot in a row without one,
+#        held here to the same terms (stop file, no later request), and a slot ends at its first request without one.
+#        Fetching after a stop resumed only on Logan's word (--resumed; lead.md 2026-11-20 19:11 and 21:03).
+#    (b) the checks: every eligible new set checked, or listed with its reason. Eligible means a later epoch than the last
+#        set checked for that object, an epoch no earlier than T_s, the object not decayed, and the fetcher not stopped.
+#        T1 and T3 pass on every check. Recomputed here: per catalogue number, the latest ephemeris-type-0 set in the
+#        slot's archived files (h_check.py's rule); the last set checked from the seed's epoch and the earlier tables; a
+#        decay from the step logs' D lines, at the checkpoint the check used; T1 from the check logs; T3 recomputed from
+#        the tables' (B) positions and references and the files' mean motions, as h_check.py's t3().
+#    (c) the sanity bound: over the run, (A256)'s median miss at horizons e - e0 under 24 hours is at most 5 km, over at
+#        least 20 checks; with fewer, NOT DETERMINED, never passed. Every check, flagged fits in; e - e0 from the epochs.
+#    (d) the checkpoints: every 40 steps of each track, all files present, each hash matching the manifest (re-checked
+#        here on the ledger's copies, with the files' object ranges tiling the seed). A sample of 10 segments per track
+#        re-propagated by seg equals checkpoint k + 1's bytes (the box's audit.001.log, read here).
+#    (e) the pacing: in every clock hour with foreign load under 5% of 36 CPUs and no pause, no step of any track is late,
+#        over at least 6 such hours; with fewer, NOT DETERMINED. A clock hour is [H, H + 3600 s) for a whole hour H, every
+#        hour in which some step is due (the first and last are partial); its foreign load is the sum of foreign_cpu_s of
+#        the service log's LOAD lines whose interval begins in it, over 36 times the sum of their lengths (the lead's
+#        visit7b/8b rule); a pause is any p or P line of a step log or a pause-file line of the service log. A step is late
+#        when it finishes after its due time (lag > 0) and belongs to the hour of its due time. Elsewhere, measured: the
+#        share of late steps, the largest lag, and each late stretch (per track, the union over its workers of [due,
+#        finish] of every late step) with its length: the time the track took to be on time again.
+#    (f) the kinds: at T_s the cft256 and native64 positions of the first seed are equal (the service's DIV line at k 0,
+#        and recomputed here from the k 0 checkpoints). After that, a measurement: every DIV line's median and largest
+#        distance over the objects (recomputed here at the last checkpoint).
+#   MEASUREMENTS (the plan's statistics, fixed before the run), for (A256), (A64), (A64f) and (B), per slot and over the
+#     run: the miss's median and 90th percentile (the ceil(0.9n)-th smallest), and the same for |R|, |A| and |C|; by horizon
+#     e - e0 (<6 h, 6-24 h, 1-2 d, 2-3 d, 3-7 d, >=7 d), the run's age e - T_s (<6 h, 6-24 h, 1-2 d, 2-3 d), perigee
+#     band (<500, 500-800, >=800 km), the seed set's age at T_s (<=1 d, 1-3, 3-7, >7) and the sign of the fitted bc;
+#     with and without the flagged fits (flags1 & 3); a cell of fewer than 20 checks gives its count and median only; the
+#     share of checks in which (A256) misses less than (B) (checks cluster by object and update: not independent
+#     trials); the distinct objects checked, and the checks per object; the kinds' divergence at every checkpoint.
+#     Every check's reference is the catalogue's new set through SGP4, not the truth: a miss is a distance from it.
+#   DEFINED AFTER THE DATA (no pass condition; beside verdicts they do not change; Logan's rulings, lead.md 2026-11-19
+#     05:08 and 15:10):
+#    (e) split: a qualifying hour begins on time if at its first second every worker of every track has finished every
+#        step due before that second, else it begins behind; per qualifying hour, its kind, late steps and largest lag.
+#    (b) split: per T3 hit, its slot, the two objects (seed indices here; catalogue numbers, groups and designators in the
+#        ledger only), the T3 distance, the two references' distance, each object's own (B) miss, each new set's argument
+#        of perigee plus mean anomaly at its epoch, and the differences of inclination and RAAN; per group over the run,
+#        the share of checked sets whose argp + M lies within 5 and within 1 degree of the ascending node.
+# per-object tables: ../cft-debris-ledger/debris-h/phase2/h_analyze.001 (the ledger)
+PASS inputs: the repository's 91 copies equal SHA256SUMS.box (sha256 13361aa8bdf3bf36a465e87335b52a1f380264e73816e4eb37dc564a46e5d238); 0 differ or are missing, 0 unlisted
+PASS inputs: the ledger's 106 files read from svc/checks (tables), svc/steps and svc/fetch equal MANIFEST.copy-003.sha256 (sha256 b3b200ee3e24869432b0da9cc693f1574d9a23c548e026389a3701b362de7c43, 9210 entries); 0 differ or are missing, 0 unlisted
+PASS inputs: seed/seed_meta.tsv sha256 c229529c76f557074a667182ea67b7fa26199b83e4d5f59f937a4a15b9ca9f3e (recorded c229529c76f55707)
+PASS inputs: the leap-second file sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3 (the stage's 3524e1ae34d67e85)
+# the run: T_s 0x1.6614c00000000p+21 TDB s (11-18 15:48:50 local), 2688 objects, steps 1..17280, tracks A256 cft256 x18, A64 native64 x1, A64f native64 x1; unix_ref 1795042130.817173
+
+# ---- the long run's timeline (the service log; local -0700)
+# 2026-11-18T22:23:47 CLOCK unix_ref 1795042130.817173 t_ref 0x1.6614c00000000p+21 (real: the UTC of T_s (tai-utc.dat and eq. 2.6)); the end step 17280 is due at 1795301330.817
+# 2026-11-18T22:23:47 START A256 (cft256): 18 workers from the seed, k0 0; pids [3313328, 3313329, 3313330, 3313331, 3313332, 3313333, 3313334, 3313335, 3313336, 3313337, 3313338, 3313339, 3313340, 3313341, 3313342, 3313343, 331
+# 2026-11-18T22:23:47 START A64 (native64): 1 workers from the seed, k0 0; pids [3313346]; start of the supervisor
+# 2026-11-18T22:23:47 START A64f (native64): 1 workers from the seed, k0 0; pids [3313347]; start of the supervisor
+# 2026-11-19T01:00:43 FETCH slot 1 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T01:00:44 CHECK slot 1 ended: code 0
+# 2026-11-19T04:00:42 FETCH slot 2 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T04:00:43 CHECK slot 2 ended: code 0
+# 2026-11-19T07:00:38 FETCH slot 3 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T07:02:25 CHECK slot 3 ended: code 0
+# 2026-11-19T10:00:49 FETCH slot 4 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T10:09:08 CHECK slot 4 ended: code 0
+# 2026-11-19T13:00:38 FETCH slot 5 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T13:09:18 CHECK slot 5 ended: code 1
+# 2026-11-19T16:01:04 FETCH slot 6 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T16:01:05 CHECK slot 6 ended: code 0
+# 2026-11-19T19:00:40 FETCH slot 7 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T19:07:20 CHECK slot 7 ended: code 0
+# 2026-11-19T22:01:02 FETCH slot 8 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-19T22:01:04 CHECK slot 8 ended: code 0
+# 2026-11-20T01:00:42 FETCH slot 9 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-20T01:03:20 CHECK slot 9 ended: code 0
+# 2026-11-20T04:00:41 FETCH slot 10 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-20T04:03:50 CHECK slot 10 ended: code 0
+# 2026-11-20T07:00:38 FETCH slot 11 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-20T07:08:24 CHECK slot 11 ended: code 1
+# 2026-11-20T10:01:46 FETCH slot 12 ended: code 4, {'status': 'noresponse', 'bodies': 3, 'note': 'no response for cosmos-2251-debris: URLError: _ssl.c:983: The handshake operation timed out'}
+# 2026-11-20T10:01:48 CHECK slot 12 ended: code 0
+# 2026-11-20T13:00:51 FETCH slot 13 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-20T13:15:59 CHECK slot 13 ended: code 0
+# 2026-11-20T16:01:08 FETCH slot 14 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-20T16:01:10 CHECK slot 14 ended: code 0
+# 2026-11-20T19:01:37 FETCH slot 15 ended: code 4, {'status': 'noresponse', 'bodies': 1, 'note': 'no response for fengyun-1c-debris: TimeoutError: The read operation timed out'}
+# 2026-11-20T19:01:38 CHECK slot 15 ended: code 0
+# 2026-11-20T22:01:53 FETCH slot 16 ended: code 2, {'status': 'noresponse', 'bodies': 3, 'note': 'no response for cosmos-2251-debris: TimeoutError: The read operation timed out; STOP written'}
+# 2026-11-21T04:01:26 SLOTS missed while the service was down: [17]
+# 2026-11-21T04:02:26 FETCH slot 18 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+# 2026-11-21T04:22:52 CHECK slot 18 ended: code 1
+# 2026-11-21T07:01:36 FETCH slot 19 ended: code 4, {'status': 'noresponse', 'bodies': 1, 'note': 'no response for fengyun-1c-debris: TimeoutError: The read operation timed out'}
+# 2026-11-21T07:01:38 CHECK slot 19 ended: code 0
+# 2026-11-21T10:00:21 FETCH slot 20 ended: code 2, {'status': 'stopped', 'bodies': 1, 'note': 'HTTP 500 for fengyun-1c-debris'}
+# 2026-11-21T22:47:51 EXIT A64 worker 0 of 1 (pid 3313346): code 0
+# 2026-11-21T22:47:51 EXIT A64f worker 0 of 1 (pid 3313347): code 0
+# 2026-11-21T22:47:51 TRACK A64 done: checkpoint 17280 complete
+# 2026-11-21T22:47:51 TRACK A64f done: checkpoint 17280 complete
+# 2026-11-21T22:48:37 EXIT A256 worker 14 of 18 (pid 3313342): code 0
+# 2026-11-21T22:48:47 EXIT A256 worker 6 of 18 (pid 3313334): code 0
+# 2026-11-21T22:48:49 EXIT A256 worker 9 of 18 (pid 3313337): code 0
+# 2026-11-21T22:48:53 EXIT A256 worker 2 of 18 (pid 3313330): code 0
+# 2026-11-21T22:48:55 EXIT A256 worker 3 of 18 (pid 3313331): code 0
+# 2026-11-21T22:49:36 EXIT A256 worker 15 of 18 (pid 3313343): code 0
+# 2026-11-21T22:49:45 EXIT A256 worker 1 of 18 (pid 3313329): code 0
+# 2026-11-21T22:49:56 EXIT A256 worker 10 of 18 (pid 3313338): code 0
+# 2026-11-21T22:50:12 EXIT A256 worker 11 of 18 (pid 3313339): code 0
+# 2026-11-21T22:50:14 EXIT A256 worker 17 of 18 (pid 3313345): code 0
+# 2026-11-21T22:52:15 EXIT A256 worker 12 of 18 (pid 3313340): code 0
+# 2026-11-21T22:53:17 EXIT A256 worker 16 of 18 (pid 3313344): code 0
+# 2026-11-21T22:53:56 EXIT A256 worker 8 of 18 (pid 3313336): code 0
+# 2026-11-21T22:54:27 EXIT A256 worker 7 of 18 (pid 3313335): code 0
+# 2026-11-21T22:55:23 EXIT A256 worker 13 of 18 (pid 3313341): code 0
+# 2026-11-21T22:56:00 EXIT A256 worker 5 of 18 (pid 3313333): code 0
+# 2026-11-21T22:56:08 EXIT A256 worker 0 of 18 (pid 3313328): code 0
+# 2026-11-21T22:56:25 EXIT A256 worker 4 of 18 (pid 3313332): code 0
+# 2026-11-21T22:56:25 TRACK A256 done: checkpoint 17280 complete
+# 2026-11-21T22:56:25 END: tracks {'A256': 'done', 'A64': 'done', 'A64f': 'done'}
+MEASURED restarts 0; REWRITE comparisons 7361, with a difference 0
+MEASURED decay: track A256 worker w07of18, idx 1178 below RMIN at step 15328 (due 11-21 07:40:50)
+MEASURED decay: track A256 worker w10of18, idx 1595 below RMIN at step 1396 (due 11-18 21:37:50)
+MEASURED decay: track A64 worker w00of01, idx 1595 below RMIN at step 1396 (due 11-18 21:37:50)
+MEASURED decay: track A64 worker w00of01, idx 1178 below RMIN at step 15328 (due 11-21 07:40:50)
+MEASURED A256: the last step 17280 finished at 11-21 15:56:24 by w04of18, 454.0 s after its due time
+MEASURED A64: the last step 17280 finished at 11-21 15:47:50 by w00of01, -59.9 s after its due time
+MEASURED A64f: the last step 17280 finished at 11-21 15:47:50 by w00of01, -59.9 s after its due time
+
+# ---- H7(a) the fetches
+MEASURED requests: 70 (200 65, 500 1, noresponse 4); slots attempted 19: 1 ok, 2 ok, 3 ok, 4 ok, 5 ok, 6 ok, 7 ok, 8 ok, 9 ok, 10 ok, 11 ok, 12 noresponse, 13 ok, 14 ok, 15 noresponse, 16 noresponse, 18 ok, 19 noresponse, 20 stopped
+PASS (a) every slot's requests logged: 19 slots in slots.tsv, each with FETCH started and ended lines in the service log, its 200s equal to its bodies and its archive folder, every request inside its slot's interval, in time order (0 problems)
+PASS (a) at most one request per file per slot: 70 (slot, group) pairs requested, 0 more than once
+PASS (a) every 200's body archived with its SHA-256: 65 bodies, each present in the ledger's slot folder with the logged size and SHA-256 (0 not)
+# stop file STOP (sha256 116da7a4418e2e25e99ba7e1fb29fdb879b321069ec4745bfd99b2661a6ed631): STOP at 2026-11-21T10:00:20Z: slot 20 fengyun-1c-debris: HTTP 500 Internal Server Error
+# stop file STOP.slot16 (sha256 ce27d6baabdb640c5571ca7cf8e5509d0243dab1c97419035ff7c0c32725e7a8): STOP at 2026-11-20T22:01:52Z: slot 16 cosmos-2251-debris: no response (TimeoutError: The read operation timed out), the second slot in a row
+# slot 12: a request without a response (cosmos-2251-debris), the first slot in a row: the slot ends, the fetcher goes on
+# slot 15: a request without a response (fengyun-1c-debris), the first slot in a row: the slot ends, the fetcher goes on
+# slot 16: the second slot in a row without a response: stop file STOP.slot16; the next request is slot 18's (resumed on Logan's word)
+# slot 19: a request without a response (fengyun-1c-debris), the first slot in a row: the slot ends, the fetcher goes on
+# slot 20: response 500 for fengyun-1c-debris: stop file STOP; later requests 0
+# service log: SLOTS missed while the service was down: [17]
+PASS (a) any other response stopped the fetcher at once, with no later request (and the second slot in a row without a response likewise, until the resume on Logan's word at slot(s) 18); slots after 20: none attempted (0 problems)
+# requests.tsv findings: 22 x 'FINDING equal to the previous body'
+# requests.tsv findings: 3 x 'TimeoutError: The read operation timed out'
+# requests.tsv findings: 1 x 'URLError: _ssl.c:983: The handshake operation timed out'
+# requests.tsv findings: 1 x 'the response is not 200 (Internal Server Error; Location ; Retry-After )'
+RESULT H7(a): PASS
+
+# ---- H7(b) the checks
+# slots fetched [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20]; checked [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19]; fetched but not checked (the fetcher stopped in that slot): [16, 20]
+# slot  1: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 0, not later 2156, before T_s 532, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot  2: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 0, not later 2156, before T_s 532, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot  3: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 0, not later 1721, before T_s 851, eligible 116; table {'checked': 116}; T3 116 of 116 compared, 0 within 100 km
+# slot  4: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 0, not later 1469, before T_s 570, eligible 649; table {'checked': 649}; T3 649 of 649 compared, 0 within 100 km
+# slot  5: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 0, not later 1573, before T_s 368, eligible 747; table {'checked': 747}; T3 747 of 747 compared, 1 within 100 km
+# slot  6: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 0, not later 2320, before T_s 368, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot  7: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 1574, before T_s 207, eligible 906; table {'checked': 906}; T3 906 of 906 compared, 0 within 100 km
+# slot  8: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 2480, before T_s 207, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot  9: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 2157, before T_s 187, eligible 343; table {'checked': 343}; T3 343 of 343 compared, 0 within 100 km
+# slot 10: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 2258, before T_s 175, eligible 254; table {'checked': 254}; T3 254 of 254 compared, 0 within 100 km
+# slot 11: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 1959, before T_s 145, eligible 583; table {'checked': 583}; T3 583 of 583 compared, 1 within 100 km
+# slot 12: files stations,fengyun-1c-debris,iridium-33-debris; recomputed absent 582, not later 1991, before T_s 115, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot 13: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 1369, before T_s 102, eligible 1216; table {'checked': 1216}; T3 1216 of 1216 compared, 0 within 100 km
+# slot 14: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 1, not later 2585, before T_s 102, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot 15: files stations; recomputed absent 2682, not later 6, before T_s 0, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot 18: files stations,fengyun-1c-debris,iridium-33-debris,cosmos-2251-debris; recomputed absent 3, not later 976, before T_s 54, eligible 1655; table {'checked': 1655}; T3 1655 of 1655 compared, 1 within 100 km
+# slot 19: files stations; recomputed absent 2682, not later 6, before T_s 0, eligible 0; table {}; T3 0 of 0 compared, 0 within 100 km
+# slot 16: the fetcher stopped in this slot (files stations,fengyun-1c-debris,iridium-33-debris): no set eligible; 191 sets there were later than the last checked and after T_s
+# slot 20: the fetcher stopped in this slot (files stations): no set eligible; 0 sets there were later than the last checked and after T_s
+PASS (b) every eligible new set checked, or listed with its reason: 6469 eligible sets over 17 checked slots, recomputed from the archived files, equal the check tables' rows; 6469 checked, 0 listed, 0 decayed (0 problems)
+PASS (b) T1 on every check: 25876 check-methods over the slots' logs, 0 outside 1% of |v|
+FAIL (b) T3 on every check: 6469 checks compared over the run (recomputed, equal to every check log's line), 3 within 100 km, at slot(s) 5, 11, 18
+RESULT H7(b): FAIL (by its letter: T3 hit at slots 5, 11, 18)
+MEASURED departures: 3 seed objects absent from their group's fetched file at some slot: idx 1595 from slot 7, idx 2513 from slot 16, idx 836 from slot 18
+
+# ---- H7(b)'s split, DEFINED AFTER THE DATA (Logan's ruling, lead.md 2026-11-19 15:10): no pass condition
+MEASURED T3 hit, slot 5: idx 2610's (B) against idx 2612's reference 38435.6 m; the references 38455.0 m apart; (B) misses 366.6 m (idx 2610) and 71770.9 m (idx 2612); argp + M 359.6858 and 359.7137 deg; inclination differs by 0.0066 deg, RAAN by 0.3077 deg (second - first)
+MEASURED T3 hit, slot 11: idx 2684's (B) against idx 2686's reference 46241.1 m; the references 42537.3 m apart; (B) misses 21621.1 m (idx 2684) and 133558.9 m (idx 2686); argp + M 0.1457 and 0.1540 deg; inclination differs by -0.0101 deg, RAAN by -0.0461 deg (second - first)
+MEASURED T3 hit, slot 18: idx 2276's (B) against idx 2278's reference 65079.3 m; the references 65161.3 m apart; (B) misses 405.3 m (idx 2276) and 2045.7 m (idx 2278); argp + M 359.6586 and 0.0259 deg; inclination differs by 0.3409 deg, RAAN by -0.2970 deg (second - first)
+MEASURED node shares, group cosmos-2251-debris: 1475 checked sets; argp + M within 5 deg of the node 538 (36.5%), within 1 deg 447 (30.3%)
+MEASURED node shares, group fengyun-1c-debris: 4685 checked sets; argp + M within 5 deg of the node 1694 (36.2%), within 1 deg 1204 (25.7%)
+MEASURED node shares, group iridium-33-debris: 285 checked sets; argp + M within 5 deg of the node 108 (37.9%), within 1 deg 103 (36.1%)
+MEASURED node shares, group stations: 24 checked sets; argp + M within 5 deg of the node 24 (100.0%), within 1 deg 24 (100.0%)
+
+# ---- H7(c) the sanity bound
+PASS (c) (A256) median miss at horizons e - e0 under 24 h, every check (flagged fits in): n 1494, median 1.240 km (bound 5 km)
+# beside it, without the flagged fits: n 1333, median 1.411 km
+RESULT H7(c): PASS
+
+# ---- H7(d) the checkpoints
+PASS (d1) re-checked on the ledger's copies: every 40 steps from 0 to 17280 of each track, the files present, their object ranges tiling the 2688 objects, each equal in size and SHA-256 to svc/manifest.tsv (8660 files; manifest 8660 entries, expected 8660; 0 problems, 0 files unlisted)
+# audit.001.log (the box, 2026-11-21 15:57): # script h_audit.py sha256 8025573f87710594754f83202975b469b33ade90a3cc3794f69c1d5076427435
+# audit.001.log (the box, 2026-11-21 15:57): PASS (d1) A256: every 40 steps from 0 to 17280 (433 checkpoints) complete, every file matching the manifest (0 problems)
+# audit.001.log (the box, 2026-11-21 15:57): PASS (d2) A256: 10 of 10 sampled segments re-propagated by seg equal the next checkpoint's bytes
+# audit.001.log (the box, 2026-11-21 15:57): PASS (d1) A64: every 40 steps from 0 to 17280 (433 checkpoints) complete, every file matching the manifest (0 problems)
+# audit.001.log (the box, 2026-11-21 15:57): PASS (d2) A64: 10 of 10 sampled segments re-propagated by seg equal the next checkpoint's bytes
+# audit.001.log (the box, 2026-11-21 15:57): PASS (d1) A64f: every 40 steps from 0 to 17280 (433 checkpoints) complete, every file matching the manifest (0 problems)
+# audit.001.log (the box, 2026-11-21 15:57): PASS (d2) A64f: 10 of 10 sampled segments re-propagated by seg equal the next checkpoint's bytes
+PASS (d2) the box's audit: 3 of 3 tracks with 10 of 10 sampled segments equal to the next checkpoint's bytes; its script's SHA-256 equals tests/h_audit.py's (8025573f8771)
+RESULT H7(d): PASS
+
+# ---- H7(e) the pacing
+PASS (e) the step logs: 20 workers, each with every step 1..17280 once; due times equal unix_ref + 15 k within 2.38e-07 s (0 problems)
+# pauses: 0 p/P lines in the step logs, 0 pause-file lines in the service log
+# every clock hour with a step due (local -0700): steps due, late, largest lag; foreign share; Q if under 5%% and no pause; at its first second, workers behind and the largest backlog
+#   11-18 15  steps   880 late     0 max     0.0 s | foreign 0.0007 (max minute 0.0025, 37 LOAD lines) Q | behind  0 (0.0 s)
+#   11-18 16  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0008, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-18 17  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0007, 59 LOAD lines) Q | behind  0 (0.0 s)
+#   11-18 18  steps  4800 late   506 max   209.9 s | foreign 0.1138 (max minute 0.2533, 60 LOAD lines) - | behind  0 (0.0 s)
+#   11-18 19  steps  4800 late  3600 max   630.3 s | foreign 0.2504 (max minute 0.2535, 60 LOAD lines) - | behind  8 (159.2 s)
+#   11-18 20  steps  4800 late  3711 max  1137.0 s | foreign 0.2829 (max minute 0.3319, 60 LOAD lines) - | behind 14 (579.2 s)
+#   11-18 21  steps  4800 late  3709 max  1303.7 s | foreign 0.2566 (max minute 0.3319, 60 LOAD lines) - | behind 14 (1089.2 s)
+#   11-18 22  steps  4800 late  3571 max  1674.6 s | foreign 0.2726 (max minute 0.3318, 60 LOAD lines) - | behind 16 (1059.2 s)
+#   11-18 23  steps  4800 late  3701 max  1450.4 s | foreign 0.2708 (max minute 0.3318, 60 LOAD lines) - | behind 15 (1554.2 s)
+#   11-19 00  steps  4800 late  4041 max  1177.9 s | foreign 0.2989 (max minute 0.3321, 59 LOAD lines) - | behind 17 (624.2 s)
+#   11-19 01  steps  4800 late  3958 max  1436.3 s | foreign 0.2597 (max minute 0.3318, 60 LOAD lines) - | behind 18 (924.2 s)
+#   11-19 02  steps  4800 late  4025 max  2205.6 s | foreign 0.2834 (max minute 0.3318, 60 LOAD lines) - | behind 18 (1284.2 s)
+#   11-19 03  steps  4800 late  3828 max  2214.8 s | foreign 0.2506 (max minute 0.2540, 60 LOAD lines) - | behind 14 (1749.2 s)
+#   11-19 04  steps  4800 late  3871 max  1966.1 s | foreign 0.2972 (max minute 0.3319, 60 LOAD lines) - | behind 17 (1824.2 s)
+#   11-19 05  steps  4800 late  3785 max  1404.5 s | foreign 0.2509 (max minute 0.2537, 59 LOAD lines) - | behind 15 (1359.2 s)
+#   11-19 06  steps  4800 late  3740 max  1784.5 s | foreign 0.2858 (max minute 0.3322, 60 LOAD lines) - | behind 15 (1314.2 s)
+#   11-19 07  steps  4800 late  3351 max  1956.0 s | foreign 0.1978 (max minute 0.3318, 60 LOAD lines) - | behind 15 (1419.2 s)
+#   11-19 08  steps  4800 late   274 max   915.6 s | foreign 0.0219 (max minute 0.0525, 60 LOAD lines) Q | behind  4 (1419.2 s)
+#   11-19 09  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0006, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-19 10  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0007, 59 LOAD lines) Q | behind  0 (0.0 s)
+#   11-19 11  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0007, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-19 12  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0016, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-19 13  steps  4800 late   111 max    31.7 s | foreign 0.0614 (max minute 0.2383, 60 LOAD lines) - | behind  0 (0.0 s)
+#   11-19 14  steps  4800 late   230 max   108.0 s | foreign 0.0577 (max minute 0.2231, 60 LOAD lines) - | behind  0 (0.0 s)
+#   11-19 15  steps  4800 late   929 max   266.8 s | foreign 0.0743 (max minute 0.2231, 59 LOAD lines) - | behind  9 (84.2 s)
+#   11-19 16  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0007, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-19 17  steps  4800 late     0 max     0.0 s | foreign 0.0018 (max minute 0.0805, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-19 18  steps  4800 late   719 max   215.9 s | foreign 0.1156 (max minute 0.2538, 60 LOAD lines) - | behind  0 (0.0 s)
+#   11-19 19  steps  4800 late  3536 max   829.3 s | foreign 0.2945 (max minute 0.3323, 59 LOAD lines) - | behind 13 (159.2 s)
+#   11-19 20  steps  4800 late  3873 max  1346.0 s | foreign 0.2542 (max minute 0.3312, 60 LOAD lines) - | behind 15 (819.2 s)
+#   11-19 21  steps  4800 late  3677 max  1645.4 s | foreign 0.2679 (max minute 0.3320, 60 LOAD lines) - | behind 16 (1074.2 s)
+#   11-19 22  steps  4800 late  3840 max  1576.0 s | foreign 0.2803 (max minute 0.3318, 59 LOAD lines) - | behind 17 (1389.2 s)
+#   11-19 23  steps  4800 late  3994 max  2203.0 s | foreign 0.2507 (max minute 0.2540, 60 LOAD lines) - | behind 11 (1059.2 s)
+#   11-20 00  steps  4800 late  4149 max  2728.5 s | foreign 0.2675 (max minute 0.3318, 60 LOAD lines) - | behind 17 (1764.2 s)
+#   11-20 01  steps  4800 late  4124 max  2392.3 s | foreign 0.2825 (max minute 0.3318, 59 LOAD lines) - | behind 17 (2439.2 s)
+#   11-20 02  steps  4800 late  3985 max  1996.1 s | foreign 0.2937 (max minute 0.3320, 60 LOAD lines) - | behind 15 (1764.2 s)
+#   11-20 03  steps  4800 late  3982 max  2468.7 s | foreign 0.2672 (max minute 0.3317, 59 LOAD lines) - | behind 16 (1794.2 s)
+#   11-20 04  steps  4800 late  4037 max  2279.1 s | foreign 0.2824 (max minute 0.3319, 60 LOAD lines) - | behind 18 (2274.2 s)
+#   11-20 05  steps  4800 late  3780 max  2326.5 s | foreign 0.2508 (max minute 0.2536, 60 LOAD lines) - | behind 13 (1854.2 s)
+#   11-20 06  steps  4800 late  4076 max  2667.8 s | foreign 0.3005 (max minute 0.3321, 59 LOAD lines) - | behind 14 (1989.2 s)
+#   11-20 07  steps  4800 late  3412 max  2533.3 s | foreign 0.1890 (max minute 0.2518, 60 LOAD lines) - | behind 15 (2514.2 s)
+#   11-20 08  steps  4800 late   732 max  1304.0 s | foreign 0.0144 (max minute 0.0547, 59 LOAD lines) Q | behind  5 (1989.2 s)
+#   11-20 09  steps  4800 late     0 max     0.0 s | foreign 0.0006 (max minute 0.0045, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 10  steps  4800 late     0 max     0.0 s | foreign 0.0385 (max minute 0.5448, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 11  steps  4800 late     0 max     0.0 s | foreign 0.0009 (max minute 0.0233, 59 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 12  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0007, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 13  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0008, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 14  steps  4800 late     0 max     0.0 s | foreign 0.0005 (max minute 0.0008, 59 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 15  steps  4800 late     0 max     0.0 s | foreign 0.0376 (max minute 0.5768, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 16  steps  4800 late     0 max     0.0 s | foreign 0.0018 (max minute 0.0285, 59 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 17  steps  4800 late     0 max     0.0 s | foreign 0.0014 (max minute 0.0537, 60 LOAD lines) Q | behind  0 (0.0 s)
+#   11-20 18  steps  4800 late   399 max   190.5 s | foreign 0.1150 (max minute 0.2577, 60 LOAD lines) - | behind  0 (0.0 s)
+#   11-20 19  steps  4800 late  3288 max   676.0 s | foreign 0.2854 (max minute 0.3318, 59 LOAD lines) - | behind  6 (144.2 s)
+#   11-20 20  steps  4800 late  3818 max  1269.4 s | foreign 0.2553 (max minute 0.3320, 60 LOAD lines) - | behind 15 (534.2 s)
+#   11-20 21  steps  4800 late  4132 max  1717.6 s | foreign 0.3029 (max minute 0.3318, 59 LOAD lines) - | behind 15 (1014.2 s)
+#   11-20 22  steps  4800 late  3805 max  1620.9 s | foreign 0.2503 (max minute 0.2542, 60 LOAD lines) - | behind 16 (1434.2 s)
+#   11-20 23  steps  4800 late  3944 max  1351.2 s | foreign 0.2962 (max minute 0.3318, 59 LOAD lines) - | behind 14 (1209.2 s)
+#   11-21 00  steps  4800 late  3924 max  2242.1 s | foreign 0.2512 (max minute 0.2721, 60 LOAD lines) - | behind 17 (1089.2 s)
+#   11-21 01  steps  4800 late  3824 max  2440.3 s | foreign 0.2823 (max minute 0.3320, 59 LOAD lines) - | behind 16 (1794.2 s)
+#   11-21 02  steps  4800 late  3869 max  1924.0 s | foreign 0.2641 (max minute 0.3317, 60 LOAD lines) - | behind 16 (2409.2 s)
+#   11-21 03  steps  4800 late  3833 max  1503.9 s | foreign 0.2965 (max minute 0.3321, 59 LOAD lines) - | behind 16 (1569.2 s)
+#   11-21 04  steps  4800 late  3818 max  1921.6 s | foreign 0.2668 (max minute 0.3318, 60 LOAD lines) - | behind 16 (1149.2 s)
+#   11-21 05  steps  4800 late  3686 max  1589.1 s | foreign 0.2808 (max minute 0.3319, 59 LOAD lines) - | behind 13 (1824.2 s)
+#   11-21 06  steps  4800 late  3888 max  1582.3 s | foreign 0.2508 (max minute 0.2686, 59 LOAD lines) - | behind 16 (1359.2 s)
+#   11-21 07  steps  4800 late  4198 max  1463.1 s | foreign 0.2877 (max minute 0.3320, 60 LOAD lines) - | behind 16 (1149.2 s)
+#   11-21 08  steps  4800 late  4059 max  1570.3 s | foreign 0.2548 (max minute 0.3266, 59 LOAD lines) - | behind 17 (1419.2 s)
+#   11-21 09  steps  4800 late  3582 max  1630.7 s | foreign 0.2511 (max minute 0.2632, 60 LOAD lines) - | behind 15 (1449.2 s)
+#   11-21 10  steps  4800 late  3903 max  1551.3 s | foreign 0.2948 (max minute 0.3318, 59 LOAD lines) - | behind 16 (1554.2 s)
+#   11-21 11  steps  4800 late  3881 max  1667.1 s | foreign 0.2705 (max minute 0.3322, 60 LOAD lines) - | behind 16 (1329.2 s)
+#   11-21 12  steps  4800 late  3827 max  1156.0 s | foreign 0.2785 (max minute 0.3319, 59 LOAD lines) - | behind 17 (1224.2 s)
+#   11-21 13  steps  4800 late  3923 max   948.7 s | foreign 0.2968 (max minute 0.3320, 60 LOAD lines) - | behind 17 (684.2 s)
+#   11-21 14  steps  4800 late  3835 max   718.3 s | foreign 0.2520 (max minute 0.3190, 59 LOAD lines) - | behind 18 (924.2 s)
+#   11-21 15  steps  3920 late  2752 max   739.3 s | foreign 0.2588 (max minute 0.3288, 56 LOAD lines) - | behind 16 (699.2 s)
+# qualifying hours: 20, of which 19 full (4800 steps due, every worker's 240) and 1 partial (11-18 15: 880 steps due)
+FAIL (e) no step of any track late in the 20 qualifying hours (19 full, 1 partial; foreign load under 5% of 36 CPUs, no pause): 1006 late steps in 2 of them (11-19 08: 274, largest lag 915.6 s, 11-20 08: 732, largest lag 1304.0 s)
+RESULT H7(e): FAIL (by its letter)
+MEASURED late steps per track over the run: A256 183045 of 311040 (58.8%), largest lag 2728.5 s; A64 0 of 17280 (0.0%), largest lag 0.0 s; A64f 0 of 17280 (0.0%), largest lag 0.0 s
+MEASURED outside the qualifying hours (53 hours): 182039 of 253520 steps late (71.8%), largest lag 2728.5 s
+MEASURED A256: largest lag 2728.5 s, step 7877 of worker w16of18, due 11-20 00:38:05
+MEASURED A256 late stretches: 47; 5 of 1 min or longer, listed; 42 shorter (107 late steps, largest lag 17.0 s, longest 41.6 s)
+MEASURED   A256 stretch from 11-18 18:44:05 to 11-19 08:42:01: 837.9 min to be on time again; 49656 late steps, 18 workers, largest lag 2214.8 s
+MEASURED   A256 stretch from 11-19 13:15:35 to 11-19 13:18:16: 2.7 min to be on time again; 52 late steps, 8 workers, largest lag 31.7 s
+MEASURED   A256 stretch from 11-19 14:52:35 to 11-19 15:23:03: 30.5 min to be on time again; 1143 late steps, 18 workers, largest lag 266.8 s
+MEASURED   A256 stretch from 11-19 18:44:20 to 11-20 08:59:05: 854.7 min to be on time again; 51904 late steps, 18 workers, largest lag 2728.5 s
+MEASURED   A256 stretch from 11-20 18:46:35 to 11-21 15:56:24: 1269.8 min to be on time again; 80183 late steps, 18 workers, largest lag 2440.3 s
+MEASURED A64: no late step
+MEASURED A64f: no late step
+
+# ---- H7(e)'s split, DEFINED AFTER THE DATA (Logan's ruling, lead.md 2026-11-19 05:08): no pass condition
+MEASURED qualifying hour 11-18 15 (partial, 880 steps due): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-18 16 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-18 17 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-19 08 (full): begins behind (4 workers behind at its first second, largest backlog 1419.2 s); late steps 274, largest lag 915.6 s
+MEASURED qualifying hour 11-19 09 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-19 10 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-19 11 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-19 12 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-19 16 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-19 17 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 08 (full): begins behind (5 workers behind at its first second, largest backlog 1989.2 s); late steps 732, largest lag 1304.0 s
+MEASURED qualifying hour 11-20 09 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 10 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 11 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 12 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 13 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 14 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 15 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 16 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hour 11-20 17 (full): begins on time (0 workers behind at its first second, largest backlog 0.0 s); late steps 0, largest lag 0.0 s
+MEASURED qualifying hours: 20; begun on time 18, with 0 late steps; begun behind 2 (11-19 08, 11-20 08), with 1006 late steps
+
+# ---- H7(f) the kinds
+PASS (f) at T_s (k 0) the cft256 and native64 positions of the first seed equal: the service's DIV line n 2688, zero distance 2688
+PASS (f) recomputed from the ledger's checkpoints at k 0: n 2688, median 0.000000e+00 m, largest 0.000000e+00 m, zero 2688; the service's DIV line (0, 2688, 0.0, 0.0, 2688)
+PASS (f) recomputed from the ledger's checkpoints at k 17280: n 2686, median 1.412168e-05 m, largest 7.194537e-05 m, zero 0; the service's DIV line (17280, 2686, 1.412168e-05, 7.194537e-05, 0)
+MEASURED the kinds' divergence, |A256 - A64| over the objects, at every checkpoint (433 DIV lines); every 1440 steps (6 h):
+MEASURED   k     0 (  0.0 h): n 2688, median 0.000e+00 m, largest 0.000e+00 m, zero 2688
+MEASURED   k  1440 (  6.0 h): n 2687, median 3.468e-07 m, largest 1.997e-06 m, zero 0
+MEASURED   k  2880 ( 12.0 h): n 2687, median 9.696e-07 m, largest 5.673e-06 m, zero 0
+MEASURED   k  4320 ( 18.0 h): n 2687, median 1.804e-06 m, largest 9.720e-06 m, zero 0
+MEASURED   k  5760 ( 24.0 h): n 2687, median 2.737e-06 m, largest 1.430e-05 m, zero 0
+MEASURED   k  7200 ( 30.0 h): n 2687, median 3.830e-06 m, largest 1.938e-05 m, zero 0
+MEASURED   k  8640 ( 36.0 h): n 2687, median 5.035e-06 m, largest 2.403e-05 m, zero 0
+MEASURED   k 10080 ( 42.0 h): n 2687, median 6.422e-06 m, largest 2.993e-05 m, zero 0
+MEASURED   k 11520 ( 48.0 h): n 2687, median 7.925e-06 m, largest 3.703e-05 m, zero 0
+MEASURED   k 12960 ( 54.0 h): n 2687, median 9.435e-06 m, largest 4.485e-05 m, zero 0
+MEASURED   k 14400 ( 60.0 h): n 2687, median 1.088e-05 m, largest 5.487e-05 m, zero 0
+MEASURED   k 15840 ( 66.0 h): n 2686, median 1.246e-05 m, largest 6.441e-05 m, zero 0
+MEASURED   k 17280 ( 72.0 h): n 2686, median 1.412e-05 m, largest 7.195e-05 m, zero 0
+MEASURED the largest distance over the run: 7.200e-05 m at k 17080; the largest median: 1.412e-05 m at k 17280; checkpoints 433, k 0 to 17280
+RESULT H7(f): PASS (at T_s; after it a measurement)
+
+# ---- the measurements (MEASURED; the reference is the catalogue's new set through SGP4, not the truth)
+MEASURED slot 3 A256 all: n 116, median 0.845 km, 90th 6.443 km; median/90th |R| 0.097/0.204, |A| 0.832/6.440, |C| 0.084/0.198 km
+MEASURED slot 3 A256 without flagged fits: n 107, median 0.968 km, 90th 6.610 km; median/90th |R| 0.103/0.207, |A| 0.962/6.608, |C| 0.092/0.198 km
+MEASURED slot 3 A64 all: n 116, median 0.845 km, 90th 6.443 km; median/90th |R| 0.097/0.204, |A| 0.832/6.440, |C| 0.084/0.198 km
+MEASURED slot 3 A64 without flagged fits: n 107, median 0.968 km, 90th 6.610 km; median/90th |R| 0.103/0.207, |A| 0.962/6.608, |C| 0.092/0.198 km
+MEASURED slot 3 A64f all: n 116, median 0.801 km, 90th 5.219 km; median/90th |R| 0.112/0.230, |A| 0.788/5.216, |C| 0.084/0.200 km
+MEASURED slot 3 A64f without flagged fits: n 107, median 0.853 km, 90th 5.311 km; median/90th |R| 0.114/0.231, |A| 0.835/5.307, |C| 0.094/0.200 km
+MEASURED slot 3 B all: n 116, median 0.091 km, 90th 0.790 km; median/90th |R| 0.018/0.071, |A| 0.086/0.758, |C| 0.012/0.087 km
+MEASURED slot 3 B without flagged fits: n 107, median 0.096 km, 90th 0.892 km; median/90th |R| 0.020/0.074, |A| 0.091/0.883, |C| 0.014/0.090 km
+MEASURED slot 4 A256 all: n 649, median 1.479 km, 90th 6.170 km; median/90th |R| 0.102/0.215, |A| 1.471/6.169, |C| 0.090/0.202 km
+MEASURED slot 4 A256 without flagged fits: n 566, median 1.667 km, 90th 6.390 km; median/90th |R| 0.098/0.212, |A| 1.663/6.388, |C| 0.095/0.201 km
+MEASURED slot 4 A64 all: n 649, median 1.479 km, 90th 6.170 km; median/90th |R| 0.102/0.215, |A| 1.471/6.169, |C| 0.090/0.202 km
+MEASURED slot 4 A64 without flagged fits: n 566, median 1.667 km, 90th 6.390 km; median/90th |R| 0.098/0.212, |A| 1.663/6.388, |C| 0.095/0.201 km
+MEASURED slot 4 A64f all: n 649, median 1.095 km, 90th 8.676 km; median/90th |R| 0.107/0.222, |A| 1.087/8.673, |C| 0.092/0.204 km
+MEASURED slot 4 A64f without flagged fits: n 566, median 1.215 km, 90th 9.523 km; median/90th |R| 0.102/0.222, |A| 1.204/9.522, |C| 0.096/0.204 km
+MEASURED slot 4 B all: n 649, median 0.146 km, 90th 1.020 km; median/90th |R| 0.020/0.072, |A| 0.138/0.949, |C| 0.018/0.069 km
+MEASURED slot 4 B without flagged fits: n 566, median 0.150 km, 90th 1.193 km; median/90th |R| 0.020/0.073, |A| 0.145/1.155, |C| 0.019/0.071 km
+MEASURED slot 5 A256 all: n 747, median 2.441 km, 90th 8.557 km; median/90th |R| 0.106/0.229, |A| 2.432/8.553, |C| 0.089/0.192 km
+MEASURED slot 5 A256 without flagged fits: n 667, median 2.518 km, 90th 9.018 km; median/90th |R| 0.102/0.229, |A| 2.503/9.017, |C| 0.089/0.192 km
+MEASURED slot 5 A64 all: n 747, median 2.441 km, 90th 8.557 km; median/90th |R| 0.106/0.229, |A| 2.432/8.553, |C| 0.089/0.192 km
+MEASURED slot 5 A64 without flagged fits: n 667, median 2.518 km, 90th 9.018 km; median/90th |R| 0.102/0.229, |A| 2.503/9.017, |C| 0.089/0.192 km
+MEASURED slot 5 A64f all: n 747, median 1.692 km, 90th 11.962 km; median/90th |R| 0.112/0.255, |A| 1.685/11.962, |C| 0.089/0.192 km
+MEASURED slot 5 A64f without flagged fits: n 667, median 1.820 km, 90th 14.449 km; median/90th |R| 0.112/0.262, |A| 1.818/14.444, |C| 0.089/0.192 km
+MEASURED slot 5 B all: n 747, median 0.198 km, 90th 1.264 km; median/90th |R| 0.026/0.098, |A| 0.185/1.254, |C| 0.026/0.098 km
+MEASURED slot 5 B without flagged fits: n 667, median 0.209 km, 90th 1.382 km; median/90th |R| 0.026/0.104, |A| 0.195/1.380, |C| 0.027/0.098 km
+MEASURED slot 7 A256 all: n 906, median 3.003 km, 90th 9.611 km; median/90th |R| 0.096/0.248, |A| 2.993/9.610, |C| 0.098/0.205 km
+MEASURED slot 7 A256 without flagged fits: n 805, median 3.276 km, 90th 9.681 km; median/90th |R| 0.094/0.249, |A| 3.275/9.679, |C| 0.099/0.204 km
+MEASURED slot 7 A64 all: n 906, median 3.003 km, 90th 9.611 km; median/90th |R| 0.096/0.248, |A| 2.993/9.610, |C| 0.098/0.205 km
+MEASURED slot 7 A64 without flagged fits: n 805, median 3.276 km, 90th 9.681 km; median/90th |R| 0.094/0.249, |A| 3.275/9.679, |C| 0.099/0.204 km
+MEASURED slot 7 A64f all: n 906, median 2.215 km, 90th 17.911 km; median/90th |R| 0.105/0.259, |A| 2.208/17.907, |C| 0.098/0.206 km
+MEASURED slot 7 A64f without flagged fits: n 805, median 2.387 km, 90th 19.408 km; median/90th |R| 0.107/0.273, |A| 2.385/19.403, |C| 0.100/0.205 km
+MEASURED slot 7 B all: n 906, median 0.212 km, 90th 1.472 km; median/90th |R| 0.037/0.107, |A| 0.196/1.470, |C| 0.034/0.121 km
+MEASURED slot 7 B without flagged fits: n 805, median 0.217 km, 90th 1.557 km; median/90th |R| 0.037/0.111, |A| 0.206/1.500, |C| 0.036/0.122 km
+MEASURED slot 9 A256 all: n 343, median 5.593 km, 90th 12.182 km; median/90th |R| 0.098/0.233, |A| 5.591/12.181, |C| 0.113/0.207 km
+MEASURED slot 9 A256 without flagged fits: n 296, median 5.886 km, 90th 12.595 km; median/90th |R| 0.098/0.234, |A| 5.883/12.593, |C| 0.108/0.205 km
+MEASURED slot 9 A64 all: n 343, median 5.593 km, 90th 12.182 km; median/90th |R| 0.098/0.233, |A| 5.591/12.181, |C| 0.113/0.207 km
+MEASURED slot 9 A64 without flagged fits: n 296, median 5.886 km, 90th 12.595 km; median/90th |R| 0.098/0.234, |A| 5.883/12.593, |C| 0.108/0.205 km
+MEASURED slot 9 A64f all: n 343, median 3.665 km, 90th 15.422 km; median/90th |R| 0.093/0.238, |A| 3.665/15.420, |C| 0.112/0.205 km
+MEASURED slot 9 A64f without flagged fits: n 296, median 3.720 km, 90th 16.257 km; median/90th |R| 0.095/0.247, |A| 3.714/16.256, |C| 0.109/0.204 km
+MEASURED slot 9 B all: n 343, median 0.262 km, 90th 1.264 km; median/90th |R| 0.038/0.126, |A| 0.248/1.256, |C| 0.044/0.117 km
+MEASURED slot 9 B without flagged fits: n 296, median 0.271 km, 90th 1.270 km; median/90th |R| 0.039/0.124, |A| 0.255/1.266, |C| 0.041/0.115 km
+MEASURED slot 10 A256 all: n 254, median 6.689 km, 90th 13.715 km; median/90th |R| 0.117/0.282, |A| 6.688/13.714, |C| 0.117/0.245 km
+MEASURED slot 10 A256 without flagged fits: n 230, median 6.984 km, 90th 13.330 km; median/90th |R| 0.117/0.282, |A| 6.979/13.328, |C| 0.114/0.237 km
+MEASURED slot 10 A64 all: n 254, median 6.689 km, 90th 13.715 km; median/90th |R| 0.117/0.282, |A| 6.688/13.714, |C| 0.117/0.245 km
+MEASURED slot 10 A64 without flagged fits: n 230, median 6.984 km, 90th 13.330 km; median/90th |R| 0.117/0.282, |A| 6.979/13.328, |C| 0.114/0.237 km
+MEASURED slot 10 A64f all: n 254, median 3.720 km, 90th 25.370 km; median/90th |R| 0.119/0.254, |A| 3.715/25.362, |C| 0.116/0.241 km
+MEASURED slot 10 A64f without flagged fits: n 230, median 3.850 km, 90th 25.678 km; median/90th |R| 0.122/0.251, |A| 3.847/25.677, |C| 0.114/0.230 km
+MEASURED slot 10 B all: n 254, median 0.311 km, 90th 1.863 km; median/90th |R| 0.046/0.132, |A| 0.295/1.849, |C| 0.041/0.142 km
+MEASURED slot 10 B without flagged fits: n 230, median 0.319 km, 90th 1.958 km; median/90th |R| 0.046/0.131, |A| 0.301/1.947, |C| 0.042/0.142 km
+MEASURED slot 11 A256 all: n 583, median 6.688 km, 90th 15.250 km; median/90th |R| 0.110/0.272, |A| 6.682/15.247, |C| 0.121/0.250 km
+MEASURED slot 11 A256 without flagged fits: n 524, median 7.062 km, 90th 15.983 km; median/90th |R| 0.111/0.277, |A| 7.057/15.980, |C| 0.120/0.246 km
+MEASURED slot 11 A64 all: n 583, median 6.688 km, 90th 15.250 km; median/90th |R| 0.110/0.272, |A| 6.682/15.247, |C| 0.121/0.250 km
+MEASURED slot 11 A64 without flagged fits: n 524, median 7.062 km, 90th 15.983 km; median/90th |R| 0.111/0.277, |A| 7.057/15.980, |C| 0.120/0.246 km
+MEASURED slot 11 A64f all: n 583, median 3.767 km, 90th 26.524 km; median/90th |R| 0.103/0.282, |A| 3.764/26.524, |C| 0.122/0.254 km
+MEASURED slot 11 A64f without flagged fits: n 524, median 4.057 km, 90th 27.413 km; median/90th |R| 0.105/0.286, |A| 4.051/27.412, |C| 0.121/0.252 km
+MEASURED slot 11 B all: n 583, median 0.325 km, 90th 1.981 km; median/90th |R| 0.046/0.146, |A| 0.307/1.946, |C| 0.050/0.165 km
+MEASURED slot 11 B without flagged fits: n 524, median 0.331 km, 90th 2.076 km; median/90th |R| 0.045/0.140, |A| 0.318/2.074, |C| 0.051/0.165 km
+MEASURED slot 13 A256 all: n 1216, median 7.323 km, 90th 20.310 km; median/90th |R| 0.130/0.331, |A| 7.321/20.308, |C| 0.088/0.205 km
+MEASURED slot 13 A256 without flagged fits: n 1081, median 7.860 km, 90th 21.333 km; median/90th |R| 0.131/0.336, |A| 7.856/21.332, |C| 0.089/0.205 km
+MEASURED slot 13 A64 all: n 1216, median 7.323 km, 90th 20.310 km; median/90th |R| 0.130/0.331, |A| 7.321/20.308, |C| 0.088/0.205 km
+MEASURED slot 13 A64 without flagged fits: n 1081, median 7.860 km, 90th 21.333 km; median/90th |R| 0.131/0.336, |A| 7.856/21.332, |C| 0.089/0.205 km
+MEASURED slot 13 A64f all: n 1216, median 4.724 km, 90th 33.151 km; median/90th |R| 0.131/0.314, |A| 4.718/33.151, |C| 0.087/0.202 km
+MEASURED slot 13 A64f without flagged fits: n 1081, median 5.022 km, 90th 37.104 km; median/90th |R| 0.131/0.316, |A| 5.021/37.102, |C| 0.087/0.203 km
+MEASURED slot 13 B all: n 1216, median 0.364 km, 90th 2.672 km; median/90th |R| 0.065/0.168, |A| 0.332/2.650, |C| 0.059/0.196 km
+MEASURED slot 13 B without flagged fits: n 1081, median 0.366 km, 90th 2.855 km; median/90th |R| 0.064/0.170, |A| 0.336/2.833, |C| 0.063/0.196 km
+MEASURED slot 18 A256 all: n 1655, median 11.785 km, 90th 31.950 km; median/90th |R| 0.150/0.418, |A| 11.783/31.946, |C| 0.095/0.219 km
+MEASURED slot 18 A256 without flagged fits: n 1458, median 12.534 km, 90th 32.613 km; median/90th |R| 0.153/0.432, |A| 12.513/32.611, |C| 0.095/0.218 km
+MEASURED slot 18 A64 all: n 1655, median 11.785 km, 90th 31.950 km; median/90th |R| 0.150/0.418, |A| 11.783/31.946, |C| 0.095/0.219 km
+MEASURED slot 18 A64 without flagged fits: n 1458, median 12.534 km, 90th 32.613 km; median/90th |R| 0.153/0.432, |A| 12.513/32.611, |C| 0.095/0.218 km
+MEASURED slot 18 A64f all: n 1655, median 6.898 km, 90th 52.507 km; median/90th |R| 0.139/0.455, |A| 6.888/52.507, |C| 0.096/0.222 km
+MEASURED slot 18 A64f without flagged fits: n 1458, median 7.682 km, 90th 58.056 km; median/90th |R| 0.143/0.481, |A| 7.681/58.055, |C| 0.096/0.220 km
+MEASURED slot 18 B all: n 1655, median 0.579 km, 90th 4.492 km; median/90th |R| 0.081/0.214, |A| 0.550/4.448, |C| 0.088/0.267 km
+MEASURED slot 18 B without flagged fits: n 1458, median 0.601 km, 90th 5.063 km; median/90th |R| 0.082/0.218, |A| 0.574/5.036, |C| 0.091/0.268 km
+MEASURED run A256 all: n 6469, median 4.888 km, 90th 21.277 km; median/90th |R| 0.120/0.302, |A| 4.880/21.270, |C| 0.095/0.212 km
+MEASURED run A256 all, horizon e-e0 <6 h: n 0
+MEASURED run A256 all, horizon e-e0 6-24 h: n 1494, median 1.240 km, 90th 4.267 km; median/90th |R| 0.089/0.193, |A| 1.230/4.259, |C| 0.089/0.191 km
+MEASURED run A256 all, horizon e-e0 1-2 d: n 2505, median 4.700 km, 90th 11.561 km; median/90th |R| 0.106/0.242, |A| 4.695/11.560, |C| 0.099/0.211 km
+MEASURED run A256 all, horizon e-e0 2-3 d: n 1625, median 10.474 km, 90th 22.832 km; median/90th |R| 0.134/0.340, |A| 10.473/22.831, |C| 0.095/0.218 km
+MEASURED run A256 all, horizon e-e0 3-7 d: n 783, median 18.307 km, 90th 56.735 km; median/90th |R| 0.202/0.678, |A| 18.306/56.733, |C| 0.092/0.233 km
+MEASURED run A256 all, horizon e-e0 >=7 d: n 62, median 68.758 km, 90th 230.790 km; median/90th |R| 0.693/8.179, |A| 68.753/230.323, |C| 0.124/0.650 km
+MEASURED run A256 all, run age e-T_s <6 h: n 1144, median 1.610 km, 90th 6.961 km; median/90th |R| 0.103/0.215, |A| 1.596/6.961, |C| 0.089/0.201 km
+MEASURED run A256 all, run age e-T_s 6-24 h: n 2530, median 4.149 km, 90th 12.880 km; median/90th |R| 0.106/0.262, |A| 4.147/12.871, |C| 0.103/0.215 km
+MEASURED run A256 all, run age e-T_s 1-2 d: n 2642, median 9.627 km, 90th 27.585 km; median/90th |R| 0.139/0.380, |A| 9.620/27.584, |C| 0.091/0.214 km
+MEASURED run A256 all, run age e-T_s 2-3 d: n 153, median 9.103 km, 90th 27.006 km; median/90th |R| 0.145/0.393, |A| 9.102/27.004, |C| 0.125/0.213 km
+MEASURED run A256 all, perigee <500 km: n 195, median 10.927 km, 90th 70.880 km; median/90th |R| 0.185/0.986, |A| 10.924/70.877, |C| 0.090/0.212 km
+MEASURED run A256 all, perigee 500-800 km: n 4750, median 5.299 km, 90th 21.372 km; median/90th |R| 0.121/0.290, |A| 5.296/21.370, |C| 0.097/0.212 km
+MEASURED run A256 all, perigee >=800 km: n 1524, median 3.269 km, 90th 16.565 km; median/90th |R| 0.109/0.283, |A| 3.260/16.564, |C| 0.091/0.210 km
+MEASURED run A256 all, seed set's age at T_s <=1 d: n 4632, median 3.667 km, 90th 14.011 km; median/90th |R| 0.104/0.234, |A| 3.661/14.011, |C| 0.097/0.205 km
+MEASURED run A256 all, seed set's age at T_s 1-3 d: n 1505, median 8.982 km, 90th 27.025 km; median/90th |R| 0.157/0.393, |A| 8.979/27.015, |C| 0.089/0.224 km
+MEASURED run A256 all, seed set's age at T_s 3-7 d: n 290, median 31.374 km, 90th 81.631 km; median/90th |R| 0.263/1.105, |A| 31.373/81.622, |C| 0.103/0.255 km
+MEASURED run A256 all, seed set's age at T_s >7 d: n 42, median 69.621 km, 90th 297.858 km; median/90th |R| 0.770/14.681, |A| 69.589/297.755, |C| 0.146/0.684 km
+MEASURED run A256 all, fitted bc > 0: n 4109, median 3.857 km, 90th 20.779 km; median/90th |R| 0.115/0.307, |A| 3.850/20.732, |C| 0.096/0.214 km
+MEASURED run A256 all, fitted bc < 0: n 2360, median 7.440 km, 90th 21.984 km; median/90th |R| 0.126/0.296, |A| 7.436/21.977, |C| 0.094/0.207 km
+MEASURED run A256 without flagged fits: n 5734, median 5.261 km, 90th 21.886 km; median/90th |R| 0.120/0.305, |A| 5.255/21.885, |C| 0.096/0.211 km
+MEASURED run A256 without flagged fits, horizon e-e0 <6 h: n 0
+MEASURED run A256 without flagged fits, horizon e-e0 6-24 h: n 1333, median 1.411 km, 90th 4.292 km; median/90th |R| 0.087/0.194, |A| 1.402/4.288, |C| 0.092/0.191 km
+MEASURED run A256 without flagged fits, horizon e-e0 1-2 d: n 2229, median 5.077 km, 90th 11.736 km; median/90th |R| 0.107/0.243, |A| 5.076/11.735, |C| 0.099/0.211 km
+MEASURED run A256 without flagged fits, horizon e-e0 2-3 d: n 1442, median 11.307 km, 90th 23.266 km; median/90th |R| 0.138/0.351, |A| 11.306/23.264, |C| 0.096/0.218 km
+MEASURED run A256 without flagged fits, horizon e-e0 3-7 d: n 683, median 20.181 km, 90th 58.718 km; median/90th |R| 0.206/0.703, |A| 20.180/58.715, |C| 0.092/0.224 km
+MEASURED run A256 without flagged fits, horizon e-e0 >=7 d: n 47, median 80.886 km, 90th 297.858 km; median/90th |R| 0.865/14.681, |A| 80.875/297.755, |C| 0.126/0.982 km
+MEASURED run A256 without flagged fits, run age e-T_s <6 h: n 1014, median 1.735 km, 90th 7.388 km; median/90th |R| 0.099/0.213, |A| 1.721/7.386, |C| 0.094/0.201 km
+MEASURED run A256 without flagged fits, run age e-T_s 6-24 h: n 2241, median 4.285 km, 90th 12.999 km; median/90th |R| 0.107/0.270, |A| 4.280/12.999, |C| 0.103/0.213 km
+MEASURED run A256 without flagged fits, run age e-T_s 1-2 d: n 2341, median 10.224 km, 90th 29.281 km; median/90th |R| 0.141/0.386, |A| 10.222/29.281, |C| 0.092/0.212 km
+MEASURED run A256 without flagged fits, run age e-T_s 2-3 d: n 138, median 9.769 km, 90th 27.006 km; median/90th |R| 0.140/0.383, |A| 9.767/27.004, |C| 0.124/0.213 km
+MEASURED run A256 without flagged fits, perigee <500 km: n 195, median 10.927 km, 90th 70.880 km; median/90th |R| 0.185/0.986, |A| 10.924/70.877, |C| 0.090/0.212 km
+MEASURED run A256 without flagged fits, perigee 500-800 km: n 4396, median 5.468 km, 90th 21.594 km; median/90th |R| 0.121/0.291, |A| 5.466/21.588, |C| 0.097/0.212 km
+MEASURED run A256 without flagged fits, perigee >=800 km: n 1143, median 3.860 km, 90th 18.195 km; median/90th |R| 0.102/0.282, |A| 3.852/18.192, |C| 0.095/0.210 km
+MEASURED run A256 without flagged fits, seed set's age at T_s <=1 d: n 4137, median 3.927 km, 90th 14.631 km; median/90th |R| 0.104/0.237, |A| 3.925/14.628, |C| 0.098/0.205 km
+MEASURED run A256 without flagged fits, seed set's age at T_s 1-3 d: n 1323, median 9.728 km, 90th 29.022 km; median/90th |R| 0.161/0.396, |A| 9.726/29.018, |C| 0.089/0.221 km
+MEASURED run A256 without flagged fits, seed set's age at T_s 3-7 d: n 242, median 33.466 km, 90th 85.341 km; median/90th |R| 0.287/1.105, |A| 33.464/85.340, |C| 0.102/0.243 km
+MEASURED run A256 without flagged fits, seed set's age at T_s >7 d: n 32, median 102.266 km, 90th 478.256 km; median/90th |R| 1.340/15.102, |A| 102.260/478.017, |C| 0.175/0.982 km
+MEASURED run A256 without flagged fits, fitted bc > 0: n 3763, median 4.132 km, 90th 21.434 km; median/90th |R| 0.116/0.311, |A| 4.125/21.433, |C| 0.099/0.215 km
+MEASURED run A256 without flagged fits, fitted bc < 0: n 1971, median 8.068 km, 90th 22.531 km; median/90th |R| 0.126/0.293, |A| 8.065/22.530, |C| 0.093/0.202 km
+MEASURED run A64 all: n 6469, median 4.888 km, 90th 21.277 km; median/90th |R| 0.120/0.302, |A| 4.880/21.270, |C| 0.095/0.212 km
+MEASURED run A64 all, horizon e-e0 <6 h: n 0
+MEASURED run A64 all, horizon e-e0 6-24 h: n 1494, median 1.240 km, 90th 4.267 km; median/90th |R| 0.089/0.193, |A| 1.230/4.259, |C| 0.089/0.191 km
+MEASURED run A64 all, horizon e-e0 1-2 d: n 2505, median 4.700 km, 90th 11.561 km; median/90th |R| 0.106/0.242, |A| 4.695/11.560, |C| 0.099/0.211 km
+MEASURED run A64 all, horizon e-e0 2-3 d: n 1625, median 10.474 km, 90th 22.832 km; median/90th |R| 0.134/0.340, |A| 10.473/22.831, |C| 0.095/0.218 km
+MEASURED run A64 all, horizon e-e0 3-7 d: n 783, median 18.307 km, 90th 56.735 km; median/90th |R| 0.202/0.678, |A| 18.306/56.733, |C| 0.092/0.233 km
+MEASURED run A64 all, horizon e-e0 >=7 d: n 62, median 68.758 km, 90th 230.790 km; median/90th |R| 0.693/8.179, |A| 68.753/230.323, |C| 0.124/0.650 km
+MEASURED run A64 all, run age e-T_s <6 h: n 1144, median 1.610 km, 90th 6.961 km; median/90th |R| 0.103/0.215, |A| 1.596/6.961, |C| 0.089/0.201 km
+MEASURED run A64 all, run age e-T_s 6-24 h: n 2530, median 4.149 km, 90th 12.880 km; median/90th |R| 0.106/0.262, |A| 4.147/12.871, |C| 0.103/0.215 km
+MEASURED run A64 all, run age e-T_s 1-2 d: n 2642, median 9.627 km, 90th 27.585 km; median/90th |R| 0.139/0.380, |A| 9.620/27.584, |C| 0.091/0.214 km
+MEASURED run A64 all, run age e-T_s 2-3 d: n 153, median 9.103 km, 90th 27.006 km; median/90th |R| 0.145/0.393, |A| 9.102/27.004, |C| 0.125/0.213 km
+MEASURED run A64 all, perigee <500 km: n 195, median 10.927 km, 90th 70.880 km; median/90th |R| 0.185/0.986, |A| 10.924/70.877, |C| 0.090/0.212 km
+MEASURED run A64 all, perigee 500-800 km: n 4750, median 5.299 km, 90th 21.372 km; median/90th |R| 0.121/0.290, |A| 5.296/21.370, |C| 0.097/0.212 km
+MEASURED run A64 all, perigee >=800 km: n 1524, median 3.269 km, 90th 16.565 km; median/90th |R| 0.109/0.283, |A| 3.260/16.564, |C| 0.091/0.210 km
+MEASURED run A64 all, seed set's age at T_s <=1 d: n 4632, median 3.667 km, 90th 14.011 km; median/90th |R| 0.104/0.234, |A| 3.661/14.011, |C| 0.097/0.205 km
+MEASURED run A64 all, seed set's age at T_s 1-3 d: n 1505, median 8.982 km, 90th 27.025 km; median/90th |R| 0.157/0.393, |A| 8.979/27.015, |C| 0.089/0.224 km
+MEASURED run A64 all, seed set's age at T_s 3-7 d: n 290, median 31.374 km, 90th 81.631 km; median/90th |R| 0.263/1.105, |A| 31.373/81.622, |C| 0.103/0.255 km
+MEASURED run A64 all, seed set's age at T_s >7 d: n 42, median 69.621 km, 90th 297.858 km; median/90th |R| 0.770/14.681, |A| 69.589/297.755, |C| 0.146/0.684 km
+MEASURED run A64 all, fitted bc > 0: n 4109, median 3.857 km, 90th 20.779 km; median/90th |R| 0.115/0.307, |A| 3.850/20.732, |C| 0.096/0.214 km
+MEASURED run A64 all, fitted bc < 0: n 2360, median 7.440 km, 90th 21.984 km; median/90th |R| 0.126/0.296, |A| 7.436/21.977, |C| 0.094/0.207 km
+MEASURED run A64 without flagged fits: n 5734, median 5.261 km, 90th 21.886 km; median/90th |R| 0.120/0.305, |A| 5.255/21.885, |C| 0.096/0.211 km
+MEASURED run A64 without flagged fits, horizon e-e0 <6 h: n 0
+MEASURED run A64 without flagged fits, horizon e-e0 6-24 h: n 1333, median 1.411 km, 90th 4.292 km; median/90th |R| 0.087/0.194, |A| 1.402/4.288, |C| 0.092/0.191 km
+MEASURED run A64 without flagged fits, horizon e-e0 1-2 d: n 2229, median 5.077 km, 90th 11.736 km; median/90th |R| 0.107/0.243, |A| 5.076/11.735, |C| 0.099/0.211 km
+MEASURED run A64 without flagged fits, horizon e-e0 2-3 d: n 1442, median 11.307 km, 90th 23.266 km; median/90th |R| 0.138/0.351, |A| 11.306/23.264, |C| 0.096/0.218 km
+MEASURED run A64 without flagged fits, horizon e-e0 3-7 d: n 683, median 20.181 km, 90th 58.718 km; median/90th |R| 0.206/0.703, |A| 20.180/58.715, |C| 0.092/0.224 km
+MEASURED run A64 without flagged fits, horizon e-e0 >=7 d: n 47, median 80.886 km, 90th 297.858 km; median/90th |R| 0.865/14.681, |A| 80.875/297.755, |C| 0.126/0.982 km
+MEASURED run A64 without flagged fits, run age e-T_s <6 h: n 1014, median 1.735 km, 90th 7.388 km; median/90th |R| 0.099/0.213, |A| 1.721/7.386, |C| 0.094/0.201 km
+MEASURED run A64 without flagged fits, run age e-T_s 6-24 h: n 2241, median 4.285 km, 90th 12.999 km; median/90th |R| 0.107/0.270, |A| 4.280/12.999, |C| 0.103/0.213 km
+MEASURED run A64 without flagged fits, run age e-T_s 1-2 d: n 2341, median 10.224 km, 90th 29.281 km; median/90th |R| 0.141/0.386, |A| 10.222/29.281, |C| 0.092/0.212 km
+MEASURED run A64 without flagged fits, run age e-T_s 2-3 d: n 138, median 9.769 km, 90th 27.006 km; median/90th |R| 0.140/0.383, |A| 9.767/27.004, |C| 0.124/0.213 km
+MEASURED run A64 without flagged fits, perigee <500 km: n 195, median 10.927 km, 90th 70.880 km; median/90th |R| 0.185/0.986, |A| 10.924/70.877, |C| 0.090/0.212 km
+MEASURED run A64 without flagged fits, perigee 500-800 km: n 4396, median 5.468 km, 90th 21.594 km; median/90th |R| 0.121/0.291, |A| 5.466/21.588, |C| 0.097/0.212 km
+MEASURED run A64 without flagged fits, perigee >=800 km: n 1143, median 3.860 km, 90th 18.195 km; median/90th |R| 0.102/0.282, |A| 3.852/18.192, |C| 0.095/0.210 km
+MEASURED run A64 without flagged fits, seed set's age at T_s <=1 d: n 4137, median 3.927 km, 90th 14.631 km; median/90th |R| 0.104/0.237, |A| 3.925/14.628, |C| 0.098/0.205 km
+MEASURED run A64 without flagged fits, seed set's age at T_s 1-3 d: n 1323, median 9.728 km, 90th 29.022 km; median/90th |R| 0.161/0.396, |A| 9.726/29.018, |C| 0.089/0.221 km
+MEASURED run A64 without flagged fits, seed set's age at T_s 3-7 d: n 242, median 33.466 km, 90th 85.341 km; median/90th |R| 0.287/1.105, |A| 33.464/85.340, |C| 0.102/0.243 km
+MEASURED run A64 without flagged fits, seed set's age at T_s >7 d: n 32, median 102.266 km, 90th 478.256 km; median/90th |R| 1.340/15.102, |A| 102.260/478.017, |C| 0.175/0.982 km
+MEASURED run A64 without flagged fits, fitted bc > 0: n 3763, median 4.132 km, 90th 21.434 km; median/90th |R| 0.116/0.311, |A| 4.125/21.433, |C| 0.099/0.215 km
+MEASURED run A64 without flagged fits, fitted bc < 0: n 1971, median 8.068 km, 90th 22.531 km; median/90th |R| 0.126/0.293, |A| 8.065/22.530, |C| 0.093/0.202 km
+MEASURED run A64f all: n 6469, median 3.422 km, 90th 28.114 km; median/90th |R| 0.118/0.301, |A| 3.418/28.114, |C| 0.096/0.214 km
+MEASURED run A64f all, horizon e-e0 <6 h: n 0
+MEASURED run A64f all, horizon e-e0 6-24 h: n 1494, median 1.244 km, 90th 5.067 km; median/90th |R| 0.100/0.201, |A| 1.232/5.037, |C| 0.090/0.191 km
+MEASURED run A64f all, horizon e-e0 1-2 d: n 2505, median 3.297 km, 90th 17.049 km; median/90th |R| 0.108/0.246, |A| 3.294/17.048, |C| 0.100/0.211 km
+MEASURED run A64f all, horizon e-e0 2-3 d: n 1625, median 6.168 km, 90th 37.102 km; median/90th |R| 0.128/0.322, |A| 6.164/37.100, |C| 0.094/0.219 km
+MEASURED run A64f all, horizon e-e0 3-7 d: n 783, median 13.835 km, 90th 87.199 km; median/90th |R| 0.179/0.766, |A| 13.827/87.195, |C| 0.096/0.239 km
+MEASURED run A64f all, horizon e-e0 >=7 d: n 62, median 74.026 km, 90th 338.931 km; median/90th |R| 0.650/10.051, |A| 74.024/338.868, |C| 0.148/0.707 km
+MEASURED run A64f all, run age e-T_s <6 h: n 1144, median 1.151 km, 90th 9.337 km; median/90th |R| 0.108/0.222, |A| 1.133/9.335, |C| 0.090/0.204 km
+MEASURED run A64f all, run age e-T_s 6-24 h: n 2530, median 2.981 km, 90th 19.656 km; median/90th |R| 0.109/0.274, |A| 2.978/19.490, |C| 0.104/0.216 km
+MEASURED run A64f all, run age e-T_s 1-2 d: n 2642, median 5.802 km, 90th 41.875 km; median/90th |R| 0.133/0.380, |A| 5.799/41.831, |C| 0.091/0.214 km
+MEASURED run A64f all, run age e-T_s 2-3 d: n 153, median 4.559 km, 90th 40.365 km; median/90th |R| 0.137/0.314, |A| 4.556/40.337, |C| 0.123/0.218 km
+MEASURED run A64f all, perigee <500 km: n 195, median 49.273 km, 90th 624.713 km; median/90th |R| 0.386/21.717, |A| 49.272/624.236, |C| 0.104/0.283 km
+MEASURED run A64f all, perigee 500-800 km: n 4750, median 4.410 km, 90th 29.764 km; median/90th |R| 0.122/0.296, |A| 4.405/29.764, |C| 0.098/0.212 km
+MEASURED run A64f all, perigee >=800 km: n 1524, median 1.762 km, 90th 5.670 km; median/90th |R| 0.100/0.217, |A| 1.752/5.670, |C| 0.091/0.211 km
+MEASURED run A64f all, seed set's age at T_s <=1 d: n 4632, median 2.622 km, 90th 16.395 km; median/90th |R| 0.106/0.235, |A| 2.617/16.393, |C| 0.097/0.205 km
+MEASURED run A64f all, seed set's age at T_s 1-3 d: n 1505, median 6.572 km, 90th 40.481 km; median/90th |R| 0.148/0.382, |A| 6.566/40.480, |C| 0.089/0.229 km
+MEASURED run A64f all, seed set's age at T_s 3-7 d: n 290, median 24.485 km, 90th 141.078 km; median/90th |R| 0.233/2.431, |A| 24.481/141.078, |C| 0.107/0.258 km
+MEASURED run A64f all, seed set's age at T_s >7 d: n 42, median 94.078 km, 90th 338.931 km; median/90th |R| 0.724/9.196, |A| 94.065/338.868, |C| 0.187/0.967 km
+MEASURED run A64f all, fitted bc > 0: n 4109, median 5.003 km, 90th 42.959 km; median/90th |R| 0.131/0.374, |A| 5.001/42.959, |C| 0.097/0.215 km
+MEASURED run A64f all, fitted bc < 0: n 2360, median 1.792 km, 90th 8.902 km; median/90th |R| 0.103/0.212, |A| 1.788/8.896, |C| 0.094/0.207 km
+MEASURED run A64f without flagged fits: n 5734, median 3.621 km, 90th 31.070 km; median/90th |R| 0.119/0.307, |A| 3.614/31.062, |C| 0.097/0.212 km
+MEASURED run A64f without flagged fits, horizon e-e0 <6 h: n 0
+MEASURED run A64f without flagged fits, horizon e-e0 6-24 h: n 1333, median 1.350 km, 90th 5.437 km; median/90th |R| 0.099/0.205, |A| 1.342/5.433, |C| 0.093/0.191 km
+MEASURED run A64f without flagged fits, horizon e-e0 1-2 d: n 2229, median 3.514 km, 90th 18.510 km; median/90th |R| 0.110/0.250, |A| 3.513/18.508, |C| 0.100/0.211 km
+MEASURED run A64f without flagged fits, horizon e-e0 2-3 d: n 1442, median 6.804 km, 90th 40.481 km; median/90th |R| 0.132/0.334, |A| 6.793/40.480, |C| 0.095/0.220 km
+MEASURED run A64f without flagged fits, horizon e-e0 3-7 d: n 683, median 14.952 km, 90th 96.066 km; median/90th |R| 0.190/0.891, |A| 14.948/96.066, |C| 0.094/0.229 km
+MEASURED run A64f without flagged fits, horizon e-e0 >=7 d: n 47, median 120.054 km, 90th 418.233 km; median/90th |R| 0.732/13.319, |A| 120.054/418.122, |C| 0.150/0.967 km
+MEASURED run A64f without flagged fits, run age e-T_s <6 h: n 1014, median 1.274 km, 90th 9.967 km; median/90th |R| 0.105/0.226, |A| 1.271/9.964, |C| 0.094/0.204 km
+MEASURED run A64f without flagged fits, run age e-T_s 6-24 h: n 2241, median 3.148 km, 90th 21.370 km; median/90th |R| 0.112/0.284, |A| 3.143/21.369, |C| 0.104/0.214 km
+MEASURED run A64f without flagged fits, run age e-T_s 1-2 d: n 2341, median 6.246 km, 90th 48.953 km; median/90th |R| 0.134/0.388, |A| 6.244/48.952, |C| 0.092/0.213 km
+MEASURED run A64f without flagged fits, run age e-T_s 2-3 d: n 138, median 4.802 km, 90th 46.388 km; median/90th |R| 0.141/0.320, |A| 4.799/46.388, |C| 0.122/0.218 km
+MEASURED run A64f without flagged fits, perigee <500 km: n 195, median 49.273 km, 90th 624.713 km; median/90th |R| 0.386/21.717, |A| 49.272/624.236, |C| 0.104/0.283 km
+MEASURED run A64f without flagged fits, perigee 500-800 km: n 4396, median 4.499 km, 90th 31.438 km; median/90th |R| 0.123/0.301, |A| 4.497/31.435, |C| 0.097/0.211 km
+MEASURED run A64f without flagged fits, perigee >=800 km: n 1143, median 1.820 km, 90th 5.408 km; median/90th |R| 0.098/0.212, |A| 1.816/5.406, |C| 0.095/0.208 km
+MEASURED run A64f without flagged fits, seed set's age at T_s <=1 d: n 4137, median 2.778 km, 90th 17.867 km; median/90th |R| 0.107/0.241, |A| 2.773/17.865, |C| 0.098/0.206 km
+MEASURED run A64f without flagged fits, seed set's age at T_s 1-3 d: n 1323, median 7.607 km, 90th 43.530 km; median/90th |R| 0.151/0.394, |A| 7.604/43.526, |C| 0.089/0.223 km
+MEASURED run A64f without flagged fits, seed set's age at T_s 3-7 d: n 242, median 32.132 km, 90th 170.914 km; median/90th |R| 0.253/2.529, |A| 32.128/170.908, |C| 0.106/0.253 km
+MEASURED run A64f without flagged fits, seed set's age at T_s >7 d: n 32, median 141.572 km, 90th 343.069 km; median/90th |R| 1.112/9.635, |A| 141.546/342.946, |C| 0.197/0.967 km
+MEASURED run A64f without flagged fits, fitted bc > 0: n 3763, median 5.417 km, 90th 47.642 km; median/90th |R| 0.133/0.385, |A| 5.411/47.625, |C| 0.100/0.215 km
+MEASURED run A64f without flagged fits, fitted bc < 0: n 1971, median 1.742 km, 90th 8.469 km; median/90th |R| 0.102/0.211, |A| 1.733/8.467, |C| 0.093/0.204 km
+MEASURED run B all: n 6469, median 0.306 km, 90th 2.250 km; median/90th |R| 0.048/0.152, |A| 0.281/2.228, |C| 0.045/0.188 km
+MEASURED run B all, horizon e-e0 <6 h: n 0
+MEASURED run B all, horizon e-e0 6-24 h: n 1494, median 0.123 km, 90th 0.423 km; median/90th |R| 0.022/0.050, |A| 0.114/0.403, |C| 0.017/0.061 km
+MEASURED run B all, horizon e-e0 1-2 d: n 2505, median 0.262 km, 90th 1.195 km; median/90th |R| 0.046/0.101, |A| 0.249/1.194, |C| 0.040/0.131 km
+MEASURED run B all, horizon e-e0 2-3 d: n 1625, median 0.553 km, 90th 2.791 km; median/90th |R| 0.075/0.162, |A| 0.533/2.749, |C| 0.076/0.219 km
+MEASURED run B all, horizon e-e0 3-7 d: n 783, median 1.258 km, 90th 8.229 km; median/90th |R| 0.121/0.322, |A| 1.190/8.018, |C| 0.129/0.418 km
+MEASURED run B all, horizon e-e0 >=7 d: n 62, median 6.982 km, 90th 71.771 km; median/90th |R| 0.274/1.318, |A| 6.886/71.759, |C| 0.379/0.869 km
+MEASURED run B all, run age e-T_s <6 h: n 1144, median 0.150 km, 90th 1.207 km; median/90th |R| 0.020/0.076, |A| 0.143/1.183, |C| 0.019/0.075 km
+MEASURED run B all, run age e-T_s 6-24 h: n 2530, median 0.256 km, 90th 1.602 km; median/90th |R| 0.040/0.131, |A| 0.238/1.576, |C| 0.040/0.143 km
+MEASURED run B all, run age e-T_s 1-2 d: n 2642, median 0.474 km, 90th 3.444 km; median/90th |R| 0.072/0.192, |A| 0.449/3.429, |C| 0.074/0.231 km
+MEASURED run B all, run age e-T_s 2-3 d: n 153, median 0.433 km, 90th 3.398 km; median/90th |R| 0.078/0.150, |A| 0.411/3.310, |C| 0.041/0.210 km
+MEASURED run B all, perigee <500 km: n 195, median 3.740 km, 90th 61.105 km; median/90th |R| 0.129/0.755, |A| 3.724/61.105, |C| 0.125/0.358 km
+MEASURED run B all, perigee 500-800 km: n 4750, median 0.340 km, 90th 2.411 km; median/90th |R| 0.051/0.154, |A| 0.313/2.376, |C| 0.054/0.194 km
+MEASURED run B all, perigee >=800 km: n 1524, median 0.190 km, 90th 0.711 km; median/90th |R| 0.037/0.105, |A| 0.172/0.705, |C| 0.021/0.104 km
+MEASURED run B all, seed set's age at T_s <=1 d: n 4632, median 0.228 km, 90th 1.184 km; median/90th |R| 0.039/0.102, |A| 0.206/1.170, |C| 0.034/0.134 km
+MEASURED run B all, seed set's age at T_s 1-3 d: n 1505, median 0.635 km, 90th 4.221 km; median/90th |R| 0.077/0.199, |A| 0.616/4.215, |C| 0.078/0.246 km
+MEASURED run B all, seed set's age at T_s 3-7 d: n 290, median 1.811 km, 90th 9.713 km; median/90th |R| 0.180/0.496, |A| 1.772/9.368, |C| 0.158/0.556 km
+MEASURED run B all, seed set's age at T_s >7 d: n 42, median 9.663 km, 90th 82.558 km; median/90th |R| 0.274/1.519, |A| 9.516/82.551, |C| 0.409/0.773 km
+MEASURED run B all, fitted bc > 0: n 4109, median 0.345 km, 90th 3.562 km; median/90th |R| 0.050/0.178, |A| 0.325/3.543, |C| 0.044/0.196 km
+MEASURED run B all, fitted bc < 0: n 2360, median 0.256 km, 90th 1.063 km; median/90th |R| 0.046/0.123, |A| 0.224/1.045, |C| 0.046/0.171 km
+MEASURED run B without flagged fits: n 5734, median 0.318 km, 90th 2.488 km; median/90th |R| 0.049/0.153, |A| 0.290/2.466, |C| 0.047/0.189 km
+MEASURED run B without flagged fits, horizon e-e0 <6 h: n 0
+MEASURED run B without flagged fits, horizon e-e0 6-24 h: n 1333, median 0.125 km, 90th 0.444 km; median/90th |R| 0.022/0.051, |A| 0.117/0.439, |C| 0.018/0.063 km
+MEASURED run B without flagged fits, horizon e-e0 1-2 d: n 2229, median 0.271 km, 90th 1.302 km; median/90th |R| 0.046/0.102, |A| 0.256/1.301, |C| 0.043/0.133 km
+MEASURED run B without flagged fits, horizon e-e0 2-3 d: n 1442, median 0.578 km, 90th 3.350 km; median/90th |R| 0.076/0.166, |A| 0.561/3.332, |C| 0.080/0.222 km
+MEASURED run B without flagged fits, horizon e-e0 3-7 d: n 683, median 1.336 km, 90th 8.771 km; median/90th |R| 0.119/0.322, |A| 1.266/8.724, |C| 0.129/0.416 km
+MEASURED run B without flagged fits, horizon e-e0 >=7 d: n 47, median 10.253 km, 90th 82.564 km; median/90th |R| 0.378/1.666, |A| 9.970/82.557, |C| 0.283/0.894 km
+MEASURED run B without flagged fits, run age e-T_s <6 h: n 1014, median 0.156 km, 90th 1.262 km; median/90th |R| 0.021/0.078, |A| 0.148/1.255, |C| 0.020/0.077 km
+MEASURED run B without flagged fits, run age e-T_s 6-24 h: n 2241, median 0.261 km, 90th 1.722 km; median/90th |R| 0.040/0.132, |A| 0.245/1.707, |C| 0.041/0.142 km
+MEASURED run B without flagged fits, run age e-T_s 1-2 d: n 2341, median 0.494 km, 90th 3.724 km; median/90th |R| 0.072/0.193, |A| 0.465/3.704, |C| 0.077/0.232 km
+MEASURED run B without flagged fits, run age e-T_s 2-3 d: n 138, median 0.452 km, 90th 4.264 km; median/90th |R| 0.079/0.150, |A| 0.419/4.262, |C| 0.042/0.222 km
+MEASURED run B without flagged fits, perigee <500 km: n 195, median 3.740 km, 90th 61.105 km; median/90th |R| 0.129/0.755, |A| 3.724/61.105, |C| 0.125/0.358 km
+MEASURED run B without flagged fits, perigee 500-800 km: n 4396, median 0.342 km, 90th 2.495 km; median/90th |R| 0.051/0.153, |A| 0.315/2.486, |C| 0.054/0.193 km
+MEASURED run B without flagged fits, perigee >=800 km: n 1143, median 0.201 km, 90th 0.695 km; median/90th |R| 0.037/0.100, |A| 0.181/0.682, |C| 0.021/0.102 km
+MEASURED run B without flagged fits, seed set's age at T_s <=1 d: n 4137, median 0.234 km, 90th 1.279 km; median/90th |R| 0.039/0.103, |A| 0.213/1.274, |C| 0.036/0.140 km
+MEASURED run B without flagged fits, seed set's age at T_s 1-3 d: n 1323, median 0.676 km, 90th 4.969 km; median/90th |R| 0.077/0.205, |A| 0.655/4.941, |C| 0.080/0.253 km
+MEASURED run B without flagged fits, seed set's age at T_s 3-7 d: n 242, median 2.136 km, 90th 10.039 km; median/90th |R| 0.179/0.511, |A| 2.014/10.007, |C| 0.146/0.551 km
+MEASURED run B without flagged fits, seed set's age at T_s >7 d: n 32, median 15.439 km, 90th 82.564 km; median/90th |R| 0.409/1.678, |A| 15.426/82.557, |C| 0.385/0.834 km
+MEASURED run B without flagged fits, fitted bc > 0: n 3763, median 0.367 km, 90th 3.836 km; median/90th |R| 0.050/0.180, |A| 0.347/3.789, |C| 0.046/0.198 km
+MEASURED run B without flagged fits, fitted bc < 0: n 1971, median 0.252 km, 90th 1.041 km; median/90th |R| 0.046/0.119, |A| 0.218/1.030, |C| 0.047/0.170 km
+MEASURED (A256) misses less than (B), all: 334 of 6469 checks (5.2%); checks cluster by object and update, not independent trials
+MEASURED (A256) misses less than (B), without flagged fits: 313 of 5734 checks (5.5%); checks cluster by object and update, not independent trials
+MEASURED distinct objects checked: 2076 of 2688; checks per object: min 1, median 3.0, max 9; histogram 1: 511, 2: 377, 3: 366, 4: 310, 5: 287, 6: 156, 7: 58, 8: 10, 9: 1
+MEASURED flagged fits among the checks: 735 of 6469
+# ledger table departures_decays.tsv sha256 7b30c3052794a82bd867658b5696423b2e6395d6b99009564024ec6e8ada3166
+# ledger table objects.tsv sha256 42fab14ae9836aa97bd7d42aeba71d742bc648fb0f30513ea099f2eda3a2326a
+# ledger table t3_hits.tsv sha256 5f99ac12393407577bde4df8ce03b834883a184d5c9f8baa9c57486866746b6b
+
+# H7: (a) PASS; (b) FAIL; (c) PASS; (d) PASS; (e) FAIL; (f) PASS
+# CPU (cycles / 2.5e9): 13.7 s
+# FAIL (2) 

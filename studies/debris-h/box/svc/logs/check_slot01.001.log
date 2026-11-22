@@ -1,0 +1,26 @@
+# check_slot01, log 001, written 2026-11-18 18:00:43 -0700
+# script h_check.py sha256 3a9d41ed8a08739e334b03ccff46f77a8f3d46ec94d4bab5d5c27451bba88688
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   H-e, the check (DEBRIS-F's F6 repeated at each slot): the eligibility, the reference, the methods, the miss and its
+#   parts as this script's header states them. ASSERTED for every check: T1 (every method's miss vector moves by the
+#   reference's velocity x 1 s within 1% of |v|) and T3 (each (B) misses the next check's reference, mean motion more
+#   than 1e-3 rev/day apart, by more than 100 km); every checkpoint file used matches the manifest's SHA-256.
+#   MEASURED (no pass condition), per method: the count, median and 90th percentile (the ceil(0.9 n)-th smallest) of the
+#   miss, with and without the flagged fits; the medians of its parts' sizes.
+PASS every seed object's set is found in S_H0 (2688 of 2688)
+# slot 1: 4 files (gp-stations.csv sha256 6571b29a790a6b1e34ab4cdfd3df0117580a11b130493a4ea7d9700e02ea8a56, gp-fengyun-1c-debris.csv sha256 1a3ef0c52de0854f369f250a31568c39996309eca1d693b830aba5114ba48f6c, gp-iridium-33-debris.csv sha256 28ff6a453039400d62fb1ff8e2af78ea9e5e830f4ef9ad8d340b521a836c69f4, gp-cosmos-2251-debris.csv sha256 feafcb84a2c2a18f8b2487a85e0435030ba886c799127718c305002873f2bf51), 2701 objects of ephemeris type 0
+# counts: {'absent': 0, 'not_later': 2156, 'before_ts': 532, 'decayed': 0, 'no_checkpoint': 0, 'hash_refused': 0, 'eligible': 0}; new sets of objects the seed does not hold: 13
+PASS T1 the time tag: all 0 check-methods moved by v x 1 s within 1% of |v| (0 do not)
+PASS T3 swapped identities: 0 of 0 checks compared, 0 within 100 km
+# per-object table slot01.tsv, 0 rows, sha256 8bc841efa28b5dc4b47ec855d8fdd0fa4e6e3b1c95a817640e712f077d8a3e16
+MEASURED slot 1 A256 all: n 0
+MEASURED slot 1 A256 without flagged fits: n 0
+MEASURED slot 1 A64 all: n 0
+MEASURED slot 1 A64 without flagged fits: n 0
+MEASURED slot 1 A64f all: n 0
+MEASURED slot 1 A64f without flagged fits: n 0
+MEASURED slot 1 B all: n 0
+MEASURED slot 1 B without flagged fits: n 0
+# PASS 

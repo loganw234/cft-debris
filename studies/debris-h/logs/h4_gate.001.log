@@ -1,0 +1,39 @@
+# h4_gate, log 001, written 2026-11-18 08:41:25 -0700
+# script h4_gate.py sha256 db829b60e87b3b70ba86a5d642523fc0ee704a3ce8b813c568acf6b71950c2fa
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   H4 (DEBRIS-H's brief, decision 2(a)): every row of DEBRIS-F's S0 (the four groups' CSV files, in file order, the groups
+#   in order), decoded by tests/f5_sgp4.js (Orekit 13.1.9's SGP4 through Nashorn, in/jars, in/orekit) at three instants
+#   each - e0q - 1 day, e0q and e0q + 3 days (e0q the epoch in TDB rounded to 2^-20 s, as DEBRIS-F's B1) - in one JVM, so
+#   that the sequence of requests is the same on both machines (the decoder's output depends on what its JVM decoded
+#   before: DEBRIS-H's finding of 2026-11-18).
+#   CRITERION (box, against the desktop's file): every GCRF state bit-identical. If not, the gate still passes when every
+#   position agrees within 1 mm and every velocity within 1 um/s, and the differences are reported as a finding (basis:
+#   1 mm is a twenty-thousandth of the smallest cell median F6 reported, (B)'s 20 m).
+#   CONTROL C12: the first row with its mean motion moved by one ulp (the next binary64 above), decoded first in a JVM of
+#   its own (the same history as the first row in the main run: none), must change its states at all three instants.
+# in/jars\hipparchus-core-4.0.3.jar sha256 5af54dc3c21b8d85e1264157ee91d93fa67e68c825cfb38834dc2bbb9b0f6583
+# in/jars\hipparchus-filtering-4.0.3.jar sha256 279eece43411f372bd8340355cb89101def0bf9b1b6824231b76181d1ec63a81
+# in/jars\hipparchus-fitting-4.0.3.jar sha256 3712c3b4f43d9c12bf7b7aad187764f4b3c09cc962504899d8951eb310b1e4be
+# in/jars\hipparchus-geometry-4.0.3.jar sha256 19594d5106ec6a46951e859e2924bfcade02a834c06c56bd3d2130a74f0fbb7e
+# in/jars\hipparchus-ode-4.0.3.jar sha256 75f0f0b3fdcd99d13e9c394b7ae809cce5a9c22f1c14b1b90a5109ed951467fe
+# in/jars\hipparchus-optim-4.0.3.jar sha256 4bc0dbb5c6d5fefda5db9d92141c6cbb807174a1d491a85df46bcc57a67b8992
+# in/jars\hipparchus-stat-4.0.3.jar sha256 8b066e3060dc119efcce241fb0720a3b9e59c026d0f5fe9e70abfd5e22d3817b
+# in/jars\orekit-13.1.9.jar sha256 a1dbec163c1119459cf79e2dfe32ff74b446f7a8d457e2d4d9761cd6cd820fbe
+# in/orekit/finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+# in/orekit/tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# in/gp/gp-stations-S0.csv sha256 bfdf8f60f932ae11247c0dd31d361d3f1a3c11cf8505aebedede9b4c08808906
+# in/gp/gp-fengyun-1c-debris-S0.csv sha256 cabf9ba46a14446ebde737dce4e9d4f9e3930dfb19e428d95c9772029a2df5e2
+# in/gp/gp-iridium-33-debris-S0.csv sha256 4e794306dd4bd9cc2f9ecd595ac5f55dc82b6083d0cd7b7648b7247b6b499a17
+# in/gp/gp-cosmos-2251-debris-S0.csv sha256 253e32e87b0be45c2639a8d615808e05093337d395c56bb03da54e4317318f34
+# the decode: 2696 rows x 3 instants, one JVM, in file order; input h4_in.txt sha256 d5881f85c685f915af483684501340d926789a65e82a8444505f34c14e6522cc
+# ran (1.78 s wall, exit 0): java.exe -cp in/jars\hipparchus-core-4.0.3.jar;in/jars\hipparchus-filtering-4.0.3.jar;in/jars\hipparchus-fitting-4.0.3.jar;in/jars\hipparchus-geometry-4.0.3.jar;in/jars\hipparchus-ode-4.0.3.jar;in/jars\hipparchus-optim-4.0.3.jar;in/jars\hipparchus-stat-4.0.3.jar;in/jars\orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit h4\gate.001\h4_in.txt h4\gate.001\h4_decode.txt
+# java: # f5_sgp4 pv: java 1.8.0_411
+PASS every row decoded at its three instants (8088 states, 0 refused)
+# the decode's output: h4/gate.001/h4_decode.txt, sha256 a78d569f62311a1091807e498f065a60e43edeaf4326ddd100649f16d6a75a73 (per object: the ledger's)
+# ran (0.91 s wall, exit 0): java.exe -cp in/jars\hipparchus-core-4.0.3.jar;in/jars\hipparchus-filtering-4.0.3.jar;in/jars\hipparchus-fitting-4.0.3.jar;in/jars\hipparchus-geometry-4.0.3.jar;in/jars\hipparchus-ode-4.0.3.jar;in/jars\hipparchus-optim-4.0.3.jar;in/jars\hipparchus-stat-4.0.3.jar;in/jars\orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit h4\gate.001\c12_in.txt h4\gate.001\c12_decode.txt
+PASS C12 the first row's mean motion moved by one ulp changes its states at 3 of 3 instants - failed as specified
+# CPU: 8.32 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

@@ -1,0 +1,158 @@
+# h_seed_fit2, log 001, written 2026-11-18 15:14:20 -0700
+# script h_seed.py sha256 d43000d54299f28773b6db57bb923eb4b7caad29ff81a075e3345f7a52acc22d
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE SEED, fixed before S_H0's values are read (DEBRIS-H's brief, H-a):
+#   ROWS: the four groups' CSV files (stations, fengyun-1c-debris, iridium-33-debris, cosmos-2251-debris), each with the
+#     header's 17 columns in CelesTrak's order (asserted); ephemeris type 0 only, rows of another type excluded and counted.
+#   ONE OBJECT PER ELEMENT SET, by DEBRIS-G's key (tests/g_pop.py): the epoch as whole microseconds and MEAN_MOTION,
+#     ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, ARG_OF_PERICENTER, MEAN_ANOMALY, BSTAR, MEAN_MOTION_DOT, MEAN_MOTION_DDOT as
+#     parsed values; the smallest catalogue number of each set is kept, the other rows counted as dropped.
+#   THE SCREENS, in this order, each exclusion counted: perigee a(1 - e) - 6,378,137 m under 200 km, a from the mean motion
+#     with GM = 3.986004415e14 m^3/s^2 (DEBRIS-G's formula); the set's epoch more than 30 days before T_s (TDB); the fit's
+#     origin O after T_s (the set's epoch more than a day after T_s).
+#   T_s: from the command line, a multiple of 600 s on M1's TDB axis, and (but with --test) at least 20 minutes after this
+#     run starts, by the clock of the machine, through the leap seconds of tai-utc.dat and USNO Circular 179's eq. (2.6).
+#   THE FIT, DEBRIS-F's B4 unchanged in its rules: e0q = the epoch in TDB rounded to 2^-20 s; O = e0q - 86,400 s; 721
+#     pseudo-observations at O + 120 k (k = 0 to 720) from Orekit's SGP4 (tests/f5_sgp4.js, GCRF, through DEBRIS-F's Earth
+#     orientation file); tests/m1f.c fit at native64 with its iteration limit of 10; the start state the first
+#     pseudo-observation's, bc from 0.01 m^2/kg, cram fixed at 0.01 m^2/kg; an object Orekit refuses is excluded and counted.
+#     SEED 1: bc estimated where the perigee by tests/f_fit.py's formula (MU = 3.986004418e14) is under 1,000 km, held at
+#     0.01 m^2/kg above (fitbc = 1 or 0). SEED 2 (decision 4(b)): bc held at 0.01 m^2/kg for every object (fitbc = 0).
+#     A fit that stops on the iteration limit, or on a singular matrix, keeps its last iterate and is flagged.
+#   FLAGS (an integer): 1 the fit stopped on the iteration limit; 2 it stopped on a singular matrix; 4 bc was estimated;
+#     8 the fitted bc is negative.
+#   THE CATCH-UP: tests/m1f.c prop at native64 from O to T_s - whole steps of 15 s, then one short step landing on T_s.
+#     An object whose catch-up stops early (its m1f run fails), or whose state at T_s is not finite or lies 6,498.137 km
+#     or less from the centre (120 km), is left out; in combine, an object left out by either seed is left out of every
+#     track, and each is counted.
+#   THE FILES: seed1.txt and seed2.txt, one line an object in ascending catalogue number, "idx cat flags T_s x y z vx vy vz
+#     bc cram", every real a C99 hex float (%a), the same objects and indices in both; seed_meta.tsv beside them.
+# seed 2; T_s 2933400.0 s TDB = 0x1.6614c00000000p+21 (2026-11-18 22:50:00 TDB); table frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f; m1f sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319; leaps sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# orekit data finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+# orekit data tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# jar hipparchus-core-4.0.3.jar sha256 5af54dc3c21b8d85e1264157ee91d93fa67e68c825cfb38834dc2bbb9b0f6583
+# jar hipparchus-filtering-4.0.3.jar sha256 279eece43411f372bd8340355cb89101def0bf9b1b6824231b76181d1ec63a81
+# jar hipparchus-fitting-4.0.3.jar sha256 3712c3b4f43d9c12bf7b7aad187764f4b3c09cc962504899d8951eb310b1e4be
+# jar hipparchus-geometry-4.0.3.jar sha256 19594d5106ec6a46951e859e2924bfcade02a834c06c56bd3d2130a74f0fbb7e
+# jar hipparchus-ode-4.0.3.jar sha256 75f0f0b3fdcd99d13e9c394b7ae809cce5a9c22f1c14b1b90a5109ed951467fe
+# jar hipparchus-optim-4.0.3.jar sha256 4bc0dbb5c6d5fefda5db9d92141c6cbb807174a1d491a85df46bcc57a67b8992
+# jar hipparchus-stat-4.0.3.jar sha256 8b066e3060dc119efcce241fb0720a3b9e59c026d0f5fe9e70abfd5e22d3817b
+# jar orekit-13.1.9.jar sha256 a1dbec163c1119459cf79e2dfe32ff74b446f7a8d457e2d4d9761cd6cd820fbe
+# m1f's downloads in/dl/: EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715
+# m1f's downloads in/dl/: lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# m1f's downloads in/dl/: header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+PASS T_s is a multiple of 600 s on M1's TDB axis (2933400.0)
+PASS T_s is at least 20 minutes after this run started (2070 s)
+# gp-stations-SH0.csv: 17 rows, sha256 8dd2e6230ebf2b83d34541d90c6215e66f742fe9f0f4e2755376c714ddb30be7
+# gp-fengyun-1c-debris-SH0.csv: 1991 rows, sha256 9d4c56d91302a82f8f761d2422bba41cb4b99539afb003a895eb47266d6884fe
+# gp-iridium-33-debris-SH0.csv: 109 rows, sha256 cd844917cf0f782797c9b84d39ad33a9cf4ceb2cdadb4af5c5f54d742248324a
+# gp-cosmos-2251-debris-SH0.csv: 582 rows, sha256 1e676c21b6c3bf458d2cd495473d57f14c032f0fd33db5e4838157ba79e95cb4
+# rows read 2699; excluded as ephemeris type not 0: 0
+# element sets 2688; rows dropped as sharing a set with a smaller catalogue number (or repeated across groups): 11
+PASS one catalogue number per kept set
+# excluded: perigee under 200 km 0; epoch more than 30 days before T_s 0; origin after T_s 0; kept 2688
+PASS objects to fit: 2688
+# the decode: 2688 objects in 8 JVM run(s), in catalogue order
+# decode batch 00 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.00.txt, sha256 0a2dd0da096ce3c99e4db1237f92733da99f046beecb1619dc95f3624cc24c69
+# decode batch 01 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.01.txt, sha256 8e4ae8479543e357db31f8048eacd0ef6ef8167c5996be2cc76ebb19ff7e582d
+# decode batch 02 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.02.txt, sha256 8a4428c14fb78c0fceab3811fe0f508798d175738eaca1456082d49c706aebf1
+# decode batch 03 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.03.txt, sha256 76556ce8edf1206535d302d0adf56a7eae839ee08127da96c0728d6b3167335f
+# decode batch 04 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.04.txt, sha256 5cb3256727e87220fba2120c0baa9c040bcdeea2791cc5b3f7e19ec76c4c648a
+# decode batch 05 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.05.txt, sha256 91a43e8320c726ae1501151b6d5be4c3f12758b1f74d61f38a0f8cf55a2177c1
+# decode batch 06 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.06.txt, sha256 ddce2db0bacfe4d049e17579a8350832fc1c1cdbe3956c12bf7339b41d65e0f0
+# decode batch 07 (--jprocs 8): 336 objects x 721 instants, in the order of work_fit2_1/pv_in.07.txt, sha256 19f02722afc13301193acbddb2995810001c23166599e8dc943419275a5a0560
+# ran (14.24 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.05.txt seed/work_fit2_1/pv.05.txt
+# ran (14.29 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.00.txt seed/work_fit2_1/pv.00.txt
+# ran (14.29 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.01.txt seed/work_fit2_1/pv.01.txt
+# ran (14.34 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.06.txt seed/work_fit2_1/pv.06.txt
+# ran (14.39 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.04.txt seed/work_fit2_1/pv.04.txt
+# ran (14.49 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.03.txt seed/work_fit2_1/pv.03.txt
+# ran (14.49 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.07.txt seed/work_fit2_1/pv.07.txt
+# ran (14.59 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit seed/work_fit2_1/pv_in.02.txt seed/work_fit2_1/pv.02.txt
+PASS every decoder run exited 0 ([0, 0, 0, 0, 0, 0, 0, 0])
+# Orekit refused 0 objects (excluded)
+PASS every decoded object has its 721 pseudo-observations
+# ran (253.32 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.32.txt seed/work_fit2_1/fit.32.txt --maxit 10
+# ran (256.04 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.13.txt seed/work_fit2_1/fit.13.txt --maxit 10
+# ran (256.44 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.25.txt seed/work_fit2_1/fit.25.txt --maxit 10
+# ran (257.29 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.31.txt seed/work_fit2_1/fit.31.txt --maxit 10
+# ran (257.45 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.11.txt seed/work_fit2_1/fit.11.txt --maxit 10
+# ran (257.90 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.07.txt seed/work_fit2_1/fit.07.txt --maxit 10
+# ran (257.89 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.22.txt seed/work_fit2_1/fit.22.txt --maxit 10
+# ran (258.39 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.27.txt seed/work_fit2_1/fit.27.txt --maxit 10
+# ran (258.55 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.09.txt seed/work_fit2_1/fit.09.txt --maxit 10
+# ran (258.54 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.28.txt seed/work_fit2_1/fit.28.txt --maxit 10
+# ran (258.65 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.26.txt seed/work_fit2_1/fit.26.txt --maxit 10
+# ran (259.10 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.23.txt seed/work_fit2_1/fit.23.txt --maxit 10
+# ran (259.86 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.08.txt seed/work_fit2_1/fit.08.txt --maxit 10
+# ran (259.90 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.12.txt seed/work_fit2_1/fit.12.txt --maxit 10
+# ran (259.96 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.05.txt seed/work_fit2_1/fit.05.txt --maxit 10
+# ran (260.85 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.30.txt seed/work_fit2_1/fit.30.txt --maxit 10
+# ran (261.35 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.34.txt seed/work_fit2_1/fit.34.txt --maxit 10
+# ran (261.76 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.02.txt seed/work_fit2_1/fit.02.txt --maxit 10
+# ran (262.10 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.24.txt seed/work_fit2_1/fit.24.txt --maxit 10
+# ran (262.31 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.14.txt seed/work_fit2_1/fit.14.txt --maxit 10
+# ran (262.71 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.18.txt seed/work_fit2_1/fit.18.txt --maxit 10
+# ran (262.75 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.29.txt seed/work_fit2_1/fit.29.txt --maxit 10
+# ran (263.01 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.10.txt seed/work_fit2_1/fit.10.txt --maxit 10
+# ran (263.67 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.06.txt seed/work_fit2_1/fit.06.txt --maxit 10
+# ran (263.87 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.04.txt seed/work_fit2_1/fit.04.txt --maxit 10
+# ran (264.31 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.19.txt seed/work_fit2_1/fit.19.txt --maxit 10
+# ran (264.36 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.20.txt seed/work_fit2_1/fit.20.txt --maxit 10
+# ran (264.45 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.35.txt seed/work_fit2_1/fit.35.txt --maxit 10
+# ran (265.37 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.16.txt seed/work_fit2_1/fit.16.txt --maxit 10
+# ran (266.17 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.15.txt seed/work_fit2_1/fit.15.txt --maxit 10
+# ran (266.43 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.03.txt seed/work_fit2_1/fit.03.txt --maxit 10
+# ran (266.98 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.01.txt seed/work_fit2_1/fit.01.txt --maxit 10
+# ran (267.48 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.00.txt seed/work_fit2_1/fit.00.txt --maxit 10
+# ran (267.88 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.17.txt seed/work_fit2_1/fit.17.txt --maxit 10
+# ran (269.03 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.21.txt seed/work_fit2_1/fit.21.txt --maxit 10
+# ran (270.13 s wall, exit 0): m1f fit in/frame_h0.bin seed/work_fit2_1/fit_in.33.txt seed/work_fit2_1/fit.33.txt --maxit 10
+PASS every fit run exited 0 ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+PASS every object fitted has a FIT line (2688 of 2688)
+# fits: 2687 converged, 1 stopped on the iteration limit, 0 stopped on a singular matrix (flagged); bc estimated in 0
+PASS seed 2: every bc is exactly 0.01 m^2/kg
+# post-fit RMS of the position residual's length: median 547.8 m, 90th 626.1 m, largest 78889.7 m; iterations median 3
+# ran (45.31 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.21.txt seed/work_fit2_1/prop.21.txt
+# ran (46.63 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.02.txt seed/work_fit2_1/prop.02.txt
+# ran (46.67 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.22.txt seed/work_fit2_1/prop.22.txt
+# ran (47.38 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.03.txt seed/work_fit2_1/prop.03.txt
+# ran (47.43 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.01.txt seed/work_fit2_1/prop.01.txt
+# ran (47.88 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.00.txt seed/work_fit2_1/prop.00.txt
+# ran (48.79 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.04.txt seed/work_fit2_1/prop.04.txt
+# ran (49.53 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.23.txt seed/work_fit2_1/prop.23.txt
+# ran (52.09 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.05.txt seed/work_fit2_1/prop.05.txt
+# ran (52.59 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.06.txt seed/work_fit2_1/prop.06.txt
+# ran (53.25 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.07.txt seed/work_fit2_1/prop.07.txt
+# ran (56.15 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.08.txt seed/work_fit2_1/prop.08.txt
+# ran (58.30 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.24.txt seed/work_fit2_1/prop.24.txt
+# ran (61.11 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.09.txt seed/work_fit2_1/prop.09.txt
+# ran (66.83 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.10.txt seed/work_fit2_1/prop.10.txt
+# ran (68.23 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.12.txt seed/work_fit2_1/prop.12.txt
+# ran (68.67 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.25.txt seed/work_fit2_1/prop.25.txt
+# ran (72.33 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.27.txt seed/work_fit2_1/prop.27.txt
+# ran (74.34 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.13.txt seed/work_fit2_1/prop.13.txt
+# ran (78.35 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.11.txt seed/work_fit2_1/prop.11.txt
+# ran (78.54 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.26.txt seed/work_fit2_1/prop.26.txt
+# ran (80.39 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.28.txt seed/work_fit2_1/prop.28.txt
+# ran (82.50 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.29.txt seed/work_fit2_1/prop.29.txt
+# ran (82.96 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.14.txt seed/work_fit2_1/prop.14.txt
+# ran (83.61 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.17.txt seed/work_fit2_1/prop.17.txt
+# ran (84.21 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.15.txt seed/work_fit2_1/prop.15.txt
+# ran (85.21 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.16.txt seed/work_fit2_1/prop.16.txt
+# ran (88.51 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.30.txt seed/work_fit2_1/prop.30.txt
+# ran (88.86 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.20.txt seed/work_fit2_1/prop.20.txt
+# ran (90.12 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.18.txt seed/work_fit2_1/prop.18.txt
+# ran (92.91 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.31.txt seed/work_fit2_1/prop.31.txt
+# ran (95.36 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.35.txt seed/work_fit2_1/prop.35.txt
+# ran (96.52 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.33.txt seed/work_fit2_1/prop.33.txt
+# ran (96.67 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.34.txt seed/work_fit2_1/prop.34.txt
+# ran (98.07 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.32.txt seed/work_fit2_1/prop.32.txt
+# ran (98.83 s wall, exit 0): m1f prop native64 in/frame_h0.bin seed/work_fit2_1/prop_in.19.txt seed/work_fit2_1/prop.19.txt
+# catch-up to T_s: ok 2688; stopped early 0; not finite 0; at or below 120 km 0
+# catch-up spans from O: 1.29 to 29.14 days, median 2.05
+# per-object fit table: fit2.001.tsv (2688 objects), sha256 abe20a27e2653091fba1e3ed474814b1bbe95e430511deaf223fcc7494e2639c
+# PASS 

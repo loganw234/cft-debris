@@ -1,0 +1,66 @@
+# h6_gate, log 002, written 2026-11-18 11:58:02 -0700
+# script h6_gate.py sha256 739c9b0c4f7edbdc86d1bddd3048ad25a3955d57aeb5cc3aaf30cad1ccebaede
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_check.py sha256 3a9d41ed8a08739e334b03ccff46f77a8f3d46ec94d4bab5d5c27451bba88688
+# h_seed.py sha256 d43000d54299f28773b6db57bb923eb4b7caad29ff81a075e3345f7a52acc22d
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   H6, the check against F6 (DEBRIS-H's brief). For each of F6's 200 pairs (the keys of the ledger's f6_pairs.001.tsv):
+#     the object is fitted from its S0 set by tests/h_seed.py's fit (DEBRIS-F's B4, --select-any: each pair's object with
+#     its own row, as F6 fitted it, the set rule and screens not applied) with DEBRIS-F's table (in/frame_f.bin) and Earth
+#     orientation file, replaying the decode F6's fit used (--decode-order: F5(d)'s 100 objects in its order for the 13
+#     pairs F6 reused from F5(d), F6's 187 new objects in catalogue order for the rest; the decoder's output depends on
+#     what its JVM decoded before, DEBRIS-H's finding before this gate ran); then run alone from its origin O by the service's driver (tests/m1h.c run, native64, checkpoints
+#     every 40 steps, the clock map in the past, so every step is due at once) to the last checkpoint at or before e1q;
+#     then tests/m1h.c seg from that checkpoint to e1q (whole steps, then one short step); then the check (tests/h_check.py's
+#     miss(): F6's reference, SGP4 from the S1 set at e1q; (B), SGP4 from the S0 set at e1q).
+#   CRITERION: for every pair, (A)'s and (B)'s misses and their three parts (8 values) equal f6_pairs.001.tsv's within
+#     1 mm (the file prints them to the millimetre); and T1 (every pair-method) and T3 (every pair) pass, and T2 (every
+#     object whose S1 row equals its S0 row in all 17 fields gives (B) a miss of exactly 0 at its epoch), as F6 defines them.
+#   CONTROL C16: the first pair in catalogue order with its e1 moved by 1 s (the method, (B) and the reference all at
+#     e1q + 1 s) must fail the criterion for that pair: at least one of its 8 values more than 1 mm from F6's.
+#   THE BOX (--compare the desktop's per-pair table): every pair's 8 values equal the desktop's within 1 mm; each
+#     difference is reported (the fit's native64 uses each machine's C library). A second run on the box with
+#     --fits-from in/desktop (the desktop's fit tables, not fitted again) compares the driver, seg and the check alone,
+#     against the same two references.
+# build/m1h sha256 5a3b65e56e9d8432923991ce771010400a61f374869c3f1f33023d97e92a86f5
+# build/m1f sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319
+# in/frame_f.bin sha256 1d997961111f720b2dc275bacb848b3191cbd8997251692ba5b6fe10ef82cf69
+# in/ledger/f6_pairs.001.tsv sha256 b548b943a3f4df198e449be29bafd6d4f3c2705db80b759fbf3777c46a7ae84b
+# in/gp/gp-stations-S0.csv sha256 bfdf8f60f932ae11247c0dd31d361d3f1a3c11cf8505aebedede9b4c08808906
+# in/gp/gp-stations-S1.csv sha256 9bdadd3ac3472b6dd860c753483ef1aa15ba0c2fc664ae0b4137cc67a0c68b5d
+# in/gp/gp-fengyun-1c-debris-S0.csv sha256 cabf9ba46a14446ebde737dce4e9d4f9e3930dfb19e428d95c9772029a2df5e2
+# in/gp/gp-fengyun-1c-debris-S1.csv sha256 3f6092778d026dd6b5c0bb632c40a9d19be6425c9c632724071de1d7e65329da
+# in/gp/gp-iridium-33-debris-S0.csv sha256 4e794306dd4bd9cc2f9ecd595ac5f55dc82b6083d0cd7b7648b7247b6b499a17
+# in/gp/gp-iridium-33-debris-S1.csv sha256 5bd57a2ed58e1e10238a5e75aeb4f4badbb6760e22af9ccb9d3604cc34ff70bd
+# in/gp/gp-cosmos-2251-debris-S0.csv sha256 253e32e87b0be45c2639a8d615808e05093337d395c56bb03da54e4317318f34
+# in/gp/gp-cosmos-2251-debris-S1.csv sha256 29c6578607b82119650830122211ca695b7b4091f3b54bb89be8f48d09022590
+PASS the table is DEBRIS-F's (frame_main.bin)
+PASS f6_pairs.001.tsv is the ledger's
+PASS F6's 200 pairs (200)
+# in/ledger/f5d_fits.001.tsv sha256 a85c98129cdd63a2e034496b9769b082b2d04b17587b36e9024a86628e0bcfe9 (F5(d)'s decode order)
+# pairs fitted in F5(d) and reused by F6: 13; fitted anew by F6: 187
+# FITS FROM in/desktop/h6_fit_f5d.tsv, sha256 7884e300b5899cbed1894ef15d0c957092798c85372a333b67e7eb6067f0db4d (not fitted here)
+# FITS FROM in/desktop/h6_fit_f6.tsv, sha256 9b8ebbf1e62d4af0757ba55c2cbc811beeef00194ebe9fd111fa4fac64aa3cf4 (not fitted here)
+PASS every pair's object fitted (200)
+PASS every fit's origin is e0q - 1 day
+# fits converged 178 of 200 (F6 reported 178 of 200 converged); F6's own column agrees for 200 pairs
+PASS every run from O exited 0 (200 runs)
+# the runs wrote 44064 checkpoints (every 40 steps from O); steps from O to the last checkpoint: 6120 to 22680
+PASS every seg exited 0 (201)
+PASS every seg landed on its e1q exactly
+# decode batch sgp4: one JVM, 3694 sets, 4294 instants, in the order of sgp4_pv_in.txt, sha256 49da4e188a1c31e8a8ac64cb82ad6dfdbd6f280ecda4759481c9ed4e0977fdea
+# ran (2.36 s wall, exit 0): java -cp in/jars/hipparchus-core-4.0.3.jar:in/jars/hipparchus-filtering-4.0.3.jar:in/jars/hipparchus-fitting-4.0.3.jar:in/jars/hipparchus-geometry-4.0.3.jar:in/jars/hipparchus-ode-4.0.3.jar:in/jars/hipparchus-optim-4.0.3.jar:in/jars/hipparchus-stat-4.0.3.jar:in/jars/orekit-13.1.9.jar jdk.nashorn.tools.Shell in/tests/f5_sgp4.js -- pv in/orekit h6/run.002/sgp4_pv_in.txt h6/run.002/sgp4_pv.txt
+# the 8 values of every pair against F6's: largest difference 0.0005 m (tolerance 0.001 m)
+PASS H6 criterion: every pair's (A) and (B) misses and parts equal F6's within 1 mm (0 of 200 pairs do not)
+PASS T1 the time tag: all 400 pair-methods moved by v x 1 s within 1% of |v|
+PASS T2 equal sets: all 1647 objects with equal S0 and S1 rows give (B) a miss of exactly 0 (0 do not)
+PASS T3 swapped identities: 200 pairs compared, 0 within 100 km
+# C16: with e1 moved by 1 s, the first pair's largest difference from F6's values is 0.1729 m
+PASS C16 the first pair with e1 moved by 1 s fails the 1 mm criterion - failed as specified
+# per-pair table h6/run.002/h6_pairs.tsv, sha256 ace76df6742d4668cf9b9ac66c960d09f891829b236faf58bd6ad708cc2d7e3a
+# compared with in/desktop/h6_pairs.tsv, sha256 008bad2533d3735a7565d0921b520282c866ea036531dbb1afd4377b8577e1c3
+# against the other machine: 0 pairs differ in any value at the printed micrometre, the largest difference 0.000000 m
+PASS H6 on two machines: every pair's 8 values equal the other machine's within 1 mm (0 do not)
+# PASS 

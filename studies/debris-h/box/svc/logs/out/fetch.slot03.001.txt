@@ -1,0 +1,6 @@
+h_fetch.py sha256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0; slot 3; live mode
+kept stations: 17 rows, 2816 bytes (913 on the wire, gzip), sha256 25471288c6d9f26f2f0add262cb4d4bc7052fa5a936b6ceeb05a33399469559f 
+kept fengyun-1c-debris: 1992 rows, 303917 bytes (114840 on the wire, gzip), sha256 cbb7a8dd0f9baa680193c8efdd813e180c2904574c2c54f87bbb901442ab7f93 
+kept iridium-33-debris: 109 rows, 16966 bytes (6753 on the wire, gzip), sha256 0302d54db0ef87f4a7a26041d7ab81a2b58ec1cd0b3de855fd0b7ccd3feb5acc 
+kept cosmos-2251-debris: 583 rows, 90356 bytes (34225 on the wire, gzip), sha256 c9b73eff13b273e8d868e49a078b56f831a6289bbfb26d45adbcef8e673e06bb 
+slot 3: ok (exit 0)

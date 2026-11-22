@@ -1,0 +1,23 @@
+# h_env_gate, log 001, written 2026-11-18 11:56:13 -0700
+# script h_env_gate.py sha256 9cad7f9a5c2eb1d2cf70caef655a3b201fef6d6ebf60cbd6963d302141d25884
+# h_lib.py sha256 7bd11067b93f8f2ac7975034894e2d9c15c8ba0b163cb039f95f924fc096e4bb
+# h_seed.py sha256 d43000d54299f28773b6db57bb923eb4b7caad29ff81a075e3345f7a52acc22d
+# host Linux 6.8.0-139-generic x86_64; python 3.12.3
+# CRITERIA (stated in the script before its data; asserted below):
+#   C17 (the lead's request of 2026-11-18): tests/h_seed.py fit, on one object (the test seed's object 0, from S0, with
+#   DEBRIS-F's table, --no-catchup), run three times from <root>:
+#    (i)   M1_DOWNLOADS=no-such-downloads/ in the environment it inherits: it must pass (every m1f fit exits 0), its m1f
+#          reading in/dl/, the default of its --downloads, which it gives every m1f as M1_DOWNLOADS;
+#    (ii)  no M1_DOWNLOADS in the environment it inherits: it must pass;
+#    (iii) as (i) with the fix withdrawn (--downloads-inherit: m1f inherits the environment as it is): it must FAIL, its
+#          log naming m1f's "gfc: cannot open" - the control that bites on the property itself;
+#    and (i) and (ii) must give the same fit, bit for bit.
+# m1f sha256 a033f5f23c1dc95cf43f66c53b81aac6b02a6c56c025e0938041800356116319; in/dl/ holds EIGEN6-C4.gfc, header.421, lnxp1900p2053.421
+# (i) inherited M1_DOWNLOADS 'no-such-downloads/': exit 0; a fit table
+# (ii) inherited M1_DOWNLOADS None: exit 0; a fit table
+# (iii) inherited M1_DOWNLOADS 'no-such-downloads/' and --downloads-inherit: exit 1; no fit table
+PASS (i) with no-such-downloads/ inherited, the fix gives m1f in/dl/ and the fit passes
+PASS (ii) with no M1_DOWNLOADS inherited, the fit passes
+PASS (i) and (ii) give the same fit, bit for bit
+PASS C17 (iii) with the fix withdrawn, m1f reads the inherited no-such-downloads/ and the run fails (gfc: cannot open) - failed as specified
+# PASS 
