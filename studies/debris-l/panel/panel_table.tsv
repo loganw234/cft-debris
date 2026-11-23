@@ -1,0 +1,32 @@
+# cft-debris DEBRIS-L panel source table: every plotted number, with the committed record and the line it is read from.
+# cell = the table cell (0-based, between the pipes) of that line; part a = the text before ' / '. Values keep their sources' commas.
+chart	category	series	value	unit	source	line	cell	part
+g	native32	CAPACITY	18,526,551	objects	DEBRIS-G-build.md	50	1	
+g	native64	CAPACITY	18,259,424	objects	DEBRIS-G-build.md	51	1	
+g	native64-cr	CAPACITY	57,040	objects	DEBRIS-G-build.md	52	1	
+g	cft32	CAPACITY	19,828	objects	DEBRIS-G-build.md	53	1	
+g	cft64	CAPACITY	15,322	objects	DEBRIS-G-build.md	54	1	
+g	cft128	CAPACITY	9,564	objects	DEBRIS-G-build.md	55	1	
+g	cft256	CAPACITY	4,332	objects	DEBRIS-G-build.md	56	1	
+i	binary64	PROGRAM	92,573	object-seconds a second	DEBRIS-I-build.md	168	3	
+i	binary64	M1 CFT	85,294	object-seconds a second	DEBRIS-I-build.md	172	3	
+i	binary128	PROGRAM	78,198	object-seconds a second	DEBRIS-I-build.md	169	3	
+i	binary128	M1 CFT	52,375	object-seconds a second	DEBRIS-I-build.md	173	3	
+i	binary256	PROGRAM	59,732	object-seconds a second	DEBRIS-I-build.md	170	3	
+i	binary256	M1 CFT	23,246	object-seconds a second	DEBRIS-I-build.md	174	3	
+h	6 to 24 h	A256	1.240	km	DEBRIS-H-build.md	111	2	a
+h	6 to 24 h	B	0.123	km	DEBRIS-H-build.md	111	4	a
+h	1 to 2 d	A256	4.700	km	DEBRIS-H-build.md	112	2	a
+h	1 to 2 d	B	0.262	km	DEBRIS-H-build.md	112	4	a
+h	2 to 3 d	A256	10.474	km	DEBRIS-H-build.md	113	2	a
+h	2 to 3 d	B	0.553	km	DEBRIS-H-build.md	113	4	a
+h	3 to 7 d	A256	18.307	km	DEBRIS-H-build.md	114	2	a
+h	3 to 7 d	B	1.258	km	DEBRIS-H-build.md	114	4	a
+h	7 d and over	A256	68.758	km	DEBRIS-H-build.md	115	2	a
+h	7 d and over	B	6.982	km	DEBRIS-H-build.md	115	4	a
+k	(A64)	MEDIAN	29.49	km	DEBRIS-K-study.md	133	1	a
+k	(B)	MEDIAN	19.40	km	DEBRIS-K-study.md	133	2	a
+k	(B')	MEDIAN	4.33	km	DEBRIS-K-study.md	133	3	a
+k	(R)	MEDIAN	6.53	km	DEBRIS-K-study.md	133	4	a
+k	(H)	MEDIAN	6.65	km	DEBRIS-K-study.md	133	5	a
+k	(C)	MEDIAN	8.27	km	DEBRIS-K-study.md	133	6	a

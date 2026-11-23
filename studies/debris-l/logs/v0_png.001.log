@@ -1,0 +1,22 @@
+# v0_png, log 001, written 2026-11-23 13:49:45 -0700
+# script l_gates.py sha256 774bd4b34107ea0848990b847820fde9147e0217dc3dbf4bceceb2cf5a649b44
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module l_png.py sha256 29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726
+# module l_draw.py sha256 931daf73d639982d8a98ce003cd1d1308d9112a7ad0a0359f3c578dd445a03dd
+# module l_font.py sha256 dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9
+# module l_panel.py sha256 836f9df43ba2451963e98d85b5047295d3a859da10672734f3d921672c626c1a
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   V0.1 a test image written by l_png.write_png and read back by l_png.read_png has the same pixels, and the CRC of every chunk checks;
+#   V0.2 ffmpeg reads it: its stderr (ffmpeg -i exits 1 with no output named) has a stream line naming png and the image's width and height;
+#   V0.3 CONTROL: one byte flipped in the image data (the IDAT chunk) must make read_png raise a CRC error; a flipped byte in IHDR as well;
+#   V0.4 the same holds for a real frame of the video (frame 0): written, read back equal, every CRC good, ffmpeg names png 1280x720.
+PASS V0.1 test image 200x120: pixels equal after read-back, chunks ['IHDR', 'IDAT', 'IEND'] all with a good CRC
+# ran (0.06 s wall, exit 1): ffmpeg.exe -hide_banner -i <root>/scratch/work/v0_test.png
+PASS V0.2 ffmpeg names the stream: Stream #0:0: Video: png, rgb24(pc, gbr/unknown/unknown), 200x120, 25 fps, 25 tbr
+PASS V0.3 CONTROL: one byte flipped in the IDAT data makes read_png raise a CRC error
+PASS V0.3 CONTROL: one byte flipped in IHDR makes read_png raise a CRC error
+# ran (0.05 s wall, exit 1): ffmpeg.exe -hide_banner -i <root>/scratch/frames/f0000.png
+PASS V0.4 frame 0: read back, CRCs good, ffmpeg names png 1280x720
+# CPU: 0.53 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (5 checks, 0 failed) 

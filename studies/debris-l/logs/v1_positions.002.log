@@ -1,0 +1,21 @@
+# v1_positions, log 002, written 2026-11-23 13:50:47 -0700
+# script l_gates.py sha256 774bd4b34107ea0848990b847820fde9147e0217dc3dbf4bceceb2cf5a649b44
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module l_png.py sha256 29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726
+# module l_draw.py sha256 931daf73d639982d8a98ce003cd1d1308d9112a7ad0a0359f3c578dd445a03dd
+# module l_font.py sha256 dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9
+# module l_panel.py sha256 836f9df43ba2451963e98d85b5047295d3a859da10672734f3d921672c626c1a
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   V1.1 for 20 objects drawn with random.Random(20261123) from the seed's 2,688, each object drawn alone (no Earth, no text) in a 1,280 x 720
+#        image of the 'both' layout lights exactly the 3 x 3 blocks centred on the pixels its seed state projects to, in the colour of its
+#        group; the pixels come from a separate function (ref_pixel) that reads seed1.txt itself and is written for this check;
+#   V1.2 the sample has at least 15 objects whose block lies in the image in both views;
+#   V1.3 CONTROL: a pair of objects (different groups, different pixels with blocks 4 pixels or more apart in both views, found first by ref_pixel),
+#        positions swapped: each object's colour must light the OTHER object's blocks, and not its own.
+PASS V1.1 20 objects each drawn alone: lit pixels equal the reference's blocks in the group's colour
+PASS V1.2 20 of 20 sampled objects lie in the image in both views
+PASS V1.3 a pair with different groups and well-separated pixels was found by ref_pixel
+PASS V1.3 CONTROL: after the swap each object's colour lights the other's pixels (True) and not its own (True)
+# CPU: 0.77 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (4 checks, 0 failed) 

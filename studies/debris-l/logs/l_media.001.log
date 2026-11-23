@@ -1,0 +1,29 @@
+# l_media, log 001, written 2026-11-23 13:42:46 -0700
+# script l_media.py sha256 71d8e6f3b4c9f9ea78fed89273d8befa9539163838dc12838c4fe81c2d428b0d
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module l_draw.py sha256 8e7d26fd1122fc93c50a457e83480b6749cf0451f18c83509ee0a01fa644dd50
+# module l_png.py sha256 29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726
+# module l_font.py sha256 b826526e68ba8895f1faac41dbb0f781083e984d387156d73a66d3adc3d93726
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   M1 every coordinate of every frame is under 10,000 km in size (the display stores 16-bit integers of km);
+#   M2 every frame is 1,280 x 720 and its PNG is read back by l_png.read_png with every CRC good and the same pixels;
+#   M3 the video has 181 frames at 30 a second: the stderr of ffmpeg's null-output decode of it says 181 frames, and its stream
+#      line names h264 and 1280x720;
+#   M4 the display's file holds no network address (no 'http' and no 'src=' or 'href=' outside its own text), 181 x 2,688 x 3
+#      16-bit values and 2,688 group bytes, and decoding its base64 gives back round(position in km) for every value;
+#   M5 every picture, the video and the display have a sidecar naming the SHA-256 of the data and of the scripts.
+PASS M1 181 frames, 2688 objects, largest coordinate 9324.6 km (< 10,000)
+PASS M2 181 frames of 1,280 x 720 written; frames 0, 90 and 180 read back equal, every CRC good
+PASS M2 shot_both_k000 read back equal
+PASS M2 shot_both_k180 read back equal
+PASS M2 shot_top_k000 read back equal
+PASS M2 shot_edge_k000 read back equal
+# ran (5.98 s wall, exit 0): ffmpeg.exe -y -hide_banner -threads 2 -framerate 30 -i <root>/scratch/frames/f%04d.png -c:v libx264 -preset medium -crf
+PASS ffmpeg exit 0, 12903072 bytes
+# ran (0.81 s wall, exit 0): ffmpeg.exe -hide_banner -threads 2 -i <root>/ledger/debris-l/video.mp4 -f null -
+PASS M3 decode of the video: frames 181; stream line:  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1280x720, 17104 kb/s, 30
+PASS M4 display: 1459584 values, 2688 group bytes, base64 decodes to round(km), 0 network patterns, 3899962 bytes
+PASS M5 sidecars written for 6 files
+# CPU: 22.88 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (10 checks, 0 failed) 

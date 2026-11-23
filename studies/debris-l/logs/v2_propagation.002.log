@@ -1,0 +1,29 @@
+# v2_propagation, log 002, written 2026-11-23 13:50:48 -0700
+# script l_gates.py sha256 774bd4b34107ea0848990b847820fde9147e0217dc3dbf4bceceb2cf5a649b44
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module l_png.py sha256 29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726
+# module l_draw.py sha256 931daf73d639982d8a98ce003cd1d1308d9112a7ad0a0359f3c578dd445a03dd
+# module l_font.py sha256 dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9
+# module l_panel.py sha256 836f9df43ba2451963e98d85b5047295d3a859da10672734f3d921672c626c1a
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   V2.1 (a) prop's output at its first target (T_s) equals seed1.txt's state for every object bit for bit (read from prop's own output file,
+#        not from the run's arrays); every frame time equals T_s + 60 k exactly; the l_prop log names m1f's and the frame table's SHA-256;
+#   V2.2 (b) for 20 objects and 5 frames with k >= 1 drawn with random.Random(20261124): the renderer's recorded pixel equals ref_pixel of the P line's
+#        position in both views; the drawn flag equals the reference's (not behind the Earth's disc, inside the image); in the frame's PNG the centre
+#        pixel of every drawn block has a group's colour; the live display's decoded position is within 0.5 km of the P line's, per coordinate;
+#        every value finite;
+#   V2.3 CONTROL: an input whose object A has x changed by one unit in the last place (nextafter) gives, for A, states that differ from the main run's
+#        at some k >= 1, and for every other object of the input states bit-for-bit equal to the main run's at every k.
+PASS V2.1 (a) 2688 x 181 P lines; first target equals the seed's state bit for bit for all but 0 objects; 0 frame times off T_s + 60 k
+PASS V2.1 l_prop.001.log names m1f's SHA-256 3190c0ffe7a45241f04fc7c58b20db9227b15d4f89f301b6040a939c43c4a915 and the frame table's
+PASS V2.2 (b) 20 objects x 5 frames x 2 views: recorded pixel differs from ref_pixel in 0 cases
+PASS V2.2 the drawn flag differs from the reference's in 0 cases
+PASS V2.2 in the frames' PNGs 142 drawn centre pixels checked, 0 not in a group's colour
+PASS V2.2 the display's decoded position is within 0.5 km of the P line's in all but 0 of 100 cases
+PASS V2.2 0 non-finite values among the sampled P lines
+# m1f prop v2ctl: 5 objects, 905 targets, input sha256 b0f25a6db2f5354abfdbd7d5f0c80c95ba6b004e32eedb6ff3ceaccafa2d59ba
+# ran (0.25 s wall, exit 0): m1f_O2.exe prop native64 <root>/ledger/debris-h/frame_h0.bin <root>/scratch/work/v2ctl_prop_in.txt <root>/scratch/work/v2ctl_prop.txt
+PASS V2.3 CONTROL: object A's states change in 180 of 180 frames (k >= 1); the other 4 objects' are bit-for-bit the main run's at every frame: True
+# CPU: 3.36 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (8 checks, 0 failed) 

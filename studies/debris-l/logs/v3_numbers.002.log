@@ -1,0 +1,28 @@
+# v3_numbers, log 002, written 2026-11-23 13:50:52 -0700
+# script l_gates.py sha256 774bd4b34107ea0848990b847820fde9147e0217dc3dbf4bceceb2cf5a649b44
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module l_png.py sha256 29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726
+# module l_draw.py sha256 931daf73d639982d8a98ce003cd1d1308d9112a7ad0a0359f3c578dd445a03dd
+# module l_font.py sha256 dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9
+# module l_panel.py sha256 836f9df43ba2451963e98d85b5047295d3a859da10672734f3d921672c626c1a
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   V3.1 (a) every number in panel_table.tsv equals the one in its source file and line (cell and part as the table says); the table has the 29
+#        rows (7 + 6 + 10 + 6) of the four charts, once each; the sources' SHA-256 equal the sidecars'. CONTROL: one planted wrong number must fail;
+#   V3.2 (b) each chart's bar tops, found by scanning the picture's pixel column at each bar's centre for the series colour, equal (within 1 pixel;
+#        the exact count is reported) the extent a separate function (bar_row) computes from the table's value and the axis limits. CONTROL: a chart
+#        drawn from a table with its smallest value doubled must fail, for each of the four charts.
+PASS V3.1 the table has 29 rows, 29 distinct, by chart {'g': 7, 'i': 6, 'h': 10, 'k': 6}
+PASS V3.1 (a) every one of 29 numbers equals its source line's: 0 mismatches
+PASS V3.1 the sidecars' SHA-256 of the sources, the charts and the table equal the files'
+PASS V3.1 CONTROL: one planted wrong number (1 mismatches found, 1 expected)
+PASS V3.2 (b) chart g: 7 bars, 7 at the exact row, 0 off by more than 1 pixel
+PASS V3.2 CONTROL chart g: its smallest value doubled is found: 1 bars off by more than 1 pixel (1 expected)
+PASS V3.2 (b) chart i: 6 bars, 6 at the exact row, 0 off by more than 1 pixel
+PASS V3.2 CONTROL chart i: its smallest value doubled is found: 1 bars off by more than 1 pixel (1 expected)
+PASS V3.2 (b) chart h: 10 bars, 10 at the exact row, 0 off by more than 1 pixel
+PASS V3.2 CONTROL chart h: its smallest value doubled is found: 1 bars off by more than 1 pixel (1 expected)
+PASS V3.2 (b) chart k: 6 bars, 6 at the exact row, 0 off by more than 1 pixel
+PASS V3.2 CONTROL chart k: its smallest value doubled is found: 1 bars off by more than 1 pixel (1 expected)
+# CPU: 0.57 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (12 checks, 0 failed) 

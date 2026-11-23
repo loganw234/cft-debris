@@ -1,0 +1,52 @@
+# v4_scan, log 001, written 2026-11-23 13:51:03 -0700
+# script l_gates.py sha256 774bd4b34107ea0848990b847820fde9147e0217dc3dbf4bceceb2cf5a649b44
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module l_png.py sha256 29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726
+# module l_draw.py sha256 931daf73d639982d8a98ce003cd1d1308d9112a7ad0a0359f3c578dd445a03dd
+# module l_font.py sha256 dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9
+# module l_panel.py sha256 836f9df43ba2451963e98d85b5047295d3a859da10672734f3d921672c626c1a
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   V4.1 scope: tests/l_*.py and every file under studies/debris-l/; .png only under studies/debris-l/panel/ (each read by l_png with its CRC good);
+#        no other binary or data extension, no NUL byte, nothing over 2 MB;
+#   V4.2 every .py and .c carries 'cft-debris, MIT licence' in its first 800 bytes;
+#   V4.3 no pattern hit: third-party licence and data headers, email, a temp-scratch path, token-like strings, LAN address, box home path, Windows and MSYS
+#        user paths, an app-data folder, the owner's login name, the folder names of the local scratch, ledger and downloads; each pattern must hit its plant;
+#   V4.4 no catalogue number: no 5-digit number outside a hexadecimal token of 12 or more characters equals a catalogue number of the seed or of the
+#        downloads' snapshots; the test must find a planted one, and must exempt a planted hash;
+#   V4.5 no __pycache__ under tests/ or studies/debris-l/.
+# FINAL run
+PASS V4.3 CONTROL: all 22 patterns hit their plants
+PASS V4.4 CONTROL: a planted 5-digit run inside a 16-character hash is exempt, outside one it is not
+PASS V4.4 2699 catalogue numbers known (the seed's, and the downloads' snapshots where present)
+PASS V4.4 CONTROL: a planted known catalogue number is found
+# scope: 44 files by extension {'.json': 4, '.log': 14, '.png': 4, '.py': 21, '.tsv': 1}
+PASS V4.1 nothing over 2 MB ([])
+PASS V4.1 no binary or data extension outside panel PNGs [], NUL [], bad PNG []
+PASS V4.2 every source has the cft-debris MIT line in its first 800 bytes (without: [])
+PASS V4.3 pattern third-party SPDX: []
+PASS V4.3 pattern cft-fp256 copyright line: []
+PASS V4.3 pattern GPL text: []
+PASS V4.3 pattern Orekit header: []
+PASS V4.3 pattern Hipparchus header: []
+PASS V4.3 pattern REBOUND author: []
+PASS V4.3 pattern EIGEN gfc header: []
+PASS V4.3 pattern JPL ephemeris header: []
+PASS V4.3 pattern CelesTrak SW header: []
+PASS V4.3 pattern GP CSV header: []
+PASS V4.3 pattern SATCAT field: []
+PASS V4.3 pattern email address: []
+PASS V4.3 pattern temp-scratch path: []
+PASS V4.3 pattern token-like: []
+PASS V4.3 pattern LAN address: []
+PASS V4.3 pattern box home path: []
+PASS V4.3 pattern Windows user path: []
+PASS V4.3 pattern MSYS user path: []
+PASS V4.3 pattern app-data folder: []
+PASS V4.3 pattern owner's login name: []
+PASS V4.3 pattern local folder names: []
+PASS V4.3 pattern owner's domain: []
+PASS V4.4 catalogue-number hits outside hexadecimal tokens: 0 in []
+PASS V4.5 __pycache__: []
+# CPU: 0.53 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (31 checks, 0 failed) 

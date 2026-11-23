@@ -1,0 +1,27 @@
+# l_prop, log 001, written 2026-11-23 13:40:55 -0700
+# script l_prop.py sha256 111517598b4f77c52ac96a39c5bfd787c9452734ac9ccc3d81478bea83985315
+# module k_pilot.py sha256 21e05a47dedb69f96ca6af771da021379db75e9eee567e2b65b44c189f6c8bf5
+# module l_lib.py sha256 a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d
+# module m1f.c sha256 635c0fe21957c288f3a37c4a566b3533b08bcc1ec0e167943103383a1a7108ea
+# python 3.12.15
+# CRITERIA (fixed in the script before the data, asserted in code):
+#   P1 the seed, its meta file and the frame table have the SHA-256 the dispatch note gives;
+#   P2 the seed holds 2,688 objects with one T_s, equal to 2,933,400 s (2026-11-18 22:50:00 TDB), and the groups count 1,991, 582, 109 and 6;
+#   P3 prop's output holds 2,688 x (frames) P lines, every value finite;
+#   P4 (V2a) prop's state at its first target (k = 0, T = T_s) equals the seed's state for every object, bit for bit, and every
+#      frame time equals T_s + DELTA k exactly (binary64 equality);
+#   P5 the run's log names m1f's SHA-256 and the frame table's.
+PASS P1 seed1.txt sha256 a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0
+PASS P1 seed_meta.tsv sha256 c229529c76f557074a667182ea67b7fa26199b83e4d5f59f937a4a15b9ca9f3e
+PASS P1 frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# m1f exe sha256 3190c0ffe7a45241f04fc7c58b20db9227b15d4f89f301b6040a939c43c4a915; frame table sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+PASS P2 2688 objects, T_s 2933400.0 s, group counts [1991, 582, 109, 6]
+# m1f prop all: 2688 objects, 486528 targets, input sha256 38b3c1234d4166b99b175b210b7c99b6045d2704c0f54c583b616b61c3c2d6ca
+# ran (49.48 s wall, exit 0): m1f_O2.exe prop native64 <root>/ledger/debris-h/frame_h0.bin <root>/scratch/work/all_prop_in.txt <root>/scratch/work/all_prop.txt
+# prop output all_prop.txt: 124840990 bytes, sha256 21e5eff656554cc8cc15ac6f147f9f1d9295073aa23f06abb199f18347aa1c4e
+PASS P3 181 x 2688 states, all finite
+PASS P4 every frame time equals T_s + 60 k exactly
+PASS P4 k = 0: 2688 of 2688 objects' states equal the seed's bit for bit
+# states.npy sha256 c887ea003e118a46d7cfe6a3e44a27e391e03e5bb92e70eb979e750559b88854 (in the scratch)
+# CPU: 54.62 s by cycles / 2.5e9 (this script and every process it started)
+# PASS (7 checks, 0 failed) 

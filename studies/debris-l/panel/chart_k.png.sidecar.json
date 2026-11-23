@@ -1,0 +1,15 @@
+{
+ "data": {
+  "panel_table.tsv": "872eb2b518f3435067f56097c8c4368932d9625c2bc7e62dbb75d8b38a67cd65"
+ },
+ "file": "chart_k.png",
+ "scripts": {
+  "l_font.py": "dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9",
+  "l_panel.py": "836f9df43ba2451963e98d85b5047295d3a859da10672734f3d921672c626c1a",
+  "l_png.py": "29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726"
+ },
+ "sha256": "0609f281f5da37020b7d84ca515c42038c92cc71334dc6f5363f4fbe9289c5a5",
+ "sources": {
+  "DEBRIS-K-study.md": "8a76f7a7f8c1bdb955107e19b448273146a906099343b24b927ae1e36df4e70d"
+ }
+}
