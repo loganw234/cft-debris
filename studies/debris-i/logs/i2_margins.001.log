@@ -1,0 +1,20 @@
+# i2_margins.001.log, written by i_harness.py (SHA-256 f6744510c44161aeece98743681a2a5b592ac27ee2662799da21c534990cceda)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:09:49 -0700 local (2026-11-23 16:09:49 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I2's margins alone (i2_margins), as corrected after i2.001.log: each control's estimated movement exceeds its
+#   tolerance by at least 2^20 (see I2's criteria); computed from the inputs' ranges, the constants and the .gfc's C20
+#   string, with no data of the comparisons.
+C10's basis: C20's relative binary64 rounding error 3.386e-17 (exact, from the .gfc's string); C20's term at 8,000 km 6.429e-03 m/s^2
+PASS margin C10b128: estimated movement 2.177e-19 against tolerance 1.229e-26 (ratio 1.77e+07)
+PASS margin C10b256: estimated movement 2.177e-19 against tolerance 9.247e-63 (ratio 2.35e+43)
+PASS margin C11: estimated movement 1.000e-03 against tolerance 1.000e-12 (ratio 1.00e+09)
+PASS margin C5: estimated movement 2.249e-35 against tolerance 9.247e-63 (ratio 2.43e+27)
+PASS margin C6: estimated movement 4.913e-30 against tolerance 5.694e-60 (ratio 8.63e+29)
+PASS margin C7: estimated movement 3.786e-37 against tolerance 1.082e-66 (ratio 3.50e+29)
+PASS margin C8: estimated movement 7.889e-24 against tolerance 9.459e-50 (ratio 8.34e+25)
+PASS margin C9: estimated movement 2.319e-40 against tolerance 3.276e-54 (ratio 7.08e+13)
+# 8 checks, 0 failed; ended 2026-11-23 09:09:49 -0700 local

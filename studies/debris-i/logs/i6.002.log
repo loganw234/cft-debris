@@ -1,0 +1,20 @@
+# i6.002.log, written by i_harness.py (SHA-256 6771ecc1f9fd8efea894b6a73afb0bb873e43564e9fe2278d74f7604acbbbc89)
+# with i_vals.py (SHA-256 68a0e8af7ecac98c5f01391e82f3152f3b454383242ac3750a72103d8f93780b)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:02:18 -0700 local (2026-11-23 16:02:18 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I6: degree 20 with the gravity tables as lane params (a measurement, no pass condition).
+#   cftc at the pin on the generator's degree-20 program (layout bank:bands,scal;lane:grav,de,frame; binary64; 40 steps a
+#   segment) for sw:2048, and for sw:4096 only if sw:2048 refuses it; the whole stops at 1,800 s of wall time, which bounds
+#   its CPU time by 30 minutes (one process, one thread). Recorded: compiled or not, its time, its instructions and slots,
+#   or its refusal by name. If it compiles within 2,048 slots: I1's criterion (a) on 4 lanes of the test seed for one
+#   segment of 40 steps at binary64.
+#   The lead's ruling (DEBRIS-I's budget, 2026-11-23): I6 capped at 20 CPU-minutes on the desktop; if unfinished, stopped by
+#   its PID and recorded as not determined; no box route (cftc refuses exp without mpmath, and the box has none).
+source studies/debris-i/systems/program20-lane-fp64.cftl sha256 1e3e3a2a71c0ba3ae78d9a27cd1214b76c6574dc9d0ef3d2e01427621f3983d9
+the compile: python -I -B <archive 9e8ff270>/python/cftc studies/debris-i/systems/program20-lane-fp64.cftl --steps 40 --target sw:2048 --format fp64 --out <dir> --stem program20-lane-fp64-sw2048, started 08:40:50 local
+stopped by PID at 09:01:09 local, at the cap: QueryProcessCycleTime 3002127765996 (cftc 2979322162427 cycles, its harness 22805603569) = 1200.9 CPU-s by cycles / 2.5e9; it had written nothing (cftc writes its files only at the end) and printed nothing
+I6 result: not determined within 20 CPU-minutes on the desktop (sw:2048 neither compiled nor refused; sw:4096 not tried)
+# 0 checks, 0 failed; ended 2026-11-23 09:02:18 -0700 local

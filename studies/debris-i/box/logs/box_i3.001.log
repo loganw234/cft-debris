@@ -1,0 +1,151 @@
+# box_i3.001.log, written by i_harness.py (SHA-256 091766b0594f57f136f114b552a95144c853c5e8ac0e4a989d18447c343c328b)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:32:29 -0700 local (2026-11-23 16:32:29 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   box-i3: I3's full run (a day of 64 objects) and the model gap's runs; the criteria are evaluated on the desktop
+#   in phase 2 (tests/i_analyze.py), after every mark is replayed there. This mode runs and records:
+#    the program (degree 7, 28 bands; the staged images, runs and INIT files) at binary64, binary128 and binary256, the 64
+#       objects in 8 batches of 8 lanes, 24 one-hour runs of 6 segments from DEBRIS-H's T_s; every boundary state and lane
+#       byte (out/i3/prog-*.seg.bin), every mark with its boundary state (out/i3/prog-*.marks.bin);
+#    M1 with the program's forces (m1i --model prog) at native64, cft64, cft128 and cft256, 5,760 steps, every 40;
+#    M1 for the model gap at native64 and cft64: --model full, --model prog --nmax 20, --model prog --srp 1;
+#    each run at nice 19, at most W at once; asserted here: every run exits 0, every output's SHA-256 is logged, and the
+#    marks are counted by format and batch.
+PASS B0 the 304 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+104 runs in 2070 s of wall time, at most 16 at once, nice 19
+PASS every run exits 0 (104 runs)
+output m1-prog-cft256-b0.txt SHA-256 7d4db6ecd3681d0dddbb07942d27ba2bb25d939e4dd5d4e1f339046c176e965b
+output m1-prog-cft128-b0.txt SHA-256 78958ce210e6bca454d1ae4f4befd6a0a7c815708d6b2097bf816312834e01b0
+output m1-prog-cft64-b0.txt SHA-256 75f48b2155c036491c5d929038649660ac628106cdc9cfc6660ee12ee9b62425
+output m1-prog-native64-b0.txt SHA-256 a0c5366ff62d7da80f2fef9a9019764bff0851b4198f9a0ffaf50c4f3cb20ca0
+output m1-full-cft64-b0.txt SHA-256 f684b913c9b28f90aea43cbd1d6c85f39c5022b798967ac10773ccafc0d70d59
+output m1-deg20-cft64-b0.txt SHA-256 9eac65c2ae212c8cf0489b18dec51dbf9093f33b2ba4e7036dbeb4cf7b160d6d
+output m1-srp-cft64-b0.txt SHA-256 77cd49d3c787f5675aba8566399ec48478e60a3a92d5564afd95fbd8f190032c
+output m1-full-native64-b0.txt SHA-256 23d2319afa8fe7aeea0e4576fce4a8721faa38a21468b364758fc30d3505329b
+output m1-deg20-native64-b0.txt SHA-256 bbf8aec9cd18c1b11cdbac8c6ea31da3af7df1102d7036d212e5ac7f05707590
+output m1-srp-native64-b0.txt SHA-256 ec3c88e15ee46dc2dacfc66717a0250a5544f39d46dfee0b3b10f6e74de9b6d2
+output prog-fp256-b0.seg.bin SHA-256 eefb2cc65d7fa0ef7602b8e6018f3e1cbcbe98648c15980b8349be6971bef8d6, 260352 bytes
+output prog-fp256-b0.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b0.seg.bin SHA-256 b586a17d6b3ac5639800ebb86ff017ffc36b2ad92e867e287d124eaa6726fde2, 131328 bytes
+output prog-fp128-b0.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b0.seg.bin SHA-256 4deff562c8798fe86ea2bb3dde409f6cb1c3dd83d1e1202664b419a53d8caf91, 66816 bytes
+output prog-fp64-b0.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b1.txt SHA-256 1593d1037600e0e40ac12acc4f58f637673c8dedda2a7ad72e4a8443fcb7f968
+output m1-prog-cft128-b1.txt SHA-256 c3e4b67de389da54fd969f20c8dc77962ba41c32b470bc0cdd3d8a9577e618e0
+output m1-prog-cft64-b1.txt SHA-256 7213c3771962cfa259e78938d556cda0b9f78c6c77dbb3dc6abada22bc14760f
+output m1-prog-native64-b1.txt SHA-256 10888778917e59e3c09e0f850365eaf0d38f1062f6ab04396347f76a69d801e7
+output m1-full-cft64-b1.txt SHA-256 8d88792806fde69045743a0dba0b93b1795337df2374a8c4dd9905c9adcc8bbe
+output m1-deg20-cft64-b1.txt SHA-256 b6ebef9e7ec2961243d9f2e6597c891f4fa1dd82b5e26fd814135156b281ffa7
+output m1-srp-cft64-b1.txt SHA-256 e8ff1414718ed67f48fbb5f56c92dae04d0f8f94793040bf5e54ec0a507f427d
+output m1-full-native64-b1.txt SHA-256 2c099ec4488d666af6fdd6f5e9c09b37e11a5d9e60b6885af2328fcdc92d152e
+output m1-deg20-native64-b1.txt SHA-256 0b05407c05e19db2d651f0515a486ab145abff2ac4443add75e72b921438a3b3
+output m1-srp-native64-b1.txt SHA-256 b854a10776625681e7e6d4b3688684868df649ed79c0af003781a561c4ac9ea0
+output prog-fp256-b1.seg.bin SHA-256 4a2532a88de82c912a3a8ccd6d7599f40d9650c3ebbd3feaca07f53403cfc82a, 260352 bytes
+output prog-fp256-b1.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b1.seg.bin SHA-256 839718519dc72d4b6723a378a8e48cb89f9e7a01e7b9796175a35b93b921ed44, 131328 bytes
+output prog-fp128-b1.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b1.seg.bin SHA-256 58a37585b00bb74a3d55e10d7f9ed672e5d2f71e53d0351960c670c8aec4b42d, 66816 bytes
+output prog-fp64-b1.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b2.txt SHA-256 4d4fc9085e5b83a1975844a9ec15846ab0d96691015d06e82e055290930cfd21
+output m1-prog-cft128-b2.txt SHA-256 67deb935abaeb3398fcf4cee100290917fcfc5ed07ef8bd4fe41af9aa9227fb3
+output m1-prog-cft64-b2.txt SHA-256 0b75481ad6bb74459671ba3558dc49b43a8b6cb487f9069e5d1269f8905e418a
+output m1-prog-native64-b2.txt SHA-256 9e83718398cbb57dd3c26c36dee7c96f435d788c4c68315029e1a3f75c897d7c
+output m1-full-cft64-b2.txt SHA-256 07991da085d8df5d85e70fe4f3d428b6f1c73701d70fe0735035636972457933
+output m1-deg20-cft64-b2.txt SHA-256 a89d8cf9fee6d21624337f072585efb8d356bb439a090d45c48adb3c1c797f9d
+output m1-srp-cft64-b2.txt SHA-256 1162a2a138e0302d18999964a3108ddb84144adbd20f82b4192e737996ba4b0a
+output m1-full-native64-b2.txt SHA-256 aaa345e5d6b55c3cf50dd0da90c07699ef63b90f16f353a6790c76d9c461ce07
+output m1-deg20-native64-b2.txt SHA-256 af5ea73451b4db6aeaeee28afb8cccde5d5144a867feac04f84565a3bfccc43b
+output m1-srp-native64-b2.txt SHA-256 ca63050cf2aca11885c4cd4be6af99248a8315f90c8702f23522e77bfee34081
+output prog-fp256-b2.seg.bin SHA-256 65f07a0aa0a4da0e28986544c3457b8cc9c5e3603821ed394e663e4e119ad768, 260352 bytes
+output prog-fp256-b2.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b2.seg.bin SHA-256 4ad09d160ce6f04e0ac8ba3d90ec65628fd0ff28c036f75d0d754643a7d2fe41, 131328 bytes
+output prog-fp128-b2.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b2.seg.bin SHA-256 c6456d924fe55969ee53640a5395ed216ca3000d1f09a351a0bd815daf40bb96, 66816 bytes
+output prog-fp64-b2.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b3.txt SHA-256 7384dcf3a7251d982fdc30dec92e50fbfb1ef52b01f75d359ecc48a217fdaa75
+output m1-prog-cft128-b3.txt SHA-256 7fdbfee4001daee717c0960164a624b1f41bcccc6f19f99a950b516079acae63
+output m1-prog-cft64-b3.txt SHA-256 19d78687a2f5d945c6afd686615d0266672620927d93d245494f2e1a42ea5285
+output m1-prog-native64-b3.txt SHA-256 ca792e4def56df8f6c80fa7070c82a3f90b0781497a7ab96f0efb98bff9bfb9c
+output m1-full-cft64-b3.txt SHA-256 8e328efff4a0b19bfbaf65acfa27f555e942b0014b525f9e94eb38df989ba719
+output m1-deg20-cft64-b3.txt SHA-256 b996cbf0a556690c0244c916e4c33661a30e3c560e8eb08ec88f644197e82aac
+output m1-srp-cft64-b3.txt SHA-256 edda6478695d36f91eafc67f00832195bf339009df6c58b95c1f03192583db92
+output m1-full-native64-b3.txt SHA-256 e4a4656871dad7d2a9b3c7e2264e4e75b75aa3aaaabd98d5c12309aada9c1c1e
+output m1-deg20-native64-b3.txt SHA-256 7c9787242e09da5cd7f726ecf8602b225fbdb502de9715b7b440aa0670ae3ee0
+output m1-srp-native64-b3.txt SHA-256 0c4fbe80fbd99f89b61f06262465b7c5f431bb88c22a2f3318c099e7b6450d18
+output prog-fp256-b3.seg.bin SHA-256 8feec7acb27e3a8022ab9f0cdea88d9daf1bf06c14978f971f358ad61bded56d, 260352 bytes
+output prog-fp256-b3.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b3.seg.bin SHA-256 0ad9cb6bcf022e2d13bd71b1d8bd21bbd4ab7d2c5199a4c8b488c8a4c627f59e, 131328 bytes
+output prog-fp128-b3.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b3.seg.bin SHA-256 f3cfd9f04a25c60087f203c928ce7e3426b54df9b481f4ce8448b6f1f2436345, 66816 bytes
+output prog-fp64-b3.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b4.txt SHA-256 51b115bdce89dc2f980c572edd3007cfcedc6e4039ede1310ee3db9b4a651f5a
+output m1-prog-cft128-b4.txt SHA-256 52130e243875117a58bbcb153336ecdf10a90704df738ba37239876a6f104c3f
+output m1-prog-cft64-b4.txt SHA-256 1e4d1e882cf809b8fa2280a46122e9e191e54958b1abfa7efb1e45f64776bded
+output m1-prog-native64-b4.txt SHA-256 085e9dccb5be0345ab3f447526bcefbe966351e5e53186b5a94eeb2e9a51ed2a
+output m1-full-cft64-b4.txt SHA-256 477b69a455429ae2d9e9a009fd18fdaf4055a1720e35e90187d74c6bed28c6c0
+output m1-deg20-cft64-b4.txt SHA-256 7803752f56af6b6d91833b1b1fdc82caa541290b08ba831149c89153ef5db316
+output m1-srp-cft64-b4.txt SHA-256 dcb3906e50087b6d98349627e3487e26b139e8badb8dff342e2ad22da1e39f99
+output m1-full-native64-b4.txt SHA-256 bc7c870543c058b4f097c164a291a98f109a89539b957bc288780a715a894692
+output m1-deg20-native64-b4.txt SHA-256 b21d0667367f572c186b07097e128d6dfa04efafa2c813ffa0e18ef7401b0da8
+output m1-srp-native64-b4.txt SHA-256 75a133d9a33d3ce971ff3477685a49bdb7bcebc8482c2c475c5212c5b64cbd31
+output prog-fp256-b4.seg.bin SHA-256 4e3cdfcb542752e68a7bae78996c18029f9b74450ffe2bd67e0e6168df5328c8, 260352 bytes
+output prog-fp256-b4.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b4.seg.bin SHA-256 294a21ad63a5bff8699f46812a8be6bbdb80b12b8452d3a9c54a1bf508ad4606, 131328 bytes
+output prog-fp128-b4.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b4.seg.bin SHA-256 a012c2cbd6f4037b3b2f1a2ab5a10a773593532aa0f5441443a63a3cecd6b7be, 66816 bytes
+output prog-fp64-b4.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b5.txt SHA-256 046615e688e166c8685d4d889ba55164b552e77ab4e018bd82ae2e06e224e4f2
+output m1-prog-cft128-b5.txt SHA-256 be9abe14a693a64b85f6f9366e42441acb34c003ba08e65c36fab9e778a2644f
+output m1-prog-cft64-b5.txt SHA-256 7e78fbfad626b4331235dee69a3033f5aff975f5355de790733e2ba314d3870e
+output m1-prog-native64-b5.txt SHA-256 df17d374af567088034455e306e00ec143b2754e844dbf4c57a1eaf27cf53713
+output m1-full-cft64-b5.txt SHA-256 e302dcbee0be2ac7799985ab4aab59a6592c8c61faf52bcb732262db947c1253
+output m1-deg20-cft64-b5.txt SHA-256 764241f7ffb9bbb344d2b85ff0581b810b50ef7134d5d672e7c4209316c66400
+output m1-srp-cft64-b5.txt SHA-256 8847c68fb208f73d94564c7ed1582c3bc9dcfc07aabe7dce44f770fbae3fee4b
+output m1-full-native64-b5.txt SHA-256 176ecd5c30d325edc1c6536e610fff1b21171b04f853c1a0516d45f18d22dd1d
+output m1-deg20-native64-b5.txt SHA-256 2b8d994da64b33af33aca3f553737daf921c2d91a5a13392cd86198d444c0665
+output m1-srp-native64-b5.txt SHA-256 e82fa35a1d481e8987dcf418ff630e3c0fd745d513375f1a28816fe9d5382079
+output prog-fp256-b5.seg.bin SHA-256 c80104bb1890c3a5194d59e5f1aae5c957e4683ab1133684f2eba984f5291105, 260352 bytes
+output prog-fp256-b5.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b5.seg.bin SHA-256 f254111ef5390769b0ef5a2b76424d046fa86b95d498adaa577d13dc4fd8b728, 131328 bytes
+output prog-fp128-b5.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b5.seg.bin SHA-256 dabe011ccce02d45bd0e1ce663db039d1647609f05f11fabe8ffa2d697b9d38c, 66816 bytes
+output prog-fp64-b5.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b6.txt SHA-256 96a977bfdadfbb050a977c5ffe938c3cb3b3d8fb8631b8fde1b3c77646788e35
+output m1-prog-cft128-b6.txt SHA-256 f773eef29c56cdeb8f6aa6054d0c4261ee53a487d597a1d3f7a2114169845874
+output m1-prog-cft64-b6.txt SHA-256 fce0f953625c8b8d09743a8d10023cd31649ed6e82b0555f3392a1add5476932
+output m1-prog-native64-b6.txt SHA-256 2475861b230f932f969373f0b8789f0f678e226b993b1800cbab158a675be315
+output m1-full-cft64-b6.txt SHA-256 835a08b57248e3ed824e655a172b6c1ab9f390c99d1dfcd7b26caf2b09d6da3d
+output m1-deg20-cft64-b6.txt SHA-256 7d34314e1c30ef320d1e5bb09bef476ebd15a6db8f81bb5ac317ccac31914d69
+output m1-srp-cft64-b6.txt SHA-256 4ef1d01299d88f1e35b66c4de33dff06cae7c364bf2bbded8a6bce97ed7fdafc
+output m1-full-native64-b6.txt SHA-256 b7b0c3b2f1bf218ee9afcb704bf654a5dd057d01a413d932837e2306d2d07c56
+output m1-deg20-native64-b6.txt SHA-256 165349b9438b03d31fafb2b99f936322e015cbbd824be567d32d4849f56a0109
+output m1-srp-native64-b6.txt SHA-256 cb2c5c24693e32c631e0aa0a6ff231dac12ab52bbb3952cccc7797b2fcf502de
+output prog-fp256-b6.seg.bin SHA-256 7bf56efdb0808f176278742211bdb775606ab86445740afa34c958b9d220cdd7, 260352 bytes
+output prog-fp256-b6.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b6.seg.bin SHA-256 7f4dd35f7e265ba50dd88bbc727b03d3812c1d43a0b0897f9ebf73f14ea2557d, 131328 bytes
+output prog-fp128-b6.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b6.seg.bin SHA-256 13244bc0032afa6b387b9335610aa646a6d25f3e896d768ad454cce879343528, 66816 bytes
+output prog-fp64-b6.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output m1-prog-cft256-b7.txt SHA-256 65083fe0d8ad16bfadaa17327489fabb6ce97c2255a19da053d2ef968c490aff
+output m1-prog-cft128-b7.txt SHA-256 65327f427e4b36723debf55c1bb2e9c80dcb780b51480049e9a39360eeaa9296
+output m1-prog-cft64-b7.txt SHA-256 a6eb147ea7a734c3e0eeb746dd216e8023fc47d21a719c496656af438602d9d0
+output m1-prog-native64-b7.txt SHA-256 141f16a104b45240f6e109f09525ba78457cbe9b3d32c57ce7c05a6dcbb20c02
+output m1-full-cft64-b7.txt SHA-256 80aba95d40328c529cc01296823e4b649cb726bb5412dad34979f4c9c0814499
+output m1-deg20-cft64-b7.txt SHA-256 29c245c45fb060ec2d3fa2e91fe7512e8a55348f2b786e4bc28db5bef251900e
+output m1-srp-cft64-b7.txt SHA-256 f580782a2922bb1d31a1c1dfc851de5d0c1884ee6d91828c66a64dd9b4e02b00
+output m1-full-native64-b7.txt SHA-256 bb1f2a3278104919fe80394be57002bcc2883aa2e6df7fcb7766aae5f7ef5a0a
+output m1-deg20-native64-b7.txt SHA-256 900c326e9d4ed8a57ce0204e2bdc7e27fbfaaee5731ab1e7d617a13ad8da6a71
+output m1-srp-native64-b7.txt SHA-256 dad1ff69abe67f97f06a3653f22a542bc8ca74b997697f7e8e25cdb3a44e7342
+output prog-fp256-b7.seg.bin SHA-256 88f737ff8f3a1fe0e57815e46db991714127e5f4fdd09abb8adb800103828dc1, 260352 bytes
+output prog-fp256-b7.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp128-b7.seg.bin SHA-256 e1d971dee39a36b3d4eb02c0b420259230c59eec2e580a30256fa5119a96821a, 131328 bytes
+output prog-fp128-b7.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+output prog-fp64-b7.seg.bin SHA-256 05a23c1c7fb9b4c0126c65d7d48bd6ad44d3d274f8997b8c11ed5b0c88a10382, 66816 bytes
+output prog-fp64-b7.marks.bin SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, 0 bytes
+marks at fp64: 0 lane-segments (exp, the one routine that marks)
+marks at fp128: 0 lane-segments (exp, the one routine that marks)
+marks at fp256: 0 lane-segments (exp, the one routine that marks)
+# 2 checks, 0 failed; ended 2026-11-23 10:07:00 -0700 local

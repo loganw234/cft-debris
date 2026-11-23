@@ -1,0 +1,55 @@
+# i3_desktop.001.log, written by i_harness.py (SHA-256 e7030665db419706ba4b47c0d3e9e2013d8c62a6d3b724e1d4ebcd832d219f04)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# with i_analyze.py (SHA-256 d4b5437c66107ae0ff74cc6bb5b51e67a72b33db7c4f314a1e9acb14385545e7)
+# started 2026-11-23 09:11:44 -0700 local (2026-11-23 16:11:44 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I3 on the desktop (a functional test; the full run is the box's): 8 of I3's 64 (the first 2 drawn in each band),
+#   2 hours from DEBRIS-H's T_s (480 steps, two one-hour runs of 6 segments); the program (degree 7, 28 bands) at binary64,
+#   binary128 and binary256 against M1 with the program's forces (m1i --model prog: central, degrees 2..7, Sun, Moon,
+#   28-band drag, frame = 1, srp 0) at native64, cft64, cft128 and cft256, from the seed's binary64 states at T_s.
+#   Criterion (i_analyze.py's): |program at p - M1 at the matching kind| <= 64 n 2^-p S + T_frame at every boundary and
+#   object, S = 7e6 m and T_frame = 1e-3 m for positions, S = 8e3 m/s and T_frame = 1e-6 m/s for velocities; binary64 /
+#   native64 reported beside; t equals M1's host stage time at every boundary, exactly. Every mark is replayed by lang.run
+#   before its state is used; a criterion is evaluated only on unmarked or replayed-equal states.
+#   C12 (control): M1 at cft256 with degree 6 against the program at binary256 must FAIL the criterion somewhere.
+#   C13 (control): the program at binary256 with its second run given the frame's block of the hour before must FAIL.
+#   Measurements: the share of each tolerance used (median and largest); binary64 against binary256, position, at 1 and
+#   2 hours (the box's run gives 1, 6 and 24); the model gap (M1 at native64 and cft64: prog against full, and one force
+#   at a time: degree 7 against 20 with srp off, srp off against on at degree 7), position differences at 1 and 2 hours.
+I3 sample: seed seed1.txt sha256 a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0, 2688 objects; set aside: 0 duplicates of a lower index, and index 1595 (E0003: M1 (DEBRIS-H's A256) decayed it at step 1396, 5.8 h after T_s; a lane that re-enters leaves the model's domain, and I3's tolerance bounds rounding and the frame, not a re-entry)
+I3 sample: eligible by band [16, 323, 1806, 542]; drawn [16, 16, 16, 16] (random.Random(20261123))
+desktop objects: 8 (2 a band), seed indices [34, 154, 179, 265, 278, 295, 720, 1074]
+image program-d7-fp64: reused (manifest names source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb)
+program fp64: image d0a6558b12bf62070b38cf5dee715c9978a4eb68258cc2b74e499f5acbcd53b3, runs 89bc627f2208e78844a24ea2a615adc9b4816b8917ac90351243e08e2714c365, init f82671a1a1d3a7a3e73fa1777af0eb36de21c696a62f4994023e00435a61ebbf, segments a05b740fb890f603ce9beed9d4918684ee983cc33f9d217a8f5fa4e875daee85; marks 0
+image program-d7-fp128: reused (manifest names source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9)
+program fp128: image 02245fbc6025031797005317dbab02d1dec8baa6e16377963aa6c83593bc5994, runs b04e56d02ae4fe3dd7f612eef09125b0b199b5930b5a824649ca6362e1842a37, init 8187314d66fcf4a6be4dbc8baef8f6ecbdeebed261a26d2f10c3c4eadbce7e21, segments aff7eabb0b12da81d9b28a50730d5557fe23b5a95afbbdcbaebeab92d783e4b9; marks 0
+image program-d7-fp256: reused (manifest names source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7)
+program fp256: image 974d6760c68399df1a4f1c93d5027c41e3f1d6eecb926ade0d0c52181c79f7d9, runs e57bf11db97e3bbee334526665cab0f2625f43d817b386d5cdfae9095d391a3a, init 6b72999257add3aa0dacb7a27e812ca226a6d4facfc271f09801e2f25cdd147a, segments d7542f0106c28a24f026de2863cf582fc283ee2e31d42a287b89f842169e7efa; marks 0
+M1 native64 --model prog: output sha256 f81a4d1d80dcfe0638ef4b0df0eca798a86fe82dd06027ef1b5aba75c05188f2
+M1 cft64 --model prog: output sha256 6719ae28a5ad54e7b11cbba883d9f40793aa356f430497922f108ad437880d9c
+M1 cft128 --model prog: output sha256 e69292afe5ef33aa0fdd399f2420e19b8d4f4f8b15c1d5a0113c98fb492889c8
+M1 cft256 --model prog: output sha256 ab11bfc8b22d692bb59cab0afc843be9e9326380c096f7e6016745f9feccf43d
+PASS I3 desktop fp64 against cft64: 576 values at 12 boundaries x 8 objects; share of the tolerance median 2.66e-06, largest 0.000201; t mismatches 0; NaN pairs 0; over 0
+(beside) I3 desktop fp64 against native64: 576 values at 12 boundaries x 8 objects; share of the tolerance median 2.66e-06, largest 0.000201; t mismatches 0; NaN pairs 0; over 0
+PASS I3 desktop fp128 against cft128: 576 values at 12 boundaries x 8 objects; share of the tolerance median 4.02e-07, largest 9.13e-06; t mismatches 0; NaN pairs 0; over 0
+PASS I3 desktop fp256 against cft256: 576 values at 12 boundaries x 8 objects; share of the tolerance median 4.02e-07, largest 9.13e-06; t mismatches 0; NaN pairs 0; over 0
+binary64 against binary256 at 1 h: position difference median 1.773e-08 m, largest 9.744e-08 m (8 objects)
+binary64 against binary256 at 2 h: position difference median 7.876e-08 m, largest 1.861e-07 m (8 objects)
+PASS C12 (control): M1 at degree 6 against the program at degree 7, binary256: 576 values over the tolerance (must be > 0)
+FAIL C13 (control): the second run given the hour before's frame block, binary256: 0 values over the tolerance (must be > 0)
+gap native64 program's forces against the full model at 1 h: median 51.83 m, largest 174.3 m
+gap native64 program's forces against the full model at 2 h: median 92.72 m, largest 140.6 m
+gap native64 degree 7 against 20 (srp off) at 1 h: median 52.04 m, largest 174.2 m
+gap native64 degree 7 against 20 (srp off) at 2 h: median 92.86 m, largest 141 m
+gap native64 srp off against on (degree 7) at 1 h: median 0.2324 m, largest 0.3579 m
+gap native64 srp off against on (degree 7) at 2 h: median 0.4614 m, largest 0.8931 m
+gap cft64 program's forces against the full model at 1 h: median 51.83 m, largest 174.3 m
+gap cft64 program's forces against the full model at 2 h: median 92.72 m, largest 140.6 m
+gap cft64 degree 7 against 20 (srp off) at 1 h: median 52.04 m, largest 174.2 m
+gap cft64 degree 7 against 20 (srp off) at 2 h: median 92.86 m, largest 141 m
+gap cft64 srp off against on (degree 7) at 1 h: median 0.2324 m, largest 0.3579 m
+gap cft64 srp off against on (degree 7) at 2 h: median 0.4614 m, largest 0.8931 m
+# 5 checks, 1 failed; ended 2026-11-23 09:14:56 -0700 local

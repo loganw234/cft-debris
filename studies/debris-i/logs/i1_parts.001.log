@@ -1,0 +1,13 @@
+# i1_parts.001.log, written by i_harness.py (SHA-256 6771ecc1f9fd8efea894b6a73afb0bb873e43564e9fe2278d74f7604acbbbc89)
+# with i_vals.py (SHA-256 68a0e8af7ecac98c5f01391e82f3152f3b454383242ac3750a72103d8f93780b)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:02:25 -0700 local (2026-11-23 16:02:25 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I1 (part systems): each part system of the program (degree 7: central, grav, tides, bodies, frame, drag; maps
+#   whose inputs and data are lane params) against lang.run, at binary32, binary64, binary128 and binary256: 16 lanes of I2's
+#   inputs (the test seed's first 16 for central, grav, tides and drag; the first 16 stage times for bodies and frame), two
+#   runs of two segments of 40 steps, every lane param rewritten by the driver at each run's start; criterion (a) of I1
+#   (states bit for bit by the NaN rule, lane bytes [7:5] clear and [4:0] the definition's flags; a marked lane replayed,
+#   its guess counted).

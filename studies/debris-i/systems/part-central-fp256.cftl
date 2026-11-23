@@ -1,0 +1,17 @@
+; cft-debris DEBRIS-I (MIT licence), written by tests/i_gen.py: part central of the program (degree 7, 28 bands, frame degrees 7 and 3), a map
+; every data value is a param or a lane param, default 0, filled per run; no data is in this file
+system dpart_central
+format fp256
+round  rne
+state  o0, o1, o2
+lane param x = 0, y = 0, z = 0, gm = 0
+let r2 = x * x + y * y + z * z
+let rn = sqrt(r2)
+let kc = -(gm / (r2 * rn))
+let cx = kc * x
+let cy = kc * y
+let cz = kc * z
+next o0 = cx
+next o1 = cy
+next o2 = cz
+step   map

@@ -1,0 +1,59 @@
+# box_i0.001.log, written by i_harness.py (SHA-256 091766b0594f57f136f114b552a95144c853c5e8ac0e4a989d18447c343c328b)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:27:53 -0700 local (2026-11-23 16:27:53 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   box-i0: I0 on the box (after box-build).
+#    P4 M1 on 9e8ff270's libcft equals M1 on 0aa997a3's, bit for bit (every state line of m1i traj): the test seed's
+#       objects 0..15, 240 steps, M1's full model, frame = 1, at native32, native64, native32 --cr, native64 --cr, cft32,
+#       cft64, cft128 and cft256; and each line's SHA-256 is printed, for the desktop's to be set beside;
+#    C2 (control) the 9e8ff270 run at cft64 with object 3's x one binary64 ulp up must FAIL P4, in object 3 alone;
+#    R1 I1's runs repeated on the box's executor (9e8ff270's i_run): for every staged I1 case (the program at degrees 7
+#       and 2 and every part system, each at binary32, binary64, binary128 and binary256), the segment file's SHA-256 equals
+#       the desktop's (in/i1/EXPECTED-segs.sha256): states and lane bytes, bit for bit.
+PASS B0 the 304 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+PASS every M1 run exits 0 (17 runs)
+PASS P4 native32: equal, 112 state lines, SHA-256 of the lines e323798725e0b97262d7585751f43a0cf379cf6ee208edf5f6ed8c6513209c45
+PASS P4 native64: equal, 112 state lines, SHA-256 of the lines 920aa6868114b2142fc3f591a7bdf8a6a1149b526c09fb6f234cf94acccff2ed
+PASS P4 native32-cr: equal, 112 state lines, SHA-256 of the lines e323798725e0b97262d7585751f43a0cf379cf6ee208edf5f6ed8c6513209c45
+PASS P4 native64-cr: equal, 112 state lines, SHA-256 of the lines 920aa6868114b2142fc3f591a7bdf8a6a1149b526c09fb6f234cf94acccff2ed
+PASS P4 cft32: equal, 112 state lines, SHA-256 of the lines e323798725e0b97262d7585751f43a0cf379cf6ee208edf5f6ed8c6513209c45
+PASS P4 cft64: equal, 112 state lines, SHA-256 of the lines 920aa6868114b2142fc3f591a7bdf8a6a1149b526c09fb6f234cf94acccff2ed
+PASS P4 cft128: equal, 112 state lines, SHA-256 of the lines 57b3cd71ecd7f46e070d5585aaae6287ffd6fe8108f069a01af722bcb81ee8ea
+PASS P4 cft256: equal, 112 state lines, SHA-256 of the lines 4a102ec432f5b970ed59e04f6fedcd4e414c10249bc28549564a81dbb0149811
+PASS C2 (control) object 3's x one ulp up: P4 FAILS in object 3 alone (['3'])
+PASS R1 i1-program-d2-fp128: the box's segments 192564eb8bb5cc6de13232f81345aba596f51ac6062191ca8be4ec10d678ff7d, the desktop's 192564eb8bb5cc6de13232f81345aba596f51ac6062191ca8be4ec10d678ff7d
+PASS R1 i1-program-d2-fp256: the box's segments 8c8e189bf344eb7febbf4247061f0ecf716799fffeadd9125c6a159c3cd11c47, the desktop's 8c8e189bf344eb7febbf4247061f0ecf716799fffeadd9125c6a159c3cd11c47
+PASS R1 i1-program-d2-fp32: the box's segments a132d8def556d86e5384a77062b4235d56485e029f8979acf5da16ad13cac59a, the desktop's a132d8def556d86e5384a77062b4235d56485e029f8979acf5da16ad13cac59a
+PASS R1 i1-program-d2-fp64: the box's segments b43d82927fc41ea2f6d04b0b3d10fd8771ed57ea15b034b0e6e3e8be5cce6f66, the desktop's b43d82927fc41ea2f6d04b0b3d10fd8771ed57ea15b034b0e6e3e8be5cce6f66
+PASS R1 i1-program-d7-fp128: the box's segments 783e4ab75676d40f81515945c7d1869631e2bbf1cde2539beec5c996c9360b3a, the desktop's 783e4ab75676d40f81515945c7d1869631e2bbf1cde2539beec5c996c9360b3a
+PASS R1 i1-program-d7-fp256: the box's segments ae9e56115d4c7ab1cd8ef084fef6617614239665503259b928e17704dfd3802a, the desktop's ae9e56115d4c7ab1cd8ef084fef6617614239665503259b928e17704dfd3802a
+PASS R1 i1-program-d7-fp32: the box's segments 458b2a1cbaf038d72c3984bd8689c5d2373beb19bbb0417b47e7eb26032eed44, the desktop's 458b2a1cbaf038d72c3984bd8689c5d2373beb19bbb0417b47e7eb26032eed44
+PASS R1 i1-program-d7-fp64: the box's segments f07e59b4275c440a0344075a550dae91b0f7fcbafbc9f86c461cf9394a5beb9a, the desktop's f07e59b4275c440a0344075a550dae91b0f7fcbafbc9f86c461cf9394a5beb9a
+PASS R1 i1p-part-bodies-fp128: the box's segments 888cf809c1c98fc12a5e88e3db46f859b2e311dc9e55b9f7f4770b41e53c5faf, the desktop's 888cf809c1c98fc12a5e88e3db46f859b2e311dc9e55b9f7f4770b41e53c5faf
+PASS R1 i1p-part-bodies-fp256: the box's segments 2b70fd2cadc10d8e1792a68915b155e65cb803ced50bd8f337f76e12692a1d1a, the desktop's 2b70fd2cadc10d8e1792a68915b155e65cb803ced50bd8f337f76e12692a1d1a
+PASS R1 i1p-part-bodies-fp32: the box's segments 7c22eb3dbee928f12992a26b5a1416fe0baeab4c042803cdff9ba27e75d90d0c, the desktop's 7c22eb3dbee928f12992a26b5a1416fe0baeab4c042803cdff9ba27e75d90d0c
+PASS R1 i1p-part-bodies-fp64: the box's segments 5d1bb7a983e3628aac633a1ba16a8782f6a5972730b00219510bec8b1f677e2d, the desktop's 5d1bb7a983e3628aac633a1ba16a8782f6a5972730b00219510bec8b1f677e2d
+PASS R1 i1p-part-central-fp128: the box's segments 6a18edc6358f975fc99c738fc5189981db6e66b4f2a20afa628e3bba3c262446, the desktop's 6a18edc6358f975fc99c738fc5189981db6e66b4f2a20afa628e3bba3c262446
+PASS R1 i1p-part-central-fp256: the box's segments f0abdcaf7228e728d9900b06301be2b8ad0a92e42f9809449a4d3dad802793a8, the desktop's f0abdcaf7228e728d9900b06301be2b8ad0a92e42f9809449a4d3dad802793a8
+PASS R1 i1p-part-central-fp32: the box's segments eb351fccb801d05d379ed52607c8c1911861cbf561be65cf7a3358f9befaf507, the desktop's eb351fccb801d05d379ed52607c8c1911861cbf561be65cf7a3358f9befaf507
+PASS R1 i1p-part-central-fp64: the box's segments a198ee68189cc45ebb77333869b1951a805bccd95c0fb739fa171171e251ea58, the desktop's a198ee68189cc45ebb77333869b1951a805bccd95c0fb739fa171171e251ea58
+PASS R1 i1p-part-drag-fp128: the box's segments 9467f8830d46fc1741050fb9af170217050127b073037b29443ed08744eff529, the desktop's 9467f8830d46fc1741050fb9af170217050127b073037b29443ed08744eff529
+PASS R1 i1p-part-drag-fp256: the box's segments f017b67639315c0d0c2bb0dd2b48daac41cfcf8f1c51586067de241d9dc711ec, the desktop's f017b67639315c0d0c2bb0dd2b48daac41cfcf8f1c51586067de241d9dc711ec
+PASS R1 i1p-part-drag-fp32: the box's segments f4d280299adb73472f9c7eabce52424927791d909af6d25af96f612139321a02, the desktop's f4d280299adb73472f9c7eabce52424927791d909af6d25af96f612139321a02
+PASS R1 i1p-part-drag-fp64: the box's segments d861962045a80c29902bdc49ddea74f8a61725cf9d7c71b4690743a39c8bd1bc, the desktop's d861962045a80c29902bdc49ddea74f8a61725cf9d7c71b4690743a39c8bd1bc
+PASS R1 i1p-part-frame-fp128: the box's segments 129226ad926f39a76ca1ade9a454fc4b5f5011d499fcf1cf246bc13c0c637702, the desktop's 129226ad926f39a76ca1ade9a454fc4b5f5011d499fcf1cf246bc13c0c637702
+PASS R1 i1p-part-frame-fp256: the box's segments 3ab0f9e91709b3c837c5d9074b7ba138abb2451a9d8c0453dedf866033cc5937, the desktop's 3ab0f9e91709b3c837c5d9074b7ba138abb2451a9d8c0453dedf866033cc5937
+PASS R1 i1p-part-frame-fp32: the box's segments 0885108fb6865bb286a3a261a9455a410db3ef59d5f5cacb94fc54cd183c53ea, the desktop's 0885108fb6865bb286a3a261a9455a410db3ef59d5f5cacb94fc54cd183c53ea
+PASS R1 i1p-part-frame-fp64: the box's segments 231e94e22e71ee4e698411f151353df6e6263015f552d5223e32ff361b7f8975, the desktop's 231e94e22e71ee4e698411f151353df6e6263015f552d5223e32ff361b7f8975
+PASS R1 i1p-part-grav-fp128: the box's segments 0fb06747ee068ca6c527095233d8667c34988ecc2c7db3075d1c8f597754855f, the desktop's 0fb06747ee068ca6c527095233d8667c34988ecc2c7db3075d1c8f597754855f
+PASS R1 i1p-part-grav-fp256: the box's segments 5a04468bf2ddf4a44d9764a9ef064d3c8d5f93b4076ad58fd99dfdaed1c8ed1f, the desktop's 5a04468bf2ddf4a44d9764a9ef064d3c8d5f93b4076ad58fd99dfdaed1c8ed1f
+PASS R1 i1p-part-grav-fp32: the box's segments 5c0f4f21ab2cbbecf4ad8e741207c4e1ff3d2b6d523289d5e36e4c1ca437f04e, the desktop's 5c0f4f21ab2cbbecf4ad8e741207c4e1ff3d2b6d523289d5e36e4c1ca437f04e
+PASS R1 i1p-part-grav-fp64: the box's segments 261a82467229cfba18a70425c467bd07b57f0b3cff7c7ada3208a9e2e2cc2871, the desktop's 261a82467229cfba18a70425c467bd07b57f0b3cff7c7ada3208a9e2e2cc2871
+PASS R1 i1p-part-tides-fp128: the box's segments c2a3a0fc8b3c5ca44ebd6a8f7b3bd0872cef75e744d77061540ecccf117baf16, the desktop's c2a3a0fc8b3c5ca44ebd6a8f7b3bd0872cef75e744d77061540ecccf117baf16
+PASS R1 i1p-part-tides-fp256: the box's segments c6b956e604c40187fe6332eaaca493f56193bf9ad27db9f5597f124675f4c507, the desktop's c6b956e604c40187fe6332eaaca493f56193bf9ad27db9f5597f124675f4c507
+PASS R1 i1p-part-tides-fp32: the box's segments 14f0e2e0d85b7227c3b01ccaa1eebb306b3913a8deeb16e63d3bebac4a1c788e, the desktop's 14f0e2e0d85b7227c3b01ccaa1eebb306b3913a8deeb16e63d3bebac4a1c788e
+PASS R1 i1p-part-tides-fp64: the box's segments d7d7ecdaf25fba09a264a96823988b716390f6a2ce66ed9a1d07ac7fba8c204e, the desktop's d7d7ecdaf25fba09a264a96823988b716390f6a2ce66ed9a1d07ac7fba8c204e
+# 43 checks, 0 failed; ended 2026-11-23 09:31:54 -0700 local

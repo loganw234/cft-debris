@@ -1,0 +1,139 @@
+# i2_redacted.001.log, written by i_harness.py (SHA-256 3382f8b19be05128f47a8999a4d4504b7a4bccafa80fe0a924293b45107b4aa5)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:17:01 -0700 local (2026-11-23 16:17:01 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   i2-redact: i2.001.log, as written, printed the three binary64 encodings of Omega used for part (f) - an
+#   Earth-orientation value, which the repository must not hold. The original is kept in the ledger (debris-i/held/), its
+#   SHA-256 named here; this log is its copy, line for line, with those three encodings replaced by their SHA-256 (the same
+#   replacement i_harness.py now makes when it writes the line). No other byte differs.
+original: i2.001.log, SHA-256 87e356037d92ad0db13c2da2427e4f3a0de299bbf5e806ddc3b2afbabeb01687, 125 lines; held in the ledger as debris-i/held/i2.001.log
+| # i2.001.log, written by i_harness.py (SHA-256 9353e38146bb1cd361d68c66c46c491d382278d5c26ca0de759e0d140346df31)
+| # with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+| # with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+| # with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+| # started 2026-11-23 09:06:31 -0700 local (2026-11-23 16:06:31 UTC)
+| # python 3.12.15 on win32
+| # CRITERIA (fixed before the data, asserted in code):
+| #   I2: part by part, against M1's kernels (src/ at commit 1646c96, m1i kern; M1's model switches: central, degrees
+| #   2..7, the Sun, the Moon, drag through 28 bands, frame = 1 with DEBRIS-H's table; no radiation pressure).
+| #   Inputs (fixed in this script, PRNG seed I2_SEED): 936 lanes by DEBRIS-E's E1 recipes and the test seed's 64, for (a),
+| #   (b), (c) and (f); (d) 1,000 stage times: 500 in [B - 2 d, B), 499 in (B, B + 2 d], and B = 2026-11-20 00:00 TDB itself,
+| #   where the Moon's sub-interval changes and M1 takes the later one; (e) every stage time of I3's desktop runs (2 one-hour
+| #   blocks from DEBRIS-H's T_s) and 100 one-hour blocks drawn across the frame table's window, 10 stage times each, each
+| #   block its own run's fit. Each part by its part system on the executor (the images I1 holds, one segment) at binary64,
+| #   binary128 and binary256, and by M1's kernel at cft64, cft128 and cft256, with native64 beside.
+| #   Criteria, (a) to (d) and (f): at binary256, |program - M1| <= 2^-200 x the component's largest |M1| over the inputs; at
+| #   binary128 the same with 2^-80. At binary64: a measurement in ulps of M1's value (median and largest), against cft64 and
+| #   against native64.
+| #   Criterion (e) at binary256: every element of M within 1e-12 of M1's frame_at, and Omega within 1e-14 rad/s, at every
+| #   stage time listed. (At binary64 and binary128 the same differences are reported.)
+| #   Controls, each at binary256 unless named, each on the stated lanes, each of which must FAIL the criterion of its part:
+| #    C5 c2_2 (C22) scaled by (1 + 2^-100) fails (b) (first 100 lanes);
+| #    C6 gm scaled by (1 + 2^-100) fails (a) (first 100 lanes);
+| #    C7 gmm (the Moon's GM) scaled by (1 + 2^-100) fails (c) (first 100 lanes);
+| #    C8 each lane's largest Moon coefficient scaled by (1 + 2^-100) fails (d) (first 100 lanes);
+| #    C9 rho0 of the band holding the most (f) inputs (at least 10, asserted) scaled by (1 + 2^-100) fails (f) on that
+| #       band's inputs;
+| #    C10 every C and S taken through binary64 (and P1, PZ0 from them) fails (b) at binary256 and at binary128 (first 100);
+| #    C11 the frame's block of the hour after fails (e) (the lanes of the first 10 of the 100 drawn blocks, in the order
+| #       drawn).
+| #    Before the data, each plant's movement is estimated from the inputs' ranges and the constants, and the script asserts
+| #    that it exceeds its tolerance by at least 2^20.
+| inputs: SHA-256 0dc5d7094fd7d361966a1e916cab374ed61fd5f5dac7241ad8ea6d8a5567082d (all parts' lanes, as text); Omega for (f) M1's at T_s 2764800 (binary64), its three encodings' SHA-256 cf7b9b0ee1b04182dd9c696f5bbc7f23777639d9ad5c83f92ab29e8075d2bfa7 [redacted by i2-redact]
+| FAIL margin C10b128: estimated movement 5.848e-24 against tolerance 1.229e-26 (ratio 4.76e+02)
+| PASS margin C10b256: estimated movement 5.848e-24 against tolerance 9.247e-63 (ratio 6.32e+38)
+| PASS margin C11: estimated movement 1.000e-03 against tolerance 1.000e-12 (ratio 1.00e+09)
+| PASS margin C5: estimated movement 2.249e-35 against tolerance 9.247e-63 (ratio 2.43e+27)
+| PASS margin C6: estimated movement 4.913e-30 against tolerance 5.694e-60 (ratio 8.63e+29)
+| PASS margin C7: estimated movement 3.786e-37 against tolerance 1.082e-66 (ratio 3.50e+29)
+| PASS margin C8: estimated movement 7.889e-24 against tolerance 9.459e-50 (ratio 8.34e+25)
+| PASS margin C9: estimated movement 2.319e-40 against tolerance 3.276e-54 (ratio 7.08e+13)
+| image part-central-fp64: reused (manifest names source 9b0ec83e9eeb02f7f567e6ba77b4d3a5d3331cc74fa97d9a7067778adf555896)
+| part central fp64: source studies/debris-i/systems/part-central-fp64.cftl sha256 9b0ec83e9eeb02f7f567e6ba77b4d3a5d3331cc74fa97d9a7067778adf555896; image sha256 fc0375f91d7eade7a22336ef1fb6833fb1d019955a24c9b7cf6003367cc8f0a6; 4 lane params, 3 outputs
+| (a) central: program fp64 image fc0375f91d7eade7a22336ef1fb6833fb1d019955a24c9b7cf6003367cc8f0a6 depth 512, 1000 lanes, marks 0; M1 cft64 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs a12d49358602561f83db1a9052d12a6dda8a0fca3515f728c3437e44b7e6d465, outputs 13c4c1fc071bee61d43803016a3cd54b637ed4c300307844f060b79b088e0c05
+|   (a) central binary64: against cft64, ulps median 0 largest 0 (0 of 3000 differ); against native64, median 0 largest 0 (0 differ)
+| image part-central-fp128: reused (manifest names source 7a7820c953b1f0d8791fa632a9b0b3c89310314e4ed70f49ef547893363aa1b3)
+| part central fp128: source studies/debris-i/systems/part-central-fp128.cftl sha256 7a7820c953b1f0d8791fa632a9b0b3c89310314e4ed70f49ef547893363aa1b3; image sha256 8a067690118a770ec6a4734ba08ca83dfc5cb52974150b1de08e64ebd2eb8528; 4 lane params, 3 outputs
+| (a) central: program fp128 image 8a067690118a770ec6a4734ba08ca83dfc5cb52974150b1de08e64ebd2eb8528 depth 512, 1000 lanes, marks 0; M1 cft128 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs a12d49358602561f83db1a9052d12a6dda8a0fca3515f728c3437e44b7e6d465, outputs 868d4929509cfd6f4ef7eb04b864ff279556de26d53780739294d383a4f3a79e
+| PASS I2 (a) central fp128: |program - M1| <= 2^-80 of each component's largest |M1|; largest share 0, values differing 0 of 3000
+| image part-central-fp256: reused (manifest names source dfb3f859c578f23070b4bdd9839c14a824082e518a01625d3c48a7ef1e964e96)
+| part central fp256: source studies/debris-i/systems/part-central-fp256.cftl sha256 dfb3f859c578f23070b4bdd9839c14a824082e518a01625d3c48a7ef1e964e96; image sha256 a7aca97e112f4d3f3a7dcbfac0ee6f3bca0ba275dce1e96276ce8c6a4010d52b; 4 lane params, 3 outputs
+| (a) central: program fp256 image a7aca97e112f4d3f3a7dcbfac0ee6f3bca0ba275dce1e96276ce8c6a4010d52b depth 512, 1000 lanes, marks 0; M1 cft256 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs a12d49358602561f83db1a9052d12a6dda8a0fca3515f728c3437e44b7e6d465, outputs fae8e33e7df7eeff4772864144d7a53a70b4fc63729b8d2218205bfa70c82829
+| PASS I2 (a) central fp256: |program - M1| <= 2^-200 of each component's largest |M1|; largest share 0, values differing 0 of 3000
+| image part-grav-fp64: reused (manifest names source 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7)
+| part grav fp64: source studies/debris-i/systems/part-grav-fp64.cftl sha256 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7; image sha256 13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d; 225 lane params, 3 outputs
+| (b) grav: program fp64 image 13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d depth 512, 1000 lanes, marks 0; M1 cft64 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs 4d73fb015f9a1028da86b3c140e8d9ad7fc3570496caa746814c951f90f9bf74, outputs 26942e1b3caba743fe3fb35ca0805d046c3fd7e23876db1e6c49181e8a4f3acb
+|   (b) grav binary64: against cft64, ulps median 0 largest 0 (0 of 3000 differ); against native64, median 0 largest 0 (0 differ)
+| image part-grav-fp128: reused (manifest names source 9ca15c030489e74e74fce5db49ea8ec792a96c3996f168937d2428e5842ed668)
+| part grav fp128: source studies/debris-i/systems/part-grav-fp128.cftl sha256 9ca15c030489e74e74fce5db49ea8ec792a96c3996f168937d2428e5842ed668; image sha256 ec77d86a11185fd558b7c7215d1fcec6cb4ca9d053948be1c7a9de3dae4f4cd9; 225 lane params, 3 outputs
+| (b) grav: program fp128 image ec77d86a11185fd558b7c7215d1fcec6cb4ca9d053948be1c7a9de3dae4f4cd9 depth 512, 1000 lanes, marks 0; M1 cft128 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs 4d73fb015f9a1028da86b3c140e8d9ad7fc3570496caa746814c951f90f9bf74, outputs 1fb8c29243593ae8037770346f549f4ea5861a47efc6e446c01b036d5d34debc
+| PASS I2 (b) grav fp128: |program - M1| <= 2^-80 of each component's largest |M1|; largest share 0, values differing 0 of 3000
+| image part-grav-fp256: reused (manifest names source 35c9c67cc2dbb67fb6e240a2ad98efb448242e75f19a0cdebf797df359f157a8)
+| part grav fp256: source studies/debris-i/systems/part-grav-fp256.cftl sha256 35c9c67cc2dbb67fb6e240a2ad98efb448242e75f19a0cdebf797df359f157a8; image sha256 bd4ab2b4b446d09ada3897c9d518eb5d8958a6703c2c79d2d50438bdb462e3f4; 225 lane params, 3 outputs
+| (b) grav: program fp256 image bd4ab2b4b446d09ada3897c9d518eb5d8958a6703c2c79d2d50438bdb462e3f4 depth 512, 1000 lanes, marks 0; M1 cft256 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs 4d73fb015f9a1028da86b3c140e8d9ad7fc3570496caa746814c951f90f9bf74, outputs 328dc86ae001b59e020a5da02a24aa3b1b7e48843cff274ca9fe1f6ae02f5eb6
+| PASS I2 (b) grav fp256: |program - M1| <= 2^-200 of each component's largest |M1|; largest share 0, values differing 0 of 3000
+| image part-tides-fp64: reused (manifest names source f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87)
+| part tides fp64: source studies/debris-i/systems/part-tides-fp64.cftl sha256 f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87; image sha256 5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba; 11 lane params, 6 outputs
+| (c) tides: program fp64 image 5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba depth 512, 1000 lanes, marks 0; M1 cft64 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c444f104d1b2d36c9e9b808af94c23060c4284efc8bec18f565d3807e2af0e4e, outputs 923e9836208e888a153896bfac101700d5607812f4e4ca9b35db485102f4a2ca
+|   (c) tides binary64: against cft64, ulps median 0 largest 0 (0 of 6000 differ); against native64, median 0 largest 0 (0 differ)
+| image part-tides-fp128: reused (manifest names source 22711b33f732d4e3b71905a0e1a1c7e0cee7422d23a245cdac7c67f36e638f9c)
+| part tides fp128: source studies/debris-i/systems/part-tides-fp128.cftl sha256 22711b33f732d4e3b71905a0e1a1c7e0cee7422d23a245cdac7c67f36e638f9c; image sha256 94b308134e306bc098030110a0086b0b52be37d4076c6fcde8aea6cb6bd075f8; 11 lane params, 6 outputs
+| (c) tides: program fp128 image 94b308134e306bc098030110a0086b0b52be37d4076c6fcde8aea6cb6bd075f8 depth 512, 1000 lanes, marks 0; M1 cft128 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c444f104d1b2d36c9e9b808af94c23060c4284efc8bec18f565d3807e2af0e4e, outputs d6b95c2ae07fe73b8d5e437c7bd0051ecbbd8c810d16f051a345d3921c4c682e
+| PASS I2 (c) tides fp128: |program - M1| <= 2^-80 of each component's largest |M1|; largest share 0, values differing 0 of 6000
+| image part-tides-fp256: reused (manifest names source 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0)
+| part tides fp256: source studies/debris-i/systems/part-tides-fp256.cftl sha256 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0; image sha256 a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c; 11 lane params, 6 outputs
+| (c) tides: program fp256 image a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c depth 512, 1000 lanes, marks 0; M1 cft256 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c444f104d1b2d36c9e9b808af94c23060c4284efc8bec18f565d3807e2af0e4e, outputs 3e6f47d73805cd30ea71f1104c1dce3678ad41a9e8b2476faf27302c746a267e
+| PASS I2 (c) tides fp256: |program - M1| <= 2^-200 of each component's largest |M1|; largest share 0, values differing 0 of 6000
+| image part-bodies-fp64: reused (manifest names source f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90)
+| part bodies fp64: source studies/debris-i/systems/part-bodies-fp64.cftl sha256 f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90; image sha256 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0; 120 lane params, 6 outputs
+| (d) bodies: program fp64 image 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0 depth 512, 1000 lanes, marks 0; M1 cft64 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs cdc49b887eeabc909e0dd9dc5729754d46b923c4b822414c21e435f9d45584f1, outputs 147a9cdee6f711054416ce9ce0df94c981c4aa84078ad2435fd743e0f7735d2f
+|   (d) bodies binary64: against cft64, ulps median 0 largest 0 (0 of 6000 differ); against native64, median 0 largest 0 (0 differ)
+| image part-bodies-fp128: reused (manifest names source 49c209ca753dba2b713c47e08768cddeeb1023a2c7f4d9e09027e1b2cde83c37)
+| part bodies fp128: source studies/debris-i/systems/part-bodies-fp128.cftl sha256 49c209ca753dba2b713c47e08768cddeeb1023a2c7f4d9e09027e1b2cde83c37; image sha256 1383a17c1651734d76a29263eced3fe98da396bfb310d7ad7b4d09a2ab274dd7; 120 lane params, 6 outputs
+| (d) bodies: program fp128 image 1383a17c1651734d76a29263eced3fe98da396bfb310d7ad7b4d09a2ab274dd7 depth 512, 1000 lanes, marks 0; M1 cft128 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs cdc49b887eeabc909e0dd9dc5729754d46b923c4b822414c21e435f9d45584f1, outputs a318b94fc1db6d14bc0752770ab7e00cc7b2f5bbb44de4bd4423dad1a5f61df9
+| PASS I2 (d) bodies fp128: |program - M1| <= 2^-80 of each component's largest |M1|; largest share 0, values differing 0 of 6000
+| image part-bodies-fp256: reused (manifest names source 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5)
+| part bodies fp256: source studies/debris-i/systems/part-bodies-fp256.cftl sha256 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5; image sha256 b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c; 120 lane params, 6 outputs
+| (d) bodies: program fp256 image b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c depth 512, 1000 lanes, marks 0; M1 cft256 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs cdc49b887eeabc909e0dd9dc5729754d46b923c4b822414c21e435f9d45584f1, outputs 9dca6181c6306cdc9306c939859148df3afb8a17a007038ac87cea5bec36fb61
+| PASS I2 (d) bodies fp256: |program - M1| <= 2^-200 of each component's largest |M1|; largest share 0, values differing 0 of 6000
+| image part-frame-fp64: reused (manifest names source bbbc697fb7841a9e976cc3d91c2ec7962c1979eba67da8caafe16988b4015913)
+| part frame fp64: source studies/debris-i/systems/part-frame-fp64.cftl sha256 bbbc697fb7841a9e976cc3d91c2ec7962c1979eba67da8caafe16988b4015913; image sha256 64c1db1207e365e70f6725eb72f4a96fff86a3b2d18e564b9dea3213fd56b7ff; 86 lane params, 12 outputs
+| (e) frame: program fp64 image 64c1db1207e365e70f6725eb72f4a96fff86a3b2d18e564b9dea3213fd56b7ff depth 512, 1962 lanes, marks 0; M1 cft64 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c2b3fc82d31178c1a01e17c136150a79418dcc05a32e00c6e93cd554cdbf0ffb, outputs 3567f7ec42fd47e21c9cfab6b9d320880d893bbea62edac2cd19344572f1f529
+|   (e) fp64: largest |M - M1| 2.490e-13, |Omega - M1| 3.220e-15 rad/s; share of the bound 0.322; over 0
+| image part-frame-fp128: reused (manifest names source f1e0e70d94b4265e9c44b121bd6b08e268e7a33c44432584b80646756e9c7dd6)
+| part frame fp128: source studies/debris-i/systems/part-frame-fp128.cftl sha256 f1e0e70d94b4265e9c44b121bd6b08e268e7a33c44432584b80646756e9c7dd6; image sha256 c4cb5a587ee4e7ec66afefd00c592fb08c2ed328876fec903e92a8501c938e30; 86 lane params, 12 outputs
+| (e) frame: program fp128 image c4cb5a587ee4e7ec66afefd00c592fb08c2ed328876fec903e92a8501c938e30 depth 512, 1962 lanes, marks 0; M1 cft128 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c2b3fc82d31178c1a01e17c136150a79418dcc05a32e00c6e93cd554cdbf0ffb, outputs f8d8dbf6dc1a482457e6f716824722693e05f498cbe0340f4d4742c7fcbce161
+|   (e) fp128: largest |M - M1| 2.490e-13, |Omega - M1| 3.220e-15 rad/s; share of the bound 0.322; over 0
+| image part-frame-fp256: reused (manifest names source 86bf2b22231e1e879bc6b67be5d1643179cb3e8fdacb60034db4d930b051d8a7)
+| part frame fp256: source studies/debris-i/systems/part-frame-fp256.cftl sha256 86bf2b22231e1e879bc6b67be5d1643179cb3e8fdacb60034db4d930b051d8a7; image sha256 f9492691f92e264db2bcc48e67a6eb31eff732acb341964d28a1c97d58f952bc; 86 lane params, 12 outputs
+| (e) frame: program fp256 image f9492691f92e264db2bcc48e67a6eb31eff732acb341964d28a1c97d58f952bc depth 512, 1962 lanes, marks 0; M1 cft256 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c2b3fc82d31178c1a01e17c136150a79418dcc05a32e00c6e93cd554cdbf0ffb, outputs e363dda3c9109b52dc5693c1546e39a865442c69797912f93701548955a86be7
+|   (e) fp256: largest |M - M1| 2.490e-13, |Omega - M1| 3.220e-15 rad/s; share of the bound 0.322; over 0
+| PASS I2 (e) binary256: M within 1e-12 and Omega within 1e-14 rad/s of M1's frame_at at all 1962 stage times
+| image part-drag-fp64: reused (manifest names source fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818)
+| part drag fp64: source studies/debris-i/systems/part-drag-fp64.cftl sha256 fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818; image sha256 f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2; 95 lane params, 3 outputs
+| (f) drag: program fp64 image f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2 depth 512, 1000 lanes, marks 0; M1 cft64 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c3ff6bf3d2b02e9fb1dd19ec868ffcc6c47e9b718f9583d8277d685a55360527, outputs 36bd61723dbddd8f20c9e5407544652bce7a7427cf32376c9954bd84ef74d664
+|   (f) drag binary64: against cft64, ulps median 0 largest 0 (0 of 3000 differ); against native64, median 0 largest 0 (0 differ)
+| image part-drag-fp128: reused (manifest names source 0467190b1d88346e63999807b930e33d348f7deaece4d4e1085d3bcab8009538)
+| part drag fp128: source studies/debris-i/systems/part-drag-fp128.cftl sha256 0467190b1d88346e63999807b930e33d348f7deaece4d4e1085d3bcab8009538; image sha256 75a28d325d932c775145b137dfe310e780c6726ea81408514c04e1ac19a068d1; 95 lane params, 3 outputs
+| (f) drag: program fp128 image 75a28d325d932c775145b137dfe310e780c6726ea81408514c04e1ac19a068d1 depth 512, 1000 lanes, marks 0; M1 cft128 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c3ff6bf3d2b02e9fb1dd19ec868ffcc6c47e9b718f9583d8277d685a55360527, outputs a8865c0eda3dd202faa89a3500daa93c10ac6d266f6386fa192508abf4fe9683
+| PASS I2 (f) drag fp128: |program - M1| <= 2^-80 of each component's largest |M1|; largest share 0, values differing 0 of 3000
+| image part-drag-fp256: reused (manifest names source b7ac98c5b27421d0223a4d519fd39111620fcb8f5e83c21efb81e5246426664f)
+| part drag fp256: source studies/debris-i/systems/part-drag-fp256.cftl sha256 b7ac98c5b27421d0223a4d519fd39111620fcb8f5e83c21efb81e5246426664f; image sha256 ed12b794dd68b8e4350d53eeabe4dc577482154a23f5971df91510394ebb9056; 95 lane params, 3 outputs
+| (f) drag: program fp256 image ed12b794dd68b8e4350d53eeabe4dc577482154a23f5971df91510394ebb9056 depth 512, 1000 lanes, marks 0; M1 cft256 (model central 1 nmin 2 nmax 7 sun 1 moon 1 drag 1 srp 0 nbands 28 frame 1 jd_epoch 2461329.5 t0 0x0p+0), inputs c3ff6bf3d2b02e9fb1dd19ec868ffcc6c47e9b718f9583d8277d685a55360527, outputs 31ccd8e61f062857d4f772db3a3f80d7abcbabe1742afe7d1d015c35646f5547
+| PASS I2 (f) drag fp256: |program - M1| <= 2^-200 of each component's largest |M1|; largest share 0, values differing 0 of 3000
+| PASS C5 (control) grav fp256 on 100 lanes: the criterion FAILS, as it must
+| PASS C6 (control) central fp256 on 100 lanes: the criterion FAILS, as it must
+| PASS C7 (control) tides fp256 on 100 lanes: the criterion FAILS, as it must
+| PASS C8 (control) bodies fp256 on 100 lanes: the criterion FAILS, as it must
+| C9: band 24 holds the most (f) inputs, 110 (by the inputs' heights above rearth)
+| PASS C9's band holds at least 10 inputs
+| PASS C9 (control) drag fp256 on 110 lanes: the criterion FAILS, as it must
+| PASS C10-fp256 (control) grav fp256 on 100 lanes: the criterion FAILS, as it must
+| PASS C10-fp128 (control) grav fp128 on 100 lanes: the criterion FAILS, as it must
+| PASS C11 (control) frame fp256 on 110 lanes, the next hour's block: the criterion FAILS, as it must
+| # 28 checks, 1 failed; ended 2026-11-23 09:08:53 -0700 local
+PASS exactly one line redacted (1)
+# 1 checks, 0 failed; ended 2026-11-23 09:17:01 -0700 local

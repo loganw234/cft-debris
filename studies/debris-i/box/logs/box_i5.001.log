@@ -1,0 +1,88 @@
+# box_i5.001.log, written by i_harness.py (SHA-256 091766b0594f57f136f114b552a95144c853c5e8ac0e4a989d18447c343c328b)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 11:00:02 -0700 local (2026-11-23 18:00:02 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   box-i5: I5, the rate on the box (a measurement; in one sensitive window). Fixed here before the data:
+#    configurations: the program (degree 7, 28 bands, the staged images) at binary64, binary128 and binary256, and M1 with
+#       the program's forces (m1i rate --model prog) at native64, cft64, cft128 and cft256; W = 1, 18 and 36 workers,
+#       worker w on CPU w (as DEBRIS-G's G4), each carrying one 64-lane batch: DEBRIS-H's seed objects 64w .. 64w + 63
+#       (64, 1,152 and 2,304 objects); each worker at nice 19;
+#    durations: each configuration's runs or steps are in in/i5/plan.json, fixed from the desktop's functional rates
+#       before the box's data so that each run lasts at least 60 s (and at least one whole block a worker) and all of them
+#       fit one window of 2 hours; M1 runs whole days from the initial states (passes of 5,760 steps), as G4 did;
+#    validity (DEBRIS-G's V1 to V6): every worker exits 0; each read its release within 50 ms and began no earlier; under
+#       10 ms of CPU before its release; CPU for at least 95% of its timed wall time; on its own CPU from start to end; the
+#       foreign load from /proc/stat at most 2% over the run; the run's wall time at least 60 s. A run failing the foreign
+#       load alone is repeated once; failing again, it is void;
+#    check D: worker 0's final-state SHA-256 is equal across W = 1, 18 and 36, for each format and kind;
+#    statistics: X = object-seconds summed over the workers / the wall time from the first start to the last end (a rate,
+#       object-seconds a second); for each format and kind, X at each W; the ratios are rates against rates.
+PASS B0 the 304 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+RUN prog-fp64 W=1 (try 1): wall 94.97 s, object-seconds 691200, X 7278.4 obj-s/s, foreign load 0.080%, marks 0; validity VALID; worker 0 final states d2062b2a939f8992aa7b4d408329356a2016b32af63f1025601e12fb1cd59f0a
+PASS D prog-fp64 W=1: worker 0's final-state SHA-256 equals W=1's (d2062b2a939f8992aa7b4d408329356a2016b32af63f1025601e12fb1cd59f0a)
+RUN prog-fp64 W=18 (try 1): wall 122.03 s, object-seconds 12441600, X 101957.6 obj-s/s, foreign load 0.067%, marks 0; validity VALID; worker 0 final states d2062b2a939f8992aa7b4d408329356a2016b32af63f1025601e12fb1cd59f0a
+PASS D prog-fp64 W=18: worker 0's final-state SHA-256 equals W=1's (d2062b2a939f8992aa7b4d408329356a2016b32af63f1025601e12fb1cd59f0a)
+RUN prog-fp64 W=36 (try 1): wall 268.80 s, object-seconds 24883200, X 92572.5 obj-s/s, foreign load 0.066%, marks 0; validity VALID; worker 0 final states d2062b2a939f8992aa7b4d408329356a2016b32af63f1025601e12fb1cd59f0a
+PASS D prog-fp64 W=36: worker 0's final-state SHA-256 equals W=1's (d2062b2a939f8992aa7b4d408329356a2016b32af63f1025601e12fb1cd59f0a)
+RUN prog-fp128 W=1 (try 1): wall 75.82 s, object-seconds 460800, X 6077.6 obj-s/s, foreign load 0.054%, marks 0; validity VALID; worker 0 final states 6c335475232b8264a9210737a43f1ef9fc05355a9157fd51b7b30c7f410f4001
+PASS D prog-fp128 W=1: worker 0's final-state SHA-256 equals W=1's (6c335475232b8264a9210737a43f1ef9fc05355a9157fd51b7b30c7f410f4001)
+RUN prog-fp128 W=18 (try 1): wall 97.57 s, object-seconds 8294400, X 85013.4 obj-s/s, foreign load 0.064%, marks 0; validity VALID; worker 0 final states 6c335475232b8264a9210737a43f1ef9fc05355a9157fd51b7b30c7f410f4001
+PASS D prog-fp128 W=18: worker 0's final-state SHA-256 equals W=1's (6c335475232b8264a9210737a43f1ef9fc05355a9157fd51b7b30c7f410f4001)
+RUN prog-fp128 W=36 (try 1): wall 212.14 s, object-seconds 16588800, X 78197.5 obj-s/s, foreign load 0.061%, marks 0; validity VALID; worker 0 final states 6c335475232b8264a9210737a43f1ef9fc05355a9157fd51b7b30c7f410f4001
+PASS D prog-fp128 W=36: worker 0's final-state SHA-256 equals W=1's (6c335475232b8264a9210737a43f1ef9fc05355a9157fd51b7b30c7f410f4001)
+RUN prog-fp256 W=1 (try 1): wall 99.48 s, object-seconds 460800, X 4632.0 obj-s/s, foreign load 0.054%, marks 0; validity VALID; worker 0 final states dcf56d8902182a20c1cf576968ed3baa9914906af9a2380c52b4224cd179d180
+PASS D prog-fp256 W=1: worker 0's final-state SHA-256 equals W=1's (dcf56d8902182a20c1cf576968ed3baa9914906af9a2380c52b4224cd179d180)
+RUN prog-fp256 W=18 (try 1): wall 128.93 s, object-seconds 8294400, X 64331.9 obj-s/s, foreign load 0.061%, marks 0; validity VALID; worker 0 final states dcf56d8902182a20c1cf576968ed3baa9914906af9a2380c52b4224cd179d180
+PASS D prog-fp256 W=18: worker 0's final-state SHA-256 equals W=1's (dcf56d8902182a20c1cf576968ed3baa9914906af9a2380c52b4224cd179d180)
+RUN prog-fp256 W=36 (try 1): wall 277.72 s, object-seconds 16588800, X 59731.8 obj-s/s, foreign load 0.065%, marks 0; validity VALID; worker 0 final states dcf56d8902182a20c1cf576968ed3baa9914906af9a2380c52b4224cd179d180
+PASS D prog-fp256 W=36: worker 0's final-state SHA-256 equals W=1's (dcf56d8902182a20c1cf576968ed3baa9914906af9a2380c52b4224cd179d180)
+RUN m1-native64 W=1 (try 1): wall 67.00 s, object-seconds 428110080, X 6389227.3 obj-s/s, foreign load 0.055%, marks 0; validity VALID; worker 0 final states eff107940215ad8f153411b7d96b71b21398ac56ec03512ccabd285591278b92
+PASS D m1-native64 W=1: worker 0's final-state SHA-256 equals W=1's (eff107940215ad8f153411b7d96b71b21398ac56ec03512ccabd285591278b92)
+RUN m1-native64 W=18 (try 1): wall 85.98 s, object-seconds 7705981440, X 89625190.2 obj-s/s, foreign load 0.045%, marks 0; validity VALID; worker 0 final states eff107940215ad8f153411b7d96b71b21398ac56ec03512ccabd285591278b92
+PASS D m1-native64 W=18: worker 0's final-state SHA-256 equals W=1's (eff107940215ad8f153411b7d96b71b21398ac56ec03512ccabd285591278b92)
+RUN m1-native64 W=36 (try 1): wall 164.05 s, object-seconds 15411962880, X 93947184.2 obj-s/s, foreign load 0.056%, marks 0; validity VALID; worker 0 final states eff107940215ad8f153411b7d96b71b21398ac56ec03512ccabd285591278b92
+PASS D m1-native64 W=36: worker 0's final-state SHA-256 equals W=1's (eff107940215ad8f153411b7d96b71b21398ac56ec03512ccabd285591278b92)
+RUN m1-cft64 W=1 (try 1): wall 86.06 s, object-seconds 550080, X 6392.1 obj-s/s, foreign load 0.056%, marks 0; validity VALID; worker 0 final states 9751c448a1e6ac4d5660d11b0aa89a0c0fbd4f7bf3850f70dfb78024e817b5ad
+PASS D m1-cft64 W=1: worker 0's final-state SHA-256 equals W=1's (9751c448a1e6ac4d5660d11b0aa89a0c0fbd4f7bf3850f70dfb78024e817b5ad)
+RUN m1-cft64 W=18 (try 1): wall 110.19 s, object-seconds 9901440, X 89857.1 obj-s/s, foreign load 0.053%, marks 0; validity VALID; worker 0 final states 9751c448a1e6ac4d5660d11b0aa89a0c0fbd4f7bf3850f70dfb78024e817b5ad
+PASS D m1-cft64 W=18: worker 0's final-state SHA-256 equals W=1's (9751c448a1e6ac4d5660d11b0aa89a0c0fbd4f7bf3850f70dfb78024e817b5ad)
+RUN m1-cft64 W=36 (try 1): wall 232.17 s, object-seconds 19802880, X 85294.3 obj-s/s, foreign load 0.068%, marks 0; validity VALID; worker 0 final states 9751c448a1e6ac4d5660d11b0aa89a0c0fbd4f7bf3850f70dfb78024e817b5ad
+PASS D m1-cft64 W=36: worker 0's final-state SHA-256 equals W=1's (9751c448a1e6ac4d5660d11b0aa89a0c0fbd4f7bf3850f70dfb78024e817b5ad)
+RUN m1-cft128 W=1 (try 1): wall 81.39 s, object-seconds 308160, X 3786.3 obj-s/s, foreign load 0.047%, marks 0; validity VALID; worker 0 final states e400a52000fab1128a99ba391fd02cdf4d6d8789b837c5e60e1a1cf6160dd379
+PASS D m1-cft128 W=1: worker 0's final-state SHA-256 equals W=1's (e400a52000fab1128a99ba391fd02cdf4d6d8789b837c5e60e1a1cf6160dd379)
+RUN m1-cft128 W=18 (try 1): wall 104.53 s, object-seconds 5546880, X 53062.9 obj-s/s, foreign load 0.067%, marks 0; validity VALID; worker 0 final states e400a52000fab1128a99ba391fd02cdf4d6d8789b837c5e60e1a1cf6160dd379
+PASS D m1-cft128 W=18: worker 0's final-state SHA-256 equals W=1's (e400a52000fab1128a99ba391fd02cdf4d6d8789b837c5e60e1a1cf6160dd379)
+RUN m1-cft128 W=36 (try 1): wall 211.81 s, object-seconds 11093760, X 52374.8 obj-s/s, foreign load 0.066%, marks 0; validity VALID; worker 0 final states e400a52000fab1128a99ba391fd02cdf4d6d8789b837c5e60e1a1cf6160dd379
+PASS D m1-cft128 W=36: worker 0's final-state SHA-256 equals W=1's (e400a52000fab1128a99ba391fd02cdf4d6d8789b837c5e60e1a1cf6160dd379)
+RUN m1-cft256 W=1 (try 1): wall 143.45 s, object-seconds 230400, X 1606.2 obj-s/s, foreign load 0.049%, marks 0; validity VALID; worker 0 final states 109f88c5d4d301b889b3ee656f77d0eae2dc9756404df08e2fb16b36b9250430
+PASS D m1-cft256 W=1: worker 0's final-state SHA-256 equals W=1's (109f88c5d4d301b889b3ee656f77d0eae2dc9756404df08e2fb16b36b9250430)
+RUN m1-cft256 W=18 (try 1): wall 183.53 s, object-seconds 4147200, X 22597.2 obj-s/s, foreign load 0.062%, marks 0; validity VALID; worker 0 final states 109f88c5d4d301b889b3ee656f77d0eae2dc9756404df08e2fb16b36b9250430
+PASS D m1-cft256 W=18: worker 0's final-state SHA-256 equals W=1's (109f88c5d4d301b889b3ee656f77d0eae2dc9756404df08e2fb16b36b9250430)
+RUN m1-cft256 W=36 (try 1): wall 356.81 s, object-seconds 8294400, X 23245.7 obj-s/s, foreign load 0.068%, marks 0; validity VALID; worker 0 final states 109f88c5d4d301b889b3ee656f77d0eae2dc9756404df08e2fb16b36b9250430
+PASS D m1-cft256 W=36: worker 0's final-state SHA-256 equals W=1's (109f88c5d4d301b889b3ee656f77d0eae2dc9756404df08e2fb16b36b9250430)
+per-run aggregates: box_i5.runs.20261123-115333.json SHA-256 937ce42384c655b456a659e22bd8b187ecf3f2e6f36ddaad3b1d47e95c7cb947
+FIG prog-fp64 W=1: X 7278.4 obj-s/s (valid)
+FIG prog-fp64 W=18: X 101957.6 obj-s/s (valid)
+FIG prog-fp64 W=36: X 92572.5 obj-s/s (valid)
+FIG prog-fp128 W=1: X 6077.6 obj-s/s (valid)
+FIG prog-fp128 W=18: X 85013.4 obj-s/s (valid)
+FIG prog-fp128 W=36: X 78197.5 obj-s/s (valid)
+FIG prog-fp256 W=1: X 4632.0 obj-s/s (valid)
+FIG prog-fp256 W=18: X 64331.9 obj-s/s (valid)
+FIG prog-fp256 W=36: X 59731.8 obj-s/s (valid)
+FIG m1-native64 W=1: X 6389227.3 obj-s/s (valid)
+FIG m1-native64 W=18: X 89625190.2 obj-s/s (valid)
+FIG m1-native64 W=36: X 93947184.2 obj-s/s (valid)
+FIG m1-cft64 W=1: X 6392.1 obj-s/s (valid)
+FIG m1-cft64 W=18: X 89857.1 obj-s/s (valid)
+FIG m1-cft64 W=36: X 85294.3 obj-s/s (valid)
+FIG m1-cft128 W=1: X 3786.3 obj-s/s (valid)
+FIG m1-cft128 W=18: X 53062.9 obj-s/s (valid)
+FIG m1-cft128 W=36: X 52374.8 obj-s/s (valid)
+FIG m1-cft256 W=1: X 1606.2 obj-s/s (valid)
+FIG m1-cft256 W=18: X 22597.2 obj-s/s (valid)
+FIG m1-cft256 W=36: X 23245.7 obj-s/s (valid)
+# 22 checks, 0 failed; ended 2026-11-23 11:53:33 -0700 local

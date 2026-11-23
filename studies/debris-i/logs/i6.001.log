@@ -1,0 +1,11 @@
+# i6.001.log, written by i_harness.py (SHA-256 e63e8679af5e90b201af23d14ada3cf799a2a2a61b6c6126ad51e6f401cd5f89)
+# started 2026-11-23 08:40:50 -0700 local (2026-11-23 15:40:50 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I6: degree 20 with the gravity tables as lane params (a measurement, no pass condition).
+#   cftc at the pin on the generator's degree-20 program (layout bank:bands,scal;lane:grav,de,frame; binary64; 40 steps a
+#   segment) for sw:2048, and for sw:4096 only if sw:2048 refuses it; the whole stops at 1,800 s of wall time, which bounds
+#   its CPU time by 30 minutes (one process, one thread). Recorded: compiled or not, its time, its instructions and slots,
+#   or its refusal by name. If it compiles within 2,048 slots: I1's criterion (a) on 4 lanes of the test seed for one
+#   segment of 40 steps at binary64.
+source studies/debris-i/systems/program20-lane-fp64.cftl sha256 1e3e3a2a71c0ba3ae78d9a27cd1214b76c6574dc9d0ef3d2e01427621f3983d9: 90 params, 1751 lane params

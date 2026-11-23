@@ -1,0 +1,24 @@
+# calib.002.log, written by i_harness.py (SHA-256 4af888ceecbf87bce2f4f4160b1911d44bc97f2028406dd0f0de597195db85d4)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:17:59 -0700 local (2026-11-23 16:17:59 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   calib: the desktop's functional rates, used ONLY to fix I5's durations before the box's data (never reported as a
+#   measurement; the desktop is shared): one 64-lane batch of DEBRIS-H's seed (objects 0..63), the program at binary64,
+#   binary128 and binary256 for one segment of 40 steps, and M1 with the program's forces (m1i rate --model prog) at
+#   native64 (2,000 steps), cft64, cft128 and cft256 (40 steps), each through the drivers' READY / G / TIMED_DONE / Q
+#   protocol, one worker, unpinned. Each rate is object-seconds a second of that worker's timed region.
+image program-d7-fp64: reused (manifest names source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb)
+program fp64: one segment of 40 steps, 64 lanes, 4.499 s timed: 8535.7 object-seconds a second (functional)
+image program-d7-fp128: reused (manifest names source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9)
+program fp128: one segment of 40 steps, 64 lanes, 5.879 s timed: 6531.7 object-seconds a second (functional)
+image program-d7-fp256: reused (manifest names source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7)
+program fp256: one segment of 40 steps, 64 lanes, 7.489 s timed: 5127.5 object-seconds a second (functional)
+M1 prog native64: 2000 steps, 64 lanes, 0.314 s timed: 6115845.6 object-seconds a second (functional)
+M1 prog cft64: 40 steps, 64 lanes, 4.890 s timed: 7853.1 object-seconds a second (functional)
+M1 prog cft128: 40 steps, 64 lanes, 8.727 s timed: 4400.1 object-seconds a second (functional)
+M1 prog cft256: 40 steps, 64 lanes, 20.842 s timed: 1842.4 object-seconds a second (functional)
+rates written to the scratch's calib-rates.json, SHA-256 34c690a82ec7013664bcd73cc965e6f9208508aad2250c17b2f40a98629ed4ef
+# 0 checks, 0 failed; ended 2026-11-23 09:18:53 -0700 local

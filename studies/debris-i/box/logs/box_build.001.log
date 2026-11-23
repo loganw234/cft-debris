@@ -1,0 +1,137 @@
+# box_build.001.log, written by i_harness.py (SHA-256 091766b0594f57f136f114b552a95144c853c5e8ac0e4a989d18447c343c328b)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:26:43 -0700 local (2026-11-23 16:26:43 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   box-build: the builds (I0's box half).
+#    B0 every staged file carries its SHA-256 (in/EXPECTED.sha256);
+#    B1 each archive's SHA-256 equals lead.md's (9e8ff270 7814576d..., 0aa997a3 e01003cc...);
+#    B2 each archive extracts into build/cft-fp256-<commit>/ (Python's tarfile, a regular file or a folder for every member,
+#       no member outside the folder), and libcft.a builds there by make -C host CC=gcc libcft.a, one job;
+#    B3 M1 (src/, byte-identical to commit 1646c96: build_i.sh's S1), m1i and i_run build against each libcft by
+#       tests/build_i.sh (its criteria S1, B1 to B4: gcc -dumpmachine x86_64-linux-gnu, every source hashed, vfmadd and no
+#       fma or sqrt calls in the native objects, every compile and link succeeding);
+#    C1 (control) build_i.sh's source check on a copy of src/ with one byte of one file changed must FAIL.
+PASS B0 the 304 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+PASS B1 archive 9e8ff270 SHA-256 7814576d5d4d23fa4c1797553a32cd19b4e1d4c8f2d67fb7faecc9cfecb1c4bb
+make libcft.a (9e8ff270): exit 0; ["make: Leaving directory '<root>/build/cft-fp256-9e8ff270/host'"]
+PASS B2 libcft.a built from 9e8ff270: SHA-256 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+  S1: 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c de421.c (expected 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c)
+  S1: d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95 gfc.c (expected d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95)
+  S1: 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4 kind_cft128.c (expected 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4)
+  S1: 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da kind_cft256.c (expected 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da)
+  S1: dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb kind_cft32.c (expected dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb)
+  S1: 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32 kind_cft64.c (expected 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32)
+  S1: f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14 kind_native32.c (expected f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14)
+  S1: 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16 kind_native64.c (expected 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16)
+  S1: 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590 m1.h (expected 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590)
+  S1: 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6 m1_common.c (expected 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6)
+  S1: 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a m1_consts.h (expected 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a)
+  S1: 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab m1_ftab.c (expected 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab)
+  S1: 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b m1_kind.h (expected 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b)
+  S1: 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce m1_nodes.c (expected 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce)
+  S1: 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4 m1_nodes.h (expected 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4)
+  S1: 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c m1_ops_cft.h (expected 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c)
+  S1: 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf m1_ops_native.h (expected 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf)
+  S1: 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f m1_physics.h (expected 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f)
+  CRITERION S1 PASS (18 files)
+  gcc -dumpmachine: x86_64-linux-gnu
+  CRITERION B1 PASS
+  gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  libcft.a: 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+  cft.h: c15fe1f87e1865c05d4d5f959044447bff2e66de93fa941c12f7f881beb73ef5
+  sources built (sha256):
+  36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c  src/de421.c
+  d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95  src/gfc.c
+  65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4  src/kind_cft128.c
+  1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da  src/kind_cft256.c
+  dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb  src/kind_cft32.c
+  6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32  src/kind_cft64.c
+  f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14  src/kind_native32.c
+  4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16  src/kind_native64.c
+  88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6  src/m1_common.c
+  4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab  src/m1_ftab.c
+  778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce  src/m1_nodes.c
+  5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a  src/m1_consts.h
+  3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590  src/m1.h
+  091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b  src/m1_kind.h
+  9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4  src/m1_nodes.h
+  4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c  src/m1_ops_cft.h
+  5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf  src/m1_ops_native.h
+  014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f  src/m1_physics.h
+  fb08419aa29a8e733afb8579021de0eee23275327036c62e953e0e68a7840caa  tests/m1i.c
+  0c538be1d814cb6cbc0fb1a4aea2b924fb7859e24188a4711ada6c40c981b40e  tests/i_run.c
+  CRITERION B2 PASS (the hashes above)
+  linked m1i
+  linked i_run
+  native32: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: ''
+  native64: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: ''
+  CRITERION B3 PASS
+  CRITERION B4 PASS (every compile and link)
+  e40025725d970af4b4159995b2b0221b0f8562ed3e3f4f0f13682d21fe2023fc  m1i
+  043beea7cd744ab18a28b4ab5edf4c9552cdaafcaaf324561adf8901b8f84d9b  i_run
+  BUILD PASS
+PASS B3 build_i.sh against 9e8ff270's libcft: BUILD PASS
+PASS B1 archive 0aa997a3 SHA-256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8
+make libcft.a (0aa997a3): exit 0; ["make: Leaving directory '<root>/build/cft-fp256-0aa997a3/host'"]
+PASS B2 libcft.a built from 0aa997a3: SHA-256 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+  S1: 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c de421.c (expected 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c)
+  S1: d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95 gfc.c (expected d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95)
+  S1: 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4 kind_cft128.c (expected 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4)
+  S1: 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da kind_cft256.c (expected 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da)
+  S1: dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb kind_cft32.c (expected dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb)
+  S1: 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32 kind_cft64.c (expected 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32)
+  S1: f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14 kind_native32.c (expected f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14)
+  S1: 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16 kind_native64.c (expected 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16)
+  S1: 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590 m1.h (expected 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590)
+  S1: 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6 m1_common.c (expected 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6)
+  S1: 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a m1_consts.h (expected 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a)
+  S1: 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab m1_ftab.c (expected 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab)
+  S1: 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b m1_kind.h (expected 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b)
+  S1: 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce m1_nodes.c (expected 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce)
+  S1: 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4 m1_nodes.h (expected 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4)
+  S1: 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c m1_ops_cft.h (expected 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c)
+  S1: 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf m1_ops_native.h (expected 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf)
+  S1: 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f m1_physics.h (expected 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f)
+  CRITERION S1 PASS (18 files)
+  gcc -dumpmachine: x86_64-linux-gnu
+  CRITERION B1 PASS
+  gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  libcft.a: 14f95b22ee5834e565910230f6676f7dab3be6def14a547e5ed7a3af63276187
+  cft.h: 939de328350e5e65a9f4ac07ab7365aec646b65348b67041aa5d99b7354cd7ed
+  sources built (sha256):
+  36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c  src/de421.c
+  d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95  src/gfc.c
+  65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4  src/kind_cft128.c
+  1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da  src/kind_cft256.c
+  dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb  src/kind_cft32.c
+  6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32  src/kind_cft64.c
+  f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14  src/kind_native32.c
+  4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16  src/kind_native64.c
+  88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6  src/m1_common.c
+  4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab  src/m1_ftab.c
+  778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce  src/m1_nodes.c
+  5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a  src/m1_consts.h
+  3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590  src/m1.h
+  091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b  src/m1_kind.h
+  9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4  src/m1_nodes.h
+  4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c  src/m1_ops_cft.h
+  5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf  src/m1_ops_native.h
+  014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f  src/m1_physics.h
+  fb08419aa29a8e733afb8579021de0eee23275327036c62e953e0e68a7840caa  tests/m1i.c
+  0c538be1d814cb6cbc0fb1a4aea2b924fb7859e24188a4711ada6c40c981b40e  tests/i_run.c
+  CRITERION B2 PASS (the hashes above)
+  linked m1i
+  linked i_run
+  native32: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: ''
+  native64: vfmadd instructions 21; undefined fma/fmaf/sqrt/sqrtf: ''
+  CRITERION B3 PASS
+  CRITERION B4 PASS (every compile and link)
+  e40025725d970af4b4159995b2b0221b0f8562ed3e3f4f0f13682d21fe2023fc  m1i
+  043beea7cd744ab18a28b4ab5edf4c9552cdaafcaaf324561adf8901b8f84d9b  i_run
+  BUILD PASS
+PASS B3 build_i.sh against 0aa997a3's libcft: BUILD PASS
+PASS C1 (control) one byte of m1_consts.h changed: the check FAILS
+# 8 checks, 0 failed; ended 2026-11-23 09:27:16 -0700 local

@@ -1,0 +1,14 @@
+# deg8.001.log, written by i_harness.py (SHA-256 e7030665db419706ba4b47c0d3e9e2013d8c62a6d3b724e1d4ebcd832d219f04)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:11:12 -0700 local (2026-11-23 16:11:12 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   Decision 3: degree 8 compiled once, at binary256 (the format whose bank is fullest), for sw:512 with the program's
+#   layout (bank: grav, bands, scal; lanes: de, frame); its manifest or its refusal by name is recorded (a measurement, no
+#   pass condition). The program stays at degree 7 whatever it shows (decision 3(a)).
+source studies/debris-i/systems/program-d8-fp256.cftl sha256 580a86d37d3bb93e7f04ca5f5281c3846cc1d926a12db53af440956cf12c62cd: 372 params, 203 lane params
+compile program-d8-fp256: compiled; 21134 instructions, bank 485, scratch 400 (spills 190), 17.5 s; source 580a86d37d3bb93e7f04ca5f5281c3846cc1d926a12db53af440956cf12c62cd, image a76ae607d0805808244dafe072f7a681a07ed716eaa27e62e323e69ff3264a2c
+degree 8 at binary256 on sw:512: compiled
+# 0 checks, 0 failed; ended 2026-11-23 09:11:29 -0700 local

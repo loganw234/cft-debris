@@ -1,0 +1,95 @@
+# i1_parts.002.log, written by i_harness.py (SHA-256 6771ecc1f9fd8efea894b6a73afb0bb873e43564e9fe2278d74f7604acbbbc89)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:02:55 -0700 local (2026-11-23 16:02:55 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I1 (part systems): each part system of the program (degree 7: central, grav, tides, bodies, frame, drag; maps
+#   whose inputs and data are lane params) against lang.run, at binary32, binary64, binary128 and binary256: 16 lanes of I2's
+#   inputs (the test seed's first 16 for central, grav, tides and drag; the first 16 stage times for bodies and frame), two
+#   runs of two segments of 40 steps, every lane param rewritten by the driver at each run's start; criterion (a) of I1
+#   (states bit for bit by the NaN rule, lane bytes [7:5] clear and [4:0] the definition's flags; a marked lane replayed,
+#   its guess counted).
+compile part-central-fp64: compiled; 383 instructions, bank 38, scratch 7 (spills 0), 0.7 s; source 9b0ec83e9eeb02f7f567e6ba77b4d3a5d3331cc74fa97d9a7067778adf555896, image fc0375f91d7eade7a22336ef1fb6833fb1d019955a24c9b7cf6003367cc8f0a6
+part central fp64: source studies/debris-i/systems/part-central-fp64.cftl sha256 9b0ec83e9eeb02f7f567e6ba77b4d3a5d3331cc74fa97d9a7067778adf555896; image sha256 fc0375f91d7eade7a22336ef1fb6833fb1d019955a24c9b7cf6003367cc8f0a6; 4 lane params, 3 outputs
+driver: runs 5939d54e26cc43cf101d0b9051487e2e065e3924e30cbceaf8e3c23b965bf147 init 7fabe9ba3116f3d5991e5c679e2c9f4306604811cfa386165590ad0c75465483 segments a198ee68189cc45ebb77333869b1951a805bccd95c0fb739fa171171e251ea58
+PASS I1 part central fp64 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-central-fp32: compiled; 378 instructions, bank 36, scratch 7 (spills 0), 0.6 s; source 61dda2873a96186aed59f86f5c944f00ae6470131ff1750a232ff6c0f2fe311e, image e83fb0e24807a6936610f8b89e6c0c027bc21783ea62ba9ceb5d2caa9f3013b0
+part central fp32: source studies/debris-i/systems/part-central-fp32.cftl sha256 61dda2873a96186aed59f86f5c944f00ae6470131ff1750a232ff6c0f2fe311e; image sha256 e83fb0e24807a6936610f8b89e6c0c027bc21783ea62ba9ceb5d2caa9f3013b0; 4 lane params, 3 outputs
+driver: runs 8b6f37b77ad4bef67668d4ef0b5524a13fbbb5b860a2fb0213bd03ee2499ac10 init cc26fba121ac283e2611105357d81c75daee23d7c024489b9bf8a830bcf3a46f segments eb351fccb801d05d379ed52607c8c1911861cbf561be65cf7a3358f9befaf507
+PASS I1 part central fp32 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-central-fp128: compiled; 388 instructions, bank 38, scratch 7 (spills 0), 0.7 s; source 7a7820c953b1f0d8791fa632a9b0b3c89310314e4ed70f49ef547893363aa1b3, image 8a067690118a770ec6a4734ba08ca83dfc5cb52974150b1de08e64ebd2eb8528
+part central fp128: source studies/debris-i/systems/part-central-fp128.cftl sha256 7a7820c953b1f0d8791fa632a9b0b3c89310314e4ed70f49ef547893363aa1b3; image sha256 8a067690118a770ec6a4734ba08ca83dfc5cb52974150b1de08e64ebd2eb8528; 4 lane params, 3 outputs
+driver: runs baf1046421eda30c4b2bb7d31a684bc1483dddcc751da9b618eb3b6e395b9953 init c828c6c45eb76c80a7cb886385f921d709d997c1a42f1a499ab7dafb4b3db06b segments 6a18edc6358f975fc99c738fc5189981db6e66b4f2a20afa628e3bba3c262446
+PASS I1 part central fp128 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-central-fp256: compiled; 393 instructions, bank 38, scratch 7 (spills 0), 1.3 s; source dfb3f859c578f23070b4bdd9839c14a824082e518a01625d3c48a7ef1e964e96, image a7aca97e112f4d3f3a7dcbfac0ee6f3bca0ba275dce1e96276ce8c6a4010d52b
+part central fp256: source studies/debris-i/systems/part-central-fp256.cftl sha256 dfb3f859c578f23070b4bdd9839c14a824082e518a01625d3c48a7ef1e964e96; image sha256 a7aca97e112f4d3f3a7dcbfac0ee6f3bca0ba275dce1e96276ce8c6a4010d52b; 4 lane params, 3 outputs
+driver: runs 19f6182d929bf32c7e52da1c9e2f693958b13f8623619ecc2f19f9a98a75e7cb init ec570e178128f6c98e6b4d9eb40d95b830a7b3416cae5f084f8cc8e23b610061 segments f0abdcaf7228e728d9900b06301be2b8ad0a92e42f9809449a4d3dad802793a8
+PASS I1 part central fp256 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-grav-fp64: compiled; 2027 instructions, bank 39, scratch 290 (spills 62), 2.0 s; source 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7, image 13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d
+part grav fp64: source studies/debris-i/systems/part-grav-fp64.cftl sha256 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7; image sha256 13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d; 225 lane params, 3 outputs
+driver: runs 6c4fc4c558f41d8a8e59b8dcb3ae2b5a6862e5db5342eb65ff7df11e52285ad1 init 03d2dea637847d740adf84253be5ecf3c51ce5a285a6a72116fb4b05fad81dab segments 261a82467229cfba18a70425c467bd07b57f0b3cff7c7ada3208a9e2e2cc2871
+PASS I1 part grav fp64 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-grav-fp32: compiled; 2014 instructions, bank 37, scratch 290 (spills 62), 2.1 s; source 8f8d3c23eb6f86fc484d7ac3e89a0f02f1fbe395012f01c0c354b9c824e74b77, image 8fd6669b3bbe202fd97301b0a5327b3acdf600c83174eac7bc6d505f5ef452b3
+part grav fp32: source studies/debris-i/systems/part-grav-fp32.cftl sha256 8f8d3c23eb6f86fc484d7ac3e89a0f02f1fbe395012f01c0c354b9c824e74b77; image sha256 8fd6669b3bbe202fd97301b0a5327b3acdf600c83174eac7bc6d505f5ef452b3; 225 lane params, 3 outputs
+driver: runs 0c9bea9467a04f61e7374ab3136defafcc755ee1ce80ed4bd5896440a10796e2 init cd28e5dbc3898ddc1a92efdce3551903c30bcca2879a23177b1530c0c23ec54a segments 5c0f4f21ab2cbbecf4ad8e741207c4e1ff3d2b6d523289d5e36e4c1ca437f04e
+PASS I1 part grav fp32 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-grav-fp128: compiled; 2034 instructions, bank 39, scratch 290 (spills 62), 2.2 s; source 9ca15c030489e74e74fce5db49ea8ec792a96c3996f168937d2428e5842ed668, image ec77d86a11185fd558b7c7215d1fcec6cb4ca9d053948be1c7a9de3dae4f4cd9
+part grav fp128: source studies/debris-i/systems/part-grav-fp128.cftl sha256 9ca15c030489e74e74fce5db49ea8ec792a96c3996f168937d2428e5842ed668; image sha256 ec77d86a11185fd558b7c7215d1fcec6cb4ca9d053948be1c7a9de3dae4f4cd9; 225 lane params, 3 outputs
+driver: runs 3ea0c0cf1bf6007646d17d35f19c3452fec583816d4b9fb2feab39cd77da35b7 init 604f8412b0ed8ab69a35c2f151fea1daa3808c8d7de97ad4e1092dcad2ca94d5 segments 0fb06747ee068ca6c527095233d8667c34988ecc2c7db3075d1c8f597754855f
+PASS I1 part grav fp128 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-grav-fp256: compiled; 2041 instructions, bank 39, scratch 290 (spills 62), 2.4 s; source 35c9c67cc2dbb67fb6e240a2ad98efb448242e75f19a0cdebf797df359f157a8, image bd4ab2b4b446d09ada3897c9d518eb5d8958a6703c2c79d2d50438bdb462e3f4
+part grav fp256: source studies/debris-i/systems/part-grav-fp256.cftl sha256 35c9c67cc2dbb67fb6e240a2ad98efb448242e75f19a0cdebf797df359f157a8; image sha256 bd4ab2b4b446d09ada3897c9d518eb5d8958a6703c2c79d2d50438bdb462e3f4; 225 lane params, 3 outputs
+driver: runs 7e554b1c60b32c35773540d2a51ca3313af92120706a3f2da95b9749765afac0 init 4a38640a9b8a23bed9c65e604df0f0f829df1410d488e0ae67208188f3a6b618 segments 5a04468bf2ddf4a44d9764a9ef064d3c8d5f93b4076ad58fd99dfdaed1c8ed1f
+PASS I1 part grav fp256 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-tides-fp64: compiled; 1471 instructions, bank 38, scratch 21 (spills 4), 1.3 s; source f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87, image 5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba
+part tides fp64: source studies/debris-i/systems/part-tides-fp64.cftl sha256 f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87; image sha256 5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba; 11 lane params, 6 outputs
+driver: runs 7041efb6a2ce4d1e2c3b03303da16f7dfd515c027572636ea4a392105da5afb3 init 99f3d659d321281dee9b0d40bb514ff4e974ba3b189213c5eb8e5314ed77770f segments d7d7ecdaf25fba09a264a96823988b716390f6a2ce66ed9a1d07ac7fba8c204e
+PASS I1 part tides fp64 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-tides-fp32: compiled; 1451 instructions, bank 36, scratch 21 (spills 4), 1.4 s; source 2cf575f3a53a9789e07308b5e915a4e96f19d5b733955d42468d176cb19ae648, image 17361320fee31d1fb6f774d70a447b1da911eda64202ecb474b8dc0d15c179d2
+part tides fp32: source studies/debris-i/systems/part-tides-fp32.cftl sha256 2cf575f3a53a9789e07308b5e915a4e96f19d5b733955d42468d176cb19ae648; image sha256 17361320fee31d1fb6f774d70a447b1da911eda64202ecb474b8dc0d15c179d2; 11 lane params, 6 outputs
+driver: runs 438a8ef567e4d97ee3335d93bd5c39601fb34c7d6ee4054fb8dfb77a6591995a init 9b6c07a04828ded26d58f0709b4a1c446aadb00e63bf4facdb1ad65ecdaa7919 segments 14f0e2e0d85b7227c3b01ccaa1eebb306b3913a8deeb16e63d3bebac4a1c788e
+PASS I1 part tides fp32 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-tides-fp128: compiled; 1491 instructions, bank 38, scratch 21 (spills 4), 1.2 s; source 22711b33f732d4e3b71905a0e1a1c7e0cee7422d23a245cdac7c67f36e638f9c, image 94b308134e306bc098030110a0086b0b52be37d4076c6fcde8aea6cb6bd075f8
+part tides fp128: source studies/debris-i/systems/part-tides-fp128.cftl sha256 22711b33f732d4e3b71905a0e1a1c7e0cee7422d23a245cdac7c67f36e638f9c; image sha256 94b308134e306bc098030110a0086b0b52be37d4076c6fcde8aea6cb6bd075f8; 11 lane params, 6 outputs
+driver: runs 9c71efb6bccd9965ff99cefa9f9c85d9a04c115f5d1146c8d69bcdbf5228713e init 5001ca6f84d2a264c5ffed1eb073025b010f309c5da5a351ffe7bade81ea87a6 segments c2a3a0fc8b3c5ca44ebd6a8f7b3bd0872cef75e744d77061540ecccf117baf16
+PASS I1 part tides fp128 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-tides-fp256: compiled; 1511 instructions, bank 38, scratch 21 (spills 4), 1.9 s; source 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0, image a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c
+part tides fp256: source studies/debris-i/systems/part-tides-fp256.cftl sha256 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0; image sha256 a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c; 11 lane params, 6 outputs
+driver: runs 917bee1e0ec56fa8dd8665af1d7ce9bea15e7e99ef355b8ae405345ad666a054 init f720a3855412cada681d295c079f558fa8da657ee37f2efff0cf2a1c512eb9a0 segments c6b956e604c40187fe6332eaaca493f56193bf9ad27db9f5597f124675f4c507
+PASS I1 part tides fp256 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-bodies-fp64: compiled; 918 instructions, bank 33, scratch 126 (spills 0), 0.9 s; source f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90, image 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0
+part bodies fp64: source studies/debris-i/systems/part-bodies-fp64.cftl sha256 f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90; image sha256 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0; 120 lane params, 6 outputs
+driver: runs aee2081e146f2cf59b690db8b1902bc592094667ff3ad5907664f1c2e70037af init 9657e162313b1b925b465fda553293cb84697612d4f4c56346695758bebfd88d segments 5d1bb7a983e3628aac633a1ba16a8782f6a5972730b00219510bec8b1f677e2d
+PASS I1 part bodies fp64 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-bodies-fp32: compiled; 912 instructions, bank 32, scratch 126 (spills 0), 1.0 s; source ab7b102b2baf6c2f93297062a8af3d6b802a89e6d901f9e3a2d53352cf380bee, image d9d166a37928e2510cf32d994783655332aeca2525ca3aedc3aa94a31e722b91
+part bodies fp32: source studies/debris-i/systems/part-bodies-fp32.cftl sha256 ab7b102b2baf6c2f93297062a8af3d6b802a89e6d901f9e3a2d53352cf380bee; image sha256 d9d166a37928e2510cf32d994783655332aeca2525ca3aedc3aa94a31e722b91; 120 lane params, 6 outputs
+driver: runs a77c5bb22aa3cc04b3cf112367823988697c5ddf9ac9ae596748a93c6dbe881a init 6c96e0ac66e6e07be13469efdc1030967fb16b0b8bd001d0d6beae0769e1d8dc segments 7c22eb3dbee928f12992a26b5a1416fe0baeab4c042803cdff9ba27e75d90d0c
+PASS I1 part bodies fp32 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-bodies-fp128: compiled; 924 instructions, bank 33, scratch 126 (spills 0), 0.9 s; source 49c209ca753dba2b713c47e08768cddeeb1023a2c7f4d9e09027e1b2cde83c37, image 1383a17c1651734d76a29263eced3fe98da396bfb310d7ad7b4d09a2ab274dd7
+part bodies fp128: source studies/debris-i/systems/part-bodies-fp128.cftl sha256 49c209ca753dba2b713c47e08768cddeeb1023a2c7f4d9e09027e1b2cde83c37; image sha256 1383a17c1651734d76a29263eced3fe98da396bfb310d7ad7b4d09a2ab274dd7; 120 lane params, 6 outputs
+driver: runs 996bb33e2eea73089c27da0791622724ddfc4a368851e632b2309aff23ab37f4 init 1c76920bd979b4348153fbeffaeb69e65c83a3553533f5f6eaaacc6b4c39dbea segments 888cf809c1c98fc12a5e88e3db46f859b2e311dc9e55b9f7f4770b41e53c5faf
+PASS I1 part bodies fp128 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-bodies-fp256: compiled; 930 instructions, bank 33, scratch 126 (spills 0), 1.5 s; source 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5, image b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c
+part bodies fp256: source studies/debris-i/systems/part-bodies-fp256.cftl sha256 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5; image sha256 b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c; 120 lane params, 6 outputs
+driver: runs b9d8719a358ee37a94458fa3b283f9ef8f8a1cbd2db34da92965828f841aeff4 init 3c0a3141a4f61efcb9a05fe8658b1424310eb3217fa2ea56b5872e0602f56f50 segments 2b70fd2cadc10d8e1792a68915b155e65cb803ced50bd8f337f76e12692a1d1a
+PASS I1 part bodies fp256 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-frame-fp64: compiled; 198 instructions, bank 0, scratch 98 (spills 0), 0.6 s; source bbbc697fb7841a9e976cc3d91c2ec7962c1979eba67da8caafe16988b4015913, image 64c1db1207e365e70f6725eb72f4a96fff86a3b2d18e564b9dea3213fd56b7ff
+part frame fp64: source studies/debris-i/systems/part-frame-fp64.cftl sha256 bbbc697fb7841a9e976cc3d91c2ec7962c1979eba67da8caafe16988b4015913; image sha256 64c1db1207e365e70f6725eb72f4a96fff86a3b2d18e564b9dea3213fd56b7ff; 86 lane params, 12 outputs
+driver: runs 554822b1b448388086b9a752f601018a878dcc1ff4266fb1b61823dee69701a3 init 196a50f10675cd68077ed77271c24ad3f7543f0dcc7fd009f6aba1ee0bcc44c5 segments 231e94e22e71ee4e698411f151353df6e6263015f552d5223e32ff361b7f8975
+PASS I1 part frame fp64 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-frame-fp32: compiled; 198 instructions, bank 0, scratch 98 (spills 0), 0.7 s; source 2d0eaf5df32453d6945a9679ce906e9aad054aff14070b7e71ce0087c1642492, image b4ef172cfddaebbc43aacb25189a893be869f85c3c255d729597f98eb4fc076b
+part frame fp32: source studies/debris-i/systems/part-frame-fp32.cftl sha256 2d0eaf5df32453d6945a9679ce906e9aad054aff14070b7e71ce0087c1642492; image sha256 b4ef172cfddaebbc43aacb25189a893be869f85c3c255d729597f98eb4fc076b; 86 lane params, 12 outputs
+driver: runs b0d73968e4765b1dcd5dc283e1c4f6b6339eb63164002c76484abefed3ecdf8d init 13bbb9f950971ee9948324b751283e62f72328e0c23f578d72534567f4732d5c segments 0885108fb6865bb286a3a261a9455a410db3ef59d5f5cacb94fc54cd183c53ea
+PASS I1 part frame fp32 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-frame-fp128: compiled; 198 instructions, bank 0, scratch 98 (spills 0), 0.6 s; source f1e0e70d94b4265e9c44b121bd6b08e268e7a33c44432584b80646756e9c7dd6, image c4cb5a587ee4e7ec66afefd00c592fb08c2ed328876fec903e92a8501c938e30
+part frame fp128: source studies/debris-i/systems/part-frame-fp128.cftl sha256 f1e0e70d94b4265e9c44b121bd6b08e268e7a33c44432584b80646756e9c7dd6; image sha256 c4cb5a587ee4e7ec66afefd00c592fb08c2ed328876fec903e92a8501c938e30; 86 lane params, 12 outputs
+driver: runs d0fe709f968627795bac4a973c35c638f0c5042154f79d8fb5a85c59fbd873f9 init cb10f84ebd64b2d0f8479a57cdd5f29529889787079ed4a96d2cc6612a43070d segments 129226ad926f39a76ca1ade9a454fc4b5f5011d499fcf1cf246bc13c0c637702
+PASS I1 part frame fp128 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-frame-fp256: compiled; 198 instructions, bank 0, scratch 98 (spills 0), 0.6 s; source 86bf2b22231e1e879bc6b67be5d1643179cb3e8fdacb60034db4d930b051d8a7, image f9492691f92e264db2bcc48e67a6eb31eff732acb341964d28a1c97d58f952bc
+part frame fp256: source studies/debris-i/systems/part-frame-fp256.cftl sha256 86bf2b22231e1e879bc6b67be5d1643179cb3e8fdacb60034db4d930b051d8a7; image sha256 f9492691f92e264db2bcc48e67a6eb31eff732acb341964d28a1c97d58f952bc; 86 lane params, 12 outputs
+driver: runs 779462af1457bdb530e696a21ebbbb83087cc70a8b1f49cafc73758becc0d012 init 38093253ea7202ebf91fb1e871e3c8c6bf17c7b666c6cc0cac52426486949129 segments 3ab0f9e91709b3c837c5d9074b7ba138abb2451a9d8c0453dedf866033cc5937
+PASS I1 part frame fp256 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-drag-fp64: compiled; 997 instructions, bank 85, scratch 112 (spills 14), 1.2 s; source fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818, image f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2
+part drag fp64: source studies/debris-i/systems/part-drag-fp64.cftl sha256 fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818; image sha256 f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2; 95 lane params, 3 outputs

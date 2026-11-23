@@ -1,0 +1,30 @@
+{
+ "bands": 28,
+ "degree": 7,
+ "dm": 7,
+ "do": 3,
+ "inputs": [
+  "x",
+  "y",
+  "z"
+ ],
+ "kind": "part",
+ "lanes": [
+  "x",
+  "y",
+  "z",
+  "gm"
+ ],
+ "outputs": [
+  "cx",
+  "cy",
+  "cz"
+ ],
+ "params": [],
+ "part": "central",
+ "state": [
+  "o0",
+  "o1",
+  "o2"
+ ]
+}

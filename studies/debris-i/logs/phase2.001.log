@@ -1,0 +1,146 @@
+# phase2.001.log, written by i_analyze.py (SHA-256 71e72f51de5bce70dc0cd8d2bfb21370614b2018721bde9f4a33e67a34995df1)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 11:58:37 -0700 local (2026-11-23 18:58:37 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   Phase 2 (DEBRIS-I's, on the desktop, from the box's records as the lead copied them to the ledger):
+#   M  READY's rule for marks: every marks file of the box's runs (out/i3/prog-*.marks.bin, out/i5/*.marks.bin) is read;
+#      each record is replayed by lang.run from its boundary state, and a lane whose replay differs is voided from that
+#      segment and redone on the desktop. A gate is evaluated only on unmarked or replayed-equal states.
+#   I3 the criterion of this module's docstring, at every one of the 144 boundaries (every 40 steps of 5,760) for each of the
+#      64 objects, binary64 / cft64, binary128 / cft128, binary256 / cft256 (binary64 / native64 beside); t exact.
+#      Measurements (fixed in the plan): the share of each tolerance used (median and largest over objects and boundaries);
+#      the marks by format and routine; the program's binary64 against its binary256, position, median and largest at 1, 6
+#      and 24 hours.
+#   GAP the model gap (M1 alone, native64 and cft64; no criterion; a difference between two models, never an error): M1 with
+#      the program's forces against its full model at 1, 6 and 24 hours, median and largest position difference, and its
+#      radial, along-track and cross-track parts (full - prog, in the prog run's radial / along-track / cross-track frame:
+#      R along r, C along r x v, A = C x R); by perigee band (i3_sample.tsv's bands); one force at a time: degree 7
+#      against 20 (srp off: --nmax 20 against prog), radiation pressure off against on (degree 7: --srp 1 against prog).
+#      The program has M1's 28 bands, so the one-band comparison does not arise.
+#   I5 statistics (fixed in the plan and box_i5's criteria): X per configuration and W, with its validity and foreign load;
+#      the ratios, each a rate against a rate (X / X, never CPU times): the program against M1 at the program's forces
+#      (binary64 / cft64, binary128 / cft128, binary256 / cft256; binary64 / native64 beside), and against M1's full model
+#      (DEBRIS-G's G4 figures, same W); M1 at the program's forces against its full model; X(18) / (18 X(1)) and
+#      X(36) / X(18). X at W = 36 is the configuration's capacity at real time, an extrapolation past the 2,304 objects run.
+#   i_analyze.py - cft-debris DEBRIS-I: I3's criteria and measurements, the model gap and I5's statistics, from the
+#   records of the program's driver (tests/i_run.c) and of M1's side (tests/m1i.c), on the desktop or from the box.
+#   
+#   cft-debris, MIT licence (see LICENSE at the repository root). Written by DEBRIS-I, 2026-11-23.
+#   
+#   I3's criterion (the plan's, fixed before the data): at every segment boundary (every 40 steps), for every object,
+#       |program at p - M1 at the matching kind| <= T_round(p, n) + T_frame, component by component,
+#       T_round(p, n) = 64 n 2^-p S, n the steps so far, p = 53, 113 or 237;
+#       positions S = 7e6 m, T_frame = 1e-3 m; velocities S = 8e3 m/s, T_frame = 1e-6 m/s;
+#       pairs: binary64 / cft64, binary128 / cft128, binary256 / cft256; binary64 / native64 reported beside.
+#       t: at every boundary, the program's t equals M1's host stage time, exactly.
+#   The NaN rule: NaN results agree as NaNs; a NaN on one side alone fails.
+#   The measurements (fixed now): the share of each tolerance used (median and largest over objects and boundaries); the
+#   program's binary64 against its binary256 (median and largest position difference at 1, 6 and 24 hours). The model gap:
+#   M1 with the program's forces against M1's full model, position differences at 1, 6 and 24 hours, median and largest,
+#   their radial, along-track and cross-track parts, by perigee band, and one force at a time. No figure of the gap is an
+#   error of either model: it is a difference between two models.
+records: the box's out/ in the ledger, MANIFEST.box-001.sha256 191076be9b427c287f1c7f37ffd49ae57deee2279723c8efc07280dcf83c4b32; the staged plan c20ec93e98b899f9bbf939e9c16190294271b0149e9fec07141ac234afbb848d; the sample 454aa53f14682647eb77a20eb04afa00b1eb3da08021b3aaa56ce4f3a352d533
+marks in i3 at fp128: 0 marked lane-segments
+marks in i3 at fp256: 0 marked lane-segments
+marks in i3 at fp64: 0 marked lane-segments
+marks in i5 at fp128: 0 marked lane-segments
+marks in i5 at fp256: 0 marked lane-segments
+marks in i5 at fp64: 0 marked lane-segments
+PASS M: 189 marks files read (I3's 24, I5's 165); 0 marks, so nothing to replay and no lane to redo
+read: the program's boundary states at 3 formats and M1's at 10 model-kind pairs, 64 objects x 144 boundaries
+PASS I3 fp64 against cft64: 55296 values at 144 boundaries x 64 objects; share of the tolerance median 0.00028, largest 0.017; t mismatches 0; NaN pairs 0; over 0
+(beside) I3 fp64 against native64: 55296 values at 144 boundaries x 64 objects; share of the tolerance median 0.00028, largest 0.017; t mismatches 0; NaN pairs 0; over 0
+PASS I3 fp128 against cft128: 55296 values at 144 boundaries x 64 objects; share of the tolerance median 4.53e-06, largest 0.000177; t mismatches 0; NaN pairs 0; over 0
+PASS I3 fp256 against cft256: 55296 values at 144 boundaries x 64 objects; share of the tolerance median 4.53e-06, largest 0.000177; t mismatches 0; NaN pairs 0; over 0
+I3 measurement: the program's binary64 against its binary256 at  1 h: position median 2.045e-08 m, largest 9.744e-08 m (64 objects)
+I3 measurement: the program's binary64 against its binary256 at  6 h: position median 3.633e-07 m, largest 1.451e-06 m (64 objects)
+I3 measurement: the program's binary64 against its binary256 at 24 h: position median 2.430e-06 m, largest 1.549e-05 m (64 objects)
+GAP native64, the program's forces against the full model, at  1 h: position median 48.11 m, largest 174.3 m (64 objects); radial median 11.4 largest 38.9; along-track median 40 largest 170; cross-track median 10.6 largest 50
+GAP native64, the program's forces against the full model, at  1 h, perigee band 0: median 71.57 m, largest 174.3 m (16 objects)
+GAP native64, the program's forces against the full model, at  1 h, perigee band 1: median 53.04 m, largest 151.5 m (16 objects)
+GAP native64, the program's forces against the full model, at  1 h, perigee band 2: median 48.01 m, largest 113.5 m (16 objects)
+GAP native64, the program's forces against the full model, at  1 h, perigee band 3: median 30.41 m, largest 144.5 m (16 objects)
+GAP native64, the program's forces against the full model, at  6 h: position median 146.5 m, largest 719.1 m (64 objects); radial median 13.5 largest 51.7; along-track median 145 largest 719; cross-track median 23.1 largest 89.1
+GAP native64, the program's forces against the full model, at  6 h, perigee band 0: median 276.3 m, largest 719.1 m (16 objects)
+GAP native64, the program's forces against the full model, at  6 h, perigee band 1: median 127.4 m, largest 398.5 m (16 objects)
+GAP native64, the program's forces against the full model, at  6 h, perigee band 2: median 49.88 m, largest 288 m (16 objects)
+GAP native64, the program's forces against the full model, at  6 h, perigee band 3: median 157 m, largest 320.3 m (16 objects)
+GAP native64, the program's forces against the full model, at 24 h: position median 343.1 m, largest 2312 m (64 objects); radial median 16.1 largest 79.2; along-track median 341 largest 2.31e+03; cross-track median 41.4 largest 128
+GAP native64, the program's forces against the full model, at 24 h, perigee band 0: median 672.2 m, largest 2312 m (16 objects)
+GAP native64, the program's forces against the full model, at 24 h, perigee band 1: median 230.8 m, largest 1259 m (16 objects)
+GAP native64, the program's forces against the full model, at 24 h, perigee band 2: median 229.3 m, largest 1094 m (16 objects)
+GAP native64, the program's forces against the full model, at 24 h, perigee band 3: median 527.3 m, largest 1154 m (16 objects)
+GAP native64, degree 7 against 20 (radiation pressure off), at  1 h: position median 48.13 m, largest 174.2 m (64 objects); radial median 11.4 largest 38.7; along-track median 40.1 largest 170; cross-track median 10.5 largest 50
+GAP native64, degree 7 against 20 (radiation pressure off), at  6 h: position median 148 m, largest 720.1 m (64 objects); radial median 13.5 largest 51.3; along-track median 147 largest 720; cross-track median 23 largest 89.1
+GAP native64, degree 7 against 20 (radiation pressure off), at 24 h: position median 346.8 m, largest 2312 m (64 objects); radial median 14.8 largest 76.8; along-track median 344 largest 2.31e+03; cross-track median 41.3 largest 128
+GAP native64, radiation pressure off against on (degree 7), at  1 h: position median 0.2916 m, largest 0.7514 m (64 objects); radial median 0.102 largest 0.277; along-track median 0.26 largest 0.698; cross-track median 0.0355 largest 0.116
+GAP native64, radiation pressure off against on (degree 7), at  6 h: position median 1.083 m, largest 3.853 m (64 objects); radial median 0.405 largest 1.13; along-track median 0.923 largest 3.85; cross-track median 0.0694 largest 0.198
+GAP native64, radiation pressure off against on (degree 7), at 24 h: position median 3.966 m, largest 18.62 m (64 objects); radial median 1.73 largest 4.04; along-track median 2.9 largest 18.4; cross-track median 0.14 largest 0.773
+GAP cft64, the program's forces against the full model, at  1 h: position median 48.11 m, largest 174.3 m (64 objects); radial median 11.4 largest 38.9; along-track median 40 largest 170; cross-track median 10.6 largest 50
+GAP cft64, the program's forces against the full model, at  1 h, perigee band 0: median 71.57 m, largest 174.3 m (16 objects)
+GAP cft64, the program's forces against the full model, at  1 h, perigee band 1: median 53.04 m, largest 151.5 m (16 objects)
+GAP cft64, the program's forces against the full model, at  1 h, perigee band 2: median 48.01 m, largest 113.5 m (16 objects)
+GAP cft64, the program's forces against the full model, at  1 h, perigee band 3: median 30.41 m, largest 144.5 m (16 objects)
+GAP cft64, the program's forces against the full model, at  6 h: position median 146.5 m, largest 719.1 m (64 objects); radial median 13.5 largest 51.7; along-track median 145 largest 719; cross-track median 23.1 largest 89.1
+GAP cft64, the program's forces against the full model, at  6 h, perigee band 0: median 276.3 m, largest 719.1 m (16 objects)
+GAP cft64, the program's forces against the full model, at  6 h, perigee band 1: median 127.4 m, largest 398.5 m (16 objects)
+GAP cft64, the program's forces against the full model, at  6 h, perigee band 2: median 49.88 m, largest 288 m (16 objects)
+GAP cft64, the program's forces against the full model, at  6 h, perigee band 3: median 157 m, largest 320.3 m (16 objects)
+GAP cft64, the program's forces against the full model, at 24 h: position median 343.1 m, largest 2312 m (64 objects); radial median 16.1 largest 79.2; along-track median 341 largest 2.31e+03; cross-track median 41.4 largest 128
+GAP cft64, the program's forces against the full model, at 24 h, perigee band 0: median 672.2 m, largest 2312 m (16 objects)
+GAP cft64, the program's forces against the full model, at 24 h, perigee band 1: median 230.8 m, largest 1259 m (16 objects)
+GAP cft64, the program's forces against the full model, at 24 h, perigee band 2: median 229.3 m, largest 1094 m (16 objects)
+GAP cft64, the program's forces against the full model, at 24 h, perigee band 3: median 527.3 m, largest 1154 m (16 objects)
+GAP cft64, degree 7 against 20 (radiation pressure off), at  1 h: position median 48.13 m, largest 174.2 m (64 objects); radial median 11.4 largest 38.7; along-track median 40.1 largest 170; cross-track median 10.5 largest 50
+GAP cft64, degree 7 against 20 (radiation pressure off), at  6 h: position median 148 m, largest 720.1 m (64 objects); radial median 13.5 largest 51.3; along-track median 147 largest 720; cross-track median 23 largest 89.1
+GAP cft64, degree 7 against 20 (radiation pressure off), at 24 h: position median 346.8 m, largest 2312 m (64 objects); radial median 14.8 largest 76.8; along-track median 344 largest 2.31e+03; cross-track median 41.3 largest 128
+GAP cft64, radiation pressure off against on (degree 7), at  1 h: position median 0.2916 m, largest 0.7514 m (64 objects); radial median 0.102 largest 0.277; along-track median 0.26 largest 0.698; cross-track median 0.0355 largest 0.116
+GAP cft64, radiation pressure off against on (degree 7), at  6 h: position median 1.083 m, largest 3.853 m (64 objects); radial median 0.405 largest 1.13; along-track median 0.923 largest 3.85; cross-track median 0.0694 largest 0.198
+GAP cft64, radiation pressure off against on (degree 7), at 24 h: position median 3.966 m, largest 18.62 m (64 objects); radial median 1.73 largest 4.04; along-track median 2.9 largest 18.4; cross-track median 0.14 largest 0.773
+per-object tables in the ledger: i3_per_object.20261123-115845.tsv d41451ed0a70a9ec97ef83f5899ae6a19c49bc089e20aa216cf2fed73dbadad8, gap_per_object.20261123-115845.tsv 2e58bb52f90e9c32c5869572279643eef820ac0940853cdff1dc768295ea6fff
+I5: box_i5.runs.20261123-115333.json SHA-256 937ce42384c655b456a659e22bd8b187ecf3f2e6f36ddaad3b1d47e95c7cb947, 21 runs
+PASS I5: 21 runs, every one valid
+I5: foreign load per run 0.045% to 0.080%; wall time per run 67.0 s to 356.8 s
+I5 X prog-fp64 W=1: 7278.4 object-seconds a second (wall 95.0 s, 691200 object-seconds, foreign load 0.080%)
+I5 X prog-fp64 W=18: 101957.6 object-seconds a second (wall 122.0 s, 12441600 object-seconds, foreign load 0.067%)
+I5 X prog-fp64 W=36: 92572.5 object-seconds a second (wall 268.8 s, 24883200 object-seconds, foreign load 0.066%)
+I5 X prog-fp128 W=1: 6077.6 object-seconds a second (wall 75.8 s, 460800 object-seconds, foreign load 0.054%)
+I5 X prog-fp128 W=18: 85013.4 object-seconds a second (wall 97.6 s, 8294400 object-seconds, foreign load 0.064%)
+I5 X prog-fp128 W=36: 78197.5 object-seconds a second (wall 212.1 s, 16588800 object-seconds, foreign load 0.061%)
+I5 X prog-fp256 W=1: 4632.0 object-seconds a second (wall 99.5 s, 460800 object-seconds, foreign load 0.054%)
+I5 X prog-fp256 W=18: 64331.9 object-seconds a second (wall 128.9 s, 8294400 object-seconds, foreign load 0.061%)
+I5 X prog-fp256 W=36: 59731.8 object-seconds a second (wall 277.7 s, 16588800 object-seconds, foreign load 0.065%)
+I5 X m1-native64 W=1: 6389227.3 object-seconds a second (wall 67.0 s, 428110080 object-seconds, foreign load 0.055%)
+I5 X m1-native64 W=18: 89625190.2 object-seconds a second (wall 86.0 s, 7705981440 object-seconds, foreign load 0.045%)
+I5 X m1-native64 W=36: 93947184.2 object-seconds a second (wall 164.0 s, 15411962880 object-seconds, foreign load 0.056%)
+I5 X m1-cft64 W=1: 6392.1 object-seconds a second (wall 86.1 s, 550080 object-seconds, foreign load 0.056%)
+I5 X m1-cft64 W=18: 89857.1 object-seconds a second (wall 110.2 s, 9901440 object-seconds, foreign load 0.053%)
+I5 X m1-cft64 W=36: 85294.3 object-seconds a second (wall 232.2 s, 19802880 object-seconds, foreign load 0.068%)
+I5 X m1-cft128 W=1: 3786.3 object-seconds a second (wall 81.4 s, 308160 object-seconds, foreign load 0.047%)
+I5 X m1-cft128 W=18: 53062.9 object-seconds a second (wall 104.5 s, 5546880 object-seconds, foreign load 0.067%)
+I5 X m1-cft128 W=36: 52374.8 object-seconds a second (wall 211.8 s, 11093760 object-seconds, foreign load 0.066%)
+I5 X m1-cft256 W=1: 1606.2 object-seconds a second (wall 143.4 s, 230400 object-seconds, foreign load 0.049%)
+I5 X m1-cft256 W=18: 22597.2 object-seconds a second (wall 183.5 s, 4147200 object-seconds, foreign load 0.062%)
+I5 X m1-cft256 W=36: 23245.7 object-seconds a second (wall 356.8 s, 8294400 object-seconds, foreign load 0.068%)
+I5 ratio W= 1: program fp64 / M1 cft64 at the program's forces 1.139; / M1 cft64 full model (G4) 6.401; M1 cft64 program's forces / full model (G4) 5.622
+I5 ratio W=18: program fp64 / M1 cft64 at the program's forces 1.135; / M1 cft64 full model (G4) 6.401; M1 cft64 program's forces / full model (G4) 5.641
+I5 ratio W=36: program fp64 / M1 cft64 at the program's forces 1.085; / M1 cft64 full model (G4) 6.042; M1 cft64 program's forces / full model (G4) 5.567
+I5 ratio W= 1: program fp128 / M1 cft128 at the program's forces 1.605; / M1 cft128 full model (G4) 8.885; M1 cft128 program's forces / full model (G4) 5.535
+I5 ratio W=18: program fp128 / M1 cft128 at the program's forces 1.602; / M1 cft128 full model (G4) 8.868; M1 cft128 program's forces / full model (G4) 5.535
+I5 ratio W=36: program fp128 / M1 cft128 at the program's forces 1.493; / M1 cft128 full model (G4) 8.176; M1 cft128 program's forces / full model (G4) 5.476
+I5 ratio W= 1: program fp256 / M1 cft256 at the program's forces 2.884; / M1 cft256 full model (G4) 15.492; M1 cft256 program's forces / full model (G4) 5.372
+I5 ratio W=18: program fp256 / M1 cft256 at the program's forces 2.847; / M1 cft256 full model (G4) 15.405; M1 cft256 program's forces / full model (G4) 5.411
+I5 ratio W=36: program fp256 / M1 cft256 at the program's forces 2.570; / M1 cft256 full model (G4) 13.789; M1 cft256 program's forces / full model (G4) 5.366
+I5 ratio W= 1: program fp64 / M1 native64 at the program's forces 0.001; / M1 native64 full model (G4) 0.006; M1 native64 program's forces / full model (G4) 4.947
+I5 ratio W=18: program fp64 / M1 native64 at the program's forces 0.001; / M1 native64 full model (G4) 0.006; M1 native64 program's forces / full model (G4) 5.088
+I5 ratio W=36: program fp64 / M1 native64 at the program's forces 0.001; / M1 native64 full model (G4) 0.005; M1 native64 program's forces / full model (G4) 5.145
+I5 m1-cft128: X(18)/(18 X(1)) 0.779, X(36)/X(18) 0.987; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 52375 objects
+I5 m1-cft256: X(18)/(18 X(1)) 0.782, X(36)/X(18) 1.029; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 23246 objects
+I5 m1-cft64: X(18)/(18 X(1)) 0.781, X(36)/X(18) 0.949; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 85294 objects
+I5 m1-native64: X(18)/(18 X(1)) 0.779, X(36)/X(18) 1.048; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 93947184 objects
+I5 prog-fp128: X(18)/(18 X(1)) 0.777, X(36)/X(18) 0.920; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 78198 objects
+I5 prog-fp256: X(18)/(18 X(1)) 0.772, X(36)/X(18) 0.928; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 59732 objects
+I5 prog-fp64: X(18)/(18 X(1)) 0.778, X(36)/X(18) 0.908; capacity at real time (X at W=36, an extrapolation past the 2,304 objects run) 92573 objects
+# 5 checks, 0 failed; ended 2026-11-23 11:58:45 -0700 local

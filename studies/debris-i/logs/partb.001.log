@@ -1,0 +1,48 @@
+# partb.001.log, written by i_partb.py (SHA-256 4de88fd0af1e69ad53e7980d87edb620c2f4685bc4ea3aee225be51039f1c83b)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# with i_service.py (SHA-256 4c32cafd6f0d41e5a33eee90ef1633d70ebb0bf6147e564043f3ec7166b12816)
+# with i_fetch.py (SHA-256 3d620f1620b9af8dabc598a8fb0fb15ea1daf9e9fcd296f47db99f2d9b68b139)
+# with i3_server.py (SHA-256 86f2c2c4e86d876a7de9017693e1213bd195bd0e141c25b4a9c28a1c5bd9d027)
+# started 2026-11-23 09:10:04 -0700 local (2026-11-23 16:10:04 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   B2 (tests/i_service.py): a run folder with the fetch stop file in place; the scheduler (Service.slots, the clock
+#       replaced, the fetcher's start replaced by a record of its arguments) ticks at slot 1's and slot 2's due times plus
+#       10 s, three times each; the stop file is renamed; it ticks at slot 3's due time plus 10 s; then slot 4 falls due with
+#       no tick (the service down) and it ticks at slot 5's. PASS: "SLOT 1 skipped under the stop file" and "SLOT 2 ..."
+#       each logged exactly once; no "missed while the service was down" line names slot 1 or 2; slot 3's fetch starts;
+#       at slot 5 the line "SLOTS missed while the service was down: [4]" (the old text, for a slot the service was not
+#       running for).
+#    B2's control: DEBRIS-H's tests/h_service.py, unchanged, on the same ticks, must log "SLOTS missed while the service
+#       was down: [1, 2]" at slot 3 (the old text for the slots under the stop) and no "skipped" line.
+#   B3 (tests/i_fetch.py against tests/i3_server.py on 127.0.0.1): a slot of four requests (spacing removed for the test):
+#       with the server's 5 s delay before its response, the fetcher must log a time to the first byte of at least 5 s; with
+#       no delay, under 1 s.
+#    B3's control: with the delay moved after the first byte (delay_after_first 5 s), the time to the first byte must stay
+#       under 1 s and the time to the last byte must pass 5 s.
+DEBRIS-H's h_service.py (unchanged, read only): SHA-256 8b1e203fc2978aa9fdfa7d903e3de95ef372d547a0ebe0761f9835dc9c8899c6
+DEBRIS-H's h_fetch.py (unchanged, read only): SHA-256 98597766b7a59d8ab20eac2da8e51087d683c791a5b3645f6f4280b6e23e4db0
+DEBRIS-H's h3_server.py (unchanged, read only): SHA-256 65eb863673f73f6b00a7bfe44ed4c6454316e5f16d15676386c0a31b57ce6f84
+  B2 new: SLOT 1 skipped under the stop file (due 1800010800.000)
+  B2 new: SLOT 2 skipped under the stop file (due 1800021600.000)
+  B2 new: FETCH slot 3 started (pid 4242), due 1800032400.000
+  B2 new: FETCH slot 3 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+  B2 new: SLOTS missed while the service was down: [4]
+  B2 new: FETCH slot 5 started (pid 4242), due 1800054000.000
+PASS B2 slots 1 and 2 each logged once as skipped under the stop file
+PASS B2 no 'missed while the service was down' line names slot 1 or 2
+PASS B2 slot 3's fetch starts after the rename (fetches started: [3, 5])
+PASS B2 slot 4, due while the service was down, keeps the old line (missed lines: ['SLOTS missed while the service was down: [4]'])
+  B2 control (h_service.py): SLOTS missed while the service was down: [1, 2]
+  B2 control (h_service.py): FETCH slot 3 started (pid 4242), due 1800032400.000
+  B2 control (h_service.py): FETCH slot 3 ended: code 0, {'status': 'ok', 'bodies': 4, 'note': ''}
+  B2 control (h_service.py): SLOTS missed while the service was down: [4]
+  B2 control (h_service.py): FETCH slot 5 started (pid 4242), due 1800054000.000
+PASS B2 control: the unchanged h_service.py logs the old text for the slots under the stop, and no skipped line
+B3 delay5: slot code 0 (ok); 4 requests; first byte [5.021, 5.003, 5.017, 5.02] s; last byte [5.021, 5.003, 5.017, 5.02] s
+B3 none: slot code 0 (ok); 4 requests; first byte [0.016, 0.001, 0.014, 0.002] s; last byte [0.016, 0.002, 0.014, 0.002] s
+B3 after5: slot code 0 (ok); 4 requests; first byte [0.004, 0.002, 0.002, 0.003] s; last byte [5.005, 5.003, 5.002, 5.003] s
+PASS B3 a 5 s delay before the response: every time to the first byte at least 5 s
+PASS B3 no delay: every time to the first byte under 1 s
+PASS B3 control: the delay after the first byte: the first byte under 1 s, the last byte past 5 s
+# 8 checks, 0 failed; ended 2026-11-23 09:10:46 -0700 local

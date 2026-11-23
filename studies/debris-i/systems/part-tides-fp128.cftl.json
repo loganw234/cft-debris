@@ -1,0 +1,49 @@
+{
+ "bands": 28,
+ "degree": 7,
+ "dm": 7,
+ "do": 3,
+ "inputs": [
+  "x",
+  "y",
+  "z",
+  "is0",
+  "is1",
+  "is2",
+  "im0",
+  "im1",
+  "im2"
+ ],
+ "kind": "part",
+ "lanes": [
+  "x",
+  "y",
+  "z",
+  "is0",
+  "is1",
+  "is2",
+  "im0",
+  "im1",
+  "im2",
+  "gms",
+  "gmm"
+ ],
+ "outputs": [
+  "as0",
+  "as1",
+  "as2",
+  "am0",
+  "am1",
+  "am2"
+ ],
+ "params": [],
+ "part": "tides",
+ "state": [
+  "o0",
+  "o1",
+  "o2",
+  "o3",
+  "o4",
+  "o5"
+ ]
+}

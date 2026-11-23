@@ -1,0 +1,143 @@
+; cft-debris DEBRIS-I (MIT licence), written by tests/i_gen.py: part drag of the program (degree 7, 28 bands, frame degrees 7 and 3), a map
+; every data value is a param or a lane param, default 0, filled per run; no data is in this file
+system dpart_drag
+format fp64
+round  rne
+state  o0, o1, o2
+lane param x = 0, y = 0, z = 0, vx = 0, vy = 0, vz = 0, io0 = 0, io1 = 0
+lane param io2 = 0, bc = 0, bh0 = 0, bh1 = 0, bh2 = 0, bh3 = 0, bh4 = 0, bh5 = 0
+lane param bh6 = 0, bh7 = 0, bh8 = 0, bh9 = 0, bh10 = 0, bh11 = 0, bh12 = 0, bh13 = 0
+lane param bh14 = 0, bh15 = 0, bh16 = 0, bh17 = 0, bh18 = 0, bh19 = 0, bh20 = 0, bh21 = 0
+lane param bh22 = 0, bh23 = 0, bh24 = 0, bh25 = 0, bh26 = 0, bh27 = 0, br0 = 0, br1 = 0
+lane param br2 = 0, br3 = 0, br4 = 0, br5 = 0, br6 = 0, br7 = 0, br8 = 0, br9 = 0
+lane param br10 = 0, br11 = 0, br12 = 0, br13 = 0, br14 = 0, br15 = 0, br16 = 0, br17 = 0
+lane param br18 = 0, br19 = 0, br20 = 0, br21 = 0, br22 = 0, br23 = 0, br24 = 0, br25 = 0
+lane param br26 = 0, br27 = 0, bs0 = 0, bs1 = 0, bs2 = 0, bs3 = 0, bs4 = 0, bs5 = 0
+lane param bs6 = 0, bs7 = 0, bs8 = 0, bs9 = 0, bs10 = 0, bs11 = 0, bs12 = 0, bs13 = 0
+lane param bs14 = 0, bs15 = 0, bs16 = 0, bs17 = 0, bs18 = 0, bs19 = 0, bs20 = 0, bs21 = 0
+lane param bs22 = 0, bs23 = 0, bs24 = 0, bs25 = 0, bs26 = 0, bs27 = 0, rearth = 0
+let r2 = x * x + y * y + z * z
+let rn = sqrt(r2)
+let hh = rn - rearth
+let ge1 = bh1 <= hh
+let h0_1 = select(ge1, bh1, bh0)
+let rh1 = select(ge1, br1, br0)
+let hs1 = select(ge1, bs1, bs0)
+let ge2 = bh2 <= hh
+let h0_2 = select(ge2, bh2, h0_1)
+let rh2 = select(ge2, br2, rh1)
+let hs2 = select(ge2, bs2, hs1)
+let ge3 = bh3 <= hh
+let h0_3 = select(ge3, bh3, h0_2)
+let rh3 = select(ge3, br3, rh2)
+let hs3 = select(ge3, bs3, hs2)
+let ge4 = bh4 <= hh
+let h0_4 = select(ge4, bh4, h0_3)
+let rh4 = select(ge4, br4, rh3)
+let hs4 = select(ge4, bs4, hs3)
+let ge5 = bh5 <= hh
+let h0_5 = select(ge5, bh5, h0_4)
+let rh5 = select(ge5, br5, rh4)
+let hs5 = select(ge5, bs5, hs4)
+let ge6 = bh6 <= hh
+let h0_6 = select(ge6, bh6, h0_5)
+let rh6 = select(ge6, br6, rh5)
+let hs6 = select(ge6, bs6, hs5)
+let ge7 = bh7 <= hh
+let h0_7 = select(ge7, bh7, h0_6)
+let rh7 = select(ge7, br7, rh6)
+let hs7 = select(ge7, bs7, hs6)
+let ge8 = bh8 <= hh
+let h0_8 = select(ge8, bh8, h0_7)
+let rh8 = select(ge8, br8, rh7)
+let hs8 = select(ge8, bs8, hs7)
+let ge9 = bh9 <= hh
+let h0_9 = select(ge9, bh9, h0_8)
+let rh9 = select(ge9, br9, rh8)
+let hs9 = select(ge9, bs9, hs8)
+let ge10 = bh10 <= hh
+let h0_10 = select(ge10, bh10, h0_9)
+let rh10 = select(ge10, br10, rh9)
+let hs10 = select(ge10, bs10, hs9)
+let ge11 = bh11 <= hh
+let h0_11 = select(ge11, bh11, h0_10)
+let rh11 = select(ge11, br11, rh10)
+let hs11 = select(ge11, bs11, hs10)
+let ge12 = bh12 <= hh
+let h0_12 = select(ge12, bh12, h0_11)
+let rh12 = select(ge12, br12, rh11)
+let hs12 = select(ge12, bs12, hs11)
+let ge13 = bh13 <= hh
+let h0_13 = select(ge13, bh13, h0_12)
+let rh13 = select(ge13, br13, rh12)
+let hs13 = select(ge13, bs13, hs12)
+let ge14 = bh14 <= hh
+let h0_14 = select(ge14, bh14, h0_13)
+let rh14 = select(ge14, br14, rh13)
+let hs14 = select(ge14, bs14, hs13)
+let ge15 = bh15 <= hh
+let h0_15 = select(ge15, bh15, h0_14)
+let rh15 = select(ge15, br15, rh14)
+let hs15 = select(ge15, bs15, hs14)
+let ge16 = bh16 <= hh
+let h0_16 = select(ge16, bh16, h0_15)
+let rh16 = select(ge16, br16, rh15)
+let hs16 = select(ge16, bs16, hs15)
+let ge17 = bh17 <= hh
+let h0_17 = select(ge17, bh17, h0_16)
+let rh17 = select(ge17, br17, rh16)
+let hs17 = select(ge17, bs17, hs16)
+let ge18 = bh18 <= hh
+let h0_18 = select(ge18, bh18, h0_17)
+let rh18 = select(ge18, br18, rh17)
+let hs18 = select(ge18, bs18, hs17)
+let ge19 = bh19 <= hh
+let h0_19 = select(ge19, bh19, h0_18)
+let rh19 = select(ge19, br19, rh18)
+let hs19 = select(ge19, bs19, hs18)
+let ge20 = bh20 <= hh
+let h0_20 = select(ge20, bh20, h0_19)
+let rh20 = select(ge20, br20, rh19)
+let hs20 = select(ge20, bs20, hs19)
+let ge21 = bh21 <= hh
+let h0_21 = select(ge21, bh21, h0_20)
+let rh21 = select(ge21, br21, rh20)
+let hs21 = select(ge21, bs21, hs20)
+let ge22 = bh22 <= hh
+let h0_22 = select(ge22, bh22, h0_21)
+let rh22 = select(ge22, br22, rh21)
+let hs22 = select(ge22, bs22, hs21)
+let ge23 = bh23 <= hh
+let h0_23 = select(ge23, bh23, h0_22)
+let rh23 = select(ge23, br23, rh22)
+let hs23 = select(ge23, bs23, hs22)
+let ge24 = bh24 <= hh
+let h0_24 = select(ge24, bh24, h0_23)
+let rh24 = select(ge24, br24, rh23)
+let hs24 = select(ge24, bs24, hs23)
+let ge25 = bh25 <= hh
+let h0_25 = select(ge25, bh25, h0_24)
+let rh25 = select(ge25, br25, rh24)
+let hs25 = select(ge25, bs25, hs24)
+let ge26 = bh26 <= hh
+let h0_26 = select(ge26, bh26, h0_25)
+let rh26 = select(ge26, br26, rh25)
+let hs26 = select(ge26, bs26, hs25)
+let ge27 = bh27 <= hh
+let h0_27 = select(ge27, bh27, h0_26)
+let rh27 = select(ge27, br27, rh26)
+let hs27 = select(ge27, bs27, hs26)
+let ud = -((hh - h0_27) / hs27)
+let rhod = rh27 * exp(ud)
+let vr0 = fma(io2, y, fma(-io1, z, vx))
+let vr1 = fma(io0, z, fma(-io2, x, vy))
+let vr2 = fma(io1, x, fma(-io0, y, vz))
+let vn = sqrt(vr0 * vr0 + vr1 * vr1 + vr2 * vr2)
+let kd = -((bc * rhod) * vn)
+let drx = kd * vr0
+let dry = kd * vr1
+let drz = kd * vr2
+next o0 = drx
+next o1 = dry
+next o2 = drz
+step   map

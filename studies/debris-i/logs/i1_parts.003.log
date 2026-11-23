@@ -1,0 +1,30 @@
+# i1_parts.003.log, written by i_harness.py (SHA-256 9e37f602414d62f6edcf9bff97409016515b1f5c9d3c32eeb4475e7025d60090)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:05:46 -0700 local (2026-11-23 16:05:46 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I1 (part systems): each part system of the program (degree 7: central, grav, tides, bodies, frame, drag; maps
+#   whose inputs and data are lane params) against lang.run, at binary32, binary64, binary128 and binary256: 16 lanes of I2's
+#   inputs (the test seed's first 16 for central, grav, tides and drag; the first 16 stage times for bodies and frame), two
+#   runs of two segments of 40 steps, every lane param rewritten by the driver at each run's start; criterion (a) of I1
+#   (states bit for bit by the NaN rule, lane bytes [7:5] clear and [4:0] the definition's flags; a marked lane replayed,
+#   its guess counted).
+image part-drag-fp64: reused (manifest names source fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818)
+part drag fp64: source studies/debris-i/systems/part-drag-fp64.cftl sha256 fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818; image sha256 f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2; 95 lane params, 3 outputs
+driver: runs f19c4b61d91783be402198b0067679c85def2c0508ae09ba0d11073acf667c17 init bcb7401526cab789d02dd60441a3679a808770b199ce92e94078ecb308edc21b segments d861962045a80c29902bdc49ddea74f8a61725cf9d7c71b4690743a39c8bd1bc
+PASS I1 part drag fp64 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-drag-fp32: compiled; 1191 instructions, bank 91, scratch 112 (spills 14), 1.4 s; source 77a1b6c39e99212fee70976991e17e319117a81026c30ba08aa01d325826a43a, image 4871c5a3640d950fb49cdd327fb650a0e906a6654a03e241474daf7a0c41b57f
+part drag fp32: source studies/debris-i/systems/part-drag-fp32.cftl sha256 77a1b6c39e99212fee70976991e17e319117a81026c30ba08aa01d325826a43a; image sha256 4871c5a3640d950fb49cdd327fb650a0e906a6654a03e241474daf7a0c41b57f; 95 lane params, 3 outputs
+driver: runs e4319f90ffe37018e1f9cb7d30c95e32562684eccf0c71ece961734dca15c563 init e71dd140c909ac53d858a2cf9c6ffc78c3311bc1ae8f46817c0b7eb05a1b9cac segments f4d280299adb73472f9c7eabce52424927791d909af6d25af96f612139321a02
+PASS I1 part drag fp32 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-drag-fp128: compiled; 1013 instructions, bank 94, scratch 112 (spills 14), 1.5 s; source 0467190b1d88346e63999807b930e33d348f7deaece4d4e1085d3bcab8009538, image 75a28d325d932c775145b137dfe310e780c6726ea81408514c04e1ac19a068d1
+part drag fp128: source studies/debris-i/systems/part-drag-fp128.cftl sha256 0467190b1d88346e63999807b930e33d348f7deaece4d4e1085d3bcab8009538; image sha256 75a28d325d932c775145b137dfe310e780c6726ea81408514c04e1ac19a068d1; 95 lane params, 3 outputs
+driver: runs 2a40d2f2d423b194593cb8f1c0b60daeb19c5178733d1f4fe010b5cdad66c794 init c88810b621693801a4fa5c68be60f6b88281d40d13b14fd996fea090f22f324e segments 9467f8830d46fc1741050fb9af170217050127b073037b29443ed08744eff529
+PASS I1 part drag fp128 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+compile part-drag-fp256: compiled; 1034 instructions, bank 107, scratch 112 (spills 14), 2.5 s; source b7ac98c5b27421d0223a4d519fd39111620fcb8f5e83c21efb81e5246426664f, image ed12b794dd68b8e4350d53eeabe4dc577482154a23f5971df91510394ebb9056
+part drag fp256: source studies/debris-i/systems/part-drag-fp256.cftl sha256 b7ac98c5b27421d0223a4d519fd39111620fcb8f5e83c21efb81e5246426664f; image sha256 ed12b794dd68b8e4350d53eeabe4dc577482154a23f5971df91510394ebb9056; 95 lane params, 3 outputs
+driver: runs adb483e0a46519b3c5ef53daa9ddd05d4565bb09209b351c9a348ad7a733b5a0 init c04ef110b6f0b7f2e52c583f6e61bc1a8599e14071abab7131795eb0f588328a segments f017b67639315c0d0c2bb0dd2b48daac41cfcf8f1c51586067de241d9dc711ec
+PASS I1 part drag fp256 (a): 64 lane-segments equal lang.run, marks 0 (file 0), wrong guesses 0
+# 4 checks, 0 failed; ended 2026-11-23 09:06:00 -0700 local

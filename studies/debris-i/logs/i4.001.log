@@ -1,0 +1,50 @@
+# i4.001.log, written by i_harness.py (SHA-256 091766b0594f57f136f114b552a95144c853c5e8ac0e4a989d18447c343c328b)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:19:46 -0700 local (2026-11-23 16:19:46 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I4: the authorities, through the program's own route (its part systems, the images I1 holds).
+#   (a) testpo.421: every point whose pair the ephemeris part computes - (target, centre) = (10, 3), (3, 10), (11, 3) and
+#       (3, 11), coordinates 1 to 3, inside DE421's coverage - by part (d) at binary64 and at binary256, at the point's
+#       epoch (t = (JED - 2461329.5) x 86400 s; the sub-interval M1's floor rule takes), the value in AU being the part's
+#       metres divided exactly by 1,000 x DE421's AU (km): |value - testpo's| <= 1e-13 AU at every point (E5's tolerance).
+#       Control (E5's P2b): the Moon's coefficient c_0 of the coordinate the first Moon point tests, in that point's lane,
+#       raised by 1e-3 km: that point must FAIL.
+#   (b) Lasser et al.'s direct tides of the Sun and the Moon, at every tenth of the 2,880 epochs (288): the epoch's time as
+#       M1's lasser3 forms it (TT = GPS + 51.184 s, TDB - TT two-term, binary64), part (d) at that time, then part (c) at
+#       the CRF position (the file's decimal strings, rounded once) with part (d)'s Sun and Moon, at binary64 and binary256:
+#       max over the epochs of |a - a_Lasser| (the norm) < 1e-11 m/s^2 for the Sun and for the Moon (E4's tolerance).
+#       Control: the Moon's GM scaled by (1 + 1e-3) must FAIL the Moon's tide.
+#   (c) reported, no criterion: the program's central term plus degrees 2..7 (parts (a) and (b)) at Lasser et al.'s TRF
+#       positions, against their degree-180 field (02gravityfield_itrf.txt: degrees 2..180, the central term added here by
+#       part (a), as E4's T1 compared degrees 2..180): the difference is truncation.
+inputs: testpo.421 aed0bc7f41d5b279dfe39eb264dbb83f702b570237a84ee5c93440ee14619d18; 00orbit_icrf.txt 57bf1735f584ba9c40d0e3854caf3be30c42fde05177af15463a71546156b2e5; 03directTideSun_icrf.txt 8fa2218f7f52b9ef53e9c53be57960ae022e88dab2599aabc411c72125ad5521; 03directTideMoon_icrf.txt 20ba052a965cd5666774455743d9fef78834af65865195358207ae9af415e0cc; 00orbit_itrf.txt ff7d151c16fdfe325d1d3a50ca59d260be73d122711ef2297b6fe98994b1b783; 02gravityfield_itrf.txt dc74fcdefcd8818cde4213938f9bd312e18ffe63e7fbf8471aa0acbf723bb38c
+image part-bodies-fp64: reused (manifest names source f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90)
+part bodies fp64: source studies/debris-i/systems/part-bodies-fp64.cftl sha256 f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90; image sha256 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0; 120 lane params, 6 outputs
+PASS I4 (a) fp64: 16 testpo points (16 epochs), largest |value - testpo| 3.164e-16 AU <= 1e-13
+PASS I4 (a) fp64 control P2b: the Moon's c_0 of coordinate 3 raised 1e-3 km at JED 4835031/2: |value - testpo| 6.685e-12 AU FAILS 1e-13
+image part-bodies-fp256: reused (manifest names source 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5)
+part bodies fp256: source studies/debris-i/systems/part-bodies-fp256.cftl sha256 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5; image sha256 b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c; 120 lane params, 6 outputs
+PASS I4 (a) fp256: 16 testpo points (16 epochs), largest |value - testpo| 2.173e-16 AU <= 1e-13
+PASS I4 (a) fp256 control P2b: the Moon's c_0 of coordinate 3 raised 1e-3 km at JED 4835031/2: |value - testpo| 6.685e-12 AU FAILS 1e-13
+PASS the benchmark files hold 2,880 epochs each
+image part-bodies-fp64: reused (manifest names source f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90)
+part bodies fp64: source studies/debris-i/systems/part-bodies-fp64.cftl sha256 f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90; image sha256 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0; 120 lane params, 6 outputs
+image part-tides-fp64: reused (manifest names source f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87)
+part tides fp64: source studies/debris-i/systems/part-tides-fp64.cftl sha256 f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87; image sha256 5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba; 11 lane params, 6 outputs
+PASS I4 (b) fp64 Sun: max |da| 1.165e-17 m/s^2 < 1e-11 over 288 epochs
+PASS I4 (b) fp64 Moon: max |da| 3.913e-16 m/s^2 < 1e-11 over 288 epochs
+PASS I4 (b) fp64 control: the Moon's GM x (1 + 1e-3): max |da| 1.152e-09 m/s^2 FAILS 1e-11
+image part-bodies-fp256: reused (manifest names source 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5)
+part bodies fp256: source studies/debris-i/systems/part-bodies-fp256.cftl sha256 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5; image sha256 b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c; 120 lane params, 6 outputs
+image part-tides-fp256: reused (manifest names source 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0)
+part tides fp256: source studies/debris-i/systems/part-tides-fp256.cftl sha256 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0; image sha256 a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c; 11 lane params, 6 outputs
+PASS I4 (b) fp256 Sun: max |da| 1.044e-17 m/s^2 < 1e-11 over 288 epochs
+PASS I4 (b) fp256 Moon: max |da| 3.913e-16 m/s^2 < 1e-11 over 288 epochs
+PASS I4 (b) fp256 control: the Moon's GM x (1 + 1e-3): max |da| 1.152e-09 m/s^2 FAILS 1e-11
+image part-grav-fp64: reused (manifest names source 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7)
+part grav fp64: source studies/debris-i/systems/part-grav-fp64.cftl sha256 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7; image sha256 13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d; 225 lane params, 3 outputs
+I4 (c) reported, fp64: degrees 2..7 against Lasser et al.'s 2..180 at 288 TRF epochs: largest |da| 1.807e-04 m/s^2 (truncation, no criterion)
+# 11 checks, 0 failed; ended 2026-11-23 09:19:57 -0700 local

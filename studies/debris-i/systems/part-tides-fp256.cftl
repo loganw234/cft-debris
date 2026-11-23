@@ -1,0 +1,35 @@
+; cft-debris DEBRIS-I (MIT licence), written by tests/i_gen.py: part tides of the program (degree 7, 28 bands, frame degrees 7 and 3), a map
+; every data value is a param or a lane param, default 0, filled per run; no data is in this file
+system dpart_tides
+format fp256
+round  rne
+state  o0, o1, o2, o3, o4, o5
+lane param x = 0, y = 0, z = 0, is0 = 0, is1 = 0, is2 = 0, im0 = 0, im1 = 0
+lane param im2 = 0, gms = 0, gmm = 0
+let ds0 = is0 - x
+let ds1 = is1 - y
+let ds2 = is2 - z
+let dds = ds0 * ds0 + ds1 * ds1 + ds2 * ds2
+let qds = gms / (dds * sqrt(dds))
+let q2s = is0 * is0 + is1 * is1 + is2 * is2
+let qss = gms / (q2s * sqrt(q2s))
+let as0 = qds * ds0 - qss * is0
+let as1 = qds * ds1 - qss * is1
+let as2 = qds * ds2 - qss * is2
+let dm0 = im0 - x
+let dm1 = im1 - y
+let dm2 = im2 - z
+let ddm = dm0 * dm0 + dm1 * dm1 + dm2 * dm2
+let qdm = gmm / (ddm * sqrt(ddm))
+let q2m = im0 * im0 + im1 * im1 + im2 * im2
+let qsm = gmm / (q2m * sqrt(q2m))
+let am0 = qdm * dm0 - qsm * im0
+let am1 = qdm * dm1 - qsm * im1
+let am2 = qdm * dm2 - qsm * im2
+next o0 = as0
+next o1 = as1
+next o2 = as2
+next o3 = am0
+next o4 = am1
+next o5 = am2
+step   map

@@ -1,0 +1,28 @@
+# stage.001.log, written by i_harness.py (SHA-256 091766b0594f57f136f114b552a95144c853c5e8ac0e4a989d18447c343c328b)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# with i_analyze.py (SHA-256 d4b5437c66107ae0ff74cc6bb5b51e67a72b33db7c4f314a1e9acb14385545e7)
+# started 2026-11-23 09:19:15 -0700 local (2026-11-23 16:19:15 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   stage: the box's run folder in/ (written once: refused if it exists), every file listed in in/EXPECTED.sha256:
+#   tests/ (i_harness.py, i_lib.py, i_vals.py, i_gen.py, i_analyze.py, build_i.sh, i_run.c, m1i.c), src/ (the 18 files,
+#   checked against src_1646c96.sha256 first), the two archives (checked against lead.md's SHA-256), dl/ (EIGEN6-C4.gfc,
+#   lnxp1900p2053.421, header.421), frame_h0.bin, DEBRIS-H's seed and test seed, img/ (the images the desktop compiled and
+#   I1 held), i1/ (each I1 case's runs and INIT files and the desktop's segment SHA-256), i3/ (the sample, its 8 batches,
+#   the 24 hour runs a format), i5/ (the plan: each configuration's runs, workers' INIT files or steps, fixed here from the
+#   desktop's functional rates).
+I1 cases staged: 32 (i1-program-d2-fp128, i1-program-d2-fp256, i1-program-d2-fp32, i1-program-d2-fp64, i1-program-d7-fp128, i1-program-d7-fp256, i1-program-d7-fp32, i1-program-d7-fp64, i1p-part-bodies-fp128, i1p-part-bodies-fp256, i1p-part-bodies-fp32, i1p-part-bodies-fp64, i1p-part-central-fp128, i1p-part-central-fp256, i1p-part-central-fp32, i1p-part-central-fp64, i1p-part-drag-fp128, i1p-part-drag-fp256, i1p-part-drag-fp32, i1p-part-drag-fp64, i1p-part-frame-fp128, i1p-part-frame-fp256, i1p-part-frame-fp32, i1p-part-frame-fp64, i1p-part-grav-fp128, i1p-part-grav-fp256, i1p-part-grav-fp32, i1p-part-grav-fp64, i1p-part-tides-fp128, i1p-part-tides-fp256, i1p-part-tides-fp32, i1p-part-tides-fp64)
+I3 sample: seed seed1.txt sha256 a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0, 2688 objects; set aside: 0 duplicates of a lower index, and index 1595 (E0003: M1 (DEBRIS-H's A256) decayed it at step 1396, 5.8 h after T_s; a lane that re-enters leaves the model's domain, and I3's tolerance bounds rounding and the frame, not a re-entry)
+I3 sample: eligible by band [16, 323, 1806, 542]; drawn [16, 16, 16, 16] (random.Random(20261123))
+image program-d7-fp64: reused (manifest names source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb)
+I3 fp64: image program-d7-fp64, 24 runs of 6 segments, runs file SHA-256 8229608d4942f3e74e0f1954f7a61dd270f5923270dbb4350ef6b42ec6f26f43
+image program-d7-fp128: reused (manifest names source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9)
+I3 fp128: image program-d7-fp128, 24 runs of 6 segments, runs file SHA-256 c124c3f19f9e916de40a9f0dde62c18e4f333547df86c9b55d05cef065fe2848
+image program-d7-fp256: reused (manifest names source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7)
+I3 fp256: image program-d7-fp256, 24 runs of 6 segments, runs file SHA-256 37690838168a2399da3df68f62ac742c069335515caff69a98466cc3e81d1681
+I3 sample written to the ledger (debris-i/i3_sample.tsv), SHA-256 454aa53f14682647eb77a20eb04afa00b1eb3da08021b3aaa56ce4f3a352d533; 64 objects, 8 batches of 8
+I5 plan: prog-fp64 blocks 3; prog-fp128 blocks 2; prog-fp256 blocks 2; m1-native64 steps 445948; m1-cft64 steps 573; m1-cft128 steps 321; m1-cft256 steps 240; ESTIMATE of the window at the desktop's rates: 38 min (x 1.5 to 2.5 on the box, BELIEVED)
+staged 304 files, 182992912 bytes; EXPECTED.sha256 SHA-256 a133a792f30acee8146a39c815ebb83ec122d5ce35c915a6e7e22933645c1104
+# 0 checks, 0 failed; ended 2026-11-23 09:19:33 -0700 local

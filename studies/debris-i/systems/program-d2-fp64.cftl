@@ -1,0 +1,395 @@
+; cft-debris DEBRIS-I (MIT licence), written by tests/i_gen.py: M1's force model without radiation pressure, degree 2, 28 bands, the frame as polynomials of degree 7 (M) and 3 (Omega); layout bank:grav,bands,scal;lane:de,frame
+; every data value is a param or a lane param, default 0, filled per run; no data is in this file
+system debrisi2
+format fp64
+round  rne
+state  t, x, y, z, vx, vy, vz
+param  re = 0, re2 = 0, kacc = 0, dg1 = 0, dg2 = 0, dg3 = 0, sd0 = 0, sd1 = 0
+param  sd2 = 0, an2_0 = 0, bn2_0 = 0, an3_0 = 0, bn3_0 = 0, an3_1 = 0, bn3_1 = 0, p1_2 = 0
+param  pz_2 = 0, c2_1 = 0, s2_1 = 0, ha2_1 = 0, hb2_1 = 0, fz2_1 = 0, c2_2 = 0, s2_2 = 0
+param  ha2_2 = 0, hb2_2 = 0, fz2_2 = 0, bh0 = 0, bh1 = 0, bh2 = 0, bh3 = 0, bh4 = 0
+param  bh5 = 0, bh6 = 0, bh7 = 0, bh8 = 0, bh9 = 0, bh10 = 0, bh11 = 0, bh12 = 0
+param  bh13 = 0, bh14 = 0, bh15 = 0, bh16 = 0, bh17 = 0, bh18 = 0, bh19 = 0, bh20 = 0
+param  bh21 = 0, bh22 = 0, bh23 = 0, bh24 = 0, bh25 = 0, bh26 = 0, bh27 = 0, br0 = 0
+param  br1 = 0, br2 = 0, br3 = 0, br4 = 0, br5 = 0, br6 = 0, br7 = 0, br8 = 0
+param  br9 = 0, br10 = 0, br11 = 0, br12 = 0, br13 = 0, br14 = 0, br15 = 0, br16 = 0
+param  br17 = 0, br18 = 0, br19 = 0, br20 = 0, br21 = 0, br22 = 0, br23 = 0, br24 = 0
+param  br25 = 0, br26 = 0, br27 = 0, bs0 = 0, bs1 = 0, bs2 = 0, bs3 = 0, bs4 = 0
+param  bs5 = 0, bs6 = 0, bs7 = 0, bs8 = 0, bs9 = 0, bs10 = 0, bs11 = 0, bs12 = 0
+param  bs13 = 0, bs14 = 0, bs15 = 0, bs16 = 0, bs17 = 0, bs18 = 0, bs19 = 0, bs20 = 0
+param  bs21 = 0, bs22 = 0, bs23 = 0, bs24 = 0, bs25 = 0, bs26 = 0, bs27 = 0, gm = 0
+param  gms = 0, gmm = 0, rearth = 0, km = 0, fem = 0
+lane param mo0_0 = 0, mo0_1 = 0, mo0_2 = 0, mo0_3 = 0, mo0_4 = 0, mo0_5 = 0, mo0_6 = 0, mo0_7 = 0
+lane param mo0_8 = 0, mo0_9 = 0, mo0_10 = 0, mo0_11 = 0, mo0_12 = 0, mo1_0 = 0, mo1_1 = 0, mo1_2 = 0
+lane param mo1_3 = 0, mo1_4 = 0, mo1_5 = 0, mo1_6 = 0, mo1_7 = 0, mo1_8 = 0, mo1_9 = 0, mo1_10 = 0
+lane param mo1_11 = 0, mo1_12 = 0, mo2_0 = 0, mo2_1 = 0, mo2_2 = 0, mo2_3 = 0, mo2_4 = 0, mo2_5 = 0
+lane param mo2_6 = 0, mo2_7 = 0, mo2_8 = 0, mo2_9 = 0, mo2_10 = 0, mo2_11 = 0, mo2_12 = 0, su0_0 = 0
+lane param su0_1 = 0, su0_2 = 0, su0_3 = 0, su0_4 = 0, su0_5 = 0, su0_6 = 0, su0_7 = 0, su0_8 = 0
+lane param su0_9 = 0, su0_10 = 0, su1_0 = 0, su1_1 = 0, su1_2 = 0, su1_3 = 0, su1_4 = 0, su1_5 = 0
+lane param su1_6 = 0, su1_7 = 0, su1_8 = 0, su1_9 = 0, su1_10 = 0, su2_0 = 0, su2_1 = 0, su2_2 = 0
+lane param su2_3 = 0, su2_4 = 0, su2_5 = 0, su2_6 = 0, su2_7 = 0, su2_8 = 0, su2_9 = 0, su2_10 = 0
+lane param em0_0 = 0, em0_1 = 0, em0_2 = 0, em0_3 = 0, em0_4 = 0, em0_5 = 0, em0_6 = 0, em0_7 = 0
+lane param em0_8 = 0, em0_9 = 0, em0_10 = 0, em0_11 = 0, em0_12 = 0, em1_0 = 0, em1_1 = 0, em1_2 = 0
+lane param em1_3 = 0, em1_4 = 0, em1_5 = 0, em1_6 = 0, em1_7 = 0, em1_8 = 0, em1_9 = 0, em1_10 = 0
+lane param em1_11 = 0, em1_12 = 0, em2_0 = 0, em2_1 = 0, em2_2 = 0, em2_3 = 0, em2_4 = 0, em2_5 = 0
+lane param em2_6 = 0, em2_7 = 0, em2_8 = 0, em2_9 = 0, em2_10 = 0, em2_11 = 0, em2_12 = 0, lmo = 0
+lane param lsu = 0, lem = 0, tmo = 0, tsu = 0, tem = 0, fm0_0 = 0, fm0_1 = 0, fm0_2 = 0
+lane param fm0_3 = 0, fm0_4 = 0, fm0_5 = 0, fm0_6 = 0, fm0_7 = 0, fm1_0 = 0, fm1_1 = 0, fm1_2 = 0
+lane param fm1_3 = 0, fm1_4 = 0, fm1_5 = 0, fm1_6 = 0, fm1_7 = 0, fm2_0 = 0, fm2_1 = 0, fm2_2 = 0
+lane param fm2_3 = 0, fm2_4 = 0, fm2_5 = 0, fm2_6 = 0, fm2_7 = 0, fm3_0 = 0, fm3_1 = 0, fm3_2 = 0
+lane param fm3_3 = 0, fm3_4 = 0, fm3_5 = 0, fm3_6 = 0, fm3_7 = 0, fm4_0 = 0, fm4_1 = 0, fm4_2 = 0
+lane param fm4_3 = 0, fm4_4 = 0, fm4_5 = 0, fm4_6 = 0, fm4_7 = 0, fm5_0 = 0, fm5_1 = 0, fm5_2 = 0
+lane param fm5_3 = 0, fm5_4 = 0, fm5_5 = 0, fm5_6 = 0, fm5_7 = 0, fm6_0 = 0, fm6_1 = 0, fm6_2 = 0
+lane param fm6_3 = 0, fm6_4 = 0, fm6_5 = 0, fm6_6 = 0, fm6_7 = 0, fm7_0 = 0, fm7_1 = 0, fm7_2 = 0
+lane param fm7_3 = 0, fm7_4 = 0, fm7_5 = 0, fm7_6 = 0, fm7_7 = 0, fm8_0 = 0, fm8_1 = 0, fm8_2 = 0
+lane param fm8_3 = 0, fm8_4 = 0, fm8_5 = 0, fm8_6 = 0, fm8_7 = 0, fo0_0 = 0, fo0_1 = 0, fo0_2 = 0
+lane param fo0_3 = 0, fo1_0 = 0, fo1_1 = 0, fo1_2 = 0, fo1_3 = 0, fo2_0 = 0, fo2_1 = 0, fo2_2 = 0
+lane param fo2_3 = 0, tc = 0, bc = 0
+let fs = t - tc
+let m0 = fma(fma(fma(fma(fma(fma(fma(fm0_7, fs, fm0_6), fs, fm0_5), fs, fm0_4), fs, fm0_3), fs, fm0_2), fs, fm0_1), fs, fm0_0)
+let m1 = fma(fma(fma(fma(fma(fma(fma(fm1_7, fs, fm1_6), fs, fm1_5), fs, fm1_4), fs, fm1_3), fs, fm1_2), fs, fm1_1), fs, fm1_0)
+let m2 = fma(fma(fma(fma(fma(fma(fma(fm2_7, fs, fm2_6), fs, fm2_5), fs, fm2_4), fs, fm2_3), fs, fm2_2), fs, fm2_1), fs, fm2_0)
+let m3 = fma(fma(fma(fma(fma(fma(fma(fm3_7, fs, fm3_6), fs, fm3_5), fs, fm3_4), fs, fm3_3), fs, fm3_2), fs, fm3_1), fs, fm3_0)
+let m4 = fma(fma(fma(fma(fma(fma(fma(fm4_7, fs, fm4_6), fs, fm4_5), fs, fm4_4), fs, fm4_3), fs, fm4_2), fs, fm4_1), fs, fm4_0)
+let m5 = fma(fma(fma(fma(fma(fma(fma(fm5_7, fs, fm5_6), fs, fm5_5), fs, fm5_4), fs, fm5_3), fs, fm5_2), fs, fm5_1), fs, fm5_0)
+let m6 = fma(fma(fma(fma(fma(fma(fma(fm6_7, fs, fm6_6), fs, fm6_5), fs, fm6_4), fs, fm6_3), fs, fm6_2), fs, fm6_1), fs, fm6_0)
+let m7 = fma(fma(fma(fma(fma(fma(fma(fm7_7, fs, fm7_6), fs, fm7_5), fs, fm7_4), fs, fm7_3), fs, fm7_2), fs, fm7_1), fs, fm7_0)
+let m8 = fma(fma(fma(fma(fma(fma(fma(fm8_7, fs, fm8_6), fs, fm8_5), fs, fm8_4), fs, fm8_3), fs, fm8_2), fs, fm8_1), fs, fm8_0)
+let om0 = fma(fma(fma(fo0_3, fs, fo0_2), fs, fo0_1), fs, fo0_0)
+let om1 = fma(fma(fma(fo1_3, fs, fo1_2), fs, fo1_1), fs, fo1_0)
+let om2 = fma(fma(fma(fo2_3, fs, fo2_2), fs, fo2_1), fs, fo2_0)
+let r2 = x * x + y * y + z * z
+let rn = sqrt(r2)
+let kc = -(gm / (r2 * rn))
+let cx = kc * x
+let cy = kc * y
+let cz = kc * z
+let rb0 = fma(m6, z, fma(m3, y, m0 * x))
+let rb1 = fma(m7, z, fma(m4, y, m1 * x))
+let rb2 = fma(m8, z, fma(m5, y, m2 * x))
+let gr2 = rb0 * rb0 + rb1 * rb1 + rb2 * rb2
+let ir2 = 1 / gr2
+let rho = re2 * ir2
+let x0 = (re * rb0) * ir2
+let y0 = (re * rb1) * ir2
+let z0 = (re * rb2) * ir2
+let V0_0 = re / sqrt(gr2)
+let zs0 = sd0 * z0
+let V1_0 = zs0 * V0_0
+let p2_0 = an2_0 * z0
+let q2_0 = bn2_0 * rho
+let V2_0 = p2_0 * V1_0 - q2_0 * V0_0
+let p3_0 = an3_0 * z0
+let q3_0 = bn3_0 * rho
+let V3_0 = p3_0 * V2_0 - q3_0 * V1_0
+let V1_1 = dg1 * (x0 * V0_0)
+let W1_1 = dg1 * (y0 * V0_0)
+let zs1 = sd1 * z0
+let V2_1 = zs1 * V1_1
+let W2_1 = zs1 * W1_1
+let p3_1 = an3_1 * z0
+let q3_1 = bn3_1 * rho
+let V3_1 = p3_1 * V2_1 - q3_1 * V1_1
+let W3_1 = p3_1 * W2_1 - q3_1 * W1_1
+let V2_2 = dg2 * (x0 * V1_1 - y0 * W1_1)
+let W2_2 = dg2 * (x0 * W1_1 + y0 * V1_1)
+let zs2 = sd2 * z0
+let V3_2 = zs2 * V2_2
+let W3_2 = zs2 * W2_2
+let V3_3 = dg3 * (x0 * V2_2 - y0 * W2_2)
+let W3_3 = dg3 * (x0 * W2_2 + y0 * V2_2)
+let gx0 = -(p1_2 * V3_1)
+let gy0 = -(p1_2 * W3_1)
+let gz0 = -(pz_2 * V3_0)
+let t1_2_1 = c2_1 * V3_2 + s2_1 * W3_2
+let t2_2_1 = c2_1 * V3_0
+let t3_2_1 = s2_1 * V3_2 - c2_1 * W3_2
+let t4_2_1 = s2_1 * V3_0
+let t5_2_1 = c2_1 * V3_1 + s2_1 * W3_1
+let gx1 = gx0 + (hb2_1 * t2_2_1 - ha2_1 * t1_2_1)
+let gy1 = gy0 + (ha2_1 * t3_2_1 + hb2_1 * t4_2_1)
+let gz1 = gz0 - fz2_1 * t5_2_1
+let t1_2_2 = c2_2 * V3_3 + s2_2 * W3_3
+let t2_2_2 = c2_2 * V3_1 + s2_2 * W3_1
+let t3_2_2 = s2_2 * V3_3 - c2_2 * W3_3
+let t4_2_2 = s2_2 * V3_1 - c2_2 * W3_1
+let t5_2_2 = c2_2 * V3_2 + s2_2 * W3_2
+let gx2 = gx1 + (hb2_2 * t2_2_2 - ha2_2 * t1_2_2)
+let gy2 = gy1 + (ha2_2 * t3_2_2 + hb2_2 * t4_2_2)
+let gz2 = gz1 - fz2_2 * t5_2_2
+let fx = kacc * gx2
+let fy = kacc * gy2
+let fz = kacc * gz2
+let hv0 = fma(m2, fz, fma(m1, fy, m0 * fx))
+let hv1 = fma(m5, fz, fma(m4, fy, m3 * fx))
+let hv2 = fma(m8, fz, fma(m7, fy, m6 * fx))
+let dmo = t - tmo
+let tamo = (dmo + dmo) / lmo - 1
+let ttmo = tamo + tamo
+let bmo0_11 = fma(ttmo, mo0_12, mo0_11)
+let bmo0_10 = fma(ttmo, bmo0_11, mo0_10) - mo0_12
+let bmo0_9 = fma(ttmo, bmo0_10, mo0_9) - bmo0_11
+let bmo0_8 = fma(ttmo, bmo0_9, mo0_8) - bmo0_10
+let bmo0_7 = fma(ttmo, bmo0_8, mo0_7) - bmo0_9
+let bmo0_6 = fma(ttmo, bmo0_7, mo0_6) - bmo0_8
+let bmo0_5 = fma(ttmo, bmo0_6, mo0_5) - bmo0_7
+let bmo0_4 = fma(ttmo, bmo0_5, mo0_4) - bmo0_6
+let bmo0_3 = fma(ttmo, bmo0_4, mo0_3) - bmo0_5
+let bmo0_2 = fma(ttmo, bmo0_3, mo0_2) - bmo0_4
+let bmo0_1 = fma(ttmo, bmo0_2, mo0_1) - bmo0_3
+let mo0 = fma(tamo, bmo0_1, mo0_0) - bmo0_2
+let bmo1_11 = fma(ttmo, mo1_12, mo1_11)
+let bmo1_10 = fma(ttmo, bmo1_11, mo1_10) - mo1_12
+let bmo1_9 = fma(ttmo, bmo1_10, mo1_9) - bmo1_11
+let bmo1_8 = fma(ttmo, bmo1_9, mo1_8) - bmo1_10
+let bmo1_7 = fma(ttmo, bmo1_8, mo1_7) - bmo1_9
+let bmo1_6 = fma(ttmo, bmo1_7, mo1_6) - bmo1_8
+let bmo1_5 = fma(ttmo, bmo1_6, mo1_5) - bmo1_7
+let bmo1_4 = fma(ttmo, bmo1_5, mo1_4) - bmo1_6
+let bmo1_3 = fma(ttmo, bmo1_4, mo1_3) - bmo1_5
+let bmo1_2 = fma(ttmo, bmo1_3, mo1_2) - bmo1_4
+let bmo1_1 = fma(ttmo, bmo1_2, mo1_1) - bmo1_3
+let mo1 = fma(tamo, bmo1_1, mo1_0) - bmo1_2
+let bmo2_11 = fma(ttmo, mo2_12, mo2_11)
+let bmo2_10 = fma(ttmo, bmo2_11, mo2_10) - mo2_12
+let bmo2_9 = fma(ttmo, bmo2_10, mo2_9) - bmo2_11
+let bmo2_8 = fma(ttmo, bmo2_9, mo2_8) - bmo2_10
+let bmo2_7 = fma(ttmo, bmo2_8, mo2_7) - bmo2_9
+let bmo2_6 = fma(ttmo, bmo2_7, mo2_6) - bmo2_8
+let bmo2_5 = fma(ttmo, bmo2_6, mo2_5) - bmo2_7
+let bmo2_4 = fma(ttmo, bmo2_5, mo2_4) - bmo2_6
+let bmo2_3 = fma(ttmo, bmo2_4, mo2_3) - bmo2_5
+let bmo2_2 = fma(ttmo, bmo2_3, mo2_2) - bmo2_4
+let bmo2_1 = fma(ttmo, bmo2_2, mo2_1) - bmo2_3
+let mo2 = fma(tamo, bmo2_1, mo2_0) - bmo2_2
+let dsu = t - tsu
+let tasu = (dsu + dsu) / lsu - 1
+let ttsu = tasu + tasu
+let bsu0_9 = fma(ttsu, su0_10, su0_9)
+let bsu0_8 = fma(ttsu, bsu0_9, su0_8) - su0_10
+let bsu0_7 = fma(ttsu, bsu0_8, su0_7) - bsu0_9
+let bsu0_6 = fma(ttsu, bsu0_7, su0_6) - bsu0_8
+let bsu0_5 = fma(ttsu, bsu0_6, su0_5) - bsu0_7
+let bsu0_4 = fma(ttsu, bsu0_5, su0_4) - bsu0_6
+let bsu0_3 = fma(ttsu, bsu0_4, su0_3) - bsu0_5
+let bsu0_2 = fma(ttsu, bsu0_3, su0_2) - bsu0_4
+let bsu0_1 = fma(ttsu, bsu0_2, su0_1) - bsu0_3
+let su0 = fma(tasu, bsu0_1, su0_0) - bsu0_2
+let bsu1_9 = fma(ttsu, su1_10, su1_9)
+let bsu1_8 = fma(ttsu, bsu1_9, su1_8) - su1_10
+let bsu1_7 = fma(ttsu, bsu1_8, su1_7) - bsu1_9
+let bsu1_6 = fma(ttsu, bsu1_7, su1_6) - bsu1_8
+let bsu1_5 = fma(ttsu, bsu1_6, su1_5) - bsu1_7
+let bsu1_4 = fma(ttsu, bsu1_5, su1_4) - bsu1_6
+let bsu1_3 = fma(ttsu, bsu1_4, su1_3) - bsu1_5
+let bsu1_2 = fma(ttsu, bsu1_3, su1_2) - bsu1_4
+let bsu1_1 = fma(ttsu, bsu1_2, su1_1) - bsu1_3
+let su1 = fma(tasu, bsu1_1, su1_0) - bsu1_2
+let bsu2_9 = fma(ttsu, su2_10, su2_9)
+let bsu2_8 = fma(ttsu, bsu2_9, su2_8) - su2_10
+let bsu2_7 = fma(ttsu, bsu2_8, su2_7) - bsu2_9
+let bsu2_6 = fma(ttsu, bsu2_7, su2_6) - bsu2_8
+let bsu2_5 = fma(ttsu, bsu2_6, su2_5) - bsu2_7
+let bsu2_4 = fma(ttsu, bsu2_5, su2_4) - bsu2_6
+let bsu2_3 = fma(ttsu, bsu2_4, su2_3) - bsu2_5
+let bsu2_2 = fma(ttsu, bsu2_3, su2_2) - bsu2_4
+let bsu2_1 = fma(ttsu, bsu2_2, su2_1) - bsu2_3
+let su2 = fma(tasu, bsu2_1, su2_0) - bsu2_2
+let dem = t - tem
+let taem = (dem + dem) / lem - 1
+let ttem = taem + taem
+let bem0_11 = fma(ttem, em0_12, em0_11)
+let bem0_10 = fma(ttem, bem0_11, em0_10) - em0_12
+let bem0_9 = fma(ttem, bem0_10, em0_9) - bem0_11
+let bem0_8 = fma(ttem, bem0_9, em0_8) - bem0_10
+let bem0_7 = fma(ttem, bem0_8, em0_7) - bem0_9
+let bem0_6 = fma(ttem, bem0_7, em0_6) - bem0_8
+let bem0_5 = fma(ttem, bem0_6, em0_5) - bem0_7
+let bem0_4 = fma(ttem, bem0_5, em0_4) - bem0_6
+let bem0_3 = fma(ttem, bem0_4, em0_3) - bem0_5
+let bem0_2 = fma(ttem, bem0_3, em0_2) - bem0_4
+let bem0_1 = fma(ttem, bem0_2, em0_1) - bem0_3
+let em0 = fma(taem, bem0_1, em0_0) - bem0_2
+let bem1_11 = fma(ttem, em1_12, em1_11)
+let bem1_10 = fma(ttem, bem1_11, em1_10) - em1_12
+let bem1_9 = fma(ttem, bem1_10, em1_9) - bem1_11
+let bem1_8 = fma(ttem, bem1_9, em1_8) - bem1_10
+let bem1_7 = fma(ttem, bem1_8, em1_7) - bem1_9
+let bem1_6 = fma(ttem, bem1_7, em1_6) - bem1_8
+let bem1_5 = fma(ttem, bem1_6, em1_5) - bem1_7
+let bem1_4 = fma(ttem, bem1_5, em1_4) - bem1_6
+let bem1_3 = fma(ttem, bem1_4, em1_3) - bem1_5
+let bem1_2 = fma(ttem, bem1_3, em1_2) - bem1_4
+let bem1_1 = fma(ttem, bem1_2, em1_1) - bem1_3
+let em1 = fma(taem, bem1_1, em1_0) - bem1_2
+let bem2_11 = fma(ttem, em2_12, em2_11)
+let bem2_10 = fma(ttem, bem2_11, em2_10) - em2_12
+let bem2_9 = fma(ttem, bem2_10, em2_9) - bem2_11
+let bem2_8 = fma(ttem, bem2_9, em2_8) - bem2_10
+let bem2_7 = fma(ttem, bem2_8, em2_7) - bem2_9
+let bem2_6 = fma(ttem, bem2_7, em2_6) - bem2_8
+let bem2_5 = fma(ttem, bem2_6, em2_5) - bem2_7
+let bem2_4 = fma(ttem, bem2_5, em2_4) - bem2_6
+let bem2_3 = fma(ttem, bem2_4, em2_3) - bem2_5
+let bem2_2 = fma(ttem, bem2_3, em2_2) - bem2_4
+let bem2_1 = fma(ttem, bem2_2, em2_1) - bem2_3
+let em2 = fma(taem, bem2_1, em2_0) - bem2_2
+let ea0 = em0 - fem * mo0
+let sx0 = su0 - ea0
+let sun0 = km * sx0
+let mn0 = km * mo0
+let ea1 = em1 - fem * mo1
+let sx1 = su1 - ea1
+let sun1 = km * sx1
+let mn1 = km * mo1
+let ea2 = em2 - fem * mo2
+let sx2 = su2 - ea2
+let sun2 = km * sx2
+let mn2 = km * mo2
+let ds0 = sun0 - x
+let ds1 = sun1 - y
+let ds2 = sun2 - z
+let dds = ds0 * ds0 + ds1 * ds1 + ds2 * ds2
+let qds = gms / (dds * sqrt(dds))
+let q2s = sun0 * sun0 + sun1 * sun1 + sun2 * sun2
+let qss = gms / (q2s * sqrt(q2s))
+let as0 = qds * ds0 - qss * sun0
+let as1 = qds * ds1 - qss * sun1
+let as2 = qds * ds2 - qss * sun2
+let dm0 = mn0 - x
+let dm1 = mn1 - y
+let dm2 = mn2 - z
+let ddm = dm0 * dm0 + dm1 * dm1 + dm2 * dm2
+let qdm = gmm / (ddm * sqrt(ddm))
+let q2m = mn0 * mn0 + mn1 * mn1 + mn2 * mn2
+let qsm = gmm / (q2m * sqrt(q2m))
+let am0 = qdm * dm0 - qsm * mn0
+let am1 = qdm * dm1 - qsm * mn1
+let am2 = qdm * dm2 - qsm * mn2
+let hh = rn - rearth
+let ge1 = bh1 <= hh
+let h0_1 = select(ge1, bh1, bh0)
+let rh1 = select(ge1, br1, br0)
+let hs1 = select(ge1, bs1, bs0)
+let ge2 = bh2 <= hh
+let h0_2 = select(ge2, bh2, h0_1)
+let rh2 = select(ge2, br2, rh1)
+let hs2 = select(ge2, bs2, hs1)
+let ge3 = bh3 <= hh
+let h0_3 = select(ge3, bh3, h0_2)
+let rh3 = select(ge3, br3, rh2)
+let hs3 = select(ge3, bs3, hs2)
+let ge4 = bh4 <= hh
+let h0_4 = select(ge4, bh4, h0_3)
+let rh4 = select(ge4, br4, rh3)
+let hs4 = select(ge4, bs4, hs3)
+let ge5 = bh5 <= hh
+let h0_5 = select(ge5, bh5, h0_4)
+let rh5 = select(ge5, br5, rh4)
+let hs5 = select(ge5, bs5, hs4)
+let ge6 = bh6 <= hh
+let h0_6 = select(ge6, bh6, h0_5)
+let rh6 = select(ge6, br6, rh5)
+let hs6 = select(ge6, bs6, hs5)
+let ge7 = bh7 <= hh
+let h0_7 = select(ge7, bh7, h0_6)
+let rh7 = select(ge7, br7, rh6)
+let hs7 = select(ge7, bs7, hs6)
+let ge8 = bh8 <= hh
+let h0_8 = select(ge8, bh8, h0_7)
+let rh8 = select(ge8, br8, rh7)
+let hs8 = select(ge8, bs8, hs7)
+let ge9 = bh9 <= hh
+let h0_9 = select(ge9, bh9, h0_8)
+let rh9 = select(ge9, br9, rh8)
+let hs9 = select(ge9, bs9, hs8)
+let ge10 = bh10 <= hh
+let h0_10 = select(ge10, bh10, h0_9)
+let rh10 = select(ge10, br10, rh9)
+let hs10 = select(ge10, bs10, hs9)
+let ge11 = bh11 <= hh
+let h0_11 = select(ge11, bh11, h0_10)
+let rh11 = select(ge11, br11, rh10)
+let hs11 = select(ge11, bs11, hs10)
+let ge12 = bh12 <= hh
+let h0_12 = select(ge12, bh12, h0_11)
+let rh12 = select(ge12, br12, rh11)
+let hs12 = select(ge12, bs12, hs11)
+let ge13 = bh13 <= hh
+let h0_13 = select(ge13, bh13, h0_12)
+let rh13 = select(ge13, br13, rh12)
+let hs13 = select(ge13, bs13, hs12)
+let ge14 = bh14 <= hh
+let h0_14 = select(ge14, bh14, h0_13)
+let rh14 = select(ge14, br14, rh13)
+let hs14 = select(ge14, bs14, hs13)
+let ge15 = bh15 <= hh
+let h0_15 = select(ge15, bh15, h0_14)
+let rh15 = select(ge15, br15, rh14)
+let hs15 = select(ge15, bs15, hs14)
+let ge16 = bh16 <= hh
+let h0_16 = select(ge16, bh16, h0_15)
+let rh16 = select(ge16, br16, rh15)
+let hs16 = select(ge16, bs16, hs15)
+let ge17 = bh17 <= hh
+let h0_17 = select(ge17, bh17, h0_16)
+let rh17 = select(ge17, br17, rh16)
+let hs17 = select(ge17, bs17, hs16)
+let ge18 = bh18 <= hh
+let h0_18 = select(ge18, bh18, h0_17)
+let rh18 = select(ge18, br18, rh17)
+let hs18 = select(ge18, bs18, hs17)
+let ge19 = bh19 <= hh
+let h0_19 = select(ge19, bh19, h0_18)
+let rh19 = select(ge19, br19, rh18)
+let hs19 = select(ge19, bs19, hs18)
+let ge20 = bh20 <= hh
+let h0_20 = select(ge20, bh20, h0_19)
+let rh20 = select(ge20, br20, rh19)
+let hs20 = select(ge20, bs20, hs19)
+let ge21 = bh21 <= hh
+let h0_21 = select(ge21, bh21, h0_20)
+let rh21 = select(ge21, br21, rh20)
+let hs21 = select(ge21, bs21, hs20)
+let ge22 = bh22 <= hh
+let h0_22 = select(ge22, bh22, h0_21)
+let rh22 = select(ge22, br22, rh21)
+let hs22 = select(ge22, bs22, hs21)
+let ge23 = bh23 <= hh
+let h0_23 = select(ge23, bh23, h0_22)
+let rh23 = select(ge23, br23, rh22)
+let hs23 = select(ge23, bs23, hs22)
+let ge24 = bh24 <= hh
+let h0_24 = select(ge24, bh24, h0_23)
+let rh24 = select(ge24, br24, rh23)
+let hs24 = select(ge24, bs24, hs23)
+let ge25 = bh25 <= hh
+let h0_25 = select(ge25, bh25, h0_24)
+let rh25 = select(ge25, br25, rh24)
+let hs25 = select(ge25, bs25, hs24)
+let ge26 = bh26 <= hh
+let h0_26 = select(ge26, bh26, h0_25)
+let rh26 = select(ge26, br26, rh25)
+let hs26 = select(ge26, bs26, hs25)
+let ge27 = bh27 <= hh
+let h0_27 = select(ge27, bh27, h0_26)
+let rh27 = select(ge27, br27, rh26)
+let hs27 = select(ge27, bs27, hs26)
+let ud = -((hh - h0_27) / hs27)
+let rhod = rh27 * exp(ud)
+let vr0 = fma(om2, y, fma(-om1, z, vx))
+let vr1 = fma(om0, z, fma(-om2, x, vy))
+let vr2 = fma(om1, x, fma(-om0, y, vz))
+let vn = sqrt(vr0 * vr0 + vr1 * vr1 + vr2 * vr2)
+let kd = -((bc * rhod) * vn)
+let drx = kd * vr0
+let dry = kd * vr1
+let drz = kd * vr2
+d/dt t  = 1
+d/dt x  = vx
+d/dt y  = vy
+d/dt z  = vz
+d/dt vx = (((cx + hv0) + as0) + am0) + drx
+d/dt vy = (((cy + hv1) + as1) + am1) + dry
+d/dt vz = (((cz + hv2) + as2) + am2) + drz
+step   rk4, h = 15

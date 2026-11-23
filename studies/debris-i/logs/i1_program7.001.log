@@ -1,0 +1,110 @@
+# i1_program7.001.log, written by i_harness.py (SHA-256 e63e8679af5e90b201af23d14ada3cf799a2a2a61b6c6126ad51e6f401cd5f89)
+# started 2026-11-23 08:41:46 -0700 local (2026-11-23 15:41:46 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I1: the program against its definition (cftc's reference interpreter, lang.run, at cft-fp256 9e8ff270).
+#   Runs: 16 lanes, the test seed's indices 0..15 at its T_s (2026-11-17 00:00 TDB), 160 steps of 15 s in two runs of 80,
+#   each run two segments of 40; each run's values (DE421's sub-interval at the run's start, the frame's fit over the run's
+#   own 161 stage times) filled by the driver; the state carried across the run boundary, every lane param rewritten.
+#   (a) after every segment, every unmarked lane's state equals lang.run's from the same boundary state with the same
+#       values, bit for bit (the NaN rule: NaN results agree as NaNs), and its lane byte has [7:5] clear and [4:0] equal to
+#       lang.run's five flags for that lane and segment; a marked lane (bit 7) is replayed by lang.run, its guess counted and
+#       compared, never required, and the replay's state carried on;
+#   (b) t at every boundary equals the run's start + 600 s x the segment, exactly;
+#   (c) every mark is counted, by run and segment.
+#   C3 (control): lang.run on lanes 0 and 1 for the first segment with GM's encoding one up (as the run's value) must differ
+#       from the executor's unplanted state in at least one value; identical = control FAILED.
+#   C4 (control, binary64 only): the executor's run 1, segment 1 given the Moon's coefficients of the following sub-interval
+#       must change every lane's state; any lane unchanged = control FAILED.
+test seed seed1.txt sha256 cba8a10af3a6702a2318a3f464794c705886d4b4fb1a1810986c7459cceb0034: 64 objects, T_s 2764800.0
+
+== I1 program7 at fp64 ==
+image program-d7-fp64: reused (manifest names source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb)
+source studies/debris-i/systems/program-d7-fp64.cftl sha256 c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb; image program-d7-fp64.cftp sha256 d0a6558b12bf62070b38cf5dee715c9978a4eb68258cc2b74e499f5acbcd53b3; depth 512
+run at t = 2764800 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2765400
+run at t = 2766000 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2766600
+driver: runs 97ebe4dfb4aa28d2000a6315399b5c02adad568f40bd71815aff8f63264e5f13 init 8c5e88f6227fcf26f285d270593b5aabe1ce366df0f1e21b284e70472b9f39fb segments f07e59b4275c440a0344075a550dae91b0f7fcbafbc9f86c461cf9394a5beb9a
+  seg 0 1 flags 0x10 bus 0x0 marked 0
+  seg 0 2 flags 0x10 bus 0x0 marked 0
+  seg 1 1 flags 0x10 bus 0x0 marked 0
+  seg 1 2 flags 0x10 bus 0x0 marked 0
+  REPORT segments 4
+  REPORT marks 0
+  REPORT flags 0x10
+  REPORT final_states_sha256 b15d5f227b159fc2f134233bf4dda965546c4f646fea28036ba7d4afe9687516
+lang.run: 64 lane-segments of 40 steps in 51.9 CPU-s (process time)
+PASS I1 program7 fp64 (a) every lane equals lang.run bit for bit, states and lane flags, 4 segments x 16 lanes
+PASS I1 program7 fp64 (b) t exact at every boundary
+I1 program7 fp64 (c) marks: 0 in 64 lane-segments (driver's file: 0); wrong guesses 0
+PASS I1 program7 fp64 (c) every mark the lane bytes show is in the driver's marks file
+C3: GM's encoding 0x42f6a8665b911600 -> 0x42f6a8665b911601; 2 of 14 values differ from the executor's
+PASS I1 program7 fp64 C3 (control) the planted interpreter differs from the executor
+C4: the Moon's coefficients of the sub-interval from 3024000 s; 16 of 16 lanes changed
+PASS I1 program7 fp64 C4 (control) every lane's state changed
+
+== I1 program7 at fp32 ==
+compile program-d7-fp32: compiled; 19990 instructions, bank 409, scratch 378 (spills 168), 17.0 s; source f14132084ee796d25aec06d5fa9786a3e301597862bd09d0cbe902df5cca0b0c, image cdfe93d03fee156e4e0651eaa28f771f0dda196f5fa4ef099b8510ae15fdfc43
+source studies/debris-i/systems/program-d7-fp32.cftl sha256 f14132084ee796d25aec06d5fa9786a3e301597862bd09d0cbe902df5cca0b0c; image program-d7-fp32.cftp sha256 cdfe93d03fee156e4e0651eaa28f771f0dda196f5fa4ef099b8510ae15fdfc43; depth 512
+run at t = 2764800 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2765400
+run at t = 2766000 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2766600
+driver: runs 598e1b893fe1b9311961b281192eff361d1b541cd4c27be80919bcc0dd7afe57 init 65c409dd99fa15d0a13db09e5f4d18d85283785d9f10987ec46161ae4556aa98 segments 458b2a1cbaf038d72c3984bd8689c5d2373beb19bbb0417b47e7eb26032eed44
+  seg 0 1 flags 0x10 bus 0x0 marked 0
+  seg 0 2 flags 0x10 bus 0x0 marked 0
+  seg 1 1 flags 0x10 bus 0x0 marked 0
+  seg 1 2 flags 0x10 bus 0x0 marked 0
+  REPORT segments 4
+  REPORT marks 0
+  REPORT flags 0x10
+  REPORT final_states_sha256 820d140ae089e3301e92df8660fb7e421712afabee41345e12ae15d3cabaa6c6
+lang.run: 64 lane-segments of 40 steps in 59.5 CPU-s (process time)
+PASS I1 program7 fp32 (a) every lane equals lang.run bit for bit, states and lane flags, 4 segments x 16 lanes
+PASS I1 program7 fp32 (b) t exact at every boundary
+I1 program7 fp32 (c) marks: 0 in 64 lane-segments (driver's file: 0); wrong guesses 0
+PASS I1 program7 fp32 (c) every mark the lane bytes show is in the driver's marks file
+C3: GM's encoding 0x57b54333 -> 0x57b54334; 3 of 14 values differ from the executor's
+PASS I1 program7 fp32 C3 (control) the planted interpreter differs from the executor
+
+== I1 program7 at fp128 ==
+compile program-d7-fp128: compiled; 19550 instructions, bank 412, scratch 378 (spills 168), 16.5 s; source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9, image 02245fbc6025031797005317dbab02d1dec8baa6e16377963aa6c83593bc5994
+source studies/debris-i/systems/program-d7-fp128.cftl sha256 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9; image program-d7-fp128.cftp sha256 02245fbc6025031797005317dbab02d1dec8baa6e16377963aa6c83593bc5994; depth 512
+run at t = 2764800 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2765400
+run at t = 2766000 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2766600
+driver: runs 6678e763a866bf5e1a256d12e828d30822305be8328a2894a6b5a2f111ad4acf init ad9aa0f28b08c9ca63e1b88e9b279f86d2b573e313271b0f1abebbf5c18f90b1 segments 783e4ab75676d40f81515945c7d1869631e2bbf1cde2539beec5c996c9360b3a
+  seg 0 1 flags 0x10 bus 0x0 marked 0
+  seg 0 2 flags 0x10 bus 0x0 marked 0
+  seg 1 1 flags 0x10 bus 0x0 marked 0
+  seg 1 2 flags 0x10 bus 0x0 marked 0
+  REPORT segments 4
+  REPORT marks 0
+  REPORT flags 0x10
+  REPORT final_states_sha256 3d8cf2097fe027b9c54f8a97bcdaf2a750945fcc1a199442d6c8ce386355d8d3
+lang.run: 64 lane-segments of 40 steps in 61.4 CPU-s (process time)
+PASS I1 program7 fp128 (a) every lane equals lang.run bit for bit, states and lane flags, 4 segments x 16 lanes
+PASS I1 program7 fp128 (b) t exact at every boundary
+I1 program7 fp128 (c) marks: 0 in 64 lane-segments (driver's file: 0); wrong guesses 0
+PASS I1 program7 fp128 (c) every mark the lane bytes show is in the driver's marks file
+C3: GM's encoding 0x402f6a8665b911600000000000000000 -> 0x402f6a8665b911600000000000000001; 2 of 14 values differ from the executor's
+PASS I1 program7 fp128 C3 (control) the planted interpreter differs from the executor
+
+== I1 program7 at fp256 ==
+compile program-d7-fp256: compiled; 19758 instructions, bank 425, scratch 378 (spills 168), 18.8 s; source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7, image 974d6760c68399df1a4f1c93d5027c41e3f1d6eecb926ade0d0c52181c79f7d9
+source studies/debris-i/systems/program-d7-fp256.cftl sha256 a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7; image program-d7-fp256.cftp sha256 974d6760c68399df1a4f1c93d5027c41e3f1d6eecb926ade0d0c52181c79f7d9; depth 512
+run at t = 2764800 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2765400
+run at t = 2766000 s: DE421 mo rec 1449 sub 0 su rec 1449 sub 0 em rec 1449 sub 0; frame fit over 161 stage times, tc 2766600
+driver: runs 9cb6d5bd0ff827e707fa3ecfdb998db2c992b53d61126b9eb1b87c1238d0d6ee init 847276c9a9d57a59ab5add82c859b93f0fcd0072c88c15e90ab958a8bf403e0c segments ae9e56115d4c7ab1cd8ef084fef6617614239665503259b928e17704dfd3802a
+  seg 0 1 flags 0x10 bus 0x0 marked 0
+  seg 0 2 flags 0x10 bus 0x0 marked 0
+  seg 1 1 flags 0x10 bus 0x0 marked 0
+  seg 1 2 flags 0x10 bus 0x0 marked 0
+  REPORT segments 4
+  REPORT marks 0
+  REPORT flags 0x10
+  REPORT final_states_sha256 6ff032c8f45047f0662cd55fd6b1c18e9e6962a0f852cfd9da9a942e18f2a750
+lang.run: 64 lane-segments of 40 steps in 71.5 CPU-s (process time)
+PASS I1 program7 fp256 (a) every lane equals lang.run bit for bit, states and lane flags, 4 segments x 16 lanes
+PASS I1 program7 fp256 (b) t exact at every boundary
+I1 program7 fp256 (c) marks: 0 in 64 lane-segments (driver's file: 0); wrong guesses 0
+PASS I1 program7 fp256 (c) every mark the lane bytes show is in the driver's marks file
+C3: GM's encoding 0x4002f6a8665b9116000000000000000000000000000000000000000000000000 -> 0x4002f6a8665b9116000000000000000000000000000000000000000000000001; 6 of 14 values differ from the executor's
+PASS I1 program7 fp256 C3 (control) the planted interpreter differs from the executor
+# 17 checks, 0 failed; ended 2026-11-23 08:51:40 -0700 local

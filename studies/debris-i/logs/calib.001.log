@@ -1,0 +1,18 @@
+# calib.001.log, written by i_harness.py (SHA-256 3382f8b19be05128f47a8999a4d4504b7a4bccafa80fe0a924293b45107b4aa5)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:17:10 -0700 local (2026-11-23 16:17:10 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   calib: the desktop's functional rates, used ONLY to fix I5's durations before the box's data (never reported as a
+#   measurement; the desktop is shared): one 64-lane batch of DEBRIS-H's seed (objects 0..63), the program at binary64,
+#   binary128 and binary256 for one segment of 40 steps, and M1 with the program's forces (m1i rate --model prog) at
+#   native64 (2,000 steps), cft64, cft128 and cft256 (40 steps), each through the drivers' READY / G / TIMED_DONE / Q
+#   protocol, one worker, unpinned. Each rate is object-seconds a second of that worker's timed region.
+image program-d7-fp64: reused (manifest names source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb)
+program fp64: one segment of 40 steps, 64 lanes, 3.826 s timed: 10037.6 object-seconds a second (functional)
+image program-d7-fp128: reused (manifest names source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9)
+program fp128: one segment of 40 steps, 64 lanes, 4.410 s timed: 8708.3 object-seconds a second (functional)
+image program-d7-fp256: reused (manifest names source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7)
+program fp256: one segment of 40 steps, 64 lanes, 5.761 s timed: 6666.1 object-seconds a second (functional)

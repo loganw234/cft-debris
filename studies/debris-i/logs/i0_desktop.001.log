@@ -1,0 +1,82 @@
+# i0_desktop.001.log, written by i_harness.py (SHA-256 6771ecc1f9fd8efea894b6a73afb0bb873e43564e9fe2278d74f7604acbbbc89)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 09:03:00 -0700 local (2026-11-23 16:03:00 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   I0: the pin and the builds (the desktop's half; the box's is the lead's, mode box-i0).
+#    P1 each archive's SHA-256 equals lead.md's (9e8ff270 7814576d...; 0aa997a3 e01003cc...);
+#    P2 every member of each archive equals its file in the extracted tree, byte for byte (so libcft, cftc and the
+#       interpreter come from the archive); files beyond the members are the build's outputs, counted;
+#    P3 src/ is byte-identical to commit 1646c96 (tests/build_i.sh check against studies/debris-i/src_1646c96.sha256), every
+#       source's SHA-256 printed; the builds' logs (tests/build_i.sh, one per libcft) are kept, and the binaries in use carry
+#       the SHA-256 their build printed;
+#    P4 M1 on 9e8ff270's libcft equals M1 on 0aa997a3's, bit for bit (every state line of m1i traj): the test seed's
+#       objects 0..15, 240 steps, from the same binary64 states, M1's full model (degree 20, 28 bands, Sun, Moon, radiation
+#       pressure, frame = 1 with DEBRIS-H's table), at native32, native64, native32 --cr, native64 --cr, cft32, cft64,
+#       cft128 and cft256 (the six kinds; the native ones with and without libcft's transcendentals);
+#    C1 (control) a copy of src/ with one byte of one file changed must FAIL P3's check;
+#    C2 (control) the 9e8ff270 run at cft64 with object 3's x one binary64 ulp up must FAIL P4's equality, in object 3's
+#       lines and in no other object's.
+PASS P1 archive 9e8ff270 SHA-256 7814576d5d4d23fa4c1797553a32cd19b4e1d4c8f2d67fb7faecc9cfecb1c4bb equals lead.md's
+PASS P2 tree 9e8ff270: 2660 archive members, each equal to its extracted file (0 differ or are missing); the tree holds 2678 files, the rest the build's outputs
+libcft.a from 9e8ff270: SHA-256 f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5
+PASS P1 archive 0aa997a3 SHA-256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8 equals lead.md's
+PASS P2 tree 0aa997a3: 2643 archive members, each equal to its extracted file (0 differ or are missing); the tree holds 2661 files, the rest the build's outputs
+libcft.a from 0aa997a3: SHA-256 f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5
+  S1: \36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87 de421.c (expected 36b0ab5c5b55e817b87cb8d98e9b11208088f98d0ef664fff9ba39e2595fb87c)
+  S1: de421.c DIFFERS
+  S1: \d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd9 gfc.c (expected d3192e915be6e040dee2fd359c1fa0afaf85336b68201c9a84bae638d346bd95)
+  S1: gfc.c DIFFERS
+  S1: \65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf kind_cft128.c (expected 65a6f301dc112679effc32edf11ba078abcfd521dbb33464af20d8b2d6185bf4)
+  S1: kind_cft128.c DIFFERS
+  S1: \1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0d kind_cft256.c (expected 1b806f0101832b6c8e681947cc7b910bb9c9051d6bfe63ce3c50028fea4df0da)
+  S1: kind_cft256.c DIFFERS
+  S1: \dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bc kind_cft32.c (expected dc77c47aac8f8b624d7a7652c169d231d14bd54c86222723578d76b828fb7bcb)
+  S1: kind_cft32.c DIFFERS
+  S1: \6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e3 kind_cft64.c (expected 6677f41632cb402be7835148fcbf6ba2ae8f2ccea19590c3942735cccfd74e32)
+  S1: kind_cft64.c DIFFERS
+  S1: \f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf1 kind_native32.c (expected f6f2ece4f64a74811e5de698cb3ac620817147c1027073da0968cb2d0b61bf14)
+  S1: kind_native32.c DIFFERS
+  S1: \4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a1 kind_native64.c (expected 4b7aea3af06b15426c4fc6323aa7e1307ec925d344f302136994a0f180276a16)
+  S1: kind_native64.c DIFFERS
+  S1: \3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce74559 m1.h (expected 3475ef9f7422e0478fc2d6b7257e698c7609c1fba6cca813409bd61fce745590)
+  S1: m1.h DIFFERS
+  S1: \88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd m1_common.c (expected 88355dd78365f23e45d5d4853539ca17afd214f61e9f4f6d11926ae1f62ecbd6)
+  S1: m1_common.c DIFFERS
+  S1: \5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0 m1_consts.h (expected 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a)
+  S1: m1_consts.h DIFFERS
+  S1: \4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daa m1_ftab.c (expected 4704b2d34a1bd3fefb4cae3e4cf18921eb5feeba3e62c96a1722160016d0daab)
+  S1: m1_ftab.c DIFFERS
+  S1: \091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3 m1_kind.h (expected 091da3175594eda4f0a678877352ca578f32cc918a944ddd6e3a8c09cb156a3b)
+  S1: m1_kind.h DIFFERS
+  S1: \778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82c m1_nodes.c (expected 778ec8402611711a2bba28fa1faf9f47ce466a536dbbbf5d5706502f669d82ce)
+  S1: m1_nodes.c DIFFERS
+  S1: \9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec m1_nodes.h (expected 9aded1a0f98b904f3450df8c46c870ebd02b58fb4ccc195047ef7b3271205ec4)
+  S1: m1_nodes.h DIFFERS
+  S1: \4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5 m1_ops_cft.h (expected 4d20f2b9ee1d87c7582267798ada1d1fc001ac655d6a821e55ad155497a74c5c)
+  S1: m1_ops_cft.h DIFFERS
+  S1: \5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654c m1_ops_native.h (expected 5e2051705a645bd4383803a5154ae0fdb399ebefee42e7f34a1e0f1afcd654cf)
+  S1: m1_ops_native.h DIFFERS
+  S1: \014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428 m1_physics.h (expected 014878b37f82cfc0ee93d4727dea737e38057fcb1d7721f9c65cbe5f197d428f)
+  S1: m1_physics.h DIFFERS
+  CRITERION S1 FAILED
+FAIL P3 src/ equals commit 1646c96 (build_i.sh check; build_i.sh SHA-256 29e613e4aa4d5bc0d3cadb92f8fa23beea83a29e97228ccd7a65d243aaa43e6f)
+build log for 9e8ff270: build_i_9e8.log SHA-256 4fa4829aa66452e744cd47f1af29185eee063746efa86a601024d0031cd6ef44; its criteria: CRITERION S1 PASS (18 files), CRITERION B1 PASS, CRITERION B2 PASS (the hashes above), CRITERION B3 PASS, CRITERION B4 PASS (every compile and link), BUILD PASS
+PASS P3 m1i of the 9e8ff270 build: SHA-256 3330acbf5a272a1069ab4c7be8935691084e24230ad093ed68e1bd59751463e8 is the one its build printed
+PASS P3 i_run of the 9e8ff270 build: SHA-256 3ffc8f8c9dd4093e89632a8746f79283d50729e34d83d18b3488fafa1514e200 is the one its build printed
+build log for 0aa997a3: build_i_0aa.log SHA-256 376d31e4b0b050203af421ace50659c4d1e294eec9ec50f2fda782eeac0fd702; its criteria: CRITERION S1 PASS (18 files), CRITERION B1 PASS, CRITERION B2 PASS (the hashes above), CRITERION B3 PASS, CRITERION B4 PASS (every compile and link), BUILD PASS
+PASS P3 m1i of the 0aa997a3 build: SHA-256 154c886fc84628b0552f9752334a8768a8b18992bdf932b3101e46dba6b51e7f is the one its build printed
+PASS P3 i_run of the 0aa997a3 build: SHA-256 2ed4b807b8090e83f30a4683ac4721a93fab54d5e4282752c3d3504b29984f91 is the one its build printed
+PASS C1 (control) one byte of m1_consts.h changed: the source check FAILS
+PASS P4 native32: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines e323798725e0b97262d7585751f43a0cf379cf6ee208edf5f6ed8c6513209c45
+PASS P4 native64: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines 920aa6868114b2142fc3f591a7bdf8a6a1149b526c09fb6f234cf94acccff2ed
+PASS P4 native32-cr: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines e323798725e0b97262d7585751f43a0cf379cf6ee208edf5f6ed8c6513209c45
+PASS P4 native64-cr: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines 920aa6868114b2142fc3f591a7bdf8a6a1149b526c09fb6f234cf94acccff2ed
+PASS P4 cft32: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines e323798725e0b97262d7585751f43a0cf379cf6ee208edf5f6ed8c6513209c45
+PASS P4 cft64: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines 920aa6868114b2142fc3f591a7bdf8a6a1149b526c09fb6f234cf94acccff2ed
+PASS P4 cft128: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines 57b3cd71ecd7f46e070d5585aaae6287ffd6fe8108f069a01af722bcb81ee8ea
+PASS P4 cft256: M1 on 9e8ff270's libcft equals 0aa997a3's, 112 state lines, SHA-256 of the lines 4a102ec432f5b970ed59e04f6fedcd4e414c10249bc28549564a81dbb0149811
+PASS C2 (control) object 3's x one ulp up: the equality FAILS in object 3 alone (objects differing: ['3'])
+# 19 checks, 1 failed; ended 2026-11-23 09:14:34 -0700 local

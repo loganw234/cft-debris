@@ -1,0 +1,43 @@
+; cft-debris DEBRIS-I (MIT licence), written by tests/i_gen.py: part frame of the program (degree 7, 28 bands, frame degrees 7 and 3), a map
+; every data value is a param or a lane param, default 0, filled per run; no data is in this file
+system dpart_frame
+format fp64
+round  rne
+state  o0, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11
+lane param t = 0, fm0_0 = 0, fm0_1 = 0, fm0_2 = 0, fm0_3 = 0, fm0_4 = 0, fm0_5 = 0, fm0_6 = 0
+lane param fm0_7 = 0, fm1_0 = 0, fm1_1 = 0, fm1_2 = 0, fm1_3 = 0, fm1_4 = 0, fm1_5 = 0, fm1_6 = 0
+lane param fm1_7 = 0, fm2_0 = 0, fm2_1 = 0, fm2_2 = 0, fm2_3 = 0, fm2_4 = 0, fm2_5 = 0, fm2_6 = 0
+lane param fm2_7 = 0, fm3_0 = 0, fm3_1 = 0, fm3_2 = 0, fm3_3 = 0, fm3_4 = 0, fm3_5 = 0, fm3_6 = 0
+lane param fm3_7 = 0, fm4_0 = 0, fm4_1 = 0, fm4_2 = 0, fm4_3 = 0, fm4_4 = 0, fm4_5 = 0, fm4_6 = 0
+lane param fm4_7 = 0, fm5_0 = 0, fm5_1 = 0, fm5_2 = 0, fm5_3 = 0, fm5_4 = 0, fm5_5 = 0, fm5_6 = 0
+lane param fm5_7 = 0, fm6_0 = 0, fm6_1 = 0, fm6_2 = 0, fm6_3 = 0, fm6_4 = 0, fm6_5 = 0, fm6_6 = 0
+lane param fm6_7 = 0, fm7_0 = 0, fm7_1 = 0, fm7_2 = 0, fm7_3 = 0, fm7_4 = 0, fm7_5 = 0, fm7_6 = 0
+lane param fm7_7 = 0, fm8_0 = 0, fm8_1 = 0, fm8_2 = 0, fm8_3 = 0, fm8_4 = 0, fm8_5 = 0, fm8_6 = 0
+lane param fm8_7 = 0, fo0_0 = 0, fo0_1 = 0, fo0_2 = 0, fo0_3 = 0, fo1_0 = 0, fo1_1 = 0, fo1_2 = 0
+lane param fo1_3 = 0, fo2_0 = 0, fo2_1 = 0, fo2_2 = 0, fo2_3 = 0, tc = 0
+let fs = t - tc
+let m0 = fma(fma(fma(fma(fma(fma(fma(fm0_7, fs, fm0_6), fs, fm0_5), fs, fm0_4), fs, fm0_3), fs, fm0_2), fs, fm0_1), fs, fm0_0)
+let m1 = fma(fma(fma(fma(fma(fma(fma(fm1_7, fs, fm1_6), fs, fm1_5), fs, fm1_4), fs, fm1_3), fs, fm1_2), fs, fm1_1), fs, fm1_0)
+let m2 = fma(fma(fma(fma(fma(fma(fma(fm2_7, fs, fm2_6), fs, fm2_5), fs, fm2_4), fs, fm2_3), fs, fm2_2), fs, fm2_1), fs, fm2_0)
+let m3 = fma(fma(fma(fma(fma(fma(fma(fm3_7, fs, fm3_6), fs, fm3_5), fs, fm3_4), fs, fm3_3), fs, fm3_2), fs, fm3_1), fs, fm3_0)
+let m4 = fma(fma(fma(fma(fma(fma(fma(fm4_7, fs, fm4_6), fs, fm4_5), fs, fm4_4), fs, fm4_3), fs, fm4_2), fs, fm4_1), fs, fm4_0)
+let m5 = fma(fma(fma(fma(fma(fma(fma(fm5_7, fs, fm5_6), fs, fm5_5), fs, fm5_4), fs, fm5_3), fs, fm5_2), fs, fm5_1), fs, fm5_0)
+let m6 = fma(fma(fma(fma(fma(fma(fma(fm6_7, fs, fm6_6), fs, fm6_5), fs, fm6_4), fs, fm6_3), fs, fm6_2), fs, fm6_1), fs, fm6_0)
+let m7 = fma(fma(fma(fma(fma(fma(fma(fm7_7, fs, fm7_6), fs, fm7_5), fs, fm7_4), fs, fm7_3), fs, fm7_2), fs, fm7_1), fs, fm7_0)
+let m8 = fma(fma(fma(fma(fma(fma(fma(fm8_7, fs, fm8_6), fs, fm8_5), fs, fm8_4), fs, fm8_3), fs, fm8_2), fs, fm8_1), fs, fm8_0)
+let om0 = fma(fma(fma(fo0_3, fs, fo0_2), fs, fo0_1), fs, fo0_0)
+let om1 = fma(fma(fma(fo1_3, fs, fo1_2), fs, fo1_1), fs, fo1_0)
+let om2 = fma(fma(fma(fo2_3, fs, fo2_2), fs, fo2_1), fs, fo2_0)
+next o0 = m0
+next o1 = m1
+next o2 = m2
+next o3 = m3
+next o4 = m4
+next o5 = m5
+next o6 = m6
+next o7 = m7
+next o8 = m8
+next o9 = om0
+next o10 = om1
+next o11 = om2
+step   map

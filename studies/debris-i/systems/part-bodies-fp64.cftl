@@ -1,0 +1,151 @@
+; cft-debris DEBRIS-I (MIT licence), written by tests/i_gen.py: part bodies of the program (degree 7, 28 bands, frame degrees 7 and 3), a map
+; every data value is a param or a lane param, default 0, filled per run; no data is in this file
+system dpart_bodies
+format fp64
+round  rne
+state  o0, o1, o2, o3, o4, o5
+lane param t = 0, mo0_0 = 0, mo0_1 = 0, mo0_2 = 0, mo0_3 = 0, mo0_4 = 0, mo0_5 = 0, mo0_6 = 0
+lane param mo0_7 = 0, mo0_8 = 0, mo0_9 = 0, mo0_10 = 0, mo0_11 = 0, mo0_12 = 0, mo1_0 = 0, mo1_1 = 0
+lane param mo1_2 = 0, mo1_3 = 0, mo1_4 = 0, mo1_5 = 0, mo1_6 = 0, mo1_7 = 0, mo1_8 = 0, mo1_9 = 0
+lane param mo1_10 = 0, mo1_11 = 0, mo1_12 = 0, mo2_0 = 0, mo2_1 = 0, mo2_2 = 0, mo2_3 = 0, mo2_4 = 0
+lane param mo2_5 = 0, mo2_6 = 0, mo2_7 = 0, mo2_8 = 0, mo2_9 = 0, mo2_10 = 0, mo2_11 = 0, mo2_12 = 0
+lane param su0_0 = 0, su0_1 = 0, su0_2 = 0, su0_3 = 0, su0_4 = 0, su0_5 = 0, su0_6 = 0, su0_7 = 0
+lane param su0_8 = 0, su0_9 = 0, su0_10 = 0, su1_0 = 0, su1_1 = 0, su1_2 = 0, su1_3 = 0, su1_4 = 0
+lane param su1_5 = 0, su1_6 = 0, su1_7 = 0, su1_8 = 0, su1_9 = 0, su1_10 = 0, su2_0 = 0, su2_1 = 0
+lane param su2_2 = 0, su2_3 = 0, su2_4 = 0, su2_5 = 0, su2_6 = 0, su2_7 = 0, su2_8 = 0, su2_9 = 0
+lane param su2_10 = 0, em0_0 = 0, em0_1 = 0, em0_2 = 0, em0_3 = 0, em0_4 = 0, em0_5 = 0, em0_6 = 0
+lane param em0_7 = 0, em0_8 = 0, em0_9 = 0, em0_10 = 0, em0_11 = 0, em0_12 = 0, em1_0 = 0, em1_1 = 0
+lane param em1_2 = 0, em1_3 = 0, em1_4 = 0, em1_5 = 0, em1_6 = 0, em1_7 = 0, em1_8 = 0, em1_9 = 0
+lane param em1_10 = 0, em1_11 = 0, em1_12 = 0, em2_0 = 0, em2_1 = 0, em2_2 = 0, em2_3 = 0, em2_4 = 0
+lane param em2_5 = 0, em2_6 = 0, em2_7 = 0, em2_8 = 0, em2_9 = 0, em2_10 = 0, em2_11 = 0, em2_12 = 0
+lane param lmo = 0, lsu = 0, lem = 0, tmo = 0, tsu = 0, tem = 0, fem = 0, km = 0
+let dmo = t - tmo
+let tamo = (dmo + dmo) / lmo - 1
+let ttmo = tamo + tamo
+let bmo0_11 = fma(ttmo, mo0_12, mo0_11)
+let bmo0_10 = fma(ttmo, bmo0_11, mo0_10) - mo0_12
+let bmo0_9 = fma(ttmo, bmo0_10, mo0_9) - bmo0_11
+let bmo0_8 = fma(ttmo, bmo0_9, mo0_8) - bmo0_10
+let bmo0_7 = fma(ttmo, bmo0_8, mo0_7) - bmo0_9
+let bmo0_6 = fma(ttmo, bmo0_7, mo0_6) - bmo0_8
+let bmo0_5 = fma(ttmo, bmo0_6, mo0_5) - bmo0_7
+let bmo0_4 = fma(ttmo, bmo0_5, mo0_4) - bmo0_6
+let bmo0_3 = fma(ttmo, bmo0_4, mo0_3) - bmo0_5
+let bmo0_2 = fma(ttmo, bmo0_3, mo0_2) - bmo0_4
+let bmo0_1 = fma(ttmo, bmo0_2, mo0_1) - bmo0_3
+let mo0 = fma(tamo, bmo0_1, mo0_0) - bmo0_2
+let bmo1_11 = fma(ttmo, mo1_12, mo1_11)
+let bmo1_10 = fma(ttmo, bmo1_11, mo1_10) - mo1_12
+let bmo1_9 = fma(ttmo, bmo1_10, mo1_9) - bmo1_11
+let bmo1_8 = fma(ttmo, bmo1_9, mo1_8) - bmo1_10
+let bmo1_7 = fma(ttmo, bmo1_8, mo1_7) - bmo1_9
+let bmo1_6 = fma(ttmo, bmo1_7, mo1_6) - bmo1_8
+let bmo1_5 = fma(ttmo, bmo1_6, mo1_5) - bmo1_7
+let bmo1_4 = fma(ttmo, bmo1_5, mo1_4) - bmo1_6
+let bmo1_3 = fma(ttmo, bmo1_4, mo1_3) - bmo1_5
+let bmo1_2 = fma(ttmo, bmo1_3, mo1_2) - bmo1_4
+let bmo1_1 = fma(ttmo, bmo1_2, mo1_1) - bmo1_3
+let mo1 = fma(tamo, bmo1_1, mo1_0) - bmo1_2
+let bmo2_11 = fma(ttmo, mo2_12, mo2_11)
+let bmo2_10 = fma(ttmo, bmo2_11, mo2_10) - mo2_12
+let bmo2_9 = fma(ttmo, bmo2_10, mo2_9) - bmo2_11
+let bmo2_8 = fma(ttmo, bmo2_9, mo2_8) - bmo2_10
+let bmo2_7 = fma(ttmo, bmo2_8, mo2_7) - bmo2_9
+let bmo2_6 = fma(ttmo, bmo2_7, mo2_6) - bmo2_8
+let bmo2_5 = fma(ttmo, bmo2_6, mo2_5) - bmo2_7
+let bmo2_4 = fma(ttmo, bmo2_5, mo2_4) - bmo2_6
+let bmo2_3 = fma(ttmo, bmo2_4, mo2_3) - bmo2_5
+let bmo2_2 = fma(ttmo, bmo2_3, mo2_2) - bmo2_4
+let bmo2_1 = fma(ttmo, bmo2_2, mo2_1) - bmo2_3
+let mo2 = fma(tamo, bmo2_1, mo2_0) - bmo2_2
+let dsu = t - tsu
+let tasu = (dsu + dsu) / lsu - 1
+let ttsu = tasu + tasu
+let bsu0_9 = fma(ttsu, su0_10, su0_9)
+let bsu0_8 = fma(ttsu, bsu0_9, su0_8) - su0_10
+let bsu0_7 = fma(ttsu, bsu0_8, su0_7) - bsu0_9
+let bsu0_6 = fma(ttsu, bsu0_7, su0_6) - bsu0_8
+let bsu0_5 = fma(ttsu, bsu0_6, su0_5) - bsu0_7
+let bsu0_4 = fma(ttsu, bsu0_5, su0_4) - bsu0_6
+let bsu0_3 = fma(ttsu, bsu0_4, su0_3) - bsu0_5
+let bsu0_2 = fma(ttsu, bsu0_3, su0_2) - bsu0_4
+let bsu0_1 = fma(ttsu, bsu0_2, su0_1) - bsu0_3
+let su0 = fma(tasu, bsu0_1, su0_0) - bsu0_2
+let bsu1_9 = fma(ttsu, su1_10, su1_9)
+let bsu1_8 = fma(ttsu, bsu1_9, su1_8) - su1_10
+let bsu1_7 = fma(ttsu, bsu1_8, su1_7) - bsu1_9
+let bsu1_6 = fma(ttsu, bsu1_7, su1_6) - bsu1_8
+let bsu1_5 = fma(ttsu, bsu1_6, su1_5) - bsu1_7
+let bsu1_4 = fma(ttsu, bsu1_5, su1_4) - bsu1_6
+let bsu1_3 = fma(ttsu, bsu1_4, su1_3) - bsu1_5
+let bsu1_2 = fma(ttsu, bsu1_3, su1_2) - bsu1_4
+let bsu1_1 = fma(ttsu, bsu1_2, su1_1) - bsu1_3
+let su1 = fma(tasu, bsu1_1, su1_0) - bsu1_2
+let bsu2_9 = fma(ttsu, su2_10, su2_9)
+let bsu2_8 = fma(ttsu, bsu2_9, su2_8) - su2_10
+let bsu2_7 = fma(ttsu, bsu2_8, su2_7) - bsu2_9
+let bsu2_6 = fma(ttsu, bsu2_7, su2_6) - bsu2_8
+let bsu2_5 = fma(ttsu, bsu2_6, su2_5) - bsu2_7
+let bsu2_4 = fma(ttsu, bsu2_5, su2_4) - bsu2_6
+let bsu2_3 = fma(ttsu, bsu2_4, su2_3) - bsu2_5
+let bsu2_2 = fma(ttsu, bsu2_3, su2_2) - bsu2_4
+let bsu2_1 = fma(ttsu, bsu2_2, su2_1) - bsu2_3
+let su2 = fma(tasu, bsu2_1, su2_0) - bsu2_2
+let dem = t - tem
+let taem = (dem + dem) / lem - 1
+let ttem = taem + taem
+let bem0_11 = fma(ttem, em0_12, em0_11)
+let bem0_10 = fma(ttem, bem0_11, em0_10) - em0_12
+let bem0_9 = fma(ttem, bem0_10, em0_9) - bem0_11
+let bem0_8 = fma(ttem, bem0_9, em0_8) - bem0_10
+let bem0_7 = fma(ttem, bem0_8, em0_7) - bem0_9
+let bem0_6 = fma(ttem, bem0_7, em0_6) - bem0_8
+let bem0_5 = fma(ttem, bem0_6, em0_5) - bem0_7
+let bem0_4 = fma(ttem, bem0_5, em0_4) - bem0_6
+let bem0_3 = fma(ttem, bem0_4, em0_3) - bem0_5
+let bem0_2 = fma(ttem, bem0_3, em0_2) - bem0_4
+let bem0_1 = fma(ttem, bem0_2, em0_1) - bem0_3
+let em0 = fma(taem, bem0_1, em0_0) - bem0_2
+let bem1_11 = fma(ttem, em1_12, em1_11)
+let bem1_10 = fma(ttem, bem1_11, em1_10) - em1_12
+let bem1_9 = fma(ttem, bem1_10, em1_9) - bem1_11
+let bem1_8 = fma(ttem, bem1_9, em1_8) - bem1_10
+let bem1_7 = fma(ttem, bem1_8, em1_7) - bem1_9
+let bem1_6 = fma(ttem, bem1_7, em1_6) - bem1_8
+let bem1_5 = fma(ttem, bem1_6, em1_5) - bem1_7
+let bem1_4 = fma(ttem, bem1_5, em1_4) - bem1_6
+let bem1_3 = fma(ttem, bem1_4, em1_3) - bem1_5
+let bem1_2 = fma(ttem, bem1_3, em1_2) - bem1_4
+let bem1_1 = fma(ttem, bem1_2, em1_1) - bem1_3
+let em1 = fma(taem, bem1_1, em1_0) - bem1_2
+let bem2_11 = fma(ttem, em2_12, em2_11)
+let bem2_10 = fma(ttem, bem2_11, em2_10) - em2_12
+let bem2_9 = fma(ttem, bem2_10, em2_9) - bem2_11
+let bem2_8 = fma(ttem, bem2_9, em2_8) - bem2_10
+let bem2_7 = fma(ttem, bem2_8, em2_7) - bem2_9
+let bem2_6 = fma(ttem, bem2_7, em2_6) - bem2_8
+let bem2_5 = fma(ttem, bem2_6, em2_5) - bem2_7
+let bem2_4 = fma(ttem, bem2_5, em2_4) - bem2_6
+let bem2_3 = fma(ttem, bem2_4, em2_3) - bem2_5
+let bem2_2 = fma(ttem, bem2_3, em2_2) - bem2_4
+let bem2_1 = fma(ttem, bem2_2, em2_1) - bem2_3
+let em2 = fma(taem, bem2_1, em2_0) - bem2_2
+let ea0 = em0 - fem * mo0
+let sx0 = su0 - ea0
+let sun0 = km * sx0
+let mn0 = km * mo0
+let ea1 = em1 - fem * mo1
+let sx1 = su1 - ea1
+let sun1 = km * sx1
+let mn1 = km * mo1
+let ea2 = em2 - fem * mo2
+let sx2 = su2 - ea2
+let sun2 = km * sx2
+let mn2 = km * mo2
+next o0 = sun0
+next o1 = sun1
+next o2 = sun2
+next o3 = mn0
+next o4 = mn1
+next o5 = mn2
+step   map

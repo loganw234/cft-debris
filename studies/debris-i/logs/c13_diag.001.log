@@ -1,0 +1,28 @@
+# c13_diag.001.log, written by i_harness.py (SHA-256 3382f8b19be05128f47a8999a4d4504b7a4bccafa80fe0a924293b45107b4aa5)
+# with i_vals.py (SHA-256 9bbc17e88f6f76084bee0e5bf450448cf28380093eeffe2f6711290d4f603bfd)
+# with i_gen.py (SHA-256 22aa007afa0b179b9bb9e1e21f34311207dae21a031f05d12646fa118baabe61)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# with i_analyze.py (SHA-256 d4b5437c66107ae0ff74cc6bb5b51e67a72b33db7c4f314a1e9acb14385545e7)
+# started 2026-11-23 09:16:44 -0700 local (2026-11-23 16:16:44 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   ADDED AFTER THE DATA (the lead's instruction of 2026-11-23 09:16, after C13 failed as specified): a diagnostic
+#   beside C13, which stays reported as FAILED. From I3's desktop records already written (no new run): the program at
+#   binary256 with the second run given the hour before's frame block (C13's run) against the same program unplanted, and
+#   both against M1 at cft256: the largest position and velocity differences at each boundary of the second hour. It
+#   shows whether the planted values were read (any difference at all) and how far the extrapolated block moved the
+#   trajectory, against T_frame (1e-3 m). No pass condition.
+records: i3d-program-d7-fp256.seg.bin d7542f0106c28a24f026de2863cf582fc283ee2e31d42a287b89f842169e7efa, i3d-c13-program-d7-fp256.seg.bin 915ffd2462ff3b3b56f20fb5e97b8ce4b362f3879e80db2ceef073055bb39e08, i3d-m1-cft256.txt ab11bfc8b22d692bb59cab0afc843be9e9326380c096f7e6016745f9feccf43d
+step  40 (0.17 h): C13 run against the unplanted program: largest |dr| 0.000e+00 m, |dv| 0.000e+00 m/s; against M1 cft256 |dr| 4.999e-11 m
+step  80 (0.33 h): C13 run against the unplanted program: largest |dr| 0.000e+00 m, |dv| 0.000e+00 m/s; against M1 cft256 |dr| 1.752e-10 m
+step 120 (0.50 h): C13 run against the unplanted program: largest |dr| 0.000e+00 m, |dv| 0.000e+00 m/s; against M1 cft256 |dr| 3.509e-10 m
+step 160 (0.67 h): C13 run against the unplanted program: largest |dr| 0.000e+00 m, |dv| 0.000e+00 m/s; against M1 cft256 |dr| 5.675e-10 m
+step 200 (0.83 h): C13 run against the unplanted program: largest |dr| 0.000e+00 m, |dv| 0.000e+00 m/s; against M1 cft256 |dr| 1.287e-09 m
+step 240 (1.00 h): C13 run against the unplanted program: largest |dr| 0.000e+00 m, |dv| 0.000e+00 m/s; against M1 cft256 |dr| 2.608e-09 m
+step 280 (1.17 h): C13 run against the unplanted program: largest |dr| 2.353e-09 m, |dv| 1.950e-11 m/s; against M1 cft256 |dr| 5.061e-09 m
+step 320 (1.33 h): C13 run against the unplanted program: largest |dr| 5.512e-08 m, |dv| 2.999e-10 m/s; against M1 cft256 |dr| 5.318e-08 m
+step 360 (1.50 h): C13 run against the unplanted program: largest |dr| 4.800e-07 m, |dv| 2.229e-09 m/s; against M1 cft256 |dr| 4.799e-07 m
+step 400 (1.67 h): C13 run against the unplanted program: largest |dr| 3.026e-06 m, |dv| 9.760e-09 m/s; against M1 cft256 |dr| 3.029e-06 m
+step 440 (1.83 h): C13 run against the unplanted program: largest |dr| 1.149e-05 m, |dv| 3.155e-08 m/s; against M1 cft256 |dr| 1.149e-05 m
+step 480 (2.00 h): C13 run against the unplanted program: largest |dr| 3.422e-05 m, |dv| 8.422e-08 m/s; against M1 cft256 |dr| 3.422e-05 m
+# 0 checks, 0 failed; ended 2026-11-23 09:16:44 -0700 local
