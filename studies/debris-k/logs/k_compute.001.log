@@ -1,0 +1,67 @@
+# k_compute, log 001, written 2026-11-23 09:00:29 -0700
+# script k_compute.py sha256 466f28d7a3435a058daa3cc9ca3ef9de86fab3b140148a7f0cd1eca6f620f823
+# k_lib.py sha256 bbe2b14cc25b0a2cfccb411f3b301f0d6d31775fd681fa1d5392b1d86be1f796
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   COMPUTED, no pass condition. Inputs, each labelled:
+#     MEASURED in DEBRIS-G's G4 (box, M1's full model, 64 lanes, a sensitive window): native64 1,291,561 object-seconds a
+#       second on 1 worker; cft256 299 on 1 worker and 4,332 on 36.
+#     ESTIMATE in DEBRIS-I's plan: its cft program at binary256, 3,050 to 9,090 object-seconds a second a box worker, at a
+#       smaller model (degree 7).
+#     ESTIMATE in DEBRIS-D's Q5: device seconds an object-day at degree 20, rk4 15 s: RX 7600 binary64 0.16 to 0.23,
+#       binary256 0.42 to 0.60; RTX 5060 Ti binary64 0.071 to 0.098, binary256 0.32 to 0.47; times 1 to 3 for batches that
+#       do not fill the card (its own factor).
+#     MEASURED in this pilot: (R)'s fits took a median of 3 iterations (k_pilot rfit), (H)'s 146 iterations over 33 fits
+#       with 56,594 observations at 120 s (spans 2.38 days on average); new sets came at 55 over 17 objects between S_H0's
+#       fetch and slot 20's (2.21 days): 1.46 a day an object, with missed slots (a lower bound).
+#   THE WORKLOAD of one object a day (ESTIMATE, from the inputs): c forecast cycles a day (c = 1.5, the pilot's rate, and
+#     c = 8, every 3-hour slot); each cycle one (R) fit (8 lanes x 1 day x 4 iterations = 32 lane-days), one (H) fit
+#     (8 lanes x 2.4 days x 4.4 iterations = 84 lane-days) and N members each propagated over a horizon of D days (D = 30,
+#     the decay window; D = 7 beside it). Lane-days a day = c (32 + 84 + N D).
+#   THE NEED: CPU-seconds a day = lane-days x 86,400 / the rate; in box workers (one worker is 86,400 CPU-seconds a day;
+#     the box has 36 logical CPUs), or in cards (one card is 86,400 device-seconds a day).
+# the pilot's rate of new sets: 55 / 17 / 2.21 = 1.46 a day an object
+# cycles a day 1.5, horizon 30 days
+COMPUTED objects 10, members 1: 2190 lane-days a day; native64 0.0017 workers; cft256 7.32 workers; binary256 0.241-0.718 workers; RX 7600 binary64 0.00406-0.0175 cards; RX 7600 binary256 0.0106-0.0456 cards; RTX 5060 Ti binary64 0.0018-0.00745 cards; RTX 5060 Ti binary256 0.00811-0.0357 cards
+COMPUTED objects 10, members 100: 4.674e+04 lane-days a day; native64 0.0362 workers; cft256 156 workers; binary256 5.14-15.3 workers; RX 7600 binary64 0.0866-0.373 cards; RX 7600 binary256 0.227-0.974 cards; RTX 5060 Ti binary64 0.0384-0.159 cards; RTX 5060 Ti binary256 0.173-0.763 cards
+COMPUTED objects 10, members 1000: 4.517e+05 lane-days a day; native64 0.35 workers; cft256 1.51e+03 workers; binary256 49.7-148 workers; RX 7600 binary64 0.837-3.61 cards; RX 7600 binary256 2.2-9.41 cards; RTX 5060 Ti binary64 0.371-1.54 cards; RTX 5060 Ti binary256 1.67-7.37 cards
+COMPUTED objects 100, members 1: 2.19e+04 lane-days a day; native64 0.017 workers; cft256 73.2 workers; binary256 2.41-7.18 workers; RX 7600 binary64 0.0406-0.175 cards; RX 7600 binary256 0.106-0.456 cards; RTX 5060 Ti binary64 0.018-0.0745 cards; RTX 5060 Ti binary256 0.0811-0.357 cards
+COMPUTED objects 100, members 100: 4.674e+05 lane-days a day; native64 0.362 workers; cft256 1.56e+03 workers; binary256 51.4-153 workers; RX 7600 binary64 0.866-3.73 cards; RX 7600 binary256 2.27-9.74 cards; RTX 5060 Ti binary64 0.384-1.59 cards; RTX 5060 Ti binary256 1.73-7.63 cards
+COMPUTED objects 100, members 1000: 4.517e+06 lane-days a day; native64 3.5 workers; cft256 1.51e+04 workers; binary256 497-1.48e+03 workers; RX 7600 binary64 8.37-36.1 cards; RX 7600 binary256 22-94.1 cards; RTX 5060 Ti binary64 3.71-15.4 cards; RTX 5060 Ti binary256 16.7-73.7 cards
+COMPUTED objects 1000, members 1: 2.19e+05 lane-days a day; native64 0.17 workers; cft256 732 workers; binary256 24.1-71.8 workers; RX 7600 binary64 0.406-1.75 cards; RX 7600 binary256 1.06-4.56 cards; RTX 5060 Ti binary64 0.18-0.745 cards; RTX 5060 Ti binary256 0.811-3.57 cards
+COMPUTED objects 1000, members 100: 4.674e+06 lane-days a day; native64 3.62 workers; cft256 1.56e+04 workers; binary256 514-1.53e+03 workers; RX 7600 binary64 8.66-37.3 cards; RX 7600 binary256 22.7-97.4 cards; RTX 5060 Ti binary64 3.84-15.9 cards; RTX 5060 Ti binary256 17.3-76.3 cards
+COMPUTED objects 1000, members 1000: 4.517e+07 lane-days a day; native64 35 workers; cft256 1.51e+05 workers; binary256 4.97e+03-1.48e+04 workers; RX 7600 binary64 83.7-361 cards; RX 7600 binary256 220-941 cards; RTX 5060 Ti binary64 37.1-154 cards; RTX 5060 Ti binary256 167-737 cards
+# cycles a day 1.5, horizon 7 days
+COMPUTED objects 10, members 1: 1845 lane-days a day; native64 0.00143 workers; cft256 6.17 workers; binary256 0.203-0.605 workers; RX 7600 binary64 0.00342-0.0147 cards; RX 7600 binary256 0.00897-0.0384 cards; RTX 5060 Ti binary64 0.00152-0.00628 cards; RTX 5060 Ti binary256 0.00683-0.0301 cards
+COMPUTED objects 10, members 100: 1.224e+04 lane-days a day; native64 0.00948 workers; cft256 40.9 workers; binary256 1.35-4.01 workers; RX 7600 binary64 0.0227-0.0978 cards; RX 7600 binary256 0.0595-0.255 cards; RTX 5060 Ti binary64 0.0101-0.0416 cards; RTX 5060 Ti binary256 0.0453-0.2 cards
+COMPUTED objects 10, members 1000: 1.067e+05 lane-days a day; native64 0.0826 workers; cft256 357 workers; binary256 11.7-35 workers; RX 7600 binary64 0.198-0.852 cards; RX 7600 binary256 0.519-2.22 cards; RTX 5060 Ti binary64 0.0877-0.363 cards; RTX 5060 Ti binary256 0.395-1.74 cards
+COMPUTED objects 100, members 1: 1.845e+04 lane-days a day; native64 0.0143 workers; cft256 61.7 workers; binary256 2.03-6.05 workers; RX 7600 binary64 0.0342-0.147 cards; RX 7600 binary256 0.0897-0.384 cards; RTX 5060 Ti binary64 0.0152-0.0628 cards; RTX 5060 Ti binary256 0.0683-0.301 cards
+COMPUTED objects 100, members 100: 1.224e+05 lane-days a day; native64 0.0948 workers; cft256 409 workers; binary256 13.5-40.1 workers; RX 7600 binary64 0.227-0.978 cards; RX 7600 binary256 0.595-2.55 cards; RTX 5060 Ti binary64 0.101-0.416 cards; RTX 5060 Ti binary256 0.453-2 cards
+COMPUTED objects 100, members 1000: 1.067e+06 lane-days a day; native64 0.826 workers; cft256 3.57e+03 workers; binary256 117-350 workers; RX 7600 binary64 1.98-8.52 cards; RX 7600 binary256 5.19-22.2 cards; RTX 5060 Ti binary64 0.877-3.63 cards; RTX 5060 Ti binary256 3.95-17.4 cards
+COMPUTED objects 1000, members 1: 1.845e+05 lane-days a day; native64 0.143 workers; cft256 617 workers; binary256 20.3-60.5 workers; RX 7600 binary64 0.342-1.47 cards; RX 7600 binary256 0.897-3.84 cards; RTX 5060 Ti binary64 0.152-0.628 cards; RTX 5060 Ti binary256 0.683-3.01 cards
+COMPUTED objects 1000, members 100: 1.224e+06 lane-days a day; native64 0.948 workers; cft256 4.09e+03 workers; binary256 135-401 workers; RX 7600 binary64 2.27-9.78 cards; RX 7600 binary256 5.95-25.5 cards; RTX 5060 Ti binary64 1.01-4.17 cards; RTX 5060 Ti binary256 4.53-20 cards
+COMPUTED objects 1000, members 1000: 1.067e+07 lane-days a day; native64 8.26 workers; cft256 3.57e+04 workers; binary256 1.17e+03-3.5e+03 workers; RX 7600 binary64 19.8-85.2 cards; RX 7600 binary256 51.9-222 cards; RTX 5060 Ti binary64 8.77-36.3 cards; RTX 5060 Ti binary256 39.5-174 cards
+# cycles a day 8.0, horizon 30 days
+COMPUTED objects 10, members 1: 1.168e+04 lane-days a day; native64 0.00904 workers; cft256 39.1 workers; binary256 1.28-3.83 workers; RX 7600 binary64 0.0216-0.0933 cards; RX 7600 binary256 0.0568-0.243 cards; RTX 5060 Ti binary64 0.0096-0.0397 cards; RTX 5060 Ti binary256 0.0433-0.191 cards
+COMPUTED objects 10, members 100: 2.493e+05 lane-days a day; native64 0.193 workers; cft256 834 workers; binary256 27.4-81.7 workers; RX 7600 binary64 0.462-1.99 cards; RX 7600 binary256 1.21-5.19 cards; RTX 5060 Ti binary64 0.205-0.848 cards; RTX 5060 Ti binary256 0.923-4.07 cards
+COMPUTED objects 10, members 1000: 2.409e+06 lane-days a day; native64 1.87 workers; cft256 8.06e+03 workers; binary256 265-790 workers; RX 7600 binary64 4.46-19.2 cards; RX 7600 binary256 11.7-50.2 cards; RTX 5060 Ti binary64 1.98-8.2 cards; RTX 5060 Ti binary256 8.92-39.3 cards
+COMPUTED objects 100, members 1: 1.168e+05 lane-days a day; native64 0.0904 workers; cft256 391 workers; binary256 12.8-38.3 workers; RX 7600 binary64 0.216-0.933 cards; RX 7600 binary256 0.568-2.43 cards; RTX 5060 Ti binary64 0.096-0.397 cards; RTX 5060 Ti binary256 0.433-1.91 cards
+COMPUTED objects 100, members 100: 2.493e+06 lane-days a day; native64 1.93 workers; cft256 8.34e+03 workers; binary256 274-817 workers; RX 7600 binary64 4.62-19.9 cards; RX 7600 binary256 12.1-51.9 cards; RTX 5060 Ti binary64 2.05-8.48 cards; RTX 5060 Ti binary256 9.23-40.7 cards
+COMPUTED objects 100, members 1000: 2.409e+07 lane-days a day; native64 18.7 workers; cft256 8.06e+04 workers; binary256 2.65e+03-7.9e+03 workers; RX 7600 binary64 44.6-192 cards; RX 7600 binary256 117-502 cards; RTX 5060 Ti binary64 19.8-82 cards; RTX 5060 Ti binary256 89.2-393 cards
+COMPUTED objects 1000, members 1: 1.168e+06 lane-days a day; native64 0.904 workers; cft256 3.91e+03 workers; binary256 128-383 workers; RX 7600 binary64 2.16-9.33 cards; RX 7600 binary256 5.68-24.3 cards; RTX 5060 Ti binary64 0.96-3.97 cards; RTX 5060 Ti binary256 4.33-19.1 cards
+COMPUTED objects 1000, members 100: 2.493e+07 lane-days a day; native64 19.3 workers; cft256 8.34e+04 workers; binary256 2.74e+03-8.17e+03 workers; RX 7600 binary64 46.2-199 cards; RX 7600 binary256 121-519 cards; RTX 5060 Ti binary64 20.5-84.8 cards; RTX 5060 Ti binary256 92.3-407 cards
+COMPUTED objects 1000, members 1000: 2.409e+08 lane-days a day; native64 187 workers; cft256 8.06e+05 workers; binary256 2.65e+04-7.9e+04 workers; RX 7600 binary64 446-1.92e+03 cards; RX 7600 binary256 1.17e+03-5.02e+03 cards; RTX 5060 Ti binary64 198-820 cards; RTX 5060 Ti binary256 892-3.93e+03 cards
+# cycles a day 8.0, horizon 7 days
+COMPUTED objects 10, members 1: 9840 lane-days a day; native64 0.00762 workers; cft256 32.9 workers; binary256 1.08-3.23 workers; RX 7600 binary64 0.0182-0.0786 cards; RX 7600 binary256 0.0478-0.205 cards; RTX 5060 Ti binary64 0.00809-0.0335 cards; RTX 5060 Ti binary256 0.0364-0.161 cards
+COMPUTED objects 10, members 100: 6.528e+04 lane-days a day; native64 0.0505 workers; cft256 218 workers; binary256 7.18-21.4 workers; RX 7600 binary64 0.121-0.521 cards; RX 7600 binary256 0.317-1.36 cards; RTX 5060 Ti binary64 0.0536-0.222 cards; RTX 5060 Ti binary256 0.242-1.07 cards
+COMPUTED objects 10, members 1000: 5.693e+05 lane-days a day; native64 0.441 workers; cft256 1.9e+03 workers; binary256 62.6-187 workers; RX 7600 binary64 1.05-4.55 cards; RX 7600 binary256 2.77-11.9 cards; RTX 5060 Ti binary64 0.468-1.94 cards; RTX 5060 Ti binary256 2.11-9.29 cards
+COMPUTED objects 100, members 1: 9.84e+04 lane-days a day; native64 0.0762 workers; cft256 329 workers; binary256 10.8-32.3 workers; RX 7600 binary64 0.182-0.786 cards; RX 7600 binary256 0.478-2.05 cards; RTX 5060 Ti binary64 0.0809-0.335 cards; RTX 5060 Ti binary256 0.364-1.61 cards
+COMPUTED objects 100, members 100: 6.528e+05 lane-days a day; native64 0.505 workers; cft256 2.18e+03 workers; binary256 71.8-214 workers; RX 7600 binary64 1.21-5.21 cards; RX 7600 binary256 3.17-13.6 cards; RTX 5060 Ti binary64 0.536-2.22 cards; RTX 5060 Ti binary256 2.42-10.7 cards
+COMPUTED objects 100, members 1000: 5.693e+06 lane-days a day; native64 4.41 workers; cft256 1.9e+04 workers; binary256 626-1.87e+03 workers; RX 7600 binary64 10.5-45.5 cards; RX 7600 binary256 27.7-119 cards; RTX 5060 Ti binary64 4.68-19.4 cards; RTX 5060 Ti binary256 21.1-92.9 cards
+COMPUTED objects 1000, members 1: 9.84e+05 lane-days a day; native64 0.762 workers; cft256 3.29e+03 workers; binary256 108-323 workers; RX 7600 binary64 1.82-7.86 cards; RX 7600 binary256 4.78-20.5 cards; RTX 5060 Ti binary64 0.809-3.35 cards; RTX 5060 Ti binary256 3.64-16.1 cards
+COMPUTED objects 1000, members 100: 6.528e+06 lane-days a day; native64 5.05 workers; cft256 2.18e+04 workers; binary256 718-2.14e+03 workers; RX 7600 binary64 12.1-52.1 cards; RX 7600 binary256 31.7-136 cards; RTX 5060 Ti binary64 5.36-22.2 cards; RTX 5060 Ti binary256 24.2-107 cards
+COMPUTED objects 1000, members 1000: 5.693e+07 lane-days a day; native64 44.1 workers; cft256 1.9e+05 workers; binary256 6.26e+03-1.87e+04 workers; RX 7600 binary64 105-455 cards; RX 7600 binary256 277-1.19e+03 cards; RTX 5060 Ti binary64 46.8-194 cards; RTX 5060 Ti binary256 211-929 cards
+COMPUTED one object, native64, M1 on a box worker (G4): (R) fit 2.14 CPU-s, (H) fit 5.62 CPU-s, one 30-day member 2.01 CPU-s
+COMPUTED one object, cft256, M1 on a box worker (G4, 1 worker): (R) fit 9.25e+03 CPU-s, (H) fit 2.43e+04 CPU-s, one 30-day member 8.67e+03 CPU-s
+COMPUTED one object, binary256, DEBRIS-I's program on a box worker (ESTIMATE): (R) fit 906 CPU-s, (H) fit 2.38e+03 CPU-s, one 30-day member 850 CPU-s (to 304, 798, 285 at the estimate's other end)
+# PASS 

@@ -1,0 +1,41 @@
+# k_build, log 002, written 2026-11-23 08:32:02 -0700
+# script k_build.py sha256 b3f587c8a584a438a8e9c9d745b09774837698fe4ba322714de28c7526dc8522
+# k_lib.py sha256 51a32aee00962ff8ac0830831f0192cfe7e735786c9e3a87c341f208fce34fd9
+# build_f.sh sha256 eaed7054e35c505fe50ae802bb6ab670b79dbb6cb0294210ecf2c51c639cf1d5
+# k_fit.c sha256 1b891b3be22c7ff49ea1869dd9ee71ee5fec863cfe5d27ba9783ee42cf8d2cdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   B1 the archive's SHA-256 equals the one lead.md records for it (e01003cc...29b8, the --sha-archive default);
+#   B2 with <msys>/mingw64/bin first on PATH, gcc -dumpmachine prints x86_64-w64-mingw32;
+#   B3 libcft.a builds from the archive (make -C cft-fp256/host CC=gcc OS=Windows_NT libcft.a) and its SHA-256 equals
+#      DEBRIS-F's and DEBRIS-H's, f0eec4f2...a67a5;
+#   B4 tests/build_f.sh, unchanged, prints BUILD PASS (its own criteria 1 to 5, asserted by it);
+#   B5 tests/k_fit.c compiles with build_f.sh's O2 flags for a test program (-std=c11 -O2 -ffp-contract=off -Wall -Wextra)
+#      with no warning, and links against build_f.sh's O2 objects and libcft.a;
+#   B6 every executable's SHA-256 is printed.
+# archive cft-fp256-0aa997a3.tar sha256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8
+PASS B1 the archive's SHA-256 is as recorded
+# ran (0.02 s wall, exit 0): gcc.exe -dumpmachine
+PASS B2 gcc -dumpmachine prints x86_64-w64-mingw32
+# gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+# ran (2.33 s wall, exit 0): tar.exe --force-local -xf ~/source/repos/cft-debris-ledger/tools/cft-fp256-0aa997a3.tar -C ~/source/repos/cft-debris-scratch/DEBRIS-K/cft-fp256
+# ran (12.28 s wall, exit 0): make.exe --no-print-directory -C ~/source/repos/cft-debris-scratch/DEBRIS-K/cft-fp256/host CC=gcc OS=Windows_NT TMP=~/source/repos/cft-debris-scratch/DEBRIS-K/tmp TEMP=~/source/repos/cft-debris-scratch/DEBRIS-K/tmp libcft.a
+PASS B3 libcft.a sha256 f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5, DEBRIS-F's and DEBRIS-H's
+# ran (38.58 s wall, exit 0): bash.exe ~/source/repos/cft-debris/tests/build_f.sh ~/source/repos/cft-debris-scratch/DEBRIS-K/cft-fp256/host ~/source/repos/cft-debris-scratch/DEBRIS-K/build/f
+#   build_f.sh: gcc -dumpmachine: x86_64-w64-mingw32
+#   build_f.sh: CRITERION 1 PASS
+#   build_f.sh: gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+#   build_f.sh: libcft.a: f0eec4f25f53521006526ba3376dd616997b90c7223145c66f6ddbc6aaca67a5
+#   build_f.sh: CRITERION 5 PASS (the hashes above)
+#   build_f.sh: CRITERION 2 PASS (O2, O0, negctl); CRITERION 3 PASS (the native kinds compiled)
+#   build_f.sh: CRITERION 4 PASS (every compile and link)
+#   build_f.sh: BUILD PASS
+PASS B4 tests/build_f.sh prints BUILD PASS (exit 0)
+# ran (0.45 s wall, exit 0): gcc.exe -std=c11 -O2 -ffp-contract=off -Wall -Wextra -I~/source/repos/cft-debris-scratch/DEBRIS-K\cft-fp256\host\include -I~\source\repos\cft-debris\tests\..\src -c ~\source\repos\cft-debris\tests\k_fit.c -o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\k_fit.o
+PASS B5 k_fit.c compiles with no warning (exit 0)
+# ran (0.22 s wall, exit 0): gcc.exe -o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\k_fit.exe ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\k_fit.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\kind_cft128.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\kind_cft256.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\kind_cft32.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\kind_cft64.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\kind_native32.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\kind_native64.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\m1_common.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\gfc.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\de421.o ~/source/repos/cft-debris-scratch/DEBRIS-K\build\f\O2\m1_ftab.o
+PASS B5 k_fit.exe links (exit 0)
+# B6 m1f_O2.exe sha256 9d4c15720f1cf67de8415f6e4fe09b8b11dc63ce66164a1f7445b051041619b1
+# B6 k_fit.exe sha256 b832b34315f283ba49611957eac77e0316a33385db3a1db5d1ea3d87935f2619
+# CPU: 53.22 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

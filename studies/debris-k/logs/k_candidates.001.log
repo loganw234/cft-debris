@@ -1,0 +1,124 @@
+# k_candidates, log 001, written 2026-11-23 08:59:43 -0700
+# script k_candidates.py sha256 b9fcaca7aadc902c6da7f46407b9024054a3f485d839cfd3d3b6c63a40cf8030
+# k_lib.py sha256 bbe2b14cc25b0a2cfccb411f3b301f0d6d31775fd681fa1d5392b1d86be1f796
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   Q1's RULE, fixed before it is applied (a measurement with no pass condition):
+#   SETS: every catalogue number's sets in S_H0 (the downloads' gp-*-SH0) and in DEBRIS-H's slot folders 1 to 20, ephemeris
+#     type 0, taken in that order; a set is kept if its epoch is later than the object's previous kept set's (as the pilot).
+#   LOOKS: S_H0's (the run's start), then each slot's fetch; at each look every object's latest kept set so far.
+#   FROM THE LATEST SET: n (rev/day) and e; a = (GM / n^2)^(1/3) with n in rad/s, GM = 3.986004415e14 m^3/s^2; perigee
+#     hp = a(1 - e) - 6,378,137 m and apogee ha = a(1 + e) - 6,378,137 m. LEO: ha under 2,000 km.
+#   THE DECAY RATE: ndot_tle = 2 x MEAN_MOTION_DOT (rev/day^2; the TLE's ndot/2, DEBRIS-F's belief); ndot_emp = the change
+#     of mean motion between the object's earliest and latest kept sets so far, over their epochs, where these lie at least
+#     12 h apart; ndot = the larger of those that exist. No decay signal where ndot <= 0 (counted; BSTAR <= 0 counted beside).
+#   THE ESTIMATE: adot = -(2/3) a ndot / n; tau = (a e + Hs) / |adot|, Hs the scale height of M1's 28-band table in the band
+#     holding hp (src/m1_consts.h): a circular orbit's H/|adot| plus the time for the apogee to come down at the same rate.
+#     An ESTIMATE of the time to re-entry from one scale height and one rate; its range is taken as a factor of 3 either way.
+#   CANDIDATES for each window W of 1, 3, 7 and 30 days: 'point' where tau <= W; 'wide' where tau <= 3 W.
+#   COUNTS: per look and window (point and wide); the union over the looks; at the first look, how many wide candidates
+#     later left their group's files (absent from a later fetch that holds the group); and seed indices 1595 and 1178 with
+#     their tau at the first look (two validation points, not a measure of skill: one SATCAT decay, one M1 decay).
+# m1_consts.h sha256 5de9502b33ea6822ec4507e0c4997c812b1027007219d2b875cf367ccd530e0a (the 28 bands' bases and scale heights read from it)
+# SH0/gp-stations-SH0.csv sha256 8dd2e6230ebf2b83d34541d90c6215e66f742fe9f0f4e2755376c714ddb30be7
+# SH0/gp-fengyun-1c-debris-SH0.csv sha256 9d4c56d91302a82f8f761d2422bba41cb4b99539afb003a895eb47266d6884fe
+# SH0/gp-iridium-33-debris-SH0.csv sha256 cd844917cf0f782797c9b84d39ad33a9cf4ceb2cdadb4af5c5f54d742248324a
+# SH0/gp-cosmos-2251-debris-SH0.csv sha256 1e676c21b6c3bf458d2cd495473d57f14c032f0fd33db5e4838157ba79e95cb4
+# slot01/gp-cosmos-2251-debris.csv sha256 feafcb84a2c2a18f8b2487a85e0435030ba886c799127718c305002873f2bf51
+# slot01/gp-fengyun-1c-debris.csv sha256 1a3ef0c52de0854f369f250a31568c39996309eca1d693b830aba5114ba48f6c
+# slot01/gp-iridium-33-debris.csv sha256 28ff6a453039400d62fb1ff8e2af78ea9e5e830f4ef9ad8d340b521a836c69f4
+# slot01/gp-stations.csv sha256 6571b29a790a6b1e34ab4cdfd3df0117580a11b130493a4ea7d9700e02ea8a56
+# slot02/gp-cosmos-2251-debris.csv sha256 feafcb84a2c2a18f8b2487a85e0435030ba886c799127718c305002873f2bf51
+# slot02/gp-fengyun-1c-debris.csv sha256 1a3ef0c52de0854f369f250a31568c39996309eca1d693b830aba5114ba48f6c
+# slot02/gp-iridium-33-debris.csv sha256 28ff6a453039400d62fb1ff8e2af78ea9e5e830f4ef9ad8d340b521a836c69f4
+# slot02/gp-stations.csv sha256 6571b29a790a6b1e34ab4cdfd3df0117580a11b130493a4ea7d9700e02ea8a56
+# slot03/gp-cosmos-2251-debris.csv sha256 c9b73eff13b273e8d868e49a078b56f831a6289bbfb26d45adbcef8e673e06bb
+# slot03/gp-fengyun-1c-debris.csv sha256 cbb7a8dd0f9baa680193c8efdd813e180c2904574c2c54f87bbb901442ab7f93
+# slot03/gp-iridium-33-debris.csv sha256 0302d54db0ef87f4a7a26041d7ab81a2b58ec1cd0b3de855fd0b7ccd3feb5acc
+# slot03/gp-stations.csv sha256 25471288c6d9f26f2f0add262cb4d4bc7052fa5a936b6ceeb05a33399469559f
+# slot04/gp-cosmos-2251-debris.csv sha256 0c78563992b39d4dd82b4b73c6c73bd35bc4dce1a776fdae244c24caf74dee1b
+# slot04/gp-fengyun-1c-debris.csv sha256 b7d086687014ff945d71a3b787c6861daeb1815cb6102b805bb9fd0f53076dbe
+# slot04/gp-iridium-33-debris.csv sha256 4a89fd2a9cf42d76895b9797085fc5d9939697c83b23436e923804a0ffaa34a9
+# slot04/gp-stations.csv sha256 e295c232d30e1710667e8bad022873255fe8a63def371bbec9149241917f0017
+# slot05/gp-cosmos-2251-debris.csv sha256 add623a40c7c18679865867a59ecb0cc93384e66930efbfea8d133a357a338a1
+# slot05/gp-fengyun-1c-debris.csv sha256 95fe7746d1baae2321cb71ffe1693aad6a8c43102c39becc031608b6299f775a
+# slot05/gp-iridium-33-debris.csv sha256 9b97c35a289413d066114615bf80327714ab6fa1ebc7d45972a49d9773269595
+# slot05/gp-stations.csv sha256 2cfdaf47443268562e412cf5965ab369eadf1221e1fc16703593325fe816e844
+# slot06/gp-cosmos-2251-debris.csv sha256 add623a40c7c18679865867a59ecb0cc93384e66930efbfea8d133a357a338a1
+# slot06/gp-fengyun-1c-debris.csv sha256 95fe7746d1baae2321cb71ffe1693aad6a8c43102c39becc031608b6299f775a
+# slot06/gp-iridium-33-debris.csv sha256 9b97c35a289413d066114615bf80327714ab6fa1ebc7d45972a49d9773269595
+# slot06/gp-stations.csv sha256 2cfdaf47443268562e412cf5965ab369eadf1221e1fc16703593325fe816e844
+# slot07/gp-cosmos-2251-debris.csv sha256 9c50157aa22509195bdbfebcab2c906ca704833e6d602f87ff3439c6c8d862b5
+# slot07/gp-fengyun-1c-debris.csv sha256 10dcba26494194c29517fd3d207037cd6fcdfc3b3b3fb82e90ae5b41549d5be5
+# slot07/gp-iridium-33-debris.csv sha256 25951fde44feaee26fe7a1148458ccc1001d22627027d97cf2a8bcbbc5b958c7
+# slot07/gp-stations.csv sha256 e6b377f43b697d3e09e88df753a615bfb052b7b5b5269da119faa52b120761d6
+# slot08/gp-cosmos-2251-debris.csv sha256 9c50157aa22509195bdbfebcab2c906ca704833e6d602f87ff3439c6c8d862b5
+# slot08/gp-fengyun-1c-debris.csv sha256 10dcba26494194c29517fd3d207037cd6fcdfc3b3b3fb82e90ae5b41549d5be5
+# slot08/gp-iridium-33-debris.csv sha256 25951fde44feaee26fe7a1148458ccc1001d22627027d97cf2a8bcbbc5b958c7
+# slot08/gp-stations.csv sha256 e6b377f43b697d3e09e88df753a615bfb052b7b5b5269da119faa52b120761d6
+# slot09/gp-cosmos-2251-debris.csv sha256 1d6be065e64293ab10c787c23526c501ed335ad09d1832bba32a0d01e662e3e8
+# slot09/gp-fengyun-1c-debris.csv sha256 c8c2bedbe8b60dba07831e51880b09f3010c61222dd28e6a05180e71a9839a84
+# slot09/gp-iridium-33-debris.csv sha256 04b7324514346c2c8e65b9b4827654650cfb7035ada836f6adda5d9a29e96e18
+# slot09/gp-stations.csv sha256 698186e405293641af8e1cfddad87e50e1f617e4b06ced721235a1b5b1e7804f
+# slot10/gp-cosmos-2251-debris.csv sha256 0655c11753913fd74a6e7f25be7290dae8ece7e2ffc493d5ba71de82b6a7c593
+# slot10/gp-fengyun-1c-debris.csv sha256 efe33fc0b7b40f404c4a3778eb435c17bafee06ea5029562e0d35606eb820b33
+# slot10/gp-iridium-33-debris.csv sha256 f62a94729dfc7cf257fd474f9ec6245149e2fffe33655895091f21c304000b56
+# slot10/gp-stations.csv sha256 2218c230fc510ea9669cb37da918ed551e8b472fb13a142204ab4853db486641
+# slot11/gp-cosmos-2251-debris.csv sha256 28318e4ea74c8b3cf2aa2421481faa573fcfc5692515c2854551f52f9aea44c8
+# slot11/gp-fengyun-1c-debris.csv sha256 84f44343fc45717a892a1db8972b67d613f75486beb1154a086dc7ea04c9dbb9
+# slot11/gp-iridium-33-debris.csv sha256 1b98372909a5c0513b121fbd8c6f3902288b16700953b11e68615912baebf807
+# slot11/gp-stations.csv sha256 f85129e5b312f6156b4eef78ebde057af0ba97f15363309f09ad13f5e7a27844
+# slot12/gp-fengyun-1c-debris.csv sha256 84f44343fc45717a892a1db8972b67d613f75486beb1154a086dc7ea04c9dbb9
+# slot12/gp-iridium-33-debris.csv sha256 1b98372909a5c0513b121fbd8c6f3902288b16700953b11e68615912baebf807
+# slot12/gp-stations.csv sha256 f85129e5b312f6156b4eef78ebde057af0ba97f15363309f09ad13f5e7a27844
+# slot13/gp-cosmos-2251-debris.csv sha256 2db802d65d978037f2cc64b2df205a97f32c93788f56c0dd48981e7190bd4703
+# slot13/gp-fengyun-1c-debris.csv sha256 ac7b3d72ccff2a308b0addbd300b5f1602fd49e1bf1f92cfdb54b0f595608b61
+# slot13/gp-iridium-33-debris.csv sha256 8fb6e9eb2d382f4ab7b07000b7dabd5aa050b37c0fc494dd077cb7660e8801ce
+# slot13/gp-stations.csv sha256 35131ee193148df0ff3d5109ab5d4aa8c299185ce8b980873ae2e6f4f78e1c78
+# slot14/gp-cosmos-2251-debris.csv sha256 2db802d65d978037f2cc64b2df205a97f32c93788f56c0dd48981e7190bd4703
+# slot14/gp-fengyun-1c-debris.csv sha256 ac7b3d72ccff2a308b0addbd300b5f1602fd49e1bf1f92cfdb54b0f595608b61
+# slot14/gp-iridium-33-debris.csv sha256 8fb6e9eb2d382f4ab7b07000b7dabd5aa050b37c0fc494dd077cb7660e8801ce
+# slot14/gp-stations.csv sha256 35131ee193148df0ff3d5109ab5d4aa8c299185ce8b980873ae2e6f4f78e1c78
+# slot15/gp-stations.csv sha256 35131ee193148df0ff3d5109ab5d4aa8c299185ce8b980873ae2e6f4f78e1c78
+# slot16/gp-fengyun-1c-debris.csv sha256 7a330b89b7d919436818c23950a4c2dd2624fa811fd3dd88eadbd11c2b9c16d9
+# slot16/gp-iridium-33-debris.csv sha256 31381fab61724d4ec4763ee2d237e4b4815ae5624e917da05961e7664860992e
+# slot16/gp-stations.csv sha256 01bebf4fd6cebedfac192264b7edecc2c7c001ecb84144ba15425db7c7307603
+# slot18/gp-cosmos-2251-debris.csv sha256 bc0ecad5356c0e613649f42a90edf2b0ece6945e276b297ac1388ac7dae76cef
+# slot18/gp-fengyun-1c-debris.csv sha256 582f554160330ad8ee9f10a82cc64e4483eac038b0474dc161d2971f300a1d49
+# slot18/gp-iridium-33-debris.csv sha256 6b5f19b240e57554f2bdf7b15aea77bde998f8e27d35bbca3d3331db8cb03884
+# slot18/gp-stations.csv sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea
+# slot19/gp-stations.csv sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea
+# slot20/gp-stations.csv sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea
+MEASURED look SH0: 2689 LEO objects with a set; no decay signal (ndot <= 0) 18; BSTAR <= 0 12; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED look slot01: 2691 LEO objects with a set; no decay signal (ndot <= 0) 16; BSTAR <= 0 12; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED look slot02: 2691 LEO objects with a set; no decay signal (ndot <= 0) 16; BSTAR <= 0 12; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED look slot03: 2691 LEO objects with a set; no decay signal (ndot <= 0) 15; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED look slot04: 2691 LEO objects with a set; no decay signal (ndot <= 0) 13; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot05: 2691 LEO objects with a set; no decay signal (ndot <= 0) 13; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot06: 2691 LEO objects with a set; no decay signal (ndot <= 0) 13; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot07: 2691 LEO objects with a set; no decay signal (ndot <= 0) 10; BSTAR <= 0 12; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 4; 30 d: point 5, wide 17
+MEASURED look slot08: 2691 LEO objects with a set; no decay signal (ndot <= 0) 10; BSTAR <= 0 12; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 4; 30 d: point 5, wide 17
+MEASURED look slot09: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 1; 7 d: point 1, wide 4; 30 d: point 5, wide 17
+MEASURED look slot10: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 4; 30 d: point 5, wide 17
+MEASURED look slot11: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot12: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot13: 2691 LEO objects with a set; no decay signal (ndot <= 0) 10; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot14: 2691 LEO objects with a set; no decay signal (ndot <= 0) 10; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot15: 2691 LEO objects with a set; no decay signal (ndot <= 0) 10; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot16: 2691 LEO objects with a set; no decay signal (ndot <= 0) 10; BSTAR <= 0 11; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 17
+MEASURED look slot18: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 14; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED look slot19: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 14; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED look slot20: 2691 LEO objects with a set; no decay signal (ndot <= 0) 11; BSTAR <= 0 14; 1 d: point 0, wide 1; 3 d: point 1, wide 2; 7 d: point 1, wide 3; 30 d: point 5, wide 16
+MEASURED union over the 20 looks, window 1 d: point 0 objects, wide 1
+MEASURED union over the 20 looks, window 3 d: point 1 objects, wide 2
+MEASURED union over the 20 looks, window 7 d: point 1 objects, wide 4
+MEASURED union over the 20 looks, window 30 d: point 5 objects, wide 17
+MEASURED first look's wide candidates for 1 d: 1; of them absent from the last fetch holding their group: 1
+MEASURED first look's wide candidates for 3 d: 1; of them absent from the last fetch holding their group: 1
+MEASURED first look's wide candidates for 7 d: 3; of them absent from the last fetch holding their group: 1
+MEASURED first look's wide candidates for 30 d: 16; of them absent from the last fetch holding their group: 1
+MEASURED seed index 1595 at the first look: tau 1.24 d; its perigee, apogee and ndot (the lead, at the merge: removed here; the original line is held in the ledger's debris-k\held)
+MEASURED seed index 1178 at the first look: tau 18.63 d; its perigee, apogee and ndot (the lead, at the merge: removed here; the original line is held in the ledger's debris-k\held)
+# per-object table (tau up to 90 d) candidates.001.tsv, 333 rows, sha256 4fcbb6024e26f13f5eada88cb2e51dc93936a2a771c23ad583052fe82953ca59
+# CPU: 8.70 s by cycles / 2.5e9
+# PASS 

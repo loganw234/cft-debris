@@ -1,0 +1,27 @@
+# k_swcopy, log 001, written 2026-11-23 08:55:38 -0700
+# script k_swcopy.py sha256 f92fbda4ac1233b7b69d5a5df47d8651075d22063f3de2dfd129bb90717f214e
+# k_lib.py sha256 bbe2b14cc25b0a2cfccb411f3b301f0d6d31775fd681fa1d5392b1d86be1f796
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   ASSERTED (DEBRIS-F's, stated before the run): each copy has the original's line count and CRLF endings; every line
+#   equals the original's but (a) the filled lines, which differ only at the fill positions, each blank in the original, and
+#   (b) exactly one more line, "BEGIN MONTHLY_PREDICTED" become "BEGIN MONTHLY_FIT". CONTROL: a second change planted into
+#   the finished copy (one digit of the first OBSERVED line) must fail that check. ADDED: the 0-filled copy's SHA-256 is
+#   DEBRIS-F's 47acbcc2...c9a; the original's is the approved 718bae83...48fb.
+# original sha256 718bae83ef2786d77b5e5d11647bf5b984986f0d0213b1080c5d4d6b514948fb (313862 bytes, 2394 lines, 2394 CRLF)
+PASS the approved file's SHA-256
+PASS 45 DAILY_PREDICTED lines, each qualifier blank (2026 11 16 to 2026 12 30)
+# MONTHLY_PREDICTED data lines: 178; bytes the fill sets in them: 3738; the marker line 2215 renamed
+PASS placeholder 0: the copy is the original with exactly the three normalisations (3783 filled bytes)
+PASS placeholder 4: the copy is the original with exactly the three normalisations (3783 filled bytes)
+PASS CONTROL: a second change planted into the finished copy fails the check
+# sw3_fill0/SW-Last5Years.txt sha256 47acbcc2c5bb5bb8c6425d0f7873e77a82f44d57cac5c655bdf6ae05a2c88c9a
+# sw3_fill4/SW-Last5Years.txt sha256 f19482d72df5035c33264758f60d143af65bcc7de3ee2ac3bfa090e110869f5e
+# sw3_plant/SW-Last5Years.txt sha256 6dd3705dbaabc3523afac6fe6b08019769fdd2fdfb16b8d1ca5d09061e00ddca
+PASS the 0-filled copy equals DEBRIS-F's, 47acbcc2...c9a
+# orekit_c3/finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+# orekit_c3/tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# orekit_c3/SW-Last5Years.txt sha256 47acbcc2c5bb5bb8c6425d0f7873e77a82f44d57cac5c655bdf6ae05a2c88c9a
+PASS the folder holds the three files only
+PASS the folder holds the copy, not the original
+# PASS 

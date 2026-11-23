@@ -1,0 +1,71 @@
+# k_refit_fit, log 001, written 2026-11-23 08:35:35 -0700
+# script k_refit.py sha256 291c201fdb53181ad9e6216d4f5a4381fce42695f8f04744dca9059e17a8ea80
+# k_lib.py sha256 51a32aee00962ff8ac0830831f0192cfe7e735786c9e3a87c341f208fce34fd9
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   (R)'s FIT, DEBRIS-H's h_seed.py fit (seed 1) unchanged in its rules, applied to any list of element sets:
+#     e0q = the set's epoch in TDB rounded to 2^-20 s; O = e0q - 86,400 s; 721 pseudo-observations at O + 120 k (k = 0 to
+#     720) from Orekit's SGP4 (tests/f5_sgp4.js, GCRF, through DEBRIS-F's Earth orientation file), decoded in --jprocs
+#     contiguous chunks of the given order, one JVM each (the decoder's output depends on what its JVM decoded before:
+#     DEBRIS-H's finding 1); tests/m1f.c fit at native64 with its iteration limit of 10; the start state the first
+#     pseudo-observation's, bc from 0.01 m^2/kg, cram fixed at 0.01 m^2/kg; bc estimated where the perigee by tests/f_fit.py's
+#     formula (MU = 3.986004418e14) is under 1,000 km, held at 0.01 m^2/kg above; a fit that stops on the iteration limit, or
+#     on a singular matrix, keeps its last iterate and is flagged; an object Orekit refuses is excluded and counted.
+#   THE CATCH-UP (mode fit): tests/m1f.c prop at native64 from O to T_s, whole steps of 15 s then one short step landing on
+#     T_s; a stopped run, a state not finite or at or below 6,498.137 km from the centre is marked so.
+#   MODE FIT (the regression), h_seed.py's selection: the four groups' CSV files with their 17 columns asserted; ephemeris
+#     type 0; one object per element set by DEBRIS-G's key, the smallest catalogue number kept; the screens (perigee under
+#     200 km, epoch more than 30 days before T_s, origin after T_s) counted; --test-sample N by random.Random(0x7E57).sample
+#     over the kept catalogue numbers in ascending order. Its fit table has h_seed.py's columns.
+#   ASSERTED in mode fit, besides h_seed.py's own checks: with --expect-pv-in, the decode batch's input file has that SHA-256
+#     (the batch's composition and order replayed, as the plan's regression requires).
+# T_s 2764800.0 s TDB = 0x1.5180000000000p+21 (2026-11-17 00:00:00 TDB); table frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f; m1f sha256 9d4c15720f1cf67de8415f6e4fe09b8b11dc63ce66164a1f7445b051041619b1; leaps sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# orekit data finals2000A.daily sha256 a23ec3cf98b72db8e04903fb916efc65e6d5a16f61a7828bcee73297eb9ac1ea
+# orekit data tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# jar hipparchus-core-4.0.3.jar sha256 5af54dc3c21b8d85e1264157ee91d93fa67e68c825cfb38834dc2bbb9b0f6583
+# jar hipparchus-filtering-4.0.3.jar sha256 279eece43411f372bd8340355cb89101def0bf9b1b6824231b76181d1ec63a81
+# jar hipparchus-fitting-4.0.3.jar sha256 3712c3b4f43d9c12bf7b7aad187764f4b3c09cc962504899d8951eb310b1e4be
+# jar hipparchus-geometry-4.0.3.jar sha256 19594d5106ec6a46951e859e2924bfcade02a834c06c56bd3d2130a74f0fbb7e
+# jar hipparchus-ode-4.0.3.jar sha256 75f0f0b3fdcd99d13e9c394b7ae809cce5a9c22f1c14b1b90a5109ed951467fe
+# jar hipparchus-optim-4.0.3.jar sha256 4bc0dbb5c6d5fefda5db9d92141c6cbb807174a1d491a85df46bcc57a67b8992
+# jar hipparchus-stat-4.0.3.jar sha256 8b066e3060dc119efcce241fb0720a3b9e59c026d0f5fe9e70abfd5e22d3817b
+# jar orekit-13.1.9.jar sha256 a1dbec163c1119459cf79e2dfe32ff74b446f7a8d457e2d4d9761cd6cd820fbe
+# m1f's downloads: EIGEN6-C4.gfc sha256 b5d58320c9ee03ff4ad258e65ea2bade002c477081df08c30e72f4d864737715
+# m1f's downloads: lnxp1900p2053.421 sha256 5b3f81dd0c505925055a389431fd2bc5e0ae2fd02d85db37fa4d4fe54dfb4096
+# m1f's downloads: header.421 sha256 34e5f959e3e6af00bc15c8d87ae8090ed1843b2e3b9b4876add736b22853f522
+PASS T_s is a multiple of 600 s on M1's TDB axis (2764800.0)
+# TEST ONLY: --test waives the 20-minute rule (T_s - now = -574604 s)
+# gp-stations-S0.csv: 17 rows, sha256 bfdf8f60f932ae11247c0dd31d361d3f1a3c11cf8505aebedede9b4c08808906
+# gp-fengyun-1c-debris-S0.csv: 1989 rows, sha256 cabf9ba46a14446ebde737dce4e9d4f9e3930dfb19e428d95c9772029a2df5e2
+# gp-iridium-33-debris-S0.csv: 109 rows, sha256 4e794306dd4bd9cc2f9ecd595ac5f55dc82b6083d0cd7b7648b7247b6b499a17
+# gp-cosmos-2251-debris-S0.csv: 581 rows, sha256 253e32e87b0be45c2639a8d615808e05093337d395c56bb03da54e4317318f34
+# rows read 2696; excluded as ephemeris type not 0: 0
+# element sets 2686; rows dropped as sharing a set with a smaller catalogue number (or repeated across groups): 10
+PASS one catalogue number per kept set
+# excluded: perigee under 200 km 0; epoch more than 30 days before T_s 0; origin after T_s 0; kept 2686
+# TEST ONLY: --test-sample 64 by random.Random(0x7E57).sample over the kept catalogue numbers in ascending order
+PASS objects to fit: 64
+# the decode: 64 objects in 1 JVM run(s), in the given order
+# decode batch 00 (--jprocs 1): 64 objects x 721 instants, in the order of work_fit1_1/pv_in.00.txt, sha256 c7b17fd951229ad11d6eb7e6f9c5b8cfa8e23af1052a12f94d739f4309ec5d51
+# ran (2.62 s wall, exit 0): java.exe -cp ~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-core-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-filtering-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-fitting-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-geometry-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-ode-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-optim-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\hipparchus-stat-4.0.3.jar;~/source/repos/cft-debris-scratch/DEBRIS-K/jars\orekit-13.1.9.jar jdk.nashorn.tools.Shell tests/f5_sgp4.js -- pv ~/source/repos/cft-debris-scratch/DEBRIS-K/orekit ~/source/repos/cft-debris-ledger/debris-k/regress\work_fit1_1\pv_in.00.txt ~/source/repos/cft-debris-ledger/debris-k/regress\work_fit1_1\pv.00.txt
+PASS every decoder run exited 0 ([0])
+# Orekit refused 0 objects (excluded)
+PASS every decoded object has its 721 pseudo-observations
+# ran (148.94 s wall, exit 0): m1f_O2.exe fit ~/source/repos/cft-debris-ledger/debris-h/frame_h0.bin ~/source/repos/cft-debris-ledger/debris-k/regress\work_fit1_1\fit_in.00.txt ~/source/repos/cft-debris-ledger/debris-k/regress\work_fit1_1\fit.00.txt --maxit 10
+PASS every fit run exited 0 ([0])
+PASS every object fitted has a FIT line (64 of 64)
+# fits: 57 converged, 7 stopped on the iteration limit, 0 stopped on a singular matrix (flagged); bc estimated in 64
+# post-fit RMS of the position residual's length: median 537.3 m, 90th 579.4 m, largest 621.4 m; iterations median 3
+# fitted bc (where estimated): 30 of 64 negative; from -0.7206 to 0.8625 m^2/kg, median 0.009874
+# ran (31.16 s wall, exit 0): m1f_O2.exe prop native64 ~/source/repos/cft-debris-ledger/debris-h/frame_h0.bin ~/source/repos/cft-debris-ledger/debris-k/regress\work_fit1_1\prop_in.00.txt ~/source/repos/cft-debris-ledger/debris-k/regress\work_fit1_1\prop.00.txt
+# catch-up to T_s: ok 64; stopped early 0; not finite 0; at or below 120 km 0
+PASS the decode batch's input has the expected SHA-256 (c7b17fd951229ad11d6eb7e6f9c5b8cfa8e23af1052a12f94d739f4309ec5d51)
+# per-object fit table: fit1.001.tsv (64 objects), sha256 01c46ef91428de511bb8cc5d3a80e49ff2da1ce34c9cbba33f336f97a05693ec
+PASS the target fit1.001.tsv has its recorded SHA-256 377dbf86205380ae202414dd438de5ec2ebb6c2184147d133d89aa80373c8505
+PASS the same columns (17)
+PASS the same 64 objects
+PASS REGRESSION: every printed value equal, 1088 fields of 64 objects (columns differing: none)
+# convergence and iterations equal in 64 of 64 objects
+# CPU: 187.38 s by cycles / 2.5e9 (this script and every process it started)
+# PASS 

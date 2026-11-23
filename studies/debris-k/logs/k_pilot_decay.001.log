@@ -1,0 +1,89 @@
+# k_pilot_decay, log 001, written 2026-11-23 08:51:32 -0700
+# script k_pilot.py sha256 3a8cd903cf876a8b47ab78a0ff3c1600c5ee69ecde778cb74a83af497e4b374d
+# k_lib.py sha256 bbe2b14cc25b0a2cfccb411f3b301f0d6d31775fd681fa1d5392b1d86be1f796
+# k_refit.py sha256 291c201fdb53181ad9e6216d4f5a4381fce42695f8f04744dca9059e17a8ea80
+# k_fit.c sha256 1b891b3be22c7ff49ea1869dd9ee71ee5fec863cfe5d27ba9783ee42cf8d2cdb
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE PILOT (K3), as DEBRIS-K's plan, draft 3, fixes it; written into this script before any miss of the pilot's objects.
+#   OBJECTS: every object of DEBRIS-H's seed (debris-h/box/r2/seed/seed1.txt) whose perigee at T_s is under 400 km: the
+#     osculating a and e of the seed's binary64 state at T_s, GM = 3.986004415e14 m^3/s^2, perigee a(1 - e) - 6,378,136.46 m.
+#     (The plan counts 17; the count found is logged and checked against it.) Seed index 1595 is a reconstruction only: its
+#     one output is a decay prediction from fits to sets with epochs before 2026-11-18 00:00 UTC; no miss of it is computed.
+#   SETS: each object's sets in S_H0 (the downloads' gp-*-SH0) and in DEBRIS-H's slot folders 1 to 20 (svc/fetch/slotNN),
+#     taken in that order (S_H0, then slot 1, 2, ...), ephemeris type 0, by catalogue number; a set whose epoch is no later
+#     than the object's previous kept set's is skipped and counted (as a copy where it equals that set in every field).
+#     The first kept set must be the seed's own (seed_meta.tsv's epoch). A slot's sets are fetched at its t_end in
+#     slots.tsv (POSIX, to TDB through tai-utc.dat); S_H0's before T_s.
+#   FORECAST TIMES: T_s, and the t_end of slots 1, 5, 9 and 13 for (B'), (R) and (C); slots 5, 9 and 13 for (H). A forecast
+#     uses only the sets fetched by its time; its latest set is the one of latest epoch among them.
+#   REFERENCES: each later kept set of the object (epoch after the latest set's), fetched through slot 20, at its own epoch
+#     e rounded to 2^-20 s (e_q, DEBRIS-F's B1), through SGP4 (tests/f5_sgp4.js, GCRF); and at e_q + 1 s for T1.
+#   HORIZON, every variant: the reference's epoch less the epoch of the latest set the forecast used (for (A) and (B) the
+#     seed's set, as DEBRIS-H recorded it: its tables' horizon_h).
+#   VARIANTS: (A) A64's misses with A256's beside them, and (B), read from DEBRIS-H's check tables (status checked);
+#     (B') SGP4 from the latest set at each reference's e_q; (R) M1 native64 refitted from the latest set by DEBRIS-F's
+#     rule (tests/k_refit.py's refit(), h_seed.py's seed 1 rule) and propagated by tests/m1f.c prop from its origin to e_q;
+#     (H) M1 native64 fitted by tests/k_fit.c to every set so far: over the grid O_H + 120 k, O_H = e_q(oldest) - 86,400 s,
+#     to the last grid time at or before e_q(latest), each grid time's pseudo-observation from SGP4 of the earliest set whose
+#     e_q is at or after it; start state the first pseudo-observation's, bc from 0.01, cram 0.01 fixed, bc estimated
+#     (perigee by f_fit.py's formula under 1,000 km), maxit 10; propagated by m1f prop from O_H; (C) only if the budget
+#     allows (not in this script).
+#   THE MISS: the GCRF distance to the reference and its radial, along-track and cross-track parts in the reference's
+#     frame (R along r_ref, C along r_ref x v_ref, A = C x R), as h_check.py.
+#   A CHECK is a distinct (object, set or sets used, reference): forecasts at two times that use the same latest set (and
+#     so the same history) give one check, counted once; the rows per forecast time are kept in the ledger's table.
+#   DECAY PREDICTIONS: for seed index 1178 and every pilot object with perigee under 300 km, from each forecast time of (R)
+#     and (H), M1's rule (tests/m1h.c's RMIN 6,498,137.0 m, carried in tests/k_fit.c decay): from the fit's origin, whole
+#     rk4 steps of 15 s, the first step at whose end the distance from the centre is not above RMIN; up to 30 days after the
+#     forecast time (else "no decay within 30 days"). For seed index 1595, from (R)'s and (H)'s rules applied to its sets
+#     with epochs before 2026-11-18 00:00 UTC, set beside SATCAT's date taken as the whole UTC day 2026-11-18.
+#   STATISTICS (no pass condition): for each variant and horizon cell (under 6 h, 6 to 24 h, 1 to 2 d, 2 d and over) and
+#     overall, with n: the miss's median and 90th percentile (the ceil(0.9 n)-th smallest, h_check.py's quant), the same for
+#     the along-track part's size with its signed median beside; a cell of fewer than 5 checks gives its count and median
+#     only; with the flagged fits in (an (R) or (H) fit stopped on its iteration limit or a singular matrix; for (A) and (B)
+#     the seed's flags1 & 3), and again without them. The main comparisons, cell by cell on the same checks: (R) against
+#     (B'), and (H) against (B'); (A) against (B) restating DEBRIS-H's on these objects. Per object (by seed index), the
+#     same over all horizons. For (H), the learning curve: the median miss at horizons of 12 to 36 h by the number of sets
+#     in the fit (1, 2, 3 or 4, 5 to 8, 9 or more), (B')'s median on the same checks beside it. The share of checks in which
+#     (R), (H) each miss less than (B') (checks cluster by object: not a share of independent trials). The decay
+#     predictions, each with its rule, its forecast time and the sets it used.
+#   CONTROLS, each asserted (FAIL is reported as failed):
+#     T1 every check and variant (B'), (R), (H): with the reference moved to e_q + 1 s, the change in the miss vector equals
+#        the reference's velocity x 1 s within 1% of that velocity's size (F6, h_check.py);
+#     T2 every latest set that a later slot repeats equal in every field: decoded at its own e_q in one JVM and the copy in
+#        another, in the same order, (B')'s miss is exactly 0 (F6's T2);
+#     T3 every forecast time and reference slot, over its (B') checks in seed-index (= catalogue) order: (B')'s position
+#        against the reference of the next check (cyclically) whose reference mean motion differs by more than 1e-3
+#        rev/day must miss by more than 100 km; EXCEPT where the two references' orbital planes (the normals r x v of their
+#        GCRF states) lie within 0.1 deg of each other: such a pair is listed, not tested;
+#     K1 (tests/k_fit.c a faithful copy) k_fit's fit, given (R)'s 721 pseudo-observations of its first object at T_s with
+#        their times O + 120 k, prints the same FIT line, character for character, as tests/m1f.c fit did in (R);
+#     K2 (the frame, the time and the set) on every check-table row of a pilot object: (B') at T_s and the reference agree
+#        with DEBRIS-H's B_pos and ref_state within 1e-3 m in position (basis: the decoder's batch dependence, up to
+#        1.7e-5 m, DEBRIS-H's finding 1), and e_q is equal;
+#     PLANTED BC: the lowest-perigee pilot object other than 1595 that has a reference 12 to 36 h after a forecast time
+#        (the reference's epoch less the forecast time), at the first such forecast time and its earliest such reference,
+#        and that M1 (k_fit decay from (R)'s fit) does not decay before that reference: (R)'s bc doubled in the pipeline's
+#        prediction must give, bit for bit, the state tests/m1f.c prop gives when run directly with the doubled bc and the
+#        same inputs, and must move the predicted position at that reference by at least 100 m;
+#     PLANTED IDENTITY: (H) at slot 5 for the planted-bc object X fitted to another object's sets (Y, the next pilot object
+#        in seed-index order, cyclically, but 1595, whose latest set at slot 5 has a mean motion more than 1e-3 rev/day from
+#        X's): every miss at X's references from slot 5 must exceed ten times (H)'s own median over all its checks, or the
+#        fit be refused (singular matrix or a non-finite state).
+#   REGRESSION (tests/k_refit.py fit, its own log): (R)'s code on DEBRIS-H's test seed must reproduce
+#     debris-h/testseed/repro/fit1.001.tsv, every printed value equal.
+#   MEASURED besides: the 17 seed sets refitted on the desktop against the box's seed fits (fit1.001.tsv), and (R) at T_s
+#     against (A64) on their common checks; no tolerance (DEBRIS-H's H6: the machines differ in the fit).
+# m1f_O2.exe sha256 9d4c15720f1cf67de8415f6e4fe09b8b11dc63ce66164a1f7445b051041619b1
+# k_fit.exe sha256 b832b34315f283ba49611957eac77e0316a33385db3a1db5d1ea3d87935f2619
+# frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# plan.json c6d46283234f512868da0607e8f2670a3002cb4589689c479295614fe0d85686; rfit.json 836438d7ff32ba63be787ce2023b495f4de7c9be163841a5c781d7839c0fc1ca; hfit.json 60749dd691c257792e2e8da880d03801d536c86c6570f0c254669b9c4adc2972 (sha256)
+# decay predictions for seed indices 1178, 1427, 2683, 2686 (perigee under 300 km, and 1178), and 1595's reconstruction
+# k_fit decay decay: 22 runs, input sha256 5bf1fb97b3c24e2a0ee97d40a5d81fa5a5788fa2b3996be7aee59327c6aa1ce9
+# ran (72.00 s wall, exit 0): k_fit.exe decay native64 ~/source/repos/cft-debris-ledger/debris-h/frame_h0.bin ~/source/repos/cft-debris-ledger/debris-k/pilot\work\decay_decay_in.txt ~/source/repos/cft-debris-ledger/debris-k/pilot\work\decay_decay.txt
+# decay.json (ledger) sha256 d6a9b6a5f2d01e676db79cec8997bc56c150231bacec5f7ce901ebc35ec682a4
+# CPU: 71.63 s by cycles / 2.5e9 (this stage: the script and every process it started)
+# PASS 

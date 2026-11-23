@@ -1,0 +1,321 @@
+# k_pilot_stats, log 001, written 2026-11-23 08:52:57 -0700
+# script k_pilot.py sha256 3a8cd903cf876a8b47ab78a0ff3c1600c5ee69ecde778cb74a83af497e4b374d
+# k_lib.py sha256 bbe2b14cc25b0a2cfccb411f3b301f0d6d31775fd681fa1d5392b1d86be1f796
+# k_refit.py sha256 291c201fdb53181ad9e6216d4f5a4381fce42695f8f04744dca9059e17a8ea80
+# k_fit.c sha256 1b891b3be22c7ff49ea1869dd9ee71ee5fec863cfe5d27ba9783ee42cf8d2cdb
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE PILOT (K3), as DEBRIS-K's plan, draft 3, fixes it; written into this script before any miss of the pilot's objects.
+#   OBJECTS: every object of DEBRIS-H's seed (debris-h/box/r2/seed/seed1.txt) whose perigee at T_s is under 400 km: the
+#     osculating a and e of the seed's binary64 state at T_s, GM = 3.986004415e14 m^3/s^2, perigee a(1 - e) - 6,378,136.46 m.
+#     (The plan counts 17; the count found is logged and checked against it.) Seed index 1595 is a reconstruction only: its
+#     one output is a decay prediction from fits to sets with epochs before 2026-11-18 00:00 UTC; no miss of it is computed.
+#   SETS: each object's sets in S_H0 (the downloads' gp-*-SH0) and in DEBRIS-H's slot folders 1 to 20 (svc/fetch/slotNN),
+#     taken in that order (S_H0, then slot 1, 2, ...), ephemeris type 0, by catalogue number; a set whose epoch is no later
+#     than the object's previous kept set's is skipped and counted (as a copy where it equals that set in every field).
+#     The first kept set must be the seed's own (seed_meta.tsv's epoch). A slot's sets are fetched at its t_end in
+#     slots.tsv (POSIX, to TDB through tai-utc.dat); S_H0's before T_s.
+#   FORECAST TIMES: T_s, and the t_end of slots 1, 5, 9 and 13 for (B'), (R) and (C); slots 5, 9 and 13 for (H). A forecast
+#     uses only the sets fetched by its time; its latest set is the one of latest epoch among them.
+#   REFERENCES: each later kept set of the object (epoch after the latest set's), fetched through slot 20, at its own epoch
+#     e rounded to 2^-20 s (e_q, DEBRIS-F's B1), through SGP4 (tests/f5_sgp4.js, GCRF); and at e_q + 1 s for T1.
+#   HORIZON, every variant: the reference's epoch less the epoch of the latest set the forecast used (for (A) and (B) the
+#     seed's set, as DEBRIS-H recorded it: its tables' horizon_h).
+#   VARIANTS: (A) A64's misses with A256's beside them, and (B), read from DEBRIS-H's check tables (status checked);
+#     (B') SGP4 from the latest set at each reference's e_q; (R) M1 native64 refitted from the latest set by DEBRIS-F's
+#     rule (tests/k_refit.py's refit(), h_seed.py's seed 1 rule) and propagated by tests/m1f.c prop from its origin to e_q;
+#     (H) M1 native64 fitted by tests/k_fit.c to every set so far: over the grid O_H + 120 k, O_H = e_q(oldest) - 86,400 s,
+#     to the last grid time at or before e_q(latest), each grid time's pseudo-observation from SGP4 of the earliest set whose
+#     e_q is at or after it; start state the first pseudo-observation's, bc from 0.01, cram 0.01 fixed, bc estimated
+#     (perigee by f_fit.py's formula under 1,000 km), maxit 10; propagated by m1f prop from O_H; (C) only if the budget
+#     allows (not in this script).
+#   THE MISS: the GCRF distance to the reference and its radial, along-track and cross-track parts in the reference's
+#     frame (R along r_ref, C along r_ref x v_ref, A = C x R), as h_check.py.
+#   A CHECK is a distinct (object, set or sets used, reference): forecasts at two times that use the same latest set (and
+#     so the same history) give one check, counted once; the rows per forecast time are kept in the ledger's table.
+#   DECAY PREDICTIONS: for seed index 1178 and every pilot object with perigee under 300 km, from each forecast time of (R)
+#     and (H), M1's rule (tests/m1h.c's RMIN 6,498,137.0 m, carried in tests/k_fit.c decay): from the fit's origin, whole
+#     rk4 steps of 15 s, the first step at whose end the distance from the centre is not above RMIN; up to 30 days after the
+#     forecast time (else "no decay within 30 days"). For seed index 1595, from (R)'s and (H)'s rules applied to its sets
+#     with epochs before 2026-11-18 00:00 UTC, set beside SATCAT's date taken as the whole UTC day 2026-11-18.
+#   STATISTICS (no pass condition): for each variant and horizon cell (under 6 h, 6 to 24 h, 1 to 2 d, 2 d and over) and
+#     overall, with n: the miss's median and 90th percentile (the ceil(0.9 n)-th smallest, h_check.py's quant), the same for
+#     the along-track part's size with its signed median beside; a cell of fewer than 5 checks gives its count and median
+#     only; with the flagged fits in (an (R) or (H) fit stopped on its iteration limit or a singular matrix; for (A) and (B)
+#     the seed's flags1 & 3), and again without them. The main comparisons, cell by cell on the same checks: (R) against
+#     (B'), and (H) against (B'); (A) against (B) restating DEBRIS-H's on these objects. Per object (by seed index), the
+#     same over all horizons. For (H), the learning curve: the median miss at horizons of 12 to 36 h by the number of sets
+#     in the fit (1, 2, 3 or 4, 5 to 8, 9 or more), (B')'s median on the same checks beside it. The share of checks in which
+#     (R), (H) each miss less than (B') (checks cluster by object: not a share of independent trials). The decay
+#     predictions, each with its rule, its forecast time and the sets it used.
+#   CONTROLS, each asserted (FAIL is reported as failed):
+#     T1 every check and variant (B'), (R), (H): with the reference moved to e_q + 1 s, the change in the miss vector equals
+#        the reference's velocity x 1 s within 1% of that velocity's size (F6, h_check.py);
+#     T2 every latest set that a later slot repeats equal in every field: decoded at its own e_q in one JVM and the copy in
+#        another, in the same order, (B')'s miss is exactly 0 (F6's T2);
+#     T3 every forecast time and reference slot, over its (B') checks in seed-index (= catalogue) order: (B')'s position
+#        against the reference of the next check (cyclically) whose reference mean motion differs by more than 1e-3
+#        rev/day must miss by more than 100 km; EXCEPT where the two references' orbital planes (the normals r x v of their
+#        GCRF states) lie within 0.1 deg of each other: such a pair is listed, not tested;
+#     K1 (tests/k_fit.c a faithful copy) k_fit's fit, given (R)'s 721 pseudo-observations of its first object at T_s with
+#        their times O + 120 k, prints the same FIT line, character for character, as tests/m1f.c fit did in (R);
+#     K2 (the frame, the time and the set) on every check-table row of a pilot object: (B') at T_s and the reference agree
+#        with DEBRIS-H's B_pos and ref_state within 1e-3 m in position (basis: the decoder's batch dependence, up to
+#        1.7e-5 m, DEBRIS-H's finding 1), and e_q is equal;
+#     PLANTED BC: the lowest-perigee pilot object other than 1595 that has a reference 12 to 36 h after a forecast time
+#        (the reference's epoch less the forecast time), at the first such forecast time and its earliest such reference,
+#        and that M1 (k_fit decay from (R)'s fit) does not decay before that reference: (R)'s bc doubled in the pipeline's
+#        prediction must give, bit for bit, the state tests/m1f.c prop gives when run directly with the doubled bc and the
+#        same inputs, and must move the predicted position at that reference by at least 100 m;
+#     PLANTED IDENTITY: (H) at slot 5 for the planted-bc object X fitted to another object's sets (Y, the next pilot object
+#        in seed-index order, cyclically, but 1595, whose latest set at slot 5 has a mean motion more than 1e-3 rev/day from
+#        X's): every miss at X's references from slot 5 must exceed ten times (H)'s own median over all its checks, or the
+#        fit be refused (singular matrix or a non-finite state).
+#   REGRESSION (tests/k_refit.py fit, its own log): (R)'s code on DEBRIS-H's test seed must reproduce
+#     debris-h/testseed/repro/fit1.001.tsv, every printed value equal.
+#   MEASURED besides: the 17 seed sets refitted on the desktop against the box's seed fits (fit1.001.tsv), and (R) at T_s
+#     against (A64) on their common checks; no tolerance (DEBRIS-H's H6: the machines differ in the fit).
+# m1f_O2.exe sha256 9d4c15720f1cf67de8415f6e4fe09b8b11dc63ce66164a1f7445b051041619b1
+# k_fit.exe sha256 b832b34315f283ba49611957eac77e0316a33385db3a1db5d1ea3d87935f2619
+# frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# plan.json (ledger) sha256 c6d46283234f512868da0607e8f2670a3002cb4589689c479295614fe0d85686
+# bprime.json (ledger) sha256 82f776e923281c5a3e15332a9b71e75d07a7e00b589971cca0c754e74b6183d7
+# rfit.json (ledger) sha256 836438d7ff32ba63be787ce2023b495f4de7c9be163841a5c781d7839c0fc1ca
+# hfit.json (ledger) sha256 60749dd691c257792e2e8da880d03801d536c86c6570f0c254669b9c4adc2972
+# decay.json (ledger) sha256 d6a9b6a5f2d01e676db79cec8997bc56c150231bacec5f7ce901ebc35ec682a4
+PASS T1 the time tag: all 320 distinct check-variants moved by v x 1 s within 1% of |v| (0 do not)
+# T2 (stage bprime): 35 latest sets repeated by a later slot, largest miss 0 m
+PASS T3 swapped identities: 179 (B') checks compared, 0 within 100 km; co-planar exceptions (within 0.1 deg) 9
+#   T3 exception: Ts, reference slot 11, seed index 2684 against 2686, planes 0.0375 deg apart
+#   T3 exception: Ts, reference slot 16, seed index 2684 against 2686, planes 0.0646 deg apart
+#   T3 exception: s01, reference slot 11, seed index 2684 against 2686, planes 0.0375 deg apart
+#   T3 exception: s01, reference slot 16, seed index 2684 against 2686, planes 0.0646 deg apart
+#   T3 exception: s05, reference slot 11, seed index 2684 against 2686, planes 0.0375 deg apart
+#   T3 exception: s05, reference slot 16, seed index 2684 against 2686, planes 0.0646 deg apart
+#   T3 exception: s09, reference slot 11, seed index 2684 against 2686, planes 0.0375 deg apart
+#   T3 exception: s09, reference slot 16, seed index 2684 against 2686, planes 0.0646 deg apart
+#   T3 exception: s13, reference slot 16, seed index 2684 against 2686, planes 0.0646 deg apart
+# check table slot01.tsv sha256 8bc841efa28b5dc4b47ec855d8fdd0fa4e6e3b1c95a817640e712f077d8a3e16
+# check table slot02.tsv sha256 03af24d6fadcc3a8c070f44c1230e376ec730682d7772ccb7a6bf42a841b3420
+# check table slot03.tsv sha256 2069ce4c9438936178789375867a754741b9c6d2c5b06e162f0acb4cb60662a6
+# check table slot04.tsv sha256 494cd78fc2dccb8eea35120bc946cbefc740b5f59c2edc86180a1e0e7de3221c
+# check table slot05.tsv sha256 5909c50b57c48ef8d380b06fb64bee896627653a7c0523c8d4a29fc17188ca61
+# check table slot06.tsv sha256 f9d72630590be18813afb3c79494bded1bdcf2c68f39519e0a642c3526a20c15
+# check table slot07.tsv sha256 e85dea276d22a860c22e12a48f9074188b9d13eaac683cd3558cffbd36b9bec0
+# check table slot08.tsv sha256 12f92931dc3d5ba7e760e7ef3ee8bc7e164bedbcd9e84bd3c744335cb48d9d01
+# check table slot09.tsv sha256 566c0997facc3e4fd420d840bc50ee81cf53d45a669c3d0e34858b2ebb1be214
+# check table slot10.tsv sha256 b48be29b78e69ca9197a5cd47a17c176545bf9094ec76d8f9e9e5065f3b01b0c
+# check table slot11.tsv sha256 6704db05de6a6995df93af4e02d47c419c792dd2987429b02beb0f66c3aff9a5
+# check table slot12.tsv sha256 b40db1313439a47cd6caea3cba05143b7646e5e7620cf42dff3f66068740c370
+# check table slot13.tsv sha256 677f8933dd37c2dfb691c29984bfbe1bafe9fe430871020cdad4555b04df1032
+# check table slot14.tsv sha256 63ff1d20044a8086a3f1f45b49638b0045bb1c62472b2ebc098758d612ead686
+# check table slot15.tsv sha256 353947d34fd721b21ddea09dedc440c60109925f9a84f7b24678051f4b704bfd
+# check table slot18.tsv sha256 2fba665cc0973618f8159c15ceaebbb10aae5afa89301ddb3a41ea05e3dfc94e
+# check table slot19.tsv sha256 352a76b1d918f281fab660655ec15f32bc99f59e96e571cf51725da027a29417
+# check-table rows of pilot objects (status checked): 41, over 12 objects
+FAIL K2 (B') at T_s and the references equal DEBRIS-H's within 1e-3 m and e_q equal: 39 rows, 2 not; largest 1.95e-05 m
+PASS PLANTED IDENTITY: (H) for seed index 2683 fitted to seed index 2684's sets at slot 5: 1 misses, smallest 11463.3 km, against 10 x (H)'s median 66.515 km
+# new sets per object after the seed's (seed index: count): 278: 6, 720: 4, 1000: 2, 1178: 1, 1211: 0, 1427: 3, 1500: 0, 1538: 0, 1595: 0, 1597: 8, 2045: 3, 2178: 2, 2679: 7, 2683: 3, 2684: 6, 2685: 4, 2686: 6
+# objects with no new set (their (R) is the seed set's refit, and they have no reference): 1211, 1500, 1538
+MEASURED (A64) overall, flagged fits in: n 41, median 29.493 km, 90th 177.386 km; |along| median 29.493 km, 90th 177.385 km; signed along median -16.368 km
+MEASURED (A64) horizon under 6 h, flagged fits in: n 0
+MEASURED (A64) horizon 6 to 24 h, flagged fits in: n 6, median 4.851 km, 90th 7.146 km; |along| median 4.840 km, 90th 7.122 km; signed along median -1.321 km
+MEASURED (A64) horizon 1 to 2 d, flagged fits in: n 17, median 17.718 km, 90th 70.874 km; |along| median 17.717 km, 90th 70.870 km; signed along median -11.119 km
+MEASURED (A64) horizon 2 d and over, flagged fits in: n 18, median 101.808 km, 90th 238.365 km; |along| median 101.804 km, 90th 238.354 km; signed along median -79.417 km
+MEASURED (A64) overall, without flagged fits: n 41, median 29.493 km, 90th 177.386 km; |along| median 29.493 km, 90th 177.385 km; signed along median -16.368 km
+MEASURED (A64) horizon under 6 h, without flagged fits: n 0
+MEASURED (A64) horizon 6 to 24 h, without flagged fits: n 6, median 4.851 km, 90th 7.146 km; |along| median 4.840 km, 90th 7.122 km; signed along median -1.321 km
+MEASURED (A64) horizon 1 to 2 d, without flagged fits: n 17, median 17.718 km, 90th 70.874 km; |along| median 17.717 km, 90th 70.870 km; signed along median -11.119 km
+MEASURED (A64) horizon 2 d and over, without flagged fits: n 18, median 101.808 km, 90th 238.365 km; |along| median 101.804 km, 90th 238.354 km; signed along median -79.417 km
+MEASURED (A256) overall, flagged fits in: n 41, median 29.493 km, 90th 177.386 km; |along| median 29.493 km, 90th 177.385 km; signed along median -16.368 km
+MEASURED (A256) horizon under 6 h, flagged fits in: n 0
+MEASURED (A256) horizon 6 to 24 h, flagged fits in: n 6, median 4.851 km, 90th 7.146 km; |along| median 4.840 km, 90th 7.122 km; signed along median -1.321 km
+MEASURED (A256) horizon 1 to 2 d, flagged fits in: n 17, median 17.718 km, 90th 70.874 km; |along| median 17.717 km, 90th 70.870 km; signed along median -11.119 km
+MEASURED (A256) horizon 2 d and over, flagged fits in: n 18, median 101.808 km, 90th 238.365 km; |along| median 101.804 km, 90th 238.354 km; signed along median -79.417 km
+MEASURED (A256) overall, without flagged fits: n 41, median 29.493 km, 90th 177.386 km; |along| median 29.493 km, 90th 177.385 km; signed along median -16.368 km
+MEASURED (A256) horizon under 6 h, without flagged fits: n 0
+MEASURED (A256) horizon 6 to 24 h, without flagged fits: n 6, median 4.851 km, 90th 7.146 km; |along| median 4.840 km, 90th 7.122 km; signed along median -1.321 km
+MEASURED (A256) horizon 1 to 2 d, without flagged fits: n 17, median 17.718 km, 90th 70.874 km; |along| median 17.717 km, 90th 70.870 km; signed along median -11.119 km
+MEASURED (A256) horizon 2 d and over, without flagged fits: n 18, median 101.808 km, 90th 238.365 km; |along| median 101.804 km, 90th 238.354 km; signed along median -79.417 km
+MEASURED (B) overall, flagged fits in: n 41, median 19.401 km, 90th 154.934 km; |along| median 19.400 km, 90th 154.931 km; signed along median -16.833 km
+MEASURED (B) horizon under 6 h, flagged fits in: n 0
+MEASURED (B) horizon 6 to 24 h, flagged fits in: n 6, median 1.814 km, 90th 13.465 km; |along| median 1.793 km, 90th 13.444 km; signed along median -1.793 km
+MEASURED (B) horizon 1 to 2 d, flagged fits in: n 17, median 17.727 km, 90th 61.105 km; |along| median 17.727 km, 90th 61.105 km; signed along median -16.833 km
+MEASURED (B) horizon 2 d and over, flagged fits in: n 18, median 85.852 km, 90th 207.229 km; |along| median 85.845 km, 90th 207.218 km; signed along median -64.015 km
+MEASURED (B) overall, without flagged fits: n 41, median 19.401 km, 90th 154.934 km; |along| median 19.400 km, 90th 154.931 km; signed along median -16.833 km
+MEASURED (B) horizon under 6 h, without flagged fits: n 0
+MEASURED (B) horizon 6 to 24 h, without flagged fits: n 6, median 1.814 km, 90th 13.465 km; |along| median 1.793 km, 90th 13.444 km; signed along median -1.793 km
+MEASURED (B) horizon 1 to 2 d, without flagged fits: n 17, median 17.727 km, 90th 61.105 km; |along| median 17.727 km, 90th 61.105 km; signed along median -16.833 km
+MEASURED (B) horizon 2 d and over, without flagged fits: n 18, median 85.852 km, 90th 207.229 km; |along| median 85.845 km, 90th 207.218 km; signed along median -64.015 km
+MEASURED (B') overall, flagged fits in: n 130, median 4.332 km, 90th 64.425 km; |along| median 4.326 km, 90th 64.416 km; signed along median -1.014 km
+MEASURED (B') horizon under 6 h, flagged fits in: n 8, median 0.054 km, 90th 0.167 km; |along| median 0.025 km, 90th 0.166 km; signed along median 0.005 km
+MEASURED (B') horizon 6 to 24 h, flagged fits in: n 47, median 1.363 km, 90th 11.443 km; |along| median 1.357 km, 90th 11.432 km; signed along median -0.369 km
+MEASURED (B') horizon 1 to 2 d, flagged fits in: n 51, median 11.508 km, 90th 51.255 km; |along| median 11.503 km, 90th 51.254 km; signed along median -1.572 km
+MEASURED (B') horizon 2 d and over, flagged fits in: n 24, median 64.021 km, 90th 207.222 km; |along| median 64.015 km, 90th 207.211 km; signed along median -52.126 km
+MEASURED (B') overall, without flagged fits: n 130, median 4.332 km, 90th 64.425 km; |along| median 4.326 km, 90th 64.416 km; signed along median -1.014 km
+MEASURED (B') horizon under 6 h, without flagged fits: n 8, median 0.054 km, 90th 0.167 km; |along| median 0.025 km, 90th 0.166 km; signed along median 0.005 km
+MEASURED (B') horizon 6 to 24 h, without flagged fits: n 47, median 1.363 km, 90th 11.443 km; |along| median 1.357 km, 90th 11.432 km; signed along median -0.369 km
+MEASURED (B') horizon 1 to 2 d, without flagged fits: n 51, median 11.508 km, 90th 51.255 km; |along| median 11.503 km, 90th 51.254 km; signed along median -1.572 km
+MEASURED (B') horizon 2 d and over, without flagged fits: n 24, median 64.021 km, 90th 207.222 km; |along| median 64.015 km, 90th 207.211 km; signed along median -52.126 km
+MEASURED (R) overall, flagged fits in: n 130, median 6.530 km, 90th 93.744 km; |along| median 6.521 km, 90th 93.742 km; signed along median -3.361 km
+MEASURED (R) horizon under 6 h, flagged fits in: n 8, median 0.661 km, 90th 1.461 km; |along| median 0.559 km, 90th 1.432 km; signed along median -0.072 km
+MEASURED (R) horizon 6 to 24 h, flagged fits in: n 47, median 2.962 km, 90th 8.119 km; |along| median 2.941 km, 90th 8.118 km; signed along median -1.139 km
+MEASURED (R) horizon 1 to 2 d, flagged fits in: n 51, median 11.121 km, 90th 45.378 km; |along| median 11.119 km, 90th 45.377 km; signed along median -6.565 km
+MEASURED (R) horizon 2 d and over, flagged fits in: n 24, median 86.440 km, 90th 238.358 km; |along| median 86.435 km, 90th 238.347 km; signed along median -57.425 km
+MEASURED (R) overall, without flagged fits: n 130, median 6.530 km, 90th 93.744 km; |along| median 6.521 km, 90th 93.742 km; signed along median -3.361 km
+MEASURED (R) horizon under 6 h, without flagged fits: n 8, median 0.661 km, 90th 1.461 km; |along| median 0.559 km, 90th 1.432 km; signed along median -0.072 km
+MEASURED (R) horizon 6 to 24 h, without flagged fits: n 47, median 2.962 km, 90th 8.119 km; |along| median 2.941 km, 90th 8.118 km; signed along median -1.139 km
+MEASURED (R) horizon 1 to 2 d, without flagged fits: n 51, median 11.121 km, 90th 45.378 km; |along| median 11.119 km, 90th 45.377 km; signed along median -6.565 km
+MEASURED (R) horizon 2 d and over, without flagged fits: n 24, median 86.440 km, 90th 238.358 km; |along| median 86.435 km, 90th 238.347 km; signed along median -57.425 km
+MEASURED (H) overall, flagged fits in: n 60, median 6.652 km, 90th 69.097 km; |along| median 6.601 km, 90th 69.087 km; signed along median -0.634 km
+MEASURED (H) horizon under 6 h, flagged fits in: n 1, median 0.871 km
+MEASURED (H) horizon 6 to 24 h, flagged fits in: n 30, median 3.469 km, 90th 29.975 km; |along| median 3.462 km, 90th 29.958 km; signed along median 0.055 km
+MEASURED (H) horizon 1 to 2 d, flagged fits in: n 25, median 10.367 km, 90th 86.436 km; |along| median 10.366 km, 90th 86.422 km; signed along median -5.399 km
+MEASURED (H) horizon 2 d and over, flagged fits in: n 4, median 91.366 km
+MEASURED (H) overall, without flagged fits: n 57, median 6.433 km, 90th 63.701 km; |along| median 6.413 km, 90th 63.700 km; signed along median 0.003 km
+MEASURED (H) horizon under 6 h, without flagged fits: n 1, median 0.871 km
+MEASURED (H) horizon 6 to 24 h, without flagged fits: n 29, median 3.454 km, 90th 29.975 km; |along| median 3.449 km, 90th 29.958 km; signed along median 0.106 km
+MEASURED (H) horizon 1 to 2 d, without flagged fits: n 23, median 6.931 km, 90th 31.694 km; |along| median 6.928 km, 90th 31.686 km; signed along median -3.199 km
+MEASURED (H) horizon 2 d and over, without flagged fits: n 4, median 91.366 km
+PASS (R)'s checks are all (B') checks (130)
+MEASURED (R) against (B'), horizon overall, flagged fits in: n 130, medians 6.530 km and 4.332 km; (R) misses less in 30 of 130 (0.231)
+MEASURED (R) against (B'), horizon under 6 h, flagged fits in: n 8, medians 0.661 km and 0.054 km; (R) misses less in 0 of 8 (0.000)
+MEASURED (R) against (B'), horizon 6 to 24 h, flagged fits in: n 47, medians 2.962 km and 1.363 km; (R) misses less in 8 of 47 (0.170)
+MEASURED (R) against (B'), horizon 1 to 2 d, flagged fits in: n 51, medians 11.121 km and 11.508 km; (R) misses less in 11 of 51 (0.216)
+MEASURED (R) against (B'), horizon 2 d and over, flagged fits in: n 24, medians 86.440 km and 64.021 km; (R) misses less in 11 of 24 (0.458)
+PASS (H)'s checks are all (B') checks (60)
+MEASURED (H) against (B'), horizon overall, flagged fits in: n 60, medians 6.652 km and 2.333 km; (H) misses less in 16 of 60 (0.267)
+MEASURED (H) against (B'), horizon under 6 h, flagged fits in: n 1, medians 0.871 km and 0.167 km; (H) misses less in 0 of 1 (0.000)
+MEASURED (H) against (B'), horizon 6 to 24 h, flagged fits in: n 30, medians 3.469 km and 1.307 km; (H) misses less in 7 of 30 (0.233)
+MEASURED (H) against (B'), horizon 1 to 2 d, flagged fits in: n 25, medians 10.367 km and 10.651 km; (H) misses less in 8 of 25 (0.320)
+MEASURED (H) against (B'), horizon 2 d and over, flagged fits in: n 4, medians 91.366 km and 68.621 km; (H) misses less in 1 of 4 (0.250)
+MEASURED (A64) against (B) on these objects' check-table rows: n 41; (A64) misses less in 12 (DEBRIS-H's restated)
+MEASURED per object (A64) idx 278, all horizons, flagged in: n 3, median 6.241 km
+MEASURED per object (A64) idx 720, all horizons, flagged in: n 4, median 124.133 km
+MEASURED per object (A64) idx 1000, all horizons, flagged in: n 2, median 36.312 km
+MEASURED per object (A64) idx 1427, all horizons, flagged in: n 3, median 196.822 km
+MEASURED per object (A64) idx 1597, all horizons, flagged in: n 6, median 6.619 km, 90th 29.493 km
+MEASURED per object (A64) idx 2045, all horizons, flagged in: n 3, median 7.734 km
+MEASURED per object (A64) idx 2178, all horizons, flagged in: n 2, median 88.668 km
+MEASURED per object (A64) idx 2679, all horizons, flagged in: n 4, median 7.412 km
+MEASURED per object (A64) idx 2683, all horizons, flagged in: n 2, median 16.143 km
+MEASURED per object (A64) idx 2684, all horizons, flagged in: n 5, median 30.548 km, 90th 59.347 km
+MEASURED per object (A64) idx 2685, all horizons, flagged in: n 3, median 55.502 km
+MEASURED per object (A64) idx 2686, all horizons, flagged in: n 4, median 129.931 km
+MEASURED per object (B) idx 278, all horizons, flagged in: n 3, median 15.301 km
+MEASURED per object (B) idx 720, all horizons, flagged in: n 4, median 108.023 km
+MEASURED per object (B) idx 1000, all horizons, flagged in: n 2, median 23.849 km
+MEASURED per object (B) idx 1427, all horizons, flagged in: n 3, median 138.860 km
+MEASURED per object (B) idx 1597, all horizons, flagged in: n 6, median 3.429 km, 90th 4.457 km
+MEASURED per object (B) idx 2045, all horizons, flagged in: n 3, median 11.126 km
+MEASURED per object (B) idx 2178, all horizons, flagged in: n 2, median 84.022 km
+MEASURED per object (B) idx 2679, all horizons, flagged in: n 4, median 1.235 km
+MEASURED per object (B) idx 2683, all horizons, flagged in: n 2, median 10.836 km
+MEASURED per object (B) idx 2684, all horizons, flagged in: n 5, median 21.621 km, 90th 40.640 km
+MEASURED per object (B) idx 2685, all horizons, flagged in: n 3, median 63.617 km
+MEASURED per object (B) idx 2686, all horizons, flagged in: n 4, median 144.782 km
+MEASURED per object (B') idx 278, all horizons, flagged in: n 20, median 14.552 km, 90th 26.520 km
+MEASURED per object (B') idx 720, all horizons, flagged in: n 7, median 61.105 km, 90th 207.222 km
+MEASURED per object (B') idx 1000, all horizons, flagged in: n 3, median 17.727 km
+MEASURED per object (B') idx 1178, all horizons, flagged in: n 1, median 514.947 km
+MEASURED per object (B') idx 1427, all horizons, flagged in: n 6, median 42.850 km, 90th 182.889 km
+MEASURED per object (B') idx 1597, all horizons, flagged in: n 23, median 1.449 km, 90th 4.207 km
+MEASURED per object (B') idx 2045, all horizons, flagged in: n 6, median 1.756 km, 90th 12.984 km
+MEASURED per object (B') idx 2178, all horizons, flagged in: n 3, median 60.764 km
+MEASURED per object (B') idx 2679, all horizons, flagged in: n 24, median 0.510 km, 90th 1.271 km
+MEASURED per object (B') idx 2683, all horizons, flagged in: n 6, median 7.936 km, 90th 16.837 km
+MEASURED per object (B') idx 2684, all horizons, flagged in: n 12, median 7.527 km, 90th 32.121 km
+MEASURED per object (B') idx 2685, all horizons, flagged in: n 7, median 13.722 km, 90th 114.154 km
+MEASURED per object (B') idx 2686, all horizons, flagged in: n 12, median 29.325 km, 90th 195.861 km
+MEASURED per object (R) idx 278, all horizons, flagged in: n 20, median 17.071 km, 90th 73.391 km
+MEASURED per object (R) idx 720, all horizons, flagged in: n 7, median 70.874 km, 90th 238.358 km
+MEASURED per object (R) idx 1000, all horizons, flagged in: n 3, median 27.560 km
+MEASURED per object (R) idx 1178, all horizons, flagged in: n 1, median 456.136 km
+MEASURED per object (R) idx 1427, all horizons, flagged in: n 6, median 63.839 km, 90th 251.310 km
+MEASURED per object (R) idx 1597, all horizons, flagged in: n 23, median 3.244 km, 90th 8.981 km
+MEASURED per object (R) idx 2045, all horizons, flagged in: n 6, median 7.152 km, 90th 9.179 km
+MEASURED per object (R) idx 2178, all horizons, flagged in: n 3, median 63.701 km
+MEASURED per object (R) idx 2679, all horizons, flagged in: n 24, median 2.852 km, 90th 7.416 km
+MEASURED per object (R) idx 2683, all horizons, flagged in: n 6, median 6.444 km, 90th 25.140 km
+MEASURED per object (R) idx 2684, all horizons, flagged in: n 12, median 7.619 km, 90th 45.605 km
+MEASURED per object (R) idx 2685, all horizons, flagged in: n 7, median 14.131 km, 90th 99.489 km
+MEASURED per object (R) idx 2686, all horizons, flagged in: n 12, median 24.543 km, 90th 175.369 km
+MEASURED per object (H) idx 278, all horizons, flagged in: n 9, median 29.360 km, 90th 86.823 km
+MEASURED per object (H) idx 720, all horizons, flagged in: n 3, median 10.612 km
+MEASURED per object (H) idx 1000, all horizons, flagged in: n 3, median 27.560 km
+MEASURED per object (H) idx 1178, all horizons, flagged in: n 1, median 456.136 km
+MEASURED per object (H) idx 1427, all horizons, flagged in: n 3, median 100.814 km
+MEASURED per object (H) idx 1597, all horizons, flagged in: n 8, median 1.875 km, 90th 10.367 km
+MEASURED per object (H) idx 2045, all horizons, flagged in: n 3, median 5.405 km
+MEASURED per object (H) idx 2178, all horizons, flagged in: n 3, median 63.701 km
+MEASURED per object (H) idx 2679, all horizons, flagged in: n 11, median 1.806 km, 90th 6.150 km
+MEASURED per object (H) idx 2683, all horizons, flagged in: n 1, median 1.678 km
+MEASURED per object (H) idx 2684, all horizons, flagged in: n 6, median 3.217 km, 90th 9.397 km
+MEASURED per object (H) idx 2685, all horizons, flagged in: n 3, median 10.620 km
+MEASURED per object (H) idx 2686, all horizons, flagged in: n 6, median 24.531 km, 90th 31.694 km
+MEASURED (H) learning curve, horizons 12 to 36 h, sets in the fit 1: n 0
+MEASURED (H) learning curve, horizons 12 to 36 h, sets in the fit 2: n 4, (H) median 35.271 km; (B') on the same checks 4.190 km; flagged in
+MEASURED (H) learning curve, horizons 12 to 36 h, sets in the fit 3 or 4: n 22, (H) median 5.920 km; (B') on the same checks 1.848 km; flagged in
+MEASURED (H) learning curve, horizons 12 to 36 h, sets in the fit 5 to 8: n 11, (H) median 6.695 km; (B') on the same checks 2.029 km; flagged in
+MEASURED (H) learning curve, horizons 12 to 36 h, sets in the fit 9 or more: n 0
+# the box's seed fits fit1.001.tsv sha256 5b010f16a2d3e2b3c14c493475e9d0379ebe4744b79fad225e38657c42bd29a9
+MEASURED desktop refits of the 17 seed sets against the box's: convergence and iterations equal in 17; |dr(O)| median 0.000676 m, largest 0.182 m; |dv(O)| largest 0.000203 m/s; |dbc| largest 1.11e-08 m^2/kg; |dr(T_s)| median 0.00357 m, largest 3.29 m
+#   seed index 278: conv/iter equal True, |dr(O)| 0.00148 m, |dv(O)| 1.57e-06 m/s, dbc 2.5e-09, |dr(T_s)| 0.00314 m
+#   seed index 720: conv/iter equal True, |dr(O)| 0.00118 m, |dv(O)| 1.31e-06 m/s, dbc -5.81e-10, |dr(T_s)| 0.0185 m
+#   seed index 1000: conv/iter equal True, |dr(O)| 0.000473 m, |dv(O)| 5.03e-07 m/s, dbc 6.51e-10, |dr(T_s)| 0.00215 m
+#   seed index 1178: conv/iter equal True, |dr(O)| 0.00216 m, |dv(O)| 2.3e-06 m/s, dbc 2.86e-09, |dr(T_s)| 3.29 m
+#   seed index 1211: conv/iter equal True, |dr(O)| 0.00133 m, |dv(O)| 1.43e-06 m/s, dbc 1.4e-09, |dr(T_s)| 0.0942 m
+#   seed index 1427: conv/iter equal True, |dr(O)| 0.000148 m, |dv(O)| 1.51e-07 m/s, dbc -1.34e-11, |dr(T_s)| 0.00359 m
+#   seed index 1500: conv/iter equal True, |dr(O)| 0.000201 m, |dv(O)| 1.15e-07 m/s, dbc 1.85e-11, |dr(T_s)| 0.00437 m
+#   seed index 1538: conv/iter equal True, |dr(O)| 0.000166 m, |dv(O)| 1.8e-07 m/s, dbc -3.75e-10, |dr(T_s)| 0.0367 m
+#   seed index 1595: conv/iter equal True, |dr(O)| 0.182 m, |dv(O)| 0.000203 m/s, dbc 1.11e-08, |dr(T_s)| 2.58 m
+#   seed index 1597: conv/iter equal True, |dr(O)| 0.000676 m, |dv(O)| 6.87e-07 m/s, dbc -1.02e-09, |dr(T_s)| 0.000963 m
+#   seed index 2045: conv/iter equal True, |dr(O)| 0.00063 m, |dv(O)| 6.39e-07 m/s, dbc -8.3e-10, |dr(T_s)| 0.00357 m
+#   seed index 2178: conv/iter equal True, |dr(O)| 0.000757 m, |dv(O)| 8.09e-07 m/s, dbc 9.54e-10, |dr(T_s)| 0.00217 m
+#   seed index 2679: conv/iter equal True, |dr(O)| 0.000195 m, |dv(O)| 1.91e-07 m/s, dbc -1.7e-10, |dr(T_s)| 0.000276 m
+#   seed index 2683: conv/iter equal True, |dr(O)| 0.00166 m, |dv(O)| 1.88e-06 m/s, dbc -2.07e-10, |dr(T_s)| 0.00248 m
+#   seed index 2684: conv/iter equal True, |dr(O)| 0.000527 m, |dv(O)| 5.57e-07 m/s, dbc -1.9e-10, |dr(T_s)| 0.00221 m
+#   seed index 2685: conv/iter equal True, |dr(O)| 2.55e-05 m, |dv(O)| 1.34e-07 m/s, dbc 6.9e-12, |dr(T_s)| 0.000187 m
+#   seed index 2686: conv/iter equal True, |dr(O)| 0.00155 m, |dv(O)| 1.68e-06 m/s, dbc -2.63e-10, |dr(T_s)| 0.0112 m
+MEASURED (R) at T_s against (A64) on 39 common checks: |d miss| median 0.012 m, largest 0.078 m; |d position| median 0.012 m, largest 0.078 m
+MEASURED decay (H) seed index 1178, forecast time s05, sets used 1 (latest 343.60 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-21 14:40:41 UTC (49.67 h after the forecast time); fit converged
+MEASURED decay (H) seed index 1178, forecast time s09, sets used 1 (latest 355.60 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-21 14:40:41 UTC (37.67 h after the forecast time); fit converged
+MEASURED decay (H) seed index 1178, forecast time s13, sets used 2 (latest 301.24 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-23 12:44:26 UTC (71.73 h after the forecast time); fit flagged
+MEASURED decay (R) seed index 1178, forecast time Ts, sets used 1 (latest 329.41 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-21 14:40:41 UTC (63.86 h after the forecast time); fit converged
+MEASURED decay (R) seed index 1178, forecast time s01, sets used 1 (latest 331.60 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-21 14:40:41 UTC (61.67 h after the forecast time); fit converged
+MEASURED decay (R) seed index 1178, forecast time s05, sets used 1 (latest 343.60 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-21 14:40:41 UTC (49.67 h after the forecast time); fit converged
+MEASURED decay (R) seed index 1178, forecast time s09, sets used 1 (latest 355.60 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-21 14:40:41 UTC (37.67 h after the forecast time); fit converged
+MEASURED decay (R) seed index 1178, forecast time s13, sets used 1 (latest 301.24 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-11-15 09:50:22 UTC (-123.17 h after the forecast time); fit converged
+MEASURED decay (H) seed index 1427, forecast time s05, sets used 2 (latest 9.52 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit flagged
+MEASURED decay (H) seed index 1427, forecast time s09, sets used 2 (latest 21.52 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit flagged
+MEASURED decay (H) seed index 1427, forecast time s13, sets used 3 (latest 9.29 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit flagged
+MEASURED decay (R) seed index 1427, forecast time Ts, sets used 1 (latest 102.94 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 1427, forecast time s01, sets used 1 (latest 105.14 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 1427, forecast time s05, sets used 1 (latest 9.52 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 1427, forecast time s09, sets used 1 (latest 21.52 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 1427, forecast time s13, sets used 1 (latest 9.29 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (H) seed index 2683, forecast time s05, sets used 3 (latest 6.15 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (H) seed index 2683, forecast time s09, sets used 3 (latest 18.15 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (H) seed index 2683, forecast time s13, sets used 4 (latest 6.17 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 2683, forecast time Ts, sets used 1 (latest 8.44 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 2683, forecast time s01, sets used 1 (latest 9.14 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 2683, forecast time s05, sets used 1 (latest 6.15 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 2683, forecast time s09, sets used 1 (latest 18.15 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (R) seed index 2683, forecast time s13, sets used 1 (latest 6.17 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): no decay within 30 days of the forecast time; fit converged
+MEASURED decay (H) seed index 2686, forecast time s05, sets used 3 (latest 10.91 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-08 04:19:04 UTC (447.31 h after the forecast time); fit converged
+MEASURED decay (H) seed index 2686, forecast time s09, sets used 3 (latest 22.91 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-08 04:19:04 UTC (435.31 h after the forecast time); fit converged
+MEASURED decay (H) seed index 2686, forecast time s13, sets used 5 (latest 10.85 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-07 12:14:19 UTC (407.22 h after the forecast time); fit converged
+MEASURED decay (R) seed index 2686, forecast time Ts, sets used 1 (latest 28.32 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-10 11:46:34 UTC (516.96 h after the forecast time); fit converged
+MEASURED decay (R) seed index 2686, forecast time s01, sets used 1 (latest 30.52 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-10 11:46:34 UTC (514.76 h after the forecast time); fit converged
+MEASURED decay (R) seed index 2686, forecast time s05, sets used 1 (latest 10.91 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-07 16:50:30 UTC (435.83 h after the forecast time); fit converged
+MEASURED decay (R) seed index 2686, forecast time s09, sets used 1 (latest 22.91 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-07 16:50:30 UTC (423.83 h after the forecast time); fit converged
+MEASURED decay (R) seed index 2686, forecast time s13, sets used 1 (latest 10.85 h before the forecast time), M1's rule (RMIN 6,498,137.0 m): decays at 2026-12-09 08:51:49 UTC (451.85 h after the forecast time); fit converged
+MEASURED decay reconstruction (R) seed index 1595 from 1 set(s) with epochs before 2026-11-18 00:00 UTC: decays at 2026-11-19 04:37:51 UTC, 4.63 h after SATCAT's date taken as the UTC day 2026-11-18 (28.63 h after the day's start)
+MEASURED decay reconstruction (H) seed index 1595 from 1 set(s) with epochs before 2026-11-18 00:00 UTC: decays at 2026-11-19 04:37:51 UTC, 4.63 h after SATCAT's date taken as the UTC day 2026-11-18 (28.63 h after the day's start)
+MEASURED the share of checks in which (R) misses less than (B'): 30 of 130 (checks cluster by object: not independent trials)
+MEASURED the share of checks in which (H) misses less than (B'): 16 of 60 (checks cluster by object: not independent trials)
+# per-check table (ledger) checks.001.tsv, 581 rows, sha256 b588ca05ba3172ad05f78110731ef313e702696a5ac71e46668337294578d808
+# CPU: 0.38 s by cycles / 2.5e9 (this stage: the script and every process it started)
+# FAIL (1) 

@@ -1,0 +1,25 @@
+# k_build, log 001, written 2026-11-23 08:31:34 -0700
+# script k_build.py sha256 d50a7f8db0e37278a81517c06519c3f964004e21c2a26bf0546ce6f722f1942d
+# k_lib.py sha256 51a32aee00962ff8ac0830831f0192cfe7e735786c9e3a87c341f208fce34fd9
+# build_f.sh sha256 eaed7054e35c505fe50ae802bb6ab670b79dbb6cb0294210ecf2c51c639cf1d5
+# k_fit.c sha256 1b891b3be22c7ff49ea1869dd9ee71ee5fec863cfe5d27ba9783ee42cf8d2cdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   B1 the archive's SHA-256 equals the one lead.md records for it (e01003cc...29b8, the --sha-archive default);
+#   B2 with <msys>/mingw64/bin first on PATH, gcc -dumpmachine prints x86_64-w64-mingw32;
+#   B3 libcft.a builds from the archive (make -C cft-fp256/host CC=gcc OS=Windows_NT libcft.a) and its SHA-256 equals
+#      DEBRIS-F's and DEBRIS-H's, f0eec4f2...a67a5;
+#   B4 tests/build_f.sh, unchanged, prints BUILD PASS (its own criteria 1 to 5, asserted by it);
+#   B5 tests/k_fit.c compiles with build_f.sh's O2 flags for a test program (-std=c11 -O2 -ffp-contract=off -Wall -Wextra)
+#      with no warning, and links against build_f.sh's O2 objects and libcft.a;
+#   B6 every executable's SHA-256 is printed.
+# archive cft-fp256-0aa997a3.tar sha256 e01003cc0b984864b065ce3395f56fa189451fcb0cd98cce5b11b3c17a9c29b8
+PASS B1 the archive's SHA-256 is as recorded
+# ran (0.02 s wall, exit 0): gcc.exe -dumpmachine
+PASS B2 gcc -dumpmachine prints x86_64-w64-mingw32
+# gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+# ran (2.77 s wall, exit 128): tar.exe -xf ~/source/repos/cft-debris-ledger/tools/cft-fp256-0aa997a3.tar -C ~/source/repos/cft-debris-scratch/DEBRIS-K/cft-fp256
+FAIL command failed (128): C:/msys64/usr/bin/tar.exe -xf ~/source/repos/cft-debris-ledger/tools/cft-fp256-0aa997a3.tar -C ~/source/repos/cft-debris-scratch/DEBRIS-K/cft-fp256
+#   
+#   /usr/bin/tar: Cannot connect to C: resolve failed
+#   

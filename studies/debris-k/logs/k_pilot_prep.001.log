@@ -1,0 +1,212 @@
+# k_pilot_prep, log 001, written 2026-11-23 08:43:24 -0700
+# script k_pilot.py sha256 3a8cd903cf876a8b47ab78a0ff3c1600c5ee69ecde778cb74a83af497e4b374d
+# k_lib.py sha256 bbe2b14cc25b0a2cfccb411f3b301f0d6d31775fd681fa1d5392b1d86be1f796
+# k_refit.py sha256 291c201fdb53181ad9e6216d4f5a4381fce42695f8f04744dca9059e17a8ea80
+# k_fit.c sha256 1b891b3be22c7ff49ea1869dd9ee71ee5fec863cfe5d27ba9783ee42cf8d2cdb
+# f5_sgp4.js sha256 bb449dc54973dc933fd95e55f742dcfdabcedc8cfc3d2fe80d3f4df0a1ed0bdb
+# host Windows 11 AMD64; python 3.12.15
+# CRITERIA (stated in the script before its data; asserted below):
+#   THE PILOT (K3), as DEBRIS-K's plan, draft 3, fixes it; written into this script before any miss of the pilot's objects.
+#   OBJECTS: every object of DEBRIS-H's seed (debris-h/box/r2/seed/seed1.txt) whose perigee at T_s is under 400 km: the
+#     osculating a and e of the seed's binary64 state at T_s, GM = 3.986004415e14 m^3/s^2, perigee a(1 - e) - 6,378,136.46 m.
+#     (The plan counts 17; the count found is logged and checked against it.) Seed index 1595 is a reconstruction only: its
+#     one output is a decay prediction from fits to sets with epochs before 2026-11-18 00:00 UTC; no miss of it is computed.
+#   SETS: each object's sets in S_H0 (the downloads' gp-*-SH0) and in DEBRIS-H's slot folders 1 to 20 (svc/fetch/slotNN),
+#     taken in that order (S_H0, then slot 1, 2, ...), ephemeris type 0, by catalogue number; a set whose epoch is no later
+#     than the object's previous kept set's is skipped and counted (as a copy where it equals that set in every field).
+#     The first kept set must be the seed's own (seed_meta.tsv's epoch). A slot's sets are fetched at its t_end in
+#     slots.tsv (POSIX, to TDB through tai-utc.dat); S_H0's before T_s.
+#   FORECAST TIMES: T_s, and the t_end of slots 1, 5, 9 and 13 for (B'), (R) and (C); slots 5, 9 and 13 for (H). A forecast
+#     uses only the sets fetched by its time; its latest set is the one of latest epoch among them.
+#   REFERENCES: each later kept set of the object (epoch after the latest set's), fetched through slot 20, at its own epoch
+#     e rounded to 2^-20 s (e_q, DEBRIS-F's B1), through SGP4 (tests/f5_sgp4.js, GCRF); and at e_q + 1 s for T1.
+#   HORIZON, every variant: the reference's epoch less the epoch of the latest set the forecast used (for (A) and (B) the
+#     seed's set, as DEBRIS-H recorded it: its tables' horizon_h).
+#   VARIANTS: (A) A64's misses with A256's beside them, and (B), read from DEBRIS-H's check tables (status checked);
+#     (B') SGP4 from the latest set at each reference's e_q; (R) M1 native64 refitted from the latest set by DEBRIS-F's
+#     rule (tests/k_refit.py's refit(), h_seed.py's seed 1 rule) and propagated by tests/m1f.c prop from its origin to e_q;
+#     (H) M1 native64 fitted by tests/k_fit.c to every set so far: over the grid O_H + 120 k, O_H = e_q(oldest) - 86,400 s,
+#     to the last grid time at or before e_q(latest), each grid time's pseudo-observation from SGP4 of the earliest set whose
+#     e_q is at or after it; start state the first pseudo-observation's, bc from 0.01, cram 0.01 fixed, bc estimated
+#     (perigee by f_fit.py's formula under 1,000 km), maxit 10; propagated by m1f prop from O_H; (C) only if the budget
+#     allows (not in this script).
+#   THE MISS: the GCRF distance to the reference and its radial, along-track and cross-track parts in the reference's
+#     frame (R along r_ref, C along r_ref x v_ref, A = C x R), as h_check.py.
+#   A CHECK is a distinct (object, set or sets used, reference): forecasts at two times that use the same latest set (and
+#     so the same history) give one check, counted once; the rows per forecast time are kept in the ledger's table.
+#   DECAY PREDICTIONS: for seed index 1178 and every pilot object with perigee under 300 km, from each forecast time of (R)
+#     and (H), M1's rule (tests/m1h.c's RMIN 6,498,137.0 m, carried in tests/k_fit.c decay): from the fit's origin, whole
+#     rk4 steps of 15 s, the first step at whose end the distance from the centre is not above RMIN; up to 30 days after the
+#     forecast time (else "no decay within 30 days"). For seed index 1595, from (R)'s and (H)'s rules applied to its sets
+#     with epochs before 2026-11-18 00:00 UTC, set beside SATCAT's date taken as the whole UTC day 2026-11-18.
+#   STATISTICS (no pass condition): for each variant and horizon cell (under 6 h, 6 to 24 h, 1 to 2 d, 2 d and over) and
+#     overall, with n: the miss's median and 90th percentile (the ceil(0.9 n)-th smallest, h_check.py's quant), the same for
+#     the along-track part's size with its signed median beside; a cell of fewer than 5 checks gives its count and median
+#     only; with the flagged fits in (an (R) or (H) fit stopped on its iteration limit or a singular matrix; for (A) and (B)
+#     the seed's flags1 & 3), and again without them. The main comparisons, cell by cell on the same checks: (R) against
+#     (B'), and (H) against (B'); (A) against (B) restating DEBRIS-H's on these objects. Per object (by seed index), the
+#     same over all horizons. For (H), the learning curve: the median miss at horizons of 12 to 36 h by the number of sets
+#     in the fit (1, 2, 3 or 4, 5 to 8, 9 or more), (B')'s median on the same checks beside it. The share of checks in which
+#     (R), (H) each miss less than (B') (checks cluster by object: not a share of independent trials). The decay
+#     predictions, each with its rule, its forecast time and the sets it used.
+#   CONTROLS, each asserted (FAIL is reported as failed):
+#     T1 every check and variant (B'), (R), (H): with the reference moved to e_q + 1 s, the change in the miss vector equals
+#        the reference's velocity x 1 s within 1% of that velocity's size (F6, h_check.py);
+#     T2 every latest set that a later slot repeats equal in every field: decoded at its own e_q in one JVM and the copy in
+#        another, in the same order, (B')'s miss is exactly 0 (F6's T2);
+#     T3 every forecast time and reference slot, over its (B') checks in seed-index (= catalogue) order: (B')'s position
+#        against the reference of the next check (cyclically) whose reference mean motion differs by more than 1e-3
+#        rev/day must miss by more than 100 km; EXCEPT where the two references' orbital planes (the normals r x v of their
+#        GCRF states) lie within 0.1 deg of each other: such a pair is listed, not tested;
+#     K1 (tests/k_fit.c a faithful copy) k_fit's fit, given (R)'s 721 pseudo-observations of its first object at T_s with
+#        their times O + 120 k, prints the same FIT line, character for character, as tests/m1f.c fit did in (R);
+#     K2 (the frame, the time and the set) on every check-table row of a pilot object: (B') at T_s and the reference agree
+#        with DEBRIS-H's B_pos and ref_state within 1e-3 m in position (basis: the decoder's batch dependence, up to
+#        1.7e-5 m, DEBRIS-H's finding 1), and e_q is equal;
+#     PLANTED BC: the lowest-perigee pilot object other than 1595 that has a reference 12 to 36 h after a forecast time
+#        (the reference's epoch less the forecast time), at the first such forecast time and its earliest such reference,
+#        and that M1 (k_fit decay from (R)'s fit) does not decay before that reference: (R)'s bc doubled in the pipeline's
+#        prediction must give, bit for bit, the state tests/m1f.c prop gives when run directly with the doubled bc and the
+#        same inputs, and must move the predicted position at that reference by at least 100 m;
+#     PLANTED IDENTITY: (H) at slot 5 for the planted-bc object X fitted to another object's sets (Y, the next pilot object
+#        in seed-index order, cyclically, but 1595, whose latest set at slot 5 has a mean motion more than 1e-3 rev/day from
+#        X's): every miss at X's references from slot 5 must exceed ten times (H)'s own median over all its checks, or the
+#        fit be refused (singular matrix or a non-finite state).
+#   REGRESSION (tests/k_refit.py fit, its own log): (R)'s code on DEBRIS-H's test seed must reproduce
+#     debris-h/testseed/repro/fit1.001.tsv, every printed value equal.
+#   MEASURED besides: the 17 seed sets refitted on the desktop against the box's seed fits (fit1.001.tsv), and (R) at T_s
+#     against (A64) on their common checks; no tolerance (DEBRIS-H's H6: the machines differ in the fit).
+# m1f_O2.exe sha256 9d4c15720f1cf67de8415f6e4fe09b8b11dc63ce66164a1f7445b051041619b1
+# k_fit.exe sha256 b832b34315f283ba49611957eac77e0316a33385db3a1db5d1ea3d87935f2619
+# frame_h0.bin sha256 dd69fe0bc21e903bb3af9f4ee6711a0487cc96d040629bf26e3a3b62a635c82f
+# tai-utc.dat sha256 3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3
+# seed1.txt sha256 a67c3b09293a0a1c5a2a16a72c23744d472be31372503ae345f50f633af840b0
+# seed_meta.tsv sha256 c229529c76f557074a667182ea67b7fa26199b83e4d5f59f937a4a15b9ca9f3e
+# slots.tsv sha256 8506841454d55e19dd2204650fa17999a3ffb357bc00c0d91caf2c0ced507291
+PASS T_s is DEBRIS-H's, 2933400.0 s TDB (2026-11-18 22:50:00 TDB)
+# pilot objects (perigee at T_s under 400 km): 17; under 250 km 1, under 300 km 5, under 350 km 8
+PASS the count equals the plan's 17 (a consistency check of the sample's rule)
+PASS seed indices 1595 and 1178 are among them
+# pilot seed indices: 278, 720, 1000, 1178, 1211, 1427, 1500, 1538, 1595, 1597, 2045, 2178, 2679, 2683, 2684, 2685, 2686
+# their perigees at T_s (km), in index order: (the lead, at the merge: removed here; the original line is held in the ledger's debris-k\held)
+# sources in order: SH0, slot01, slot02, slot03, slot04, slot05, slot06, slot07, slot08, slot09, slot10, slot11, slot12, slot13, slot14, slot15, slot16, slot18, slot19, slot20
+# read SH0/gp-stations-SH0.csv sha256 8dd2e6230ebf2b83d34541d90c6215e66f742fe9f0f4e2755376c714ddb30be7
+# read SH0/gp-fengyun-1c-debris-SH0.csv sha256 9d4c56d91302a82f8f761d2422bba41cb4b99539afb003a895eb47266d6884fe
+# read SH0/gp-iridium-33-debris-SH0.csv sha256 cd844917cf0f782797c9b84d39ad33a9cf4ceb2cdadb4af5c5f54d742248324a
+# read SH0/gp-cosmos-2251-debris-SH0.csv sha256 1e676c21b6c3bf458d2cd495473d57f14c032f0fd33db5e4838157ba79e95cb4
+# read slot01/gp-cosmos-2251-debris.csv sha256 feafcb84a2c2a18f8b2487a85e0435030ba886c799127718c305002873f2bf51
+# read slot01/gp-fengyun-1c-debris.csv sha256 1a3ef0c52de0854f369f250a31568c39996309eca1d693b830aba5114ba48f6c
+# read slot01/gp-iridium-33-debris.csv sha256 28ff6a453039400d62fb1ff8e2af78ea9e5e830f4ef9ad8d340b521a836c69f4
+# read slot01/gp-stations.csv sha256 6571b29a790a6b1e34ab4cdfd3df0117580a11b130493a4ea7d9700e02ea8a56
+# read slot02/gp-cosmos-2251-debris.csv sha256 feafcb84a2c2a18f8b2487a85e0435030ba886c799127718c305002873f2bf51
+# read slot02/gp-fengyun-1c-debris.csv sha256 1a3ef0c52de0854f369f250a31568c39996309eca1d693b830aba5114ba48f6c
+# read slot02/gp-iridium-33-debris.csv sha256 28ff6a453039400d62fb1ff8e2af78ea9e5e830f4ef9ad8d340b521a836c69f4
+# read slot02/gp-stations.csv sha256 6571b29a790a6b1e34ab4cdfd3df0117580a11b130493a4ea7d9700e02ea8a56
+# read slot03/gp-cosmos-2251-debris.csv sha256 c9b73eff13b273e8d868e49a078b56f831a6289bbfb26d45adbcef8e673e06bb
+# read slot03/gp-fengyun-1c-debris.csv sha256 cbb7a8dd0f9baa680193c8efdd813e180c2904574c2c54f87bbb901442ab7f93
+# read slot03/gp-iridium-33-debris.csv sha256 0302d54db0ef87f4a7a26041d7ab81a2b58ec1cd0b3de855fd0b7ccd3feb5acc
+# read slot03/gp-stations.csv sha256 25471288c6d9f26f2f0add262cb4d4bc7052fa5a936b6ceeb05a33399469559f
+# read slot04/gp-cosmos-2251-debris.csv sha256 0c78563992b39d4dd82b4b73c6c73bd35bc4dce1a776fdae244c24caf74dee1b
+# read slot04/gp-fengyun-1c-debris.csv sha256 b7d086687014ff945d71a3b787c6861daeb1815cb6102b805bb9fd0f53076dbe
+# read slot04/gp-iridium-33-debris.csv sha256 4a89fd2a9cf42d76895b9797085fc5d9939697c83b23436e923804a0ffaa34a9
+# read slot04/gp-stations.csv sha256 e295c232d30e1710667e8bad022873255fe8a63def371bbec9149241917f0017
+# read slot05/gp-cosmos-2251-debris.csv sha256 add623a40c7c18679865867a59ecb0cc93384e66930efbfea8d133a357a338a1
+# read slot05/gp-fengyun-1c-debris.csv sha256 95fe7746d1baae2321cb71ffe1693aad6a8c43102c39becc031608b6299f775a
+# read slot05/gp-iridium-33-debris.csv sha256 9b97c35a289413d066114615bf80327714ab6fa1ebc7d45972a49d9773269595
+# read slot05/gp-stations.csv sha256 2cfdaf47443268562e412cf5965ab369eadf1221e1fc16703593325fe816e844
+# read slot06/gp-cosmos-2251-debris.csv sha256 add623a40c7c18679865867a59ecb0cc93384e66930efbfea8d133a357a338a1
+# read slot06/gp-fengyun-1c-debris.csv sha256 95fe7746d1baae2321cb71ffe1693aad6a8c43102c39becc031608b6299f775a
+# read slot06/gp-iridium-33-debris.csv sha256 9b97c35a289413d066114615bf80327714ab6fa1ebc7d45972a49d9773269595
+# read slot06/gp-stations.csv sha256 2cfdaf47443268562e412cf5965ab369eadf1221e1fc16703593325fe816e844
+# read slot07/gp-cosmos-2251-debris.csv sha256 9c50157aa22509195bdbfebcab2c906ca704833e6d602f87ff3439c6c8d862b5
+# read slot07/gp-fengyun-1c-debris.csv sha256 10dcba26494194c29517fd3d207037cd6fcdfc3b3b3fb82e90ae5b41549d5be5
+# read slot07/gp-iridium-33-debris.csv sha256 25951fde44feaee26fe7a1148458ccc1001d22627027d97cf2a8bcbbc5b958c7
+# read slot07/gp-stations.csv sha256 e6b377f43b697d3e09e88df753a615bfb052b7b5b5269da119faa52b120761d6
+# read slot08/gp-cosmos-2251-debris.csv sha256 9c50157aa22509195bdbfebcab2c906ca704833e6d602f87ff3439c6c8d862b5
+# read slot08/gp-fengyun-1c-debris.csv sha256 10dcba26494194c29517fd3d207037cd6fcdfc3b3b3fb82e90ae5b41549d5be5
+# read slot08/gp-iridium-33-debris.csv sha256 25951fde44feaee26fe7a1148458ccc1001d22627027d97cf2a8bcbbc5b958c7
+# read slot08/gp-stations.csv sha256 e6b377f43b697d3e09e88df753a615bfb052b7b5b5269da119faa52b120761d6
+# read slot09/gp-cosmos-2251-debris.csv sha256 1d6be065e64293ab10c787c23526c501ed335ad09d1832bba32a0d01e662e3e8
+# read slot09/gp-fengyun-1c-debris.csv sha256 c8c2bedbe8b60dba07831e51880b09f3010c61222dd28e6a05180e71a9839a84
+# read slot09/gp-iridium-33-debris.csv sha256 04b7324514346c2c8e65b9b4827654650cfb7035ada836f6adda5d9a29e96e18
+# read slot09/gp-stations.csv sha256 698186e405293641af8e1cfddad87e50e1f617e4b06ced721235a1b5b1e7804f
+# read slot10/gp-cosmos-2251-debris.csv sha256 0655c11753913fd74a6e7f25be7290dae8ece7e2ffc493d5ba71de82b6a7c593
+# read slot10/gp-fengyun-1c-debris.csv sha256 efe33fc0b7b40f404c4a3778eb435c17bafee06ea5029562e0d35606eb820b33
+# read slot10/gp-iridium-33-debris.csv sha256 f62a94729dfc7cf257fd474f9ec6245149e2fffe33655895091f21c304000b56
+# read slot10/gp-stations.csv sha256 2218c230fc510ea9669cb37da918ed551e8b472fb13a142204ab4853db486641
+# read slot11/gp-cosmos-2251-debris.csv sha256 28318e4ea74c8b3cf2aa2421481faa573fcfc5692515c2854551f52f9aea44c8
+# read slot11/gp-fengyun-1c-debris.csv sha256 84f44343fc45717a892a1db8972b67d613f75486beb1154a086dc7ea04c9dbb9
+# read slot11/gp-iridium-33-debris.csv sha256 1b98372909a5c0513b121fbd8c6f3902288b16700953b11e68615912baebf807
+# read slot11/gp-stations.csv sha256 f85129e5b312f6156b4eef78ebde057af0ba97f15363309f09ad13f5e7a27844
+# read slot12/gp-fengyun-1c-debris.csv sha256 84f44343fc45717a892a1db8972b67d613f75486beb1154a086dc7ea04c9dbb9
+# read slot12/gp-iridium-33-debris.csv sha256 1b98372909a5c0513b121fbd8c6f3902288b16700953b11e68615912baebf807
+# read slot12/gp-stations.csv sha256 f85129e5b312f6156b4eef78ebde057af0ba97f15363309f09ad13f5e7a27844
+# read slot13/gp-cosmos-2251-debris.csv sha256 2db802d65d978037f2cc64b2df205a97f32c93788f56c0dd48981e7190bd4703
+# read slot13/gp-fengyun-1c-debris.csv sha256 ac7b3d72ccff2a308b0addbd300b5f1602fd49e1bf1f92cfdb54b0f595608b61
+# read slot13/gp-iridium-33-debris.csv sha256 8fb6e9eb2d382f4ab7b07000b7dabd5aa050b37c0fc494dd077cb7660e8801ce
+# read slot13/gp-stations.csv sha256 35131ee193148df0ff3d5109ab5d4aa8c299185ce8b980873ae2e6f4f78e1c78
+# read slot14/gp-cosmos-2251-debris.csv sha256 2db802d65d978037f2cc64b2df205a97f32c93788f56c0dd48981e7190bd4703
+# read slot14/gp-fengyun-1c-debris.csv sha256 ac7b3d72ccff2a308b0addbd300b5f1602fd49e1bf1f92cfdb54b0f595608b61
+# read slot14/gp-iridium-33-debris.csv sha256 8fb6e9eb2d382f4ab7b07000b7dabd5aa050b37c0fc494dd077cb7660e8801ce
+# read slot14/gp-stations.csv sha256 35131ee193148df0ff3d5109ab5d4aa8c299185ce8b980873ae2e6f4f78e1c78
+# read slot15/gp-stations.csv sha256 35131ee193148df0ff3d5109ab5d4aa8c299185ce8b980873ae2e6f4f78e1c78
+# read slot16/gp-fengyun-1c-debris.csv sha256 7a330b89b7d919436818c23950a4c2dd2624fa811fd3dd88eadbd11c2b9c16d9
+# read slot16/gp-iridium-33-debris.csv sha256 31381fab61724d4ec4763ee2d237e4b4815ae5624e917da05961e7664860992e
+# read slot16/gp-stations.csv sha256 01bebf4fd6cebedfac192264b7edecc2c7c001ecb84144ba15425db7c7307603
+# read slot18/gp-cosmos-2251-debris.csv sha256 bc0ecad5356c0e613649f42a90edf2b0ece6945e276b297ac1388ac7dae76cef
+# read slot18/gp-fengyun-1c-debris.csv sha256 582f554160330ad8ee9f10a82cc64e4483eac038b0474dc161d2971f300a1d49
+# read slot18/gp-iridium-33-debris.csv sha256 6b5f19b240e57554f2bdf7b15aea77bde998f8e27d35bbca3d3331db8cb03884
+# read slot18/gp-stations.csv sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea
+# read slot19/gp-stations.csv sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea
+# read slot20/gp-stations.csv sha256 a51e9d00f54ff6ad73042f65fc3cf5028f0c62dc2f7f04459a23c62dad34e5ea
+PASS idx 278: the first kept set is the seed's own, from S_H0
+PASS idx 720: the first kept set is the seed's own, from S_H0
+PASS idx 1000: the first kept set is the seed's own, from S_H0
+PASS idx 1178: the first kept set is the seed's own, from S_H0
+PASS idx 1211: the first kept set is the seed's own, from S_H0
+PASS idx 1427: the first kept set is the seed's own, from S_H0
+PASS idx 1500: the first kept set is the seed's own, from S_H0
+PASS idx 1538: the first kept set is the seed's own, from S_H0
+PASS idx 1595: the first kept set is the seed's own, from S_H0
+PASS idx 1597: the first kept set is the seed's own, from S_H0
+PASS idx 2045: the first kept set is the seed's own, from S_H0
+PASS idx 2178: the first kept set is the seed's own, from S_H0
+PASS idx 2679: the first kept set is the seed's own, from S_H0
+PASS idx 2683: the first kept set is the seed's own, from S_H0
+PASS idx 2684: the first kept set is the seed's own, from S_H0
+PASS idx 2685: the first kept set is the seed's own, from S_H0
+PASS idx 2686: the first kept set is the seed's own, from S_H0
+# sets per object (seed index: new sets after the seed's, copies skipped, not later skipped):
+#   278: 6 new, 6 copies, 4 not later
+#   720: 4 new, 11 copies, 1 not later
+#   1000: 2 new, 13 copies, 1 not later
+#   1178: 1 new, 9 copies, 6 not later
+#   1211: 0 new, 16 copies, 0 not later
+#   1427: 3 new, 5 copies, 8 not later
+#   1500: 0 new, 16 copies, 0 not later
+#   1538: 0 new, 16 copies, 0 not later
+#   1595: 0 new, 6 copies, 0 not later
+#   1597: 8 new, 5 copies, 1 not later
+#   2045: 3 new, 11 copies, 0 not later
+#   2178: 2 new, 14 copies, 0 not later
+#   2679: 7 new, 9 copies, 3 not later
+#   2683: 3 new, 7 copies, 9 not later
+#   2684: 6 new, 13 copies, 0 not later
+#   2685: 4 new, 15 copies, 0 not later
+#   2686: 6 new, 13 copies, 0 not later
+PASS slot 1 fetched all four groups (status ok)
+PASS slot 5 fetched all four groups (status ok)
+PASS slot 9 fetched all four groups (status ok)
+PASS slot 13 fetched all four groups (status ok)
+# forecast times: Ts 2026-11-18 22:48:50 UTC (0.0000 h after T_s), s01 2026-11-19 01:00:42 UTC (2.1978 h after T_s), s05 2026-11-19 13:00:38 UTC (14.1966 h after T_s), s09 2026-11-20 01:00:42 UTC (26.1977 h after T_s), s13 2026-11-20 13:00:51 UTC (38.2002 h after T_s)
+# checks for (B') and (R): 188 rows over the 5 forecast times, 130 distinct (object, latest set, reference)
+#   Ts: 55 rows, objects with no reference 3
+#   s01: 51 rows, objects with no reference 3
+#   s05: 35 rows, objects with no reference 3
+#   s09: 32 rows, objects with no reference 3
+#   s13: 15 rows, objects with no reference 5
+# seed index 1595: 1 kept sets, 1 with epochs before 2026-11-18 00:00 UTC (its decay prediction's)
+PASS 1595 has a set before 2026-11-18 00:00 UTC
+# plan.json (ledger) sha256 c6d46283234f512868da0607e8f2670a3002cb4589689c479295614fe0d85686
+# CPU: 0.76 s by cycles / 2.5e9 (this stage: the script and every process it started)
+# PASS 
