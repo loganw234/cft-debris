@@ -22,7 +22,7 @@ The lead's record of parcel DEBRIS-L in cft-debris, 2026-11-23.
 
 ## What it made, after verification
 
-**The media,** kept in the ledger (decision 2), each with a sidecar naming the SHA-256 of its data and of the scripts that drew it:
+**The media,** kept in the ledger (decision 2), each with a sidecar naming the SHA-256 of its data and of the scripts that drew it. One picture, both views at the start, is also the README's, with its sidecar, in `studies\debris-l\readme\`: decision 2 (b), on Logan's word at 15:42 (see the last section).
 - **Screenshots,** 1,280 × 720: both views at the start, T_s (2026-11-18 22:50:00 TDB), and 3 hours later; the top view and the edge-on view at the start.
 - **A video:** 181 frames, one a minute from T_s for 3 hours, at 30 frames a second, about 6 s; h264, 1,280 × 720.
 - **A live display:** one HTML file of 3.9 MB, its data inline (positions rounded to 1 km, as 16-bit integers). verifier-L found no network reference in it.
@@ -127,6 +127,7 @@ Tokens processed per agent, from the harness's transcripts, by `dispatch\cost.py
 - `studies\DEBRIS-L-plan.md` (draft 2);
 - `studies\debris-l\`, under its `MANIFEST.sha256`:
   - `panel\`: the four charts, their sidecars and `panel_table.tsv`;
+  - `readme\`: the README's picture and its sidecar, added by the lead on Logan's word;
   - `logs\`: the gates' aggregate logs;
   - `scripts\`: the script versions that wrote logs;
 - `studies\DEBRIS-L-report.md` and `studies\DEBRIS-L-verifier-L-report.md`, each with its desktop paths written `<root>`, as its added paragraph says;
@@ -145,13 +146,14 @@ Tokens processed per agent, from the harness's transcripts, by `dispatch\cost.py
   - `superseded\`;
 - `tools\scan-l\` (the lead's scan) and `tools\merge-l\` (the merge's scripts and logs).
 
-**Kept out of the repository:** the pictures, the video and the live display of the population, M1's states, and every per-object line of the gates' logs.
+**Kept out of the repository:** the video, the live display and the population's other pictures, M1's states, and every per-object line of the gates' logs.
 
 ## Open, for Logan
 
-- **Decision 2,** where the population's pictures may go:
-  - (a) the ledger only, as now;
-  - (b) also this repository, as the README's picture;
-  - (c) also a private claude.ai page for the live display.
 - **The cosmetic label** in the two single-view screenshots, for a later pass if wanted.
-- **Pushing this parcel** to the public repository.
+
+## Decided after the first commit
+
+Logan, in chat at 15:42, after he had seen the media: "Clear to push and picture is fine in the readme".
+- **Decision 2 is (b).** The lead copied `shot_both_k000.png`, both views at the start, and its sidecar from the ledger to `studies\debris-l\readme\`. The picture's SHA-256 equals its sidecar's. `MANIFEST.sha256` now lists 38 files, its 36 old lines unchanged. The README shows the picture under its opening paragraph, with a caption saying the positions are M1's propagation of DEBRIS-H's seed, not observations.
+- **The push:** this parcel's two commits, the first and the picture's, go to the public repository after the pre-push check.

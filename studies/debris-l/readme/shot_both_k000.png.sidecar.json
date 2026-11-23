@@ -1,0 +1,19 @@
+{
+ "bytes": 36958,
+ "data": {
+  "groups.npy": "85f922c2dab2d43dfaee104db2f4c1d15b1204a816728fb5d483b14a400fbcd5",
+  "states.npy": "c887ea003e118a46d7cfe6a3e44a27e391e03e5bb92e70eb979e750559b88854"
+ },
+ "file": "shot_both_k000.png",
+ "frame": 0,
+ "layout": "both",
+ "made": "DEBRIS-L, cft-debris tests/l_media.py; positions are M1's propagation of DEBRIS-H's seed, not observations",
+ "scripts": {
+  "l_draw.py": "931daf73d639982d8a98ce003cd1d1308d9112a7ad0a0359f3c578dd445a03dd",
+  "l_font.py": "dc3d645ddf81df8a1ea635bb4b0a30d9423b0fe686b0322f2f1fc60c306825c9",
+  "l_lib.py": "a3b5c06d1630bab1226e3e49c72b0cdad9d49b8a198166cc9ca6ba7926af192d",
+  "l_media.py": "79c4de27c140e3245f5997acae3f566d6a6afb6adea3ca7200175eeeb992adc3",
+  "l_png.py": "29f7dfeee0a1de0c168d984263e443d0a068942efd903b83435d4cc4d6a53726"
+ },
+ "sha256": "c176ff4e2481b649ad9f94d166de080fd5b81aa893fee77a47dd36d62efd034d"
+}
