@@ -1,0 +1,82 @@
+# gpu_j0c.001.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:29:07 -0700 local (2026-11-23 21:29:07 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   gpu-j0c: J0c, the calibration (a measurement; its rules fixed in the plan before any data):
+#    the ladder: the program at degree 7 at binary64, binary128 and binary256 in turn, at s = 1, 2, 4 and 8 in that order;
+#       at each step one process of 8 lanes and one of 2,048 lanes (the base's first 8 and first 2,048 seed objects), each
+#       one run of 2 segments of s steps from DEBRIS-H's T_s (I3's first hour), every call timed by the driver;
+#    the warm-up: each process's first call is one segment of its own image on its first 8 lanes, logged and not judged
+#       (the plan says "at s = 1": the warm-up here uses the process's own s, since the code a GPU runs is libcft's, the
+#       same for every image; READ, HOSTAPI "What runs on the GPU is this library");
+#    a step's 2,048-lane call time is the larger of its two calls;
+#    the stop rule: a format's ladder stops at the first s whose 2,048-lane call takes over 150 ms; no larger s is started;
+#    the abort rule: from each process's second call, any call over 1,000 ms stops the calibration (j_run --abort-ms 1000
+#       stops itself, exit 6; the harness's watchdog kills a process by its PID after 180 s with no output);
+#    the choice: the largest s whose 2,048-lane call stayed under 150 ms at every format, one s for the round; if s = 1 is
+#       over 150 ms at a format, s = 1 is still used, and the report says the chunk may halve there;
+#    validity: every process's device line equals J0's; every process exits 0 (or 6, which stops the calibration);
+#    its output (out/j0c/j0c.json): every call's time, the choice, and each format's 2,048-lane call time at the chosen s.
+PASS B0 the 159 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+this attempt's outputs: out/j0c.001; J0's: j0.001
+PASS fp64: the 8- and 2048-lane INIT files are the staged plan's (6ee9b63327f356af, 759300c85d06bb9a)
+lock taken (j0c fp64 s=1 L=8) at 14:29:08, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 33, 210, P8
+run j0c-fp64-s1-L8: exit 0, wall 1.0 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 100275175 flags 0x10 bus ; call max 73.2 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2745, P3
+lock released (j0c) at 14:29:11
+PASS fp64 s=1 8 lanes: calls ['73.21', '72.89'] ms, warm-up 100.3 ms, exit 0, device line J0's: True
+lock taken (j0c fp64 s=1 L=2048) at 14:29:11, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2745, P3
+run j0c-fp64-s1-L2048: exit 0, wall 1.2 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 98919107 flags 0x10 bus 0; call max 138.7 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 34, 1117, P5
+lock released (j0c) at 14:29:15
+PASS fp64 s=1 2048 lanes: calls ['138.67', '131.61'] ms, warm-up 98.9 ms, exit 0, device line J0's: True
+lock taken (j0c fp64 s=2 L=8) at 14:29:15, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 34, 1117, P5
+run j0c-fp64-s2-L8: exit 0, wall 1.0 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 168666396 flags 0x10 bus ; call max 142.9 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2872, P5
+lock released (j0c) at 14:29:18
+PASS fp64 s=2 8 lanes: calls ['142.91', '142.72'] ms, warm-up 168.7 ms, exit 0, device line J0's: True
+lock taken (j0c fp64 s=2 L=2048) at 14:29:18, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2872, P5
+run j0c-fp64-s2-L2048: exit 0, wall 1.4 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 166847263 flags 0x10 bus ; call max 235.5 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2745, P3
+lock released (j0c) at 14:29:22
+PASS fp64 s=2 2048 lanes: calls ['235.48', '226.12'] ms, warm-up 166.8 ms, exit 0, device line J0's: True
+fp64: the stop rule at s = 2 (235.48 ms over 150 ms); no larger s
+PASS fp128: the 8- and 2048-lane INIT files are the staged plan's (bfc445e493875574, 45dfdec47763b10e)
+lock taken (j0c fp128 s=1 L=8) at 14:29:22, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2745, P5
+run j0c-fp128-s1-L8: exit 0, wall 1.0 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 113936546 flags 0x10 bus ; call max 88.1 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 34, 1155, P5
+lock released (j0c) at 14:29:26
+PASS fp128 s=1 8 lanes: calls ['87.74', '88.11'] ms, warm-up 113.9 ms, exit 0, device line J0's: True
+lock taken (j0c fp128 s=1 L=2048) at 14:29:26, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 34, 1155, P5
+run j0c-fp128-s1-L2048: exit 0, wall 1.2 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 110466164 flags 0x10 bus ; call max 166.2 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2745, P3
+lock released (j0c) at 14:29:29
+PASS fp128 s=1 2048 lanes: calls ['166.20', '158.64'] ms, warm-up 110.5 ms, exit 0, device line J0's: True
+fp128: the stop rule at s = 1 (166.20 ms over 150 ms); no larger s
+PASS fp256: the 8- and 2048-lane INIT files are the staged plan's (7ea1843dfa6fdabb, c8a6a777a1335f10)
+lock taken (j0c fp256 s=1 L=8) at 14:29:29, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2745, P5
+run j0c-fp256-s1-L8: exit 0, wall 1.0 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 150213167 flags 0x10 bus ; call max 121.6 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2805, P5
+lock released (j0c) at 14:29:33
+PASS fp256 s=1 8 lanes: calls ['121.58', '121.27'] ms, warm-up 150.2 ms, exit 0, device line J0's: True
+lock taken (j0c fp256 s=1 L=2048) at 14:29:33, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2805, P5
+run j0c-fp256-s1-L2048: exit 0, wall 1.5 s; device line; segments 2, calls 3, timed 2, marks 0; warm-up warmup lanes 8 call_ns 143041602 flags 0x10 bus ; call max 239.7 ms
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 36, 2872, P3
+lock released (j0c) at 14:29:37
+PASS fp256 s=1 2048 lanes: calls ['239.68', '235.44'] ms, warm-up 143.0 ms, exit 0, device line J0's: True
+fp256: the stop rule at s = 1 (239.68 ms over 150 ms); no larger s
+the choice: s = 1 (each format's s under 150 ms: {'fp64': [1], 'fp128': [], 'fp256': []}); s = 1 is over 150 ms at ['fp128', 'fp256'], so the chunk may halve there
+FIG J0c fp64: the 2,048-lane call at s = 1: 138.67 ms (MEASURED; the larger of two calls)
+FIG J0c fp128: the 2,048-lane call at s = 1: 166.20 ms (MEASURED; the larger of two calls)
+FIG J0c fp256: the 2,048-lane call at s = 1: 239.68 ms (MEASURED; the larger of two calls)
+out/j0c.001/j0c.json SHA-256 612bb5a06eb138f8b9a8c101014408c47b45f5059dfb954020a26b3f4e673ca5
+# 12 checks, 0 failed; ended 2026-11-23 14:29:37 -0700 local

@@ -1,0 +1,81 @@
+# gpu_j0.001.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:27:07 -0700 local (2026-11-23 21:27:07 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   gpu-j0: J0, the build and the device (cft-gpu, the lead's run; DEBRIS-J's plan, J0):
+#    B0 every staged file carries its SHA-256 (in/EXPECTED.sha256);
+#    B1 python3, flock, nvidia-smi, make and tar present; every j_run starts with CUDA_DEVICE_ORDER=PCI_BUS_ID,
+#       CUDA_VISIBLE_DEVICES=<given> and CFT_HIP_INFO=1;
+#    B2 tests/build_j.sh gpu, with HIP=1 HIP_PLATFORM=nvidia HIP_ROOT, HIP_ARCH and HIP_CUDA as given, builds libcft.a from
+#       the staged archive in <root>/build (hip-symcheck passing) and links j_run with the Makefile's NVIDIA libraries:
+#       "BUILD PASS (gpu)"; the j_run.c it compiled is the staged one (B0);
+#    then inside the lock, nvidia-smi read before and after and the processes listed, the controls first:
+#    C0a (control) j_run load --artifact hip:1 at depth 512: refused at cft_open_ex with CFT_ERR_NO_DEVICE (3), the runtime
+#       seeing 1 device ("sees 1 (");
+#    C0b (control) j_run load --artifact hip:0 at depth 4096: refused at cft_open_ex with CFT_ERR_UNSUPPORTED (2);
+#    C0c (control) j_run run --artifact hip:0 --expect-device <another card's name>: exit 5 after a device line, with no
+#       image line (stopped before any image loads);
+#    K1 j_run load --artifact hip:0 at depth 512 with --expect-device <the given name> on every image of the round (41):
+#       exit 0, every load CFT_OK, each image's SHA-256 the staged one;
+#    K2 its device line: the name exactly the given one, "of 1 visible", CUDA_VISIBLE_DEVICES the given value, HIP platform
+#       nvidia, HIP_ARCH the given value;
+#    K3 cft_get_caps: backend hip, seq_features 0x7ff1f, max_scratch 512;
+#    K4 nvidia-smi's index <given> names the given device before and after.
+#    J0 passes when every check passes; out/j0/j0.json then holds the device line and j_run's SHA-256 for later modes.
+PASS B0 the 159 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+this attempt's outputs: out/j0.001
+PASS B1 tools: flock /usr/bin/flock, make /usr/bin/make, nvidia-smi /usr/lib/wsl/lib/nvidia-smi, python3 /usr/bin/python3, tar /usr/bin/tar
+B1 python 3.12.3; environment for j_run: CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1 CFT_HIP_INFO=1
+  G0: HIP=1
+  G0: HIP_PLATFORM=nvidia
+  G0: HIP_ROOT=/opt/rocm-7.2.4
+  G0: HIP_ARCH=120
+  G0: HIP_CUDA=/usr/local/cuda-12.9
+  CRITERION G0 PASS
+  A1: archive SHA-256 7814576d5d4d23fa4c1797553a32cd19b4e1d4c8f2d67fb7faecc9cfecb1c4bb
+  A1: extracted into the work dir's cft-fp256-9e8ff270
+  A1: tar --diff: 0 lines, every one a mode, owner or time; none of contents, size, type or presence
+  CRITERION A1 PASS (2824 members, the tree's contents equal to them)
+  B1: cc -dumpmachine: x86_64-linux-gnu
+  cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  CRITERION B1 PASS
+  B2: make -C <tree>/host HIP=1 HIP_PLATFORM=nvidia HIP_ROOT=/opt/rocm-7.2.4 HIP_ARCH=120 HIP_CUDA=/usr/local/cuda-12.9 libcft.a
+  cc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude -DCFT_ENABLE_XRT -DCFT_ENABLE_HIP  -c src/formatof.c -o src/formatof.o
+  cc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude -DCFT_ENABLE_XRT -DCFT_ENABLE_HIP  -c src/conformance.c -o src/conformance.o
+  cc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude -DCFT_ENABLE_XRT -DCFT_ENABLE_HIP  -c src/sha256.c -o src/sha256.o
+  cc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude -DCFT_ENABLE_XRT -DCFT_ENABLE_HIP  -c src/backend_remote.c -o src/backend_remote.o
+  build id: unknown - git cannot place .. in a work tree: fatal: not a git repository (or any of the parent directories): .git (gen/cft_build_id.h)
+  cc -std=c99 -O2 -Wall -Wextra -Wpedantic -Wshadow -Iinclude -DCFT_ENABLE_XRT -DCFT_ENABLE_HIP -DCFT_BUILD_ID_H='"../gen/cft_build_id.h"' -c src/build_id.c -o src/build_id.o
+  HIP_PLATFORM=nvidia HIP_PATH=/opt/rocm-7.2.4 CUDA_PATH=/usr/local/cuda-12.9 /opt/rocm-7.2.4/bin/hipcc -x cu -isystem /opt/rocm-7.2.4/include -Xptxas -v -gencode arch=compute_120,code=sm_120 -std=c++17 -O2 -Xcompiler -Wall,-Wextra,-Wno-unused-function -Iinclude -DCFT_ENABLE_XRT -DCFT_ENABLE_HIP \
+  	-DCFT_HIP_ARCH_TOKENS=120  -c src/backend_hip.cpp -o src/backend_hip.o > gen/hip/backend_hip-nvidia.log 2>&1 \
+  	|| { cat gen/hip/backend_hip-nvidia.log; exit 1; }
+  hip-symcheck: 109 symbols defined in src/backend_hip.o, 259 in the 16 host objects, none in both
+  ar rcs libcft.a src/bigint.o src/softfloat.o src/device.o src/divsqrt.o src/clause5.o src/chars.o src/augmented.o src/mpfloat.o src/transcend.o src/program.o src/reduce.o src/formatof.o src/conformance.o src/sha256.o src/backend_remote.o src/build_id.o src/backend_hip.o
+  make: Leaving directory '<tree>/host'
+  CRITERION B2 PASS
+  B3: libcft.a 0d4109e45fed6b68c1400ad5481de85044ef0f252cee841d6db27bc32746880a
+  B3: include/cft.h c15fe1f87e1865c05d4d5f959044447bff2e66de93fa941c12f7f881beb73ef5
+  B3: tests/j_run.c 7faef139022badee9e4fe9d03f7108e1d9978a06e903fca3182c613548953ac1
+  CRITERION B3 PASS (the hashes above)
+  B4: cc -std=c11 -O2 -ffp-contract=off -Wall -Wextra -I<tree>/host/include -o <work>/j_run tests/j_run.c <tree>/host/libcft.a -L/usr/local/cuda-12.9/lib64 -Wl,-rpath,/usr/local/cuda-12.9/lib64 -lcudart -lstdc++ -lpthread -ldl -lrt -lm
+  B4: ldd: 	libcudart.so.12 => /usr/local/cuda-12.9/lib64/libcudart.so.12, in HIP_CUDA's lib64
+  B4: j_run b3a75460c6240473a892430e763729d9d2d7104743577dfb72d011e70f5a6475
+  CRITERION B4 PASS
+  BUILD PASS (gpu)
+PASS B2 build_j.sh gpu: exit 0, BUILD PASS, j_run.c the staged one
+j_run: b3a75460c6240473a892430e763729d9d2d7104743577dfb72d011e70f5a6475
+lock taken (j0) at 14:28:15, after 0.0 s
+nvidia-smi before: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 33, 210, P8
+processes like GPU work, other than this harness: none
+PASS C0a (control) hip:1: exit 2, j_run: cft_open_ex: no such device (3): cft_open: hip:1 names GPU 1, and the HIP runtime sees 1 (hip:0 to hip:0)
+PASS C0b (control) depth 4096: exit 2, ice memory, 260 bytes a slot a lane, so a depth of D costs D x 260 bytes a lane of a program that indexes, and 2048 is the card's depth, which this cap follows; a software handle - cft_open_ex with no
+PASS C0c (control) --expect-device "NVIDIA GeForce RTX 4070": exit 5, device line present, image line False
+PASS K1 every image of the round loads at depth 512: 41 of 41 CFT_OK with the staged SHA-256, exit 0
+PASS K2 device line: name 'NVIDIA GeForce RTX 5060 Ti', arch sm_120, 1 visible, CUDA_VISIBLE_DEVICES 1, platform nvidia, HIP_ARCH 120
+PASS K3 caps: backend hip seq_features 0x7ff1f max_scratch 512 abi 18
+nvidia-smi after: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 2565, P5
+PASS K4 nvidia-smi index 1 names 'NVIDIA GeForce RTX 5060 Ti' before and 'NVIDIA GeForce RTX 5060 Ti' after
+lock released (j0) at 14:28:21
+J0 PASS; out/j0.001/j0.json written
+# 10 checks, 0 failed; ended 2026-11-23 14:28:21 -0700 local

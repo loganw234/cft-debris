@@ -1,0 +1,65 @@
+# compare.001.log, written by j_harness.py (SHA-256 551c8c2f695b934aed3c247ff828fc5f4b27574631c814a8d33345d2e0c72eea)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 16:45:40 -0700 local (2026-11-23 23:45:40 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   compare (phase 2, desktop): J1 and J3 recomputed from the GPU's records as the lead copied them (ledger
+#   debris-j/gpu/<run>/), against the desktop's references, with the criteria of gpu-j1 and gpu-j3 unchanged:
+#   (a) each of I1's 32 cases: the card's .seg.bin and .marks.bin equal, byte for byte, the desktop's s = 1 output (E1's,
+#       ledger debris-j/desktop/e1/); REDUCE has R1's SHA-256;
+#   (b) I3's day at binary64, binary128 and binary256: the card's 64-lane file, reduced, lane-sliced, equals the box's 8
+#       files (ledger debris-i/box/out/i3/) at every 40-step boundary run;
+#   C-J1, C-J2, C-J3 as gpu-j1 states them, on the card's files;
+#   J3: the 16 drawn lanes of the card's day equal the desktop's replays (ledger debris-j/desktop/j3ref/) at every boundary;
+#   the device: every stdout of the card's runs names J0's device line; every provenance file's status is DONE (or ABORTED
+#       where the rule stopped a J2 run) and names the image, runs and INIT it ran;
+#   marks: every mark record in every .marks.bin of the card's runs is listed (format, mode, run, segment, lane) for the
+#       replay; a gate's criterion counts only states that are unmarked or replayed equal.
+the attempts compared: j0.001, j0c.001, j1.001
+the GPU's records: <ledger>\debris-j\gpu\r1; J0's device line names 'NVIDIA GeForce RTX 5060 Ti'; the chosen s 1
+PASS the device: 65 stdout files of the card's runs, 0 name another device line
+PASS (a) i1-program-d2-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 192564eb8bb5cc6d (R1's 192564eb8bb5cc6d)
+PASS (a) i1-program-d2-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 8c8e189bf344eb7f (R1's 8c8e189bf344eb7f)
+PASS (a) i1-program-d2-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE a132d8def556d86e (R1's a132d8def556d86e)
+PASS (a) i1-program-d2-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE b43d82927fc41ea2 (R1's b43d82927fc41ea2)
+PASS (a) i1-program-d7-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 783e4ab75676d40f (R1's 783e4ab75676d40f)
+PASS (a) i1-program-d7-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE ae9e56115d4c7ab1 (R1's ae9e56115d4c7ab1)
+PASS (a) i1-program-d7-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 458b2a1cbaf038d7 (R1's 458b2a1cbaf038d7)
+PASS (a) i1-program-d7-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE f07e59b4275c440a (R1's f07e59b4275c440a)
+PASS (a) i1p-part-bodies-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 888cf809c1c98fc1 (R1's 888cf809c1c98fc1)
+PASS (a) i1p-part-bodies-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 2b70fd2cadc10d8e (R1's 2b70fd2cadc10d8e)
+PASS (a) i1p-part-bodies-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 7c22eb3dbee928f1 (R1's 7c22eb3dbee928f1)
+PASS (a) i1p-part-bodies-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 5d1bb7a983e3628a (R1's 5d1bb7a983e3628a)
+PASS (a) i1p-part-central-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 6a18edc6358f975f (R1's 6a18edc6358f975f)
+PASS (a) i1p-part-central-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE f0abdcaf7228e728 (R1's f0abdcaf7228e728)
+PASS (a) i1p-part-central-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE eb351fccb801d05d (R1's eb351fccb801d05d)
+PASS (a) i1p-part-central-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE a198ee68189cc45e (R1's a198ee68189cc45e)
+PASS (a) i1p-part-drag-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 9467f8830d46fc17 (R1's 9467f8830d46fc17)
+PASS (a) i1p-part-drag-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE f017b67639315c0d (R1's f017b67639315c0d)
+PASS (a) i1p-part-drag-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE f4d280299adb7347 (R1's f4d280299adb7347)
+PASS (a) i1p-part-drag-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE d861962045a80c29 (R1's d861962045a80c29)
+PASS (a) i1p-part-frame-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 129226ad926f39a7 (R1's 129226ad926f39a7)
+PASS (a) i1p-part-frame-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 3ab0f9e91709b3c8 (R1's 3ab0f9e91709b3c8)
+PASS (a) i1p-part-frame-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 0885108fb6865bb2 (R1's 0885108fb6865bb2)
+PASS (a) i1p-part-frame-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 231e94e22e71ee4e (R1's 231e94e22e71ee4e)
+PASS (a) i1p-part-grav-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 0fb06747ee068ca6 (R1's 0fb06747ee068ca6)
+PASS (a) i1p-part-grav-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 5a04468bf2ddf4a4 (R1's 5a04468bf2ddf4a4)
+PASS (a) i1p-part-grav-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 5c0f4f21ab2cbbec (R1's 5c0f4f21ab2cbbec)
+PASS (a) i1p-part-grav-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 261a82467229cfba (R1's 261a82467229cfba)
+PASS (a) i1p-part-tides-fp128: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE c2a3a0fc8b3c5ca4 (R1's c2a3a0fc8b3c5ca4)
+PASS (a) i1p-part-tides-fp256: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE c6b956e604c40187 (R1's c6b956e604c40187)
+PASS (a) i1p-part-tides-fp32: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE 14f0e2e0d85b7227 (R1's 14f0e2e0d85b7227)
+PASS (a) i1p-part-tides-fp64: the card's .seg.bin equals the desktop's: True; .marks.bin: True; REDUCE d7d7ecdaf25fba09 (R1's d7d7ecdaf25fba09)
+PASS (b) fp64 at s = 1: 1152 records of 8 lanes against the box's, 0 differences
+PASS (b) fp128 at s = 1: 1152 records of 8 lanes against the box's, 0 differences
+PASS (b) fp256 at s = 1: 1152 records of 8 lanes against the box's, 0 differences
+PASS C-J1 (control) on the card: differing (lane, boundary) [(21, 1), (21, 2), (21, 3), (21, 4), (21, 5), (21, 6)]
+PASS C-J2 (control) fp32 on the card: 64 of 64 lane-boundaries differ
+PASS C-J2 (control) fp64 on the card: 64 of 64 lane-boundaries differ
+PASS C-J2 (control) fp128 on the card: 64 of 64 lane-boundaries differ
+PASS C-J2 (control) fp256 on the card: 64 of 64 lane-boundaries differ
+PASS C-J3 (control) on the card's binary64 day: reported [(3, 77, 2)]
+PASS J3 fp256: 16 of the 16 drawn lanes (those run) against the desktop's replay at 144 boundaries: 0 differences, 0 of them in marked lanes
+PASS J3 fp64: 16 of the 16 drawn lanes (those run) against the desktop's replay at 144 boundaries: 0 differences, 0 of them in marked lanes
+marks on the card: 0 records
+# 44 checks, 0 failed; ended 2026-11-23 16:45:41 -0700 local

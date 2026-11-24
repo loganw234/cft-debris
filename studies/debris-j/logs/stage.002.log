@@ -1,0 +1,29 @@
+# stage.002.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:18:26 -0700 local (2026-11-23 21:18:26 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   stage: the GPU's run folder in/ (written once: refused if it exists), every file listed in in/EXPECTED.sha256:
+#   tests/ (j_harness.py, i_lib.py, j_run.c, build_j.sh, j_gpu.sh: LF only, no CR byte), the archive cft-fp256-9e8ff270.tar
+#   (its SHA-256 7814576d...), img/ (the 41 short images of the round: I1's 32 systems at s = 1 and the program at degree 7
+#   at s = 2, 4, 8 at three formats, each image's REPEAT count parsed and equal to its folder's s), i1/ (I1's 32 cases: the
+#   s = 1 runs file, E1's, and DEBRIS-I's INIT), i3/ (I3's day runs file at each s, 24 one-hour runs of 6 x 40 / s
+#   segments; the 8 batches' INIT files joined at each format; C-J1's planted INIT; the box's 24 I3 files, each SHA-256
+#   the box's own MANIFEST's), base/ (the 2,688 seed objects at each format), j3/ (J3's 16 lanes' desktop replays), and
+#   plan.json (each derived file's SHA-256 too). Asserted: every s-step runs file is the 40-step one with nseg x 40 / s and
+#   no other byte changed; I3's 8 batches ran one runs file a format (the box's stdout names one SHA-256 for all 8); E1's
+#   s = 1 outputs are the references of J1(a) (e1_s1_outputs.json).
+tests: j_harness.py a8974e0f81511901, i_lib.py 98925848e733127a, j_run.c 7faef139022badee, build_j.sh 5f3bab04dc833d99, j_gpu.sh 1125baa40668c627 (no CR byte in any)
+PASS img: 41 images, the program at s = 1, 2, 4, 8 at each of fp64, fp128, fp256
+PASS i1: 32 cases, each with E1's s = 1 output SHA-256 as J1(a)'s reference
+PASS i3 fp64: the box's 8 batches ran one runs file, 8229608d4942f3e7
+PASS i3 fp128: the box's 8 batches ran one runs file, c124c3f19f9e916d
+PASS i3 fp256: the box's 8 batches ran one runs file, 37690838168a2399
+PASS the base at fp64: 2688 seed objects (T_s 0x1.6614c00000000p+21), rows of 1680 bytes; 2368 of its rows checked against DEBRIS-I's I3 and I5 INIT files, 0 differ; SHA-256 b01777707c73024a3dd5a2efca3e324dd0b647da471aba4f8f2646a011cd86c2
+PASS the base at fp128: 2688 seed objects (T_s 0x1.6614c00000000p+21), rows of 3360 bytes; 2368 of its rows checked against DEBRIS-I's I3 and I5 INIT files, 0 differ; SHA-256 647d3d87b06ea36b25f2102584efee08617e7e1fd0a3bbc15d78f98137d95d5e
+PASS the base at fp256: 2688 seed objects (T_s 0x1.6614c00000000p+21), rows of 6720 bytes; 2368 of its rows checked against DEBRIS-I's I3 and I5 INIT files, 0 differ; SHA-256 f16899ee2cb2b21bef6a349d0e66f333c7aaaad17bcd7e5d5d2db07dfbb9c090
+PASS j3 fp64: the desktop replay's INIT is the 16 drawn lanes of the base
+PASS j3 fp256: the desktop replay's INIT is the 16 drawn lanes of the base
+J3: 2687 lanes (the base less seed index 1595); drawn positions [4, 14, 182, 310, 564, 666, 709, 1008, 1738, 1795, 1905, 2005, 2300, 2328, 2390, 2482] (seed indices [4, 14, 182, 310, 564, 666, 709, 1008, 1739, 1796, 1906, 2006, 2301, 2329, 2391, 2483])
+staged 159 files, 108421828 bytes, in <ledger>/debris-j/gpu-stage/r1/in; plan.json 71de5853b01ce6d1a8d952b71a0ea06ab2308bfafd83d23eb237f6763ce41dec; EXPECTED.sha256 246f9be857fe58c206c52699bcbec1586bb3dc01774e22d8daa192f91c7039ff
+# 10 checks, 0 failed; ended 2026-11-23 14:18:28 -0700 local

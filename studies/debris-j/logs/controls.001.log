@@ -1,0 +1,28 @@
+# controls.001.log, written by j_harness.py (SHA-256 3b76aa37242c6b19a2d18cde5dd2d35ff7e3697a9eaa04985c2a7616d4f56baf)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:00:36 -0700 local (2026-11-23 21:00:36 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   The controls C-J1 to C-J3 on the desktop (libcft's software executor, j_run, depth 512), each stated before
+#   its data and each required to FAIL its comparison as given; a control that does not fail as specified is reported
+#   as failed.
+#   C-J1: I3's 64 lanes at binary256 (DEBRIS-I's 8 batch INIT files joined in batch order), lane 21 (batch 2, lane 5) with
+#       its x (state word 1) one unit in the last place up (toward +infinity), for I3's first hour (6 segments of 40
+#       steps), compared at each 40-step boundary with the box's files (ledger debris-i/box/out/i3/prog-fp256-b*.seg.bin,
+#       their first 6 records): the lane-boundaries that differ must be exactly lane 21 at all 6 boundaries (its state),
+#       and every other lane equal, state and lane byte.
+#   C-J2: I1's program at degree 2 against degree 7 (E1's s = 1 outputs, the same 16 lanes of the test seed, the same 4
+#       boundaries of 40 steps, REDUCE'd), at binary32, 64, 128 and 256: every lane's state must differ at every boundary.
+#   C-J3: the J1(b) comparison of a 64-lane binary64 day made by joining the box's 8 batch files lane by lane (40-step
+#       records) against the box's files: 0 differences; then against the same files with one byte flipped in a copy of
+#       batch 3's file (record 77, lane 2's x, byte 3): it must report exactly batch 3, record 77, lane 2, and nothing
+#       else.
+C-J1's INIT: 24 bytes differ from the joined batches (lane 21, word 1); INIT 2b04690f67269c40b0870d486de6cfb85804259e84d342be13350fd63b827c64
+PASS C-J1 (control) one ulp in lane 21's x: the differing (lane, boundary) pairs are [(21, 1), (21, 2), (21, 3), (21, 4), (21, 5), (21, 6)] (wanted [(21, 1), (21, 2), (21, 3), (21, 4), (21, 5), (21, 6)]), kinds ['state'], over 48 records compared: the comparison FAILS where it must, and only there
+PASS C-J2 (control) fp32: degree 2 against degree 7, 64 of 64 lane-boundaries differ in state (all must)
+PASS C-J2 (control) fp64: degree 2 against degree 7, 64 of 64 lane-boundaries differ in state (all must)
+PASS C-J2 (control) fp128: degree 2 against degree 7, 64 of 64 lane-boundaries differ in state (all must)
+PASS C-J2 (control) fp256: degree 2 against degree 7, 64 of 64 lane-boundaries differ in state (all must)
+PASS C-J3 (its base) the joined box day against the box's files: 0 differences in 1152 records
+PASS C-J3 (control) one byte flipped in a copy of batch 3's file (record 77 = run 12, segment 6; lane 2's x): the comparison reports [(3, 77, 12, 6, 2)], and must report exactly that
+# 7 checks, 0 failed; ended 2026-11-23 14:02:35 -0700 local

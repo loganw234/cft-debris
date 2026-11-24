@@ -1,0 +1,7 @@
+{
+ "pass": true,
+ "device": "cft hip: hip:0 = NVIDIA GeForce RTX 5060 Ti (sm_120, 36 multiprocessors, bus <redacted>, 16283 MiB), HIP platform nvidia, runtime 12090, driver 13040; of 1 visible, CUDA_VISIBLE_DEVICES=1; this libcft: HIP_ARCH 120, stage 64 MiB, page 256 bytes, kernels 40/40/64/40 registers and 4728/4208/16864/4160 bytes local a thread (run/level/seq/aug)",
+ "j_run_sha256": "b3a75460c6240473a892430e763729d9d2d7104743577dfb72d011e70f5a6475",
+ "desktop_test": false,
+ "time": "2026-11-23 14:28:21 -0700"
+}

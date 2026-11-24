@@ -1,0 +1,15 @@
+# buildgate.002.log, written by j_harness.py (SHA-256 d829d97e133a2ebd93378bf5acda3156e8d5b45910cfa1a051f5f000898e7f9b)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:18:10 -0700 local (2026-11-23 21:18:10 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   build_j.sh's refusals, on the desktop (its gpu mode cannot build here; this shows it will not start without
+#   its settings): bash tests/build_j.sh gpu <work> <archive> <tests> must exit non-zero with "CRITERION G0 FAILED" and build
+#   nothing (no work folder made) (1) with none of HIP, HIP_PLATFORM, HIP_ROOT, HIP_ARCH, HIP_CUDA given; (2) with all but
+#   HIP_CUDA; (3) with HIP_PLATFORM=amd; (4) with all five given and a HIP_ROOT holding no bin/hipcc; and each of (1) to (3)
+#   prints every setting it was given.
+PASS (none given) build_j.sh gpu: exit 1, ['CRITERION G0 FAILED: every one of HIP, HIP_PLATFORM, HIP_ROOT, HIP_ARCH and HIP_CUDA must be given']; settings printed: True; work folder made: False
+PASS (HIP_CUDA missing) build_j.sh gpu: exit 1, ['CRITERION G0 FAILED: every one of HIP, HIP_PLATFORM, HIP_ROOT, HIP_ARCH and HIP_CUDA must be given']; settings printed: True; work folder made: False
+PASS (HIP_PLATFORM amd) build_j.sh gpu: exit 1, ['CRITERION G0 FAILED: HIP must be 1 and HIP_PLATFORM nvidia']; settings printed: True; work folder made: False
+PASS (no hipcc under HIP_ROOT) build_j.sh gpu: exit 1, ['CRITERION G0 FAILED: no <repo>-scratch/DEBRIS-J/work/no-such-rocm/bin/hipcc or no /nonexistent/cuda/lib64']; settings printed: True; work folder made: False
+# 4 checks, 0 failed; ended 2026-11-23 14:18:10 -0700 local

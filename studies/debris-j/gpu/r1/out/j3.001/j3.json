@@ -1,0 +1,40 @@
+{
+ "s": 1,
+ "desktop_test": false,
+ "formats": {
+  "fp64": {
+   "hours": 24,
+   "proj_s": 1597.4927423999998,
+   "rc": 0,
+   "abort": null,
+   "timed_calls": 5760,
+   "wall_s": 1499.75367216,
+   "sim_s": 86400.0,
+   "realtime_factor": 57.60946054265269,
+   "lanes": 2687,
+   "marks": [],
+   "diffs": 0,
+   "valid": true,
+   "call_max_ms": 275.604101,
+   "smi_before": "1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 37, 210, P8",
+   "smi_after": "1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 997, P5"
+  },
+  "fp256": {
+   "hours": 24,
+   "proj_s": 2761.077888,
+   "rc": 0,
+   "abort": null,
+   "timed_calls": 5760,
+   "wall_s": 2583.478896226,
+   "sim_s": 86400.0,
+   "realtime_factor": 33.44327686446943,
+   "lanes": 2687,
+   "marks": [],
+   "diffs": 0,
+   "valid": true,
+   "call_max_ms": 465.73509,
+   "smi_before": "1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 997, P5",
+   "smi_after": "1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1957, P5"
+  }
+ }
+}

@@ -1,0 +1,24 @@
+# gpucopy.001.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 16:42:45 -0700 local (2026-11-23 23:42:45 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   gpucopy: the repository's copies of the GPU's aggregate records (studies/debris-j/gpu/<run>/), made from the
+#   ledger's debris-j/gpu/<run>/ as the lead copied it from cft-gpu: every log of logs/, and the json results of each
+#   out/<mode>.<NNN>/ (j0.json, j0c.json, j1.json, j2-plan.json, j2.json, j3.json; no state, no INIT, no output file), each
+#   with the run folder's path written as <root> and every PCI bus address (bus dddd:bb:dd.f) as "bus <redacted>"; the lines
+#   changed are counted for each copy. Asserted: after the copy, no file under studies/debris-j/gpu/<run>/ holds a bus
+#   address, the run folder's path, or a home path of the desktop.
+copied gpu/r1/logs/gpu_j0.001.log: 0 lines changed; SHA-256 92c85fa02a3edcae249dc7620cadd7c39e2075fe721b1cafc11f4bc35c5f38eb (the ledger's 92c85fa02a3edcae249dc7620cadd7c39e2075fe721b1cafc11f4bc35c5f38eb)
+copied gpu/r1/logs/gpu_j0c.001.log: 0 lines changed; SHA-256 088fcf18a4cc90f32224b10b29eef352d774d73222b792d1c90e88d7030727fd (the ledger's 088fcf18a4cc90f32224b10b29eef352d774d73222b792d1c90e88d7030727fd)
+copied gpu/r1/logs/gpu_j1.001.log: 0 lines changed; SHA-256 fc3b159a1a58e6179eded6e999d867bf143690e46a401769eb4b88daa73b3468 (the ledger's fc3b159a1a58e6179eded6e999d867bf143690e46a401769eb4b88daa73b3468)
+copied gpu/r1/logs/gpu_j2.001.log: 0 lines changed; SHA-256 723fc833c81423f59f8f3d68dcbe2c61190a641fc773e34107090a9c22f1f3fc (the ledger's 723fc833c81423f59f8f3d68dcbe2c61190a641fc773e34107090a9c22f1f3fc)
+copied gpu/r1/logs/gpu_j3.001.log: 0 lines changed; SHA-256 0fbc2387d1503dd0b06ecbc08348950f0d2aa16e41ab84765e773e414855bc48 (the ledger's 0fbc2387d1503dd0b06ecbc08348950f0d2aa16e41ab84765e773e414855bc48)
+copied gpu/r1/out/j0.001/j0.json: 1 lines changed; SHA-256 48a26493485299151b37ef548f70255bf2aa3decc46ef4c07201cd9d50611ae9 (the ledger's 7a4a12e39e07b2ef264007025b16861b514807bc20e1444d83bb3c1aeccd641f)
+copied gpu/r1/out/j0c.001/j0c.json: 0 lines changed; SHA-256 612bb5a06eb138f8b9a8c101014408c47b45f5059dfb954020a26b3f4e673ca5 (the ledger's 612bb5a06eb138f8b9a8c101014408c47b45f5059dfb954020a26b3f4e673ca5)
+copied gpu/r1/out/j1.001/j1.json: 0 lines changed; SHA-256 f19300578d2c3c18fa2f8f8afa08be5eaed05d140a3e815bfc89ef1d3bc1c0a5 (the ledger's f19300578d2c3c18fa2f8f8afa08be5eaed05d140a3e815bfc89ef1d3bc1c0a5)
+copied gpu/r1/out/j2.001/j2-plan.json: 0 lines changed; SHA-256 b965596ffaa83fa20f779721e2a08d8406d519166b00ef8476fd0a50e3d059aa (the ledger's b965596ffaa83fa20f779721e2a08d8406d519166b00ef8476fd0a50e3d059aa)
+copied gpu/r1/out/j2.001/j2.json: 0 lines changed; SHA-256 39cadde3c8644b5ada5919fc6067de4d9fb7fda7e73ee8705c824a3493a98f0d (the ledger's 39cadde3c8644b5ada5919fc6067de4d9fb7fda7e73ee8705c824a3493a98f0d)
+copied gpu/r1/out/j3.001/j3.json: 0 lines changed; SHA-256 21111696c58634b0d111c26b1ebd884b8f44f6624b6a99ee551426f99da2a1e5 (the ledger's 21111696c58634b0d111c26b1ebd884b8f44f6624b6a99ee551426f99da2a1e5)
+PASS 11 files copied; none holds a bus address, the run folder's path or a home path
+# 1 checks, 0 failed; ended 2026-11-23 16:42:45 -0700 local

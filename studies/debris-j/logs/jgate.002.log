@@ -1,0 +1,93 @@
+# jgate.002.log, written by j_harness.py (SHA-256 3b76aa37242c6b19a2d18cde5dd2d35ff7e3697a9eaa04985c2a7616d4f56baf)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 13:58:43 -0700 local (2026-11-23 20:58:43 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   j_run's desktop gate (libcft's software executor; j_run and DEBRIS-I's i_run built from one libcft.a by
+#   tests/build_j.sh desktop; depth 512; no artifact):
+#   (a) on I1's 32 cases at s = 40 (DEBRIS-I's staged 40-step images, runs and INIT files), j_run run with --keep-every 1
+#       writes .seg.bin and .marks.bin byte-identical to i_run's, and its .seg.bin has R1's SHA-256;
+#   (b) with --warmup-lanes 8 and --abort-ms 60000 j_run writes the same bytes again (the warm-up's output is discarded), on
+#       four of the cases (the program at degree 7 at binary64; grav at binary256, tides at binary32, drag at binary128);
+#   (c) the stop path: --expect-device with a name, on the software executor (whose open prints no device line), stops
+#       with exit 5 and a "device none" line, before any "image " line, with no output but PREFIX.open.txt;
+#   (d) --abort-ms 0.000001 stops the driver after the process's second call, exit 6, with "ABORT" on stdout, the
+#       provenance's status ABORTED, and that call's segment line printed;
+#   (e) mode load loads every image of the round (CFT_OK: the 32 of I1's systems at s = 1 and the program's 9 at s = 2, 4,
+#       8), and a copy of one with one header byte changed is refused, exit 3;
+#   (f) each provenance file of (a) names the SHA-256 of the image, runs and INIT files, and of its outputs as they are
+#       on disk.
+j_run 265b5e569da5a69648f59b8373dfc6020dae4e14d66ced7e2998712e34b5f3aa; i_run bb5f5af68524d1766782f04be286722ac1168c313812863f0303be2012acce93 (build_j.sh desktop)
+PASS (a) i1-program-d2-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 192564eb8bb5cc6de13232f81345aba596f51ac6062191ca8be4ec10d678ff7d, R1's 192564eb8bb5cc6de13232f81345aba596f51ac6062191ca8be4ec10d678ff7d
+PASS (f) i1-program-d2-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d2-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 8c8e189bf344eb7febbf4247061f0ecf716799fffeadd9125c6a159c3cd11c47, R1's 8c8e189bf344eb7febbf4247061f0ecf716799fffeadd9125c6a159c3cd11c47
+PASS (f) i1-program-d2-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d2-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin a132d8def556d86e5384a77062b4235d56485e029f8979acf5da16ad13cac59a, R1's a132d8def556d86e5384a77062b4235d56485e029f8979acf5da16ad13cac59a
+PASS (f) i1-program-d2-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d2-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin b43d82927fc41ea2f6d04b0b3d10fd8771ed57ea15b034b0e6e3e8be5cce6f66, R1's b43d82927fc41ea2f6d04b0b3d10fd8771ed57ea15b034b0e6e3e8be5cce6f66
+PASS (f) i1-program-d2-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d7-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 783e4ab75676d40f81515945c7d1869631e2bbf1cde2539beec5c996c9360b3a, R1's 783e4ab75676d40f81515945c7d1869631e2bbf1cde2539beec5c996c9360b3a
+PASS (f) i1-program-d7-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d7-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin ae9e56115d4c7ab1cd8ef084fef6617614239665503259b928e17704dfd3802a, R1's ae9e56115d4c7ab1cd8ef084fef6617614239665503259b928e17704dfd3802a
+PASS (f) i1-program-d7-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d7-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 458b2a1cbaf038d72c3984bd8689c5d2373beb19bbb0417b47e7eb26032eed44, R1's 458b2a1cbaf038d72c3984bd8689c5d2373beb19bbb0417b47e7eb26032eed44
+PASS (f) i1-program-d7-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1-program-d7-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin f07e59b4275c440a0344075a550dae91b0f7fcbafbc9f86c461cf9394a5beb9a, R1's f07e59b4275c440a0344075a550dae91b0f7fcbafbc9f86c461cf9394a5beb9a
+PASS (b) i1-program-d7-fp64: with the warm-up (warmup lanes 8 call_ns 699872400 flags 0x10 bus 0x0 (discard) the same bytes: True
+PASS (f) i1-program-d7-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-bodies-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 888cf809c1c98fc12a5e88e3db46f859b2e311dc9e55b9f7f4770b41e53c5faf, R1's 888cf809c1c98fc12a5e88e3db46f859b2e311dc9e55b9f7f4770b41e53c5faf
+PASS (f) i1p-part-bodies-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-bodies-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 2b70fd2cadc10d8e1792a68915b155e65cb803ced50bd8f337f76e12692a1d1a, R1's 2b70fd2cadc10d8e1792a68915b155e65cb803ced50bd8f337f76e12692a1d1a
+PASS (f) i1p-part-bodies-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-bodies-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 7c22eb3dbee928f12992a26b5a1416fe0baeab4c042803cdff9ba27e75d90d0c, R1's 7c22eb3dbee928f12992a26b5a1416fe0baeab4c042803cdff9ba27e75d90d0c
+PASS (f) i1p-part-bodies-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-bodies-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 5d1bb7a983e3628aac633a1ba16a8782f6a5972730b00219510bec8b1f677e2d, R1's 5d1bb7a983e3628aac633a1ba16a8782f6a5972730b00219510bec8b1f677e2d
+PASS (f) i1p-part-bodies-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-central-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 6a18edc6358f975fc99c738fc5189981db6e66b4f2a20afa628e3bba3c262446, R1's 6a18edc6358f975fc99c738fc5189981db6e66b4f2a20afa628e3bba3c262446
+PASS (f) i1p-part-central-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-central-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin f0abdcaf7228e728d9900b06301be2b8ad0a92e42f9809449a4d3dad802793a8, R1's f0abdcaf7228e728d9900b06301be2b8ad0a92e42f9809449a4d3dad802793a8
+PASS (f) i1p-part-central-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-central-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin eb351fccb801d05d379ed52607c8c1911861cbf561be65cf7a3358f9befaf507, R1's eb351fccb801d05d379ed52607c8c1911861cbf561be65cf7a3358f9befaf507
+PASS (f) i1p-part-central-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-central-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin a198ee68189cc45ebb77333869b1951a805bccd95c0fb739fa171171e251ea58, R1's a198ee68189cc45ebb77333869b1951a805bccd95c0fb739fa171171e251ea58
+PASS (f) i1p-part-central-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-drag-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 9467f8830d46fc1741050fb9af170217050127b073037b29443ed08744eff529, R1's 9467f8830d46fc1741050fb9af170217050127b073037b29443ed08744eff529
+PASS (b) i1p-part-drag-fp128: with the warm-up (warmup lanes 8 call_ns 25016900 flags 0x10 bus 0x0 (discarde) the same bytes: True
+PASS (f) i1p-part-drag-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-drag-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin f017b67639315c0d0c2bb0dd2b48daac41cfcf8f1c51586067de241d9dc711ec, R1's f017b67639315c0d0c2bb0dd2b48daac41cfcf8f1c51586067de241d9dc711ec
+PASS (f) i1p-part-drag-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-drag-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin f4d280299adb73472f9c7eabce52424927791d909af6d25af96f612139321a02, R1's f4d280299adb73472f9c7eabce52424927791d909af6d25af96f612139321a02
+PASS (f) i1p-part-drag-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-drag-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin d861962045a80c29902bdc49ddea74f8a61725cf9d7c71b4690743a39c8bd1bc, R1's d861962045a80c29902bdc49ddea74f8a61725cf9d7c71b4690743a39c8bd1bc
+PASS (f) i1p-part-drag-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-frame-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 129226ad926f39a76ca1ade9a454fc4b5f5011d499fcf1cf246bc13c0c637702, R1's 129226ad926f39a76ca1ade9a454fc4b5f5011d499fcf1cf246bc13c0c637702
+PASS (f) i1p-part-frame-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-frame-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 3ab0f9e91709b3c837c5d9074b7ba138abb2451a9d8c0453dedf866033cc5937, R1's 3ab0f9e91709b3c837c5d9074b7ba138abb2451a9d8c0453dedf866033cc5937
+PASS (f) i1p-part-frame-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-frame-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 0885108fb6865bb286a3a261a9455a410db3ef59d5f5cacb94fc54cd183c53ea, R1's 0885108fb6865bb286a3a261a9455a410db3ef59d5f5cacb94fc54cd183c53ea
+PASS (f) i1p-part-frame-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-frame-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 231e94e22e71ee4e698411f151353df6e6263015f552d5223e32ff361b7f8975, R1's 231e94e22e71ee4e698411f151353df6e6263015f552d5223e32ff361b7f8975
+PASS (f) i1p-part-frame-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-grav-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 0fb06747ee068ca6c527095233d8667c34988ecc2c7db3075d1c8f597754855f, R1's 0fb06747ee068ca6c527095233d8667c34988ecc2c7db3075d1c8f597754855f
+PASS (f) i1p-part-grav-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-grav-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 5a04468bf2ddf4a44d9764a9ef064d3c8d5f93b4076ad58fd99dfdaed1c8ed1f, R1's 5a04468bf2ddf4a44d9764a9ef064d3c8d5f93b4076ad58fd99dfdaed1c8ed1f
+PASS (b) i1p-part-grav-fp256: with the warm-up (warmup lanes 8 call_ns 109829100 flags 0x10 bus 0x0 (discard) the same bytes: True
+PASS (f) i1p-part-grav-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-grav-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 5c0f4f21ab2cbbecf4ad8e741207c4e1ff3d2b6d523289d5e36e4c1ca437f04e, R1's 5c0f4f21ab2cbbecf4ad8e741207c4e1ff3d2b6d523289d5e36e4c1ca437f04e
+PASS (f) i1p-part-grav-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-grav-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 261a82467229cfba18a70425c467bd07b57f0b3cff7c7ada3208a9e2e2cc2871, R1's 261a82467229cfba18a70425c467bd07b57f0b3cff7c7ada3208a9e2e2cc2871
+PASS (f) i1p-part-grav-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-tides-fp128: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin c2a3a0fc8b3c5ca44ebd6a8f7b3bd0872cef75e744d77061540ecccf117baf16, R1's c2a3a0fc8b3c5ca44ebd6a8f7b3bd0872cef75e744d77061540ecccf117baf16
+PASS (f) i1p-part-tides-fp128: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-tides-fp256: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin c6b956e604c40187fe6332eaaca493f56193bf9ad27db9f5597f124675f4c507, R1's c6b956e604c40187fe6332eaaca493f56193bf9ad27db9f5597f124675f4c507
+PASS (f) i1p-part-tides-fp256: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-tides-fp32: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin 14f0e2e0d85b7227c3b01ccaa1eebb306b3913a8deeb16e63d3bebac4a1c788e, R1's 14f0e2e0d85b7227c3b01ccaa1eebb306b3913a8deeb16e63d3bebac4a1c788e
+PASS (b) i1p-part-tides-fp32: with the warm-up (warmup lanes 8 call_ns 25863200 flags 0x10 bus 0x0 (discarde) the same bytes: True
+PASS (f) i1p-part-tides-fp32: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (a) i1p-part-tides-fp64: j_run's .seg.bin and .marks.bin equal i_run's: True; .seg.bin d7d7ecdaf25fba09a264a96823988b716390f6a2ce66ed9a1d07ac7fba8c204e, R1's d7d7ecdaf25fba09a264a96823988b716390f6a2ce66ed9a1d07ac7fba8c204e
+PASS (f) i1p-part-tides-fp64: the provenance names the inputs' and the 3 outputs' SHA-256 as on disk
+PASS (c) --expect-device on the software executor: exit 5, device line 'none', image line False, files ['stop.open.txt', 'stop.stdout.txt']
+PASS (d) --abort-ms 0.000001: exit 6, 2 segment lines, calls 2, ABORT 'call 2 (run 0 segment 2) took 839.5 ms, over 1e-06 ms', provenance 'ABORTED call 2 (run 0 segment 2) took 839.5 ms, over 1e-06 ms'
+PASS (e) mode load: 41 of 41 images CFT_OK, exit 0
+PASS (e) a copy with one header byte changed: exit 3, ): this image's magic is 0x50544642, not 0x50544643 ("CFTP"), so it is not a program image
+# 72 checks, 0 failed; ended 2026-11-23 14:00:29 -0700 local

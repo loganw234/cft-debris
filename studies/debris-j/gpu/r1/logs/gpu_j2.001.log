@@ -1,0 +1,181 @@
+# gpu_j2.001.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 15:05:20 -0700 local (2026-11-23 22:05:20 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   gpu-j2: J2, the rates (a measurement, no pass condition; fixed in the plan and here before any data).
+#    configurations: the program at degree 7 at the chosen s (out/j0c/j0c.json), at binary64, binary128 and binary256;
+#       batches of 512, 2,048, 8,192 and 32,768 lanes, tiling DEBRIS-H's 2,688 seed objects in seed index order (lane i is
+#       seed object i mod 2,688), made here from the staged base;
+#    a run's length, fixed for every configuration before the first run (out/j2/j2-plan.json): with c the format's
+#       2,048-lane call time at the chosen s (J0c's), a call of B lanes is projected at ceil(B / 2,048) x c and an hour at
+#       (240 / s) calls; a run is the fewest whole hours from T_s that fill 60 s if they take at most 180 s; where one hour
+#       would take more than 180 s, the fewest whole segments of the first hour that fill 60 s; at most the 24 staged hours
+#       (a run that 24 hours cannot fill to 60 s is run at 24 hours, and its wall time is reported as it is);
+#    a run: one process, hip:0 at depth 512, a warm-up call of 8 lanes, --abort-ms 1000, the states kept only at each run's
+#       end; the timed region from the first call after the warm-up to the last call's end (j_run's REPORT);
+#    the statistic: X = object-seconds summed over the lanes / the timed wall time = B x 15 s x s x timed calls / wall (I5's
+#       definition); each format's batch with the largest X is run twice more, and its median and range are reported;
+#    validity: the device line equals J0's; nvidia-smi before and after the run (after a 2-s settle): memory used at most
+#       --mem-max-mib and utilisation at most --util-max (Phase 0's thresholds, the lead's); exit 0. A run failing validity
+#       alone repeats once, and failing again is void. A run whose call passes 1,000 ms after the warm-up is stopped by the
+#       driver (exit 6), logged with that call's time, reported as stopped by the rule, and not repeated; the other runs go
+#       on. The VM's CPU load over each run (/proc/stat) is recorded; the desktop's own is the lead's to record beside.
+PASS B0 the 159 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+this attempt's outputs: out/j2.001; J0's: j0.001; J0c's: j0c.001
+the plan, fixed before the first run: out/j2.001/j2-plan.json SHA-256 b965596ffaa83fa20f779721e2a08d8406d519166b00ef8476fd0a50e3d059aa
+  fp64 B=512: 2 whole hours (projected 66.6 s)
+  fp64 B=2048: 2 whole hours (projected 66.6 s)
+  fp64 B=8192: 1 whole hours (projected 133.1 s)
+  fp64 B=32768: 28 segments of the first hour (projected 62.1 s; an hour 532.5 s)
+  fp128 B=512: 2 whole hours (projected 79.8 s)
+  fp128 B=2048: 2 whole hours (projected 79.8 s)
+  fp128 B=8192: 1 whole hours (projected 159.5 s)
+  fp128 B=32768: 23 segments of the first hour (projected 61.2 s; an hour 638.2 s)
+  fp256 B=512: 2 whole hours (projected 115.0 s)
+  fp256 B=2048: 2 whole hours (projected 115.0 s)
+  fp256 B=8192: 63 segments of the first hour (projected 60.4 s; an hour 230.1 s)
+  fp256 B=32768: 16 segments of the first hour (projected 61.4 s; an hour 920.4 s)
+lock taken (j2-fp64-B512-r1-a1) at 15:05:21, after 0.0 s
+nvidia-smi before j2-fp64-B512-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 35, 210, P8
+processes like GPU work, other than this harness: none
+run j2-fp64-B512-r1-a1: exit 0, wall 62.5 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 100375622 flags 0x10 bus ; call max 132.6 ms
+nvidia-smi after j2-fp64-B512-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 2842, P5
+lock released (j2-fp64-B512-r1-a1) at 15:06:26
+RUN j2-fp64-B512-r1-a1: X 59959.7 obj-s/s, timed 480 calls in 61.48 s (call 124.9 to 132.6 ms), VALID; VM busy 0.108
+lock taken (j2-fp64-B2048-r1-a1) at 15:06:26, after 0.0 s
+nvidia-smi before j2-fp64-B2048-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 2842, P5
+processes like GPU work, other than this harness: none
+run j2-fp64-B2048-r1-a1: exit 0, wall 64.4 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 103124421 flags 0x10 bus ; call max 137.1 ms
+nvidia-smi after j2-fp64-B2048-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P5
+lock released (j2-fp64-B2048-r1-a1) at 15:07:32
+RUN j2-fp64-B2048-r1-a1: X 233058.6 obj-s/s, timed 480 calls in 63.27 s (call 128.2 to 137.1 ms), VALID; VM busy 0.095
+lock taken (j2-fp64-B8192-r1-a1) at 15:07:32, after 0.0 s
+nvidia-smi before j2-fp64-B8192-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 1065, P5
+processes like GPU work, other than this harness: none
+run j2-fp64-B8192-r1-a1: exit 0, wall 127.7 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 94161495 flags 0x10 bus 0; call max 539.4 ms
+nvidia-smi after j2-fp64-B8192-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 780, P3
+lock released (j2-fp64-B8192-r1-a1) at 15:09:43
+RUN j2-fp64-B8192-r1-a1: X 233236.6 obj-s/s, timed 240 calls in 126.44 s (call 517.7 to 539.4 ms), VALID; VM busy 0.084
+lock taken (j2-fp64-B32768-r1-a1) at 15:09:43, after 0.0 s
+nvidia-smi before j2-fp64-B32768-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 780, P5
+processes like GPU work, other than this harness: none
+run j2-fp64-B32768-r1-a1: exit 6, wall 3.2 s; device line; segments 1, calls 2, timed 1, marks 0; warm-up warmup lanes 8 call_ns 96966462 flags 0x10 bus 0; call max 2163.9 ms ABORT call 2 (run 0 segment 1) took 2163.9 ms, over 1000 ms
+nvidia-smi after j2-fp64-B32768-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P5
+lock released (j2-fp64-B32768-r1-a1) at 15:09:49
+RUN j2-fp64-B32768-r1-a1: X 227147.0 obj-s/s, timed 1 calls in 2.16 s (call 2163.9 to 2163.9 ms), STOPPED by the 1,000-ms rule: call 2 (run 0 segment 1) took 2163.9 ms, over 1000 ms; VM busy 0.131
+lock taken (j2-fp128-B512-r1-a1) at 15:09:49, after 0.0 s
+nvidia-smi before j2-fp128-B512-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2842, P5
+processes like GPU work, other than this harness: none
+run j2-fp128-B512-r1-a1: exit 0, wall 75.3 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 114983819 flags 0x10 bus ; call max 162.0 ms
+nvidia-smi after j2-fp128-B512-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 2872, P5
+lock released (j2-fp128-B512-r1-a1) at 15:11:06
+RUN j2-fp128-B512-r1-a1: X 49630.0 obj-s/s, timed 480 calls in 74.28 s (call 151.9 to 162.0 ms), VALID; VM busy 0.102
+lock taken (j2-fp128-B2048-r1-a1) at 15:11:06, after 0.0 s
+nvidia-smi before j2-fp128-B2048-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 2872, P5
+processes like GPU work, other than this harness: none
+run j2-fp128-B2048-r1-a1: exit 0, wall 78.9 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 112771884 flags 0x10 bus ; call max 166.3 ms
+nvidia-smi after j2-fp128-B2048-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P3
+lock released (j2-fp128-B2048-r1-a1) at 15:12:28
+RUN j2-fp128-B2048-r1-a1: X 189867.4 obj-s/s, timed 480 calls in 77.66 s (call 157.4 to 166.3 ms), VALID; VM busy 0.084
+lock taken (j2-fp128-B8192-r1-a1) at 15:12:28, after 0.0 s
+nvidia-smi before j2-fp128-B8192-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 1155, P5
+processes like GPU work, other than this harness: none
+run j2-fp128-B8192-r1-a1: exit 0, wall 156.0 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 109448257 flags 0x10 bus ; call max 659.1 ms
+nvidia-smi after j2-fp128-B8192-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1492, P3
+lock released (j2-fp128-B8192-r1-a1) at 15:15:06
+RUN j2-fp128-B8192-r1-a1: X 190797.0 obj-s/s, timed 240 calls in 154.57 s (call 631.3 to 659.1 ms), VALID; VM busy 0.085
+lock taken (j2-fp128-B32768-r1-a1) at 15:15:06, after 0.0 s
+nvidia-smi before j2-fp128-B32768-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1492, P5
+processes like GPU work, other than this harness: none
+run j2-fp128-B32768-r1-a1: exit 6, wall 4.0 s; device line; segments 1, calls 2, timed 1, marks 0; warm-up warmup lanes 8 call_ns 107128502 flags 0x10 bus ; call max 2555.0 ms ABORT call 2 (run 0 segment 1) took 2555.0 ms, over 1000 ms
+nvidia-smi after j2-fp128-B32768-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 2377, P5
+lock released (j2-fp128-B32768-r1-a1) at 15:15:13
+RUN j2-fp128-B32768-r1-a1: X 192375.9 obj-s/s, timed 1 calls in 2.55 s (call 2555.0 to 2555.0 ms), STOPPED by the 1,000-ms rule: call 2 (run 0 segment 1) took 2555.0 ms, over 1000 ms; VM busy 0.075
+lock taken (j2-fp256-B512-r1-a1) at 15:15:13, after 0.0 s
+nvidia-smi before j2-fp256-B512-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 2377, P5
+processes like GPU work, other than this harness: none
+run j2-fp256-B512-r1-a1: exit 0, wall 107.0 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 145719860 flags 0x10 bus ; call max 228.8 ms
+nvidia-smi after j2-fp256-B512-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 1507, P3
+lock released (j2-fp256-B512-r1-a1) at 15:17:02
+RUN j2-fp256-B512-r1-a1: X 34826.1 obj-s/s, timed 480 calls in 105.85 s (call 215.1 to 228.8 ms), VALID; VM busy 0.101
+lock taken (j2-fp256-B2048-r1-a1) at 15:17:02, after 0.0 s
+nvidia-smi before j2-fp256-B2048-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 1507, P5
+processes like GPU work, other than this harness: none
+run j2-fp256-B2048-r1-a1: exit 0, wall 111.3 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 142958593 flags 0x10 bus ; call max 235.2 ms
+nvidia-smi after j2-fp256-B2048-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 2392, P5
+lock released (j2-fp256-B2048-r1-a1) at 15:18:56
+RUN j2-fp256-B2048-r1-a1: X 134252.7 obj-s/s, timed 480 calls in 109.83 s (call 222.9 to 235.2 ms), VALID; VM busy 0.084
+lock taken (j2-fp256-B8192-r1-a1) at 15:18:56, after 0.0 s
+nvidia-smi before j2-fp256-B8192-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 2392, P5
+processes like GPU work, other than this harness: none
+run j2-fp256-B8192-r1-a1: exit 0, wall 58.8 s; device line; segments 63, calls 64, timed 63, marks 0; warm-up warmup lanes 8 call_ns 143102893 flags 0x10 bus ; call max 931.7 ms
+nvidia-smi after j2-fp256-B8192-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 41, 2872, P5
+lock released (j2-fp256-B8192-r1-a1) at 15:19:57
+RUN j2-fp256-B8192-r1-a1: X 134246.5 obj-s/s, timed 63 calls in 57.67 s (call 894.8 to 931.7 ms), VALID; VM busy 0.084
+lock taken (j2-fp256-B32768-r1-a1) at 15:19:58, after 0.0 s
+nvidia-smi before j2-fp256-B32768-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1462, P5
+processes like GPU work, other than this harness: none
+run j2-fp256-B32768-r1-a1: exit 6, wall 5.6 s; device line; segments 1, calls 2, timed 1, marks 0; warm-up warmup lanes 8 call_ns 143028228 flags 0x10 bus ; call max 3667.3 ms ABORT call 2 (run 0 segment 1) took 3667.3 ms, over 1000 ms
+nvidia-smi after j2-fp256-B32768-r1-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 2872, P5
+lock released (j2-fp256-B32768-r1-a1) at 15:20:06
+RUN j2-fp256-B32768-r1-a1: X 134028.7 obj-s/s, timed 1 calls in 3.67 s (call 3667.3 to 3667.3 ms), STOPPED by the 1,000-ms rule: call 2 (run 0 segment 1) took 3667.3 ms, over 1000 ms; VM busy 0.077
+lock taken (j2-fp128-B8192-r2-a1) at 15:20:06, after 0.0 s
+nvidia-smi before j2-fp128-B8192-r2-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 2842, P5
+processes like GPU work, other than this harness: none
+run j2-fp128-B8192-r2-a1: exit 0, wall 155.7 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 108151345 flags 0x10 bus ; call max 657.0 ms
+nvidia-smi after j2-fp128-B8192-r2-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1920, P5
+lock released (j2-fp128-B8192-r2-a1) at 15:22:44
+RUN j2-fp128-B8192-r2-a1: X 191230.8 obj-s/s, timed 240 calls in 154.22 s (call 629.9 to 657.0 ms), VALID; VM busy 0.084
+lock taken (j2-fp128-B8192-r3-a1) at 15:22:44, after 0.0 s
+nvidia-smi before j2-fp128-B8192-r3-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1920, P5
+processes like GPU work, other than this harness: none
+run j2-fp128-B8192-r3-a1: exit 0, wall 155.6 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 106198558 flags 0x10 bus ; call max 658.3 ms
+nvidia-smi after j2-fp128-B8192-r3-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1920, P3
+lock released (j2-fp128-B8192-r3-a1) at 15:25:22
+RUN j2-fp128-B8192-r3-a1: X 191312.7 obj-s/s, timed 240 calls in 154.15 s (call 629.7 to 658.3 ms), VALID; VM busy 0.084
+lock taken (j2-fp256-B2048-r2-a1) at 15:25:22, after 0.0 s
+nvidia-smi before j2-fp256-B2048-r2-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1920, P5
+processes like GPU work, other than this harness: none
+run j2-fp256-B2048-r2-a1: exit 0, wall 110.6 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 144717566 flags 0x10 bus ; call max 237.7 ms
+nvidia-smi after j2-fp256-B2048-r2-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1462, P5
+lock released (j2-fp256-B2048-r2-a1) at 15:27:15
+RUN j2-fp256-B2048-r2-a1: X 134394.9 obj-s/s, timed 480 calls in 109.72 s (call 221.7 to 237.7 ms), VALID; VM busy 0.084
+lock taken (j2-fp256-B2048-r3-a1) at 15:27:15, after 0.0 s
+nvidia-smi before j2-fp256-B2048-r3-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1462, P5
+processes like GPU work, other than this harness: none
+run j2-fp256-B2048-r3-a1: exit 0, wall 110.9 s; device line; segments 480, calls 481, timed 480, marks 0; warm-up warmup lanes 8 call_ns 140990008 flags 0x10 bus ; call max 234.8 ms
+nvidia-smi after j2-fp256-B2048-r3-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P5
+lock released (j2-fp256-B2048-r3-a1) at 15:29:08
+RUN j2-fp256-B2048-r3-a1: X 134434.1 obj-s/s, timed 480 calls in 109.69 s (call 222.6 to 234.8 ms), VALID; VM busy 0.084
+lock taken (j2-fp64-B8192-r2-a1) at 15:29:08, after 0.0 s
+nvidia-smi before j2-fp64-B8192-r2-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P5
+processes like GPU work, other than this harness: none
+run j2-fp64-B8192-r2-a1: exit 0, wall 127.5 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 103600413 flags 0x10 bus ; call max 541.0 ms
+nvidia-smi after j2-fp64-B8192-r2-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P3
+lock released (j2-fp64-B8192-r2-a1) at 15:31:18
+RUN j2-fp64-B8192-r2-a1: X 233704.4 obj-s/s, timed 240 calls in 126.19 s (call 516.1 to 541.0 ms), VALID; VM busy 0.084
+lock taken (j2-fp64-B8192-r3-a1) at 15:31:18, after 0.0 s
+nvidia-smi before j2-fp64-B8192-r3-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P5
+processes like GPU work, other than this harness: none
+run j2-fp64-B8192-r3-a1: exit 0, wall 127.7 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 98204427 flags 0x10 bus 0; call max 545.9 ms
+nvidia-smi after j2-fp64-B8192-r3-a1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 40, 2872, P3
+lock released (j2-fp64-B8192-r3-a1) at 15:33:28
+RUN j2-fp64-B8192-r3-a1: X 233407.4 obj-s/s, timed 240 calls in 126.35 s (call 517.7 to 545.9 ms), VALID; VM busy 0.084
+per-run records: out/j2.001/j2.json SHA-256 39cadde3c8644b5ada5919fc6067de4d9fb7fda7e73ee8705c824a3493a98f0d
+FIG J2 fp64 B=512 s=1: X 59959.7 obj-s/s (valid)
+FIG J2 fp64 B=2048 s=1: X 233058.6 obj-s/s (valid)
+FIG J2 fp64 B=8192 s=1: X 233236.6 obj-s/s (valid)
+FIG J2 fp64 B=32768 s=1: X 227147.0 obj-s/s (stopped by the rule)
+FIG J2 fp64 best batch 8192: 3 valid samples, median 233407.4, range 233236.6 to 233704.4 obj-s/s
+FIG J2 fp128 B=512 s=1: X 49630.0 obj-s/s (valid)
+FIG J2 fp128 B=2048 s=1: X 189867.4 obj-s/s (valid)
+FIG J2 fp128 B=8192 s=1: X 190797.0 obj-s/s (valid)
+FIG J2 fp128 B=32768 s=1: X 192375.9 obj-s/s (stopped by the rule)
+FIG J2 fp128 best batch 8192: 3 valid samples, median 191230.8, range 190797.0 to 191312.7 obj-s/s
+FIG J2 fp256 B=512 s=1: X 34826.1 obj-s/s (valid)
+FIG J2 fp256 B=2048 s=1: X 134252.7 obj-s/s (valid)
+FIG J2 fp256 B=8192 s=1: X 134246.5 obj-s/s (valid)
+FIG J2 fp256 B=32768 s=1: X 134028.7 obj-s/s (stopped by the rule)
+FIG J2 fp256 best batch 2048: 3 valid samples, median 134394.9, range 134252.7 to 134434.1 obj-s/s
+# 1 checks, 0 failed; ended 2026-11-23 15:33:28 -0700 local

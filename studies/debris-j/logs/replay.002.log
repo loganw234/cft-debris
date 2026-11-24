@@ -1,0 +1,17 @@
+# replay.002.log, written by j_harness.py (SHA-256 551c8c2f695b934aed3c247ff828fc5f4b27574631c814a8d33345d2e0c72eea)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 16:45:38 -0700 local (2026-11-23 23:45:38 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   replay: a marked lane-segment of the card replayed by cftc's reference interpreter (cft_golden.lang.run at
+#   9e8ff270, mpmath), from the mark record's boundary state before the mark (the lane's whole scratch: its state and lane
+#   params) with the run's bank params, for the segment's s steps; the replay's state is compared with the card's state
+#   after the segment (the NaN rule: equal bits, or both NaN). Equal: the run stands. Not equal: that lane's later states
+#   are void and the lane is redone from the replayed state. Its selftest (no mark on the card needed): unmarked
+#   lane-segments of the desktop's own outputs, replayed the same way, must equal the executor's state (E1's I1 program at
+#   degree 7, binary64, s = 1, run 0's segment 1, lanes 0 and 1; and E1(iii)'s binary256 at s = 8, segment 1, lane 0).
+PASS selftest: I1 d7 binary64 s = 1, run 0 segment 1, lane 0: the interpreter's state equals the executor's (flags 0x10, the executor's lane byte 0x10)
+PASS selftest: I1 d7 binary64 s = 1, run 0 segment 1, lane 1: the interpreter's state equals the executor's (flags 0x10, the executor's lane byte 0x10)
+PASS selftest: E1(iii) binary256 s = 8, run 0 segment 1, lane 0: the interpreter's state equals the executor's (flags 0x10, lane byte 0x10)
+the card's marks replayed: 0
+# 3 checks, 0 failed; ended 2026-11-23 16:45:40 -0700 local

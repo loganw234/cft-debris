@@ -1,0 +1,18 @@
+# j3ref.001.log, written by j_harness.py (SHA-256 f03c22733c1ad2a25653d25f36230b1329ebe63cd8e6e14ab9ceb965cf1654c9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:03:14 -0700 local (2026-11-23 21:03:14 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   j3ref: the desktop's replays for J3's check, fixed before any card run: J3's lanes are DEBRIS-H's 2,688 seed
+#   objects less seed index 1595 (2,687, in seed index order); 16 of them drawn by random.Random(20261124).sample(range(2687),
+#   16), sorted; each replayed on libcft's software executor (j_run, no artifact, depth 512) for the whole day of I3's runs
+#   (24 one-hour runs of 6 segments of 40 steps from DEBRIS-H's T_s) at binary64 and binary256, the 40-step image
+#   (DEBRIS-I's program at degree 7, recompiled here, its SHA-256 DEBRIS-I's), keeping every boundary. Asserted: each INIT
+#   row is the base's (itself checked against DEBRIS-I's INIT files); every run exits 0; outputs' SHA-256 logged; marks
+#   counted. The outputs are per-object states: the ledger's debris-j/desktop/j3ref/.
+J3's lanes: 2687 (seed indices 0..2687 less 1595); the 16 drawn positions [4, 14, 182, 310, 564, 666, 709, 1008, 1738, 1795, 1905, 2005, 2300, 2328, 2390, 2482] = seed indices [4, 14, 182, 310, 564, 666, 709, 1008, 1739, 1796, 1906, 2006, 2301, 2329, 2391, 2483]
+PASS the base at fp64: 2688 seed objects (T_s 0x1.6614c00000000p+21), rows of 1680 bytes; 2368 of its rows checked against DEBRIS-I's I3 and I5 INIT files, 0 differ; SHA-256 b01777707c73024a3dd5a2efca3e324dd0b647da471aba4f8f2646a011cd86c2
+PASS j3ref fp64: 16 lanes, 144 segments, marks 0, INIT 21829fad34e6cb041b1c60d86a19422f335d909c2cc8ed381074964ef598380f, runs 8229608d4942f3e74e0f1954f7a61dd270f5923270dbb4350ef6b42ec6f26f43, output 0703ea1b2dfde27bd635fc98c39fc96d9d868c3cc8bd6ddb11644900d877f314
+PASS the base at fp256: 2688 seed objects (T_s 0x1.6614c00000000p+21), rows of 6720 bytes; 2368 of its rows checked against DEBRIS-I's I3 and I5 INIT files, 0 differ; SHA-256 f16899ee2cb2b21bef6a349d0e66f333c7aaaad17bcd7e5d5d2db07dfbb9c090
+PASS j3ref fp256: 16 lanes, 144 segments, marks 0, INIT 5d8121d1d3982ec4b38718431138ca70ed653a70fabad7eb97a1f3ed24137545, runs 37690838168a2399da3df68f62ac742c069335515caff69a98466cc3e81d1681, output 2d39902d2890baac285c94a5b1057492e8632fa862dde107ab4e74f85219b3b4
+# 4 checks, 0 failed; ended 2026-11-23 14:10:33 -0700 local

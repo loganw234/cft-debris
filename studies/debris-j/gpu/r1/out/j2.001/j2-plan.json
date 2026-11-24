@@ -1,0 +1,122 @@
+[
+ {
+  "fmt": "fp64",
+  "B": 512,
+  "s": 1,
+  "nruns": 2,
+  "nseg": null,
+  "rule": "2 whole hours (projected 66.6 s)",
+  "proj_call_s": 0.138671245,
+  "proj_hour_s": 33.2810988
+ },
+ {
+  "fmt": "fp64",
+  "B": 2048,
+  "s": 1,
+  "nruns": 2,
+  "nseg": null,
+  "rule": "2 whole hours (projected 66.6 s)",
+  "proj_call_s": 0.138671245,
+  "proj_hour_s": 33.2810988
+ },
+ {
+  "fmt": "fp64",
+  "B": 8192,
+  "s": 1,
+  "nruns": 1,
+  "nseg": null,
+  "rule": "1 whole hours (projected 133.1 s)",
+  "proj_call_s": 0.55468498,
+  "proj_hour_s": 133.1243952
+ },
+ {
+  "fmt": "fp64",
+  "B": 32768,
+  "s": 1,
+  "nruns": 1,
+  "nseg": 28,
+  "rule": "28 segments of the first hour (projected 62.1 s; an hour 532.5 s)",
+  "proj_call_s": 2.21873992,
+  "proj_hour_s": 532.4975808
+ },
+ {
+  "fmt": "fp128",
+  "B": 512,
+  "s": 1,
+  "nruns": 2,
+  "nseg": null,
+  "rule": "2 whole hours (projected 79.8 s)",
+  "proj_call_s": 0.16619677200000002,
+  "proj_hour_s": 39.88722528
+ },
+ {
+  "fmt": "fp128",
+  "B": 2048,
+  "s": 1,
+  "nruns": 2,
+  "nseg": null,
+  "rule": "2 whole hours (projected 79.8 s)",
+  "proj_call_s": 0.16619677200000002,
+  "proj_hour_s": 39.88722528
+ },
+ {
+  "fmt": "fp128",
+  "B": 8192,
+  "s": 1,
+  "nruns": 1,
+  "nseg": null,
+  "rule": "1 whole hours (projected 159.5 s)",
+  "proj_call_s": 0.6647870880000001,
+  "proj_hour_s": 159.54890112
+ },
+ {
+  "fmt": "fp128",
+  "B": 32768,
+  "s": 1,
+  "nruns": 1,
+  "nseg": 23,
+  "rule": "23 segments of the first hour (projected 61.2 s; an hour 638.2 s)",
+  "proj_call_s": 2.6591483520000003,
+  "proj_hour_s": 638.19560448
+ },
+ {
+  "fmt": "fp256",
+  "B": 512,
+  "s": 1,
+  "nruns": 2,
+  "nseg": null,
+  "rule": "2 whole hours (projected 115.0 s)",
+  "proj_call_s": 0.2396769,
+  "proj_hour_s": 57.522456
+ },
+ {
+  "fmt": "fp256",
+  "B": 2048,
+  "s": 1,
+  "nruns": 2,
+  "nseg": null,
+  "rule": "2 whole hours (projected 115.0 s)",
+  "proj_call_s": 0.2396769,
+  "proj_hour_s": 57.522456
+ },
+ {
+  "fmt": "fp256",
+  "B": 8192,
+  "s": 1,
+  "nruns": 1,
+  "nseg": 63,
+  "rule": "63 segments of the first hour (projected 60.4 s; an hour 230.1 s)",
+  "proj_call_s": 0.9587076,
+  "proj_hour_s": 230.089824
+ },
+ {
+  "fmt": "fp256",
+  "B": 32768,
+  "s": 1,
+  "nruns": 1,
+  "nseg": 16,
+  "rule": "16 segments of the first hour (projected 61.4 s; an hour 920.4 s)",
+  "proj_call_s": 3.8348304,
+  "proj_hour_s": 920.359296
+ }
+]

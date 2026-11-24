@@ -1,0 +1,129 @@
+{
+ "aborted": null,
+ "c2048_ms": {
+  "fp128": 166.196772,
+  "fp256": 239.6769,
+  "fp64": 138.671245
+ },
+ "chosen_s": 1,
+ "desktop_test": false,
+ "ladder": {
+  "fp128": [
+   {
+    "L2048": {
+     "calls_ms": [
+      166.196772,
+      158.64173
+     ],
+     "lanes": 2048,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 110.466164
+    },
+    "L8": {
+     "calls_ms": [
+      87.741316,
+      88.106722
+     ],
+     "lanes": 8,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 113.936546
+    },
+    "c2048_ms": 166.196772,
+    "s": 1,
+    "stopped": true
+   }
+  ],
+  "fp256": [
+   {
+    "L2048": {
+     "calls_ms": [
+      239.6769,
+      235.443166
+     ],
+     "lanes": 2048,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 143.041602
+    },
+    "L8": {
+     "calls_ms": [
+      121.580988,
+      121.268823
+     ],
+     "lanes": 8,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 150.213167
+    },
+    "c2048_ms": 239.6769,
+    "s": 1,
+    "stopped": true
+   }
+  ],
+  "fp64": [
+   {
+    "L2048": {
+     "calls_ms": [
+      138.671245,
+      131.60776
+     ],
+     "lanes": 2048,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 98.919107
+    },
+    "L8": {
+     "calls_ms": [
+      73.212798,
+      72.889273
+     ],
+     "lanes": 8,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 100.275175
+    },
+    "c2048_ms": 138.671245,
+    "s": 1
+   },
+   {
+    "L2048": {
+     "calls_ms": [
+      235.481213,
+      226.11566
+     ],
+     "lanes": 2048,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 166.847263
+    },
+    "L8": {
+     "calls_ms": [
+      142.909943,
+      142.723964
+     ],
+     "lanes": 8,
+     "marks": 0,
+     "rc": 0,
+     "same_device": true,
+     "warmup_ms": 168.666396
+    },
+    "c2048_ms": 235.481213,
+    "s": 2,
+    "stopped": true
+   }
+  ]
+ },
+ "s1_over": [
+  "fp128",
+  "fp256"
+ ]
+}

@@ -1,0 +1,19 @@
+# jgate.001.log, written by j_harness.py (SHA-256 76ac0e1ab898ed704124ded99e5be980ab554a5cdfd7b9464aecb23cbfad08c1)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 13:58:03 -0700 local (2026-11-23 20:58:03 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   j_run's desktop gate (libcft's software executor; j_run and DEBRIS-I's i_run built from one libcft.a by
+#   tests/build_j.sh desktop; depth 512; no artifact):
+#   (a) on I1's 32 cases at s = 40 (DEBRIS-I's staged 40-step images, runs and INIT files), j_run run with --keep-every 1
+#       writes .seg.bin and .marks.bin byte-identical to i_run's, and its .seg.bin has R1's SHA-256;
+#   (b) with --warmup-lanes 8 and --abort-ms 60000 j_run writes the same bytes again (the warm-up's output is discarded);
+#   (c) the stop path: --expect-device with a name, on the software executor (whose open prints no device line), stops
+#       with exit 5 and a "device none" line, before any "image " line, with no output but PREFIX.open.txt;
+#   (d) --abort-ms 0.000001 stops the driver after the process's second call, exit 6, with "ABORT" on stdout, the
+#       provenance's status ABORTED, and that call's segment line printed;
+#   (e) mode load loads every image of the round (CFT_OK: the 32 of I1's systems at s = 1 and the program's 9 at s = 2, 4,
+#       8), and a copy of one with one header byte changed is refused, exit 3;
+#   (f) each provenance file of (a) names the SHA-256 of the image, runs and INIT files, and of its outputs as they are
+#       on disk.
+j_run 265b5e569da5a69648f59b8373dfc6020dae4e14d66ced7e2998712e34b5f3aa; i_run bb5f5af68524d1766782f04be286722ac1168c313812863f0303be2012acce93 (build_j.sh desktop)

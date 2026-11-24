@@ -1,0 +1,65 @@
+# analyze.001.log, written by j_harness.py (SHA-256 551c8c2f695b934aed3c247ff828fc5f4b27574631c814a8d33345d2e0c72eea)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 16:45:42 -0700 local (2026-11-23 23:45:42 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   analyze (phase 2, desktop): J0c's table, J2's statistics and J3's measurement from the GPU's own records
+#   (out/j0c/j0c.json, out/j2/j2.json, out/j3/j3.json), as gpu-j0c, gpu-j2 and gpu-j3 defined them before the data:
+#   J2's X = B x 15 s x s x timed calls / timed wall time (object-seconds a second); each format's best batch: the median and
+#   range of its valid samples; beside the box: X on the card over the box's I5 X at 36 workers (DEBRIS-I's
+#   studies/debris-i/box/logs/box_i5.001.log, the same program and format), a ratio of rates from one sample on each side;
+#   J3: the simulated span over its wall time. No pass condition.
+the box's I5 X at W = 36 (READ, DEBRIS-I's box_i5.001.log): {'fp64': 92572.5, 'fp128': 78197.5, 'fp256': 59731.8}
+FIG J0c fp128 s=1: 8 lanes ['87.74', '88.11'] ms, 2048 lanes ['166.20', '158.64'] ms (warm-ups 113.9 and 110.5 ms)
+FIG J0c fp256 s=1: 8 lanes ['121.58', '121.27'] ms, 2048 lanes ['239.68', '235.44'] ms (warm-ups 150.2 and 143.0 ms)
+FIG J0c fp64 s=1: 8 lanes ['73.21', '72.89'] ms, 2048 lanes ['138.67', '131.61'] ms (warm-ups 100.3 and 98.9 ms)
+FIG J0c fp64 s=2: 8 lanes ['142.91', '142.72'] ms, 2048 lanes ['235.48', '226.12'] ms (warm-ups 168.7 and 166.8 ms)
+FIG J0c the choice: s = 1
+FIG J2 fp64 B=512 s=1 rep 1 try 1: X 59959.7, timed 480 calls in 61.48 s, valid
+FIG J2 fp64 B=2048 s=1 rep 1 try 1: X 233058.6, timed 480 calls in 63.27 s, valid
+FIG J2 fp64 B=8192 s=1 rep 1 try 1: X 233236.6, timed 240 calls in 126.44 s, valid
+FIG J2 fp64 B=32768 s=1 rep 1 try 1: X 227147.0, timed 1 calls in 2.16 s, stopped by the 1,000-ms rule
+FIG J2 fp128 B=512 s=1 rep 1 try 1: X 49630.0, timed 480 calls in 74.28 s, valid
+FIG J2 fp128 B=2048 s=1 rep 1 try 1: X 189867.4, timed 480 calls in 77.66 s, valid
+FIG J2 fp128 B=8192 s=1 rep 1 try 1: X 190797.0, timed 240 calls in 154.57 s, valid
+FIG J2 fp128 B=32768 s=1 rep 1 try 1: X 192375.9, timed 1 calls in 2.55 s, stopped by the 1,000-ms rule
+FIG J2 fp256 B=512 s=1 rep 1 try 1: X 34826.1, timed 480 calls in 105.85 s, valid
+FIG J2 fp256 B=2048 s=1 rep 1 try 1: X 134252.7, timed 480 calls in 109.83 s, valid
+FIG J2 fp256 B=8192 s=1 rep 1 try 1: X 134246.5, timed 63 calls in 57.67 s, valid
+FIG J2 fp256 B=32768 s=1 rep 1 try 1: X 134028.7, timed 1 calls in 3.67 s, stopped by the 1,000-ms rule
+FIG J2 fp128 B=8192 s=1 rep 2 try 1: X 191230.8, timed 240 calls in 154.22 s, valid
+FIG J2 fp128 B=8192 s=1 rep 3 try 1: X 191312.7, timed 240 calls in 154.15 s, valid
+FIG J2 fp256 B=2048 s=1 rep 2 try 1: X 134394.9, timed 480 calls in 109.72 s, valid
+FIG J2 fp256 B=2048 s=1 rep 3 try 1: X 134434.1, timed 480 calls in 109.69 s, valid
+FIG J2 fp64 B=8192 s=1 rep 2 try 1: X 233704.4, timed 240 calls in 126.19 s, valid
+FIG J2 fp64 B=8192 s=1 rep 3 try 1: X 233407.4, timed 240 calls in 126.35 s, valid
+FIG J2 fp128 best batch 8192: 3 samples, median 191230.8, range 190797.0 to 191312.7; against the box's 78197.5 at W = 36: 2.45 (rates over rates)
+FIG J2 fp256 best batch 2048: 3 samples, median 134394.9, range 134252.7 to 134434.1; against the box's 59731.8 at W = 36: 2.25 (rates over rates)
+FIG J2 fp64 best batch 8192: 3 samples, median 233407.4, range 233236.6 to 233704.4; against the box's 92572.5 at W = 36: 2.52 (rates over rates)
+FIG J3 fp256: 2687 lanes, 24 simulated hours in 2583.5 s: 33.44 times real time; marks 0; object-seconds a second over the day 89862.1
+FIG J3 fp64: 2687 lanes, 24 simulated hours in 1499.8 s: 57.61 times real time; marks 0; object-seconds a second over the day 154796.6
+the desktop's load (hostload, each second, GetSystemTimes over 12 logical processors): 5827 samples
+LOAD J2 fp64 B=512 rep 1: 22:05:23 to 22:06:26 UTC, X 59959.7, the desktop's busy share mean 0.334, highest 0.565, over 64 samples
+LOAD J2 fp64 B=2048 rep 1: 22:06:28 to 22:07:32 UTC, X 233058.6, the desktop's busy share mean 0.311, highest 0.449, over 65 samples
+LOAD J2 fp64 B=8192 rep 1: 22:07:35 to 22:09:43 UTC, X 233236.6, the desktop's busy share mean 0.293, highest 0.553, over 129 samples
+LOAD J2 fp64 B=32768 rep 1: 22:09:45 to 22:09:49 UTC, X 227147.0, the desktop's busy share mean 0.209, highest 0.314, over 5 samples
+LOAD J2 fp128 B=512 rep 1: 22:09:51 to 22:11:06 UTC, X 49630.0, the desktop's busy share mean 0.335, highest 0.554, over 76 samples
+LOAD J2 fp128 B=2048 rep 1: 22:11:09 to 22:12:28 UTC, X 189867.4, the desktop's busy share mean 0.366, highest 0.548, over 80 samples
+LOAD J2 fp128 B=8192 rep 1: 22:12:30 to 22:15:06 UTC, X 190797.0, the desktop's busy share mean 0.399, highest 0.764, over 157 samples
+LOAD J2 fp128 B=32768 rep 1: 22:15:09 to 22:15:13 UTC, X 192375.9, the desktop's busy share mean 0.357, highest 0.456, over 5 samples
+LOAD J2 fp256 B=512 rep 1: 22:15:15 to 22:17:02 UTC, X 34826.1, the desktop's busy share mean 0.334, highest 0.641, over 108 samples
+LOAD J2 fp256 B=2048 rep 1: 22:17:05 to 22:18:56 UTC, X 134252.7, the desktop's busy share mean 0.234, highest 0.415, over 112 samples
+LOAD J2 fp256 B=8192 rep 1: 22:18:58 to 22:19:57 UTC, X 134246.5, the desktop's busy share mean 0.282, highest 0.517, over 60 samples
+LOAD J2 fp256 B=32768 rep 1: 22:20:00 to 22:20:06 UTC, X 134028.7, the desktop's busy share mean 0.334, highest 0.396, over 7 samples
+LOAD J2 fp128 B=8192 rep 2: 22:20:08 to 22:22:44 UTC, X 191230.8, the desktop's busy share mean 0.261, highest 0.764, over 156 samples
+LOAD J2 fp128 B=8192 rep 3: 22:22:46 to 22:25:22 UTC, X 191312.7, the desktop's busy share mean 0.159, highest 0.309, over 157 samples
+LOAD J2 fp256 B=2048 rep 2: 22:25:24 to 22:27:15 UTC, X 134394.9, the desktop's busy share mean 0.114, highest 0.169, over 112 samples
+LOAD J2 fp256 B=2048 rep 3: 22:27:17 to 22:29:08 UTC, X 134434.1, the desktop's busy share mean 0.110, highest 0.292, over 112 samples
+LOAD J2 fp64 B=8192 rep 2: 22:29:11 to 22:31:18 UTC, X 233704.4, the desktop's busy share mean 0.108, highest 0.171, over 128 samples
+LOAD J2 fp64 B=8192 rep 3: 22:31:21 to 22:33:28 UTC, X 233407.4, the desktop's busy share mean 0.111, highest 0.171, over 128 samples
+LOAD J2 fp64 B=8192: 3 runs; at the lowest load (0.108) X 233704.4, at the highest (0.293) X 233236.6: a change of -0.200% over +0.184 of busy share (MEASURED; 3 runs, not a controlled test)
+LOAD J2 fp128 B=8192: 3 runs; at the lowest load (0.159) X 191312.7, at the highest (0.399) X 190797.0: a change of -0.270% over +0.240 of busy share (MEASURED; 3 runs, not a controlled test)
+LOAD J2 fp256 B=2048: 3 runs; at the lowest load (0.110) X 134434.1, at the highest (0.234) X 134252.7: a change of -0.135% over +0.125 of busy share (MEASURED; 3 runs, not a controlled test)
+LOAD J3 fp256: 22:58:46 to 23:42:06 UTC (the lock's hold), the desktop's busy share mean 0.082, highest 0.544, over 2600 samples
+LOAD J3 fp64: 22:33:37 to 22:58:46 UTC (the lock's hold), the desktop's busy share mean 0.114, highest 0.698, over 1510 samples
+# 0 checks, 0 failed; ended 2026-11-23 16:45:42 -0700 local

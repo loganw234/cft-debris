@@ -1,0 +1,130 @@
+# gpu_j1.001.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 14:30:03 -0700 local (2026-11-23 21:30:03 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   gpu-j1: J1, bit for bit on the card (the lead's runs; DEBRIS-J's comparison, here and again on the desktop in
+#   phase 2). Every run: hip:0 at depth 512, its device line J0's, warm-up 8 lanes, --abort-ms 1000.
+#   (a) I1's 32 cases at s = 1 (the staged s = 1 image, runs and INIT; 16 lanes, 160 steps, every segment kept): each
+#       .seg.bin and .marks.bin has the SHA-256 of the desktop's software-executor output of the same image, runs and INIT
+#       (E1's; plan.json), byte for byte; and its REDUCE to 40-step boundaries has R1's SHA-256;
+#   (b) I3's day at the chosen s, at binary64, binary128 and binary256: one run of 64 lanes (DEBRIS-I's 8 batch INIT files
+#       joined in batch order; the box ran all 8 batches with one runs file a format), 24 one-hour runs of 6 x 40 / s
+#       segments, --keep-every 40 / s: at every 40-step boundary, every lane's state and lane byte equal its slice of the
+#       box's file (ledger debris-i/box/out/i3/, staged in in/i3/box/), byte for byte;
+#   marks: every mark is counted by format, run and segment (the routine is exp, the program's one routine that marks:
+#       READ, DEBRIS-I's box_i3.001.log); a mark is a lane byte the box's file does not have (the box logged 0 marks on these
+#       inputs), so it fails (b) at that lane until the desktop's replay (phase 2) says otherwise;
+#   C-J1 (control) the planted INIT (lane 21's x one ulp up, binary256) for the first hour at the chosen s: exactly lane 21
+#       differs, at all 6 boundaries, and every other lane equals the box's;
+#   C-J2 (control) (a)'s outputs at degree 2 against degree 7, at each format, at each 40-step boundary: every lane differs;
+#   C-J3 (control) (b)'s binary64 comparison against the box's files with one byte flipped in a copy of batch 3's (record
+#       77, lane 2's x): it reports batch 3, record 77, lane 2 (beside any difference (b) itself found).
+#   J1 PASSES when (a), (b) and the three controls hold with 0 marks; with any mark it is pending the desktop's replay.
+PASS B0 the 159 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+this attempt's outputs: out/j1.001; J0's: j0.001; J0c's: j0c.001
+the chosen s: 1 (out/j0c.001/j0c.json), N = 40; hours of I3's day run: 24
+lock taken (j1 (a)) at 14:30:03, after 0.0 s
+nvidia-smi before (a): 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 34, 210, P8
+processes like GPU work, other than this harness: none
+run a-i1-program-d2-fp128: exit 0, wall 9.1 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 75814904 flags 0x10 bus 0; call max 51.7 ms
+PASS (a) i1-program-d2-fp128: .seg.bin 04a1fcd27215ba85 (the desktop's 04a1fcd27215ba85), .marks.bin equal, REDUCE 192564eb8bb5cc6d (R1's 192564eb8bb5cc6d), marks 0, device line J0's: True
+run a-i1-program-d2-fp256: exit 0, wall 11.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 90882755 flags 0x10 bus 0; call max 72.7 ms
+PASS (a) i1-program-d2-fp256: .seg.bin 11856361e28eee80 (the desktop's 11856361e28eee80), .marks.bin equal, REDUCE 8c8e189bf344eb7f (R1's 8c8e189bf344eb7f), marks 0, device line J0's: True
+run a-i1-program-d2-fp32: exit 0, wall 7.4 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 64311387 flags 0x10 bus 0; call max 41.8 ms
+PASS (a) i1-program-d2-fp32: .seg.bin ff74942dac61a3d2 (the desktop's ff74942dac61a3d2), .marks.bin equal, REDUCE a132d8def556d86e (R1's a132d8def556d86e), marks 0, device line J0's: True
+run a-i1-program-d2-fp64: exit 0, wall 7.3 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 62973069 flags 0x10 bus 0; call max 45.8 ms
+PASS (a) i1-program-d2-fp64: .seg.bin 8b8cd11373907583 (the desktop's 8b8cd11373907583), .marks.bin equal, REDUCE b43d82927fc41ea2 (R1's b43d82927fc41ea2), marks 0, device line J0's: True
+run a-i1-program-d7-fp128: exit 0, wall 16.0 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 114211975 flags 0x10 bus ; call max 105.4 ms
+PASS (a) i1-program-d7-fp128: .seg.bin b1214cb2b28f65d0 (the desktop's b1214cb2b28f65d0), .marks.bin equal, REDUCE 783e4ab75676d40f (R1's 783e4ab75676d40f), marks 0, device line J0's: True
+run a-i1-program-d7-fp256: exit 0, wall 22.3 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 146248080 flags 0x10 bus ; call max 138.2 ms
+PASS (a) i1-program-d7-fp256: .seg.bin 8417c009349b6574 (the desktop's 8417c009349b6574), .marks.bin equal, REDUCE ae9e56115d4c7ab1 (R1's ae9e56115d4c7ab1), marks 0, device line J0's: True
+run a-i1-program-d7-fp32: exit 0, wall 12.4 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 92486373 flags 0x10 bus 0; call max 81.9 ms
+PASS (a) i1-program-d7-fp32: .seg.bin be91c087f96c6105 (the desktop's be91c087f96c6105), .marks.bin equal, REDUCE 458b2a1cbaf038d7 (R1's 458b2a1cbaf038d7), marks 0, device line J0's: True
+run a-i1-program-d7-fp64: exit 0, wall 13.3 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 95663604 flags 0x10 bus 0; call max 79.6 ms
+PASS (a) i1-program-d7-fp64: .seg.bin 6bc11c4ef9b50868 (the desktop's 6bc11c4ef9b50868), .marks.bin equal, REDUCE f07e59b4275c440a (R1's f07e59b4275c440a), marks 0, device line J0's: True
+run a-i1p-part-bodies-fp128: exit 0, wall 1.4 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 29365212 flags 0x10 bus 0; call max 5.4 ms
+PASS (a) i1p-part-bodies-fp128: .seg.bin 9ff7a4e1e9dc8bbf (the desktop's 9ff7a4e1e9dc8bbf), .marks.bin equal, REDUCE 888cf809c1c98fc1 (R1's 888cf809c1c98fc1), marks 0, device line J0's: True
+run a-i1p-part-bodies-fp256: exit 0, wall 1.6 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 31642881 flags 0x10 bus 0; call max 7.2 ms
+PASS (a) i1p-part-bodies-fp256: .seg.bin 2b1346a1d5fe867e (the desktop's 2b1346a1d5fe867e), .marks.bin equal, REDUCE 2b70fd2cadc10d8e (R1's 2b70fd2cadc10d8e), marks 0, device line J0's: True
+run a-i1p-part-bodies-fp32: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 26427297 flags 0x10 bus 0; call max 4.8 ms
+PASS (a) i1p-part-bodies-fp32: .seg.bin e6fa098889fc0d96 (the desktop's e6fa098889fc0d96), .marks.bin equal, REDUCE 7c22eb3dbee928f1 (R1's 7c22eb3dbee928f1), marks 0, device line J0's: True
+run a-i1p-part-bodies-fp64: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 27259715 flags 0x10 bus 0; call max 5.3 ms
+PASS (a) i1p-part-bodies-fp64: .seg.bin 2b21d2a2f6aa6bef (the desktop's 2b21d2a2f6aa6bef), .marks.bin equal, REDUCE 5d1bb7a983e3628a (R1's 5d1bb7a983e3628a), marks 0, device line J0's: True
+run a-i1p-part-central-fp128: exit 0, wall 1.0 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 26437027 flags 0x10 bus 0; call max 2.9 ms
+PASS (a) i1p-part-central-fp128: .seg.bin 359937c88a91e1c5 (the desktop's 359937c88a91e1c5), .marks.bin equal, REDUCE 6a18edc6358f975f (R1's 6a18edc6358f975f), marks 0, device line J0's: True
+run a-i1p-part-central-fp256: exit 0, wall 0.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 24969327 flags 0x10 bus 0; call max 2.8 ms
+PASS (a) i1p-part-central-fp256: .seg.bin 282a32e1b92baead (the desktop's 282a32e1b92baead), .marks.bin equal, REDUCE f0abdcaf7228e728 (R1's f0abdcaf7228e728), marks 0, device line J0's: True
+run a-i1p-part-central-fp32: exit 0, wall 0.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 26525318 flags 0x10 bus 0; call max 2.9 ms
+PASS (a) i1p-part-central-fp32: .seg.bin f7185a81d67e4732 (the desktop's f7185a81d67e4732), .marks.bin equal, REDUCE eb351fccb801d05d (R1's eb351fccb801d05d), marks 0, device line J0's: True
+run a-i1p-part-central-fp64: exit 0, wall 0.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 25617379 flags 0x10 bus 0; call max 2.5 ms
+PASS (a) i1p-part-central-fp64: .seg.bin b2d9afa0f632cc3a (the desktop's b2d9afa0f632cc3a), .marks.bin equal, REDUCE a198ee68189cc45e (R1's a198ee68189cc45e), marks 0, device line J0's: True
+run a-i1p-part-drag-fp128: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 27139164 flags 0x10 bus 0; call max 5.4 ms
+PASS (a) i1p-part-drag-fp128: .seg.bin 84e32446f519c085 (the desktop's 84e32446f519c085), .marks.bin equal, REDUCE 9467f8830d46fc17 (R1's 9467f8830d46fc17), marks 0, device line J0's: True
+run a-i1p-part-drag-fp256: exit 0, wall 1.6 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 28281401 flags 0x10 bus 0; call max 6.9 ms
+PASS (a) i1p-part-drag-fp256: .seg.bin c404c5c1817dfce0 (the desktop's c404c5c1817dfce0), .marks.bin equal, REDUCE f017b67639315c0d (R1's f017b67639315c0d), marks 0, device line J0's: True
+run a-i1p-part-drag-fp32: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 29564418 flags 0x10 bus 0; call max 5.7 ms
+PASS (a) i1p-part-drag-fp32: .seg.bin 756df3b60aadcd73 (the desktop's 756df3b60aadcd73), .marks.bin equal, REDUCE f4d280299adb7347 (R1's f4d280299adb7347), marks 0, device line J0's: True
+run a-i1p-part-drag-fp64: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 27595123 flags 0x10 bus 0; call max 5.0 ms
+PASS (a) i1p-part-drag-fp64: .seg.bin bf222f8e58b1ce4b (the desktop's bf222f8e58b1ce4b), .marks.bin equal, REDUCE d861962045a80c29 (R1's d861962045a80c29), marks 0, device line J0's: True
+run a-i1p-part-frame-fp128: exit 0, wall 0.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 25761564 flags 0x10 bus 0; call max 3.6 ms
+PASS (a) i1p-part-frame-fp128: .seg.bin 42a7c5dea3e0e0ea (the desktop's 42a7c5dea3e0e0ea), .marks.bin equal, REDUCE 129226ad926f39a7 (R1's 129226ad926f39a7), marks 0, device line J0's: True
+run a-i1p-part-frame-fp256: exit 0, wall 1.0 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 24890506 flags 0x10 bus 0; call max 3.8 ms
+PASS (a) i1p-part-frame-fp256: .seg.bin 00cd058fc933f15a (the desktop's 00cd058fc933f15a), .marks.bin equal, REDUCE 3ab0f9e91709b3c8 (R1's 3ab0f9e91709b3c8), marks 0, device line J0's: True
+run a-i1p-part-frame-fp32: exit 0, wall 0.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 24106407 flags 0x10 bus 0; call max 3.0 ms
+PASS (a) i1p-part-frame-fp32: .seg.bin 4a9738781b4d18e5 (the desktop's 4a9738781b4d18e5), .marks.bin equal, REDUCE 0885108fb6865bb2 (R1's 0885108fb6865bb2), marks 0, device line J0's: True
+run a-i1p-part-frame-fp64: exit 0, wall 1.0 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 26087715 flags 0x10 bus 0; call max 3.1 ms
+PASS (a) i1p-part-frame-fp64: .seg.bin e1ae16ce9f68e1c4 (the desktop's e1ae16ce9f68e1c4), .marks.bin equal, REDUCE 231e94e22e71ee4e (R1's 231e94e22e71ee4e), marks 0, device line J0's: True
+run a-i1p-part-grav-fp128: exit 0, wall 3.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 40084473 flags 0x10 bus 0; call max 18.0 ms
+PASS (a) i1p-part-grav-fp128: .seg.bin 3343bb848eddb3de (the desktop's 3343bb848eddb3de), .marks.bin equal, REDUCE 0fb06747ee068ca6 (R1's 0fb06747ee068ca6), marks 0, device line J0's: True
+run a-i1p-part-grav-fp256: exit 0, wall 4.3 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 46561862 flags 0x10 bus 0; call max 23.6 ms
+PASS (a) i1p-part-grav-fp256: .seg.bin 689edeb6b42ff795 (the desktop's 689edeb6b42ff795), .marks.bin equal, REDUCE 5a04468bf2ddf4a4 (R1's 5a04468bf2ddf4a4), marks 0, device line J0's: True
+run a-i1p-part-grav-fp32: exit 0, wall 2.6 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 35991215 flags 0x10 bus 0; call max 12.7 ms
+PASS (a) i1p-part-grav-fp32: .seg.bin 1518cd4e09c3fde9 (the desktop's 1518cd4e09c3fde9), .marks.bin equal, REDUCE 5c0f4f21ab2cbbec (R1's 5c0f4f21ab2cbbec), marks 0, device line J0's: True
+run a-i1p-part-grav-fp64: exit 0, wall 2.8 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 37251875 flags 0x10 bus 0; call max 14.7 ms
+PASS (a) i1p-part-grav-fp64: .seg.bin 4f7b2f8c1bac2363 (the desktop's 4f7b2f8c1bac2363), .marks.bin equal, REDUCE 261a82467229cfba (R1's 261a82467229cfba), marks 0, device line J0's: True
+run a-i1p-part-tides-fp128: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 26161045 flags 0x10 bus 0; call max 4.8 ms
+PASS (a) i1p-part-tides-fp128: .seg.bin 784f4fdf5aa8cd27 (the desktop's 784f4fdf5aa8cd27), .marks.bin equal, REDUCE c2a3a0fc8b3c5ca4 (R1's c2a3a0fc8b3c5ca4), marks 0, device line J0's: True
+run a-i1p-part-tides-fp256: exit 0, wall 1.4 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 29156876 flags 0x10 bus 0; call max 5.8 ms
+PASS (a) i1p-part-tides-fp256: .seg.bin 2a8f20cafa6e391a (the desktop's 2a8f20cafa6e391a), .marks.bin equal, REDUCE c6b956e604c40187 (R1's c6b956e604c40187), marks 0, device line J0's: True
+run a-i1p-part-tides-fp32: exit 0, wall 1.0 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 26361379 flags 0x10 bus 0; call max 4.1 ms
+PASS (a) i1p-part-tides-fp32: .seg.bin 23c283ef62203ac1 (the desktop's 23c283ef62203ac1), .marks.bin equal, REDUCE 14f0e2e0d85b7227 (R1's 14f0e2e0d85b7227), marks 0, device line J0's: True
+run a-i1p-part-tides-fp64: exit 0, wall 1.2 s; device line; segments 160, calls 161, timed 160, marks 0; warm-up warmup lanes 8 call_ns 28436131 flags 0x10 bus 0; call max 3.8 ms
+PASS (a) i1p-part-tides-fp64: .seg.bin 52f210cc87d67efc (the desktop's 52f210cc87d67efc), .marks.bin equal, REDUCE d7d7ecdaf25fba09 (R1's d7d7ecdaf25fba09), marks 0, device line J0's: True
+nvidia-smi after (a): 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 37, 2385, P5
+lock released (j1 (a)) at 14:32:21
+lock taken (j1 (b) fp64) at 14:32:21, after 0.0 s
+nvidia-smi before (b) fp64: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 37, 2385, P5
+processes like GPU work, other than this harness: none
+run b-fp64: exit 0, wall 478.7 s; device line; segments 5760, calls 5761, timed 5760, marks 0; warm-up warmup lanes 8 call_ns 98603491 flags 0x10 bus 0; call max 96.3 ms
+nvidia-smi after (b) fp64: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 37, 1920, P5
+lock released (j1 (b)) at 14:40:22
+PASS (b) fp64 at s = 1: 1152 records of 8 lanes compared with the box's (144 boundaries x 8 batches), 0 differences; marks 0; segments 5760; device line J0's: True; output 7d017e1e342a4ad87ac15f5f0d86db080ce2dee50e8b8b418f66c27fb7643d58
+lock taken (j1 (b) fp128) at 14:40:22, after 0.0 s
+nvidia-smi before (b) fp128: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 37, 1920, P5
+processes like GPU work, other than this harness: none
+run b-fp128: exit 0, wall 586.4 s; device line; segments 5760, calls 5761, timed 5760, marks 0; warm-up warmup lanes 8 call_ns 117299171 flags 0x10 bus ; call max 109.8 ms
+nvidia-smi after (b) fp128: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 1920, P5
+lock released (j1 (b)) at 14:50:11
+PASS (b) fp128 at s = 1: 1152 records of 8 lanes compared with the box's (144 boundaries x 8 batches), 0 differences; marks 0; segments 5760; device line J0's: True; output ad67ae94a0bf861e331418fd8898d57edcb383a43e75a62acc69c6858eb46dc9
+lock taken (j1 (b) fp256) at 14:50:11, after 0.0 s
+nvidia-smi before (b) fp256: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 1920, P5
+processes like GPU work, other than this harness: none
+run b-fp256: exit 0, wall 819.2 s; device line; segments 5760, calls 5761, timed 5760, marks 0; warm-up warmup lanes 8 call_ns 151277749 flags 0x10 bus ; call max 151.9 ms
+nvidia-smi after (b) fp256: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 622, P5
+lock released (j1 (b)) at 15:03:53
+PASS (b) fp256 at s = 1: 1152 records of 8 lanes compared with the box's (144 boundaries x 8 batches), 0 differences; marks 0; segments 5760; device line J0's: True; output 0fc5e034cc51230628ae8f5206ef88249961235683c04a856039e2a5dc1ed17b
+lock taken (j1 C-J1) at 15:03:53, after 0.0 s
+nvidia-smi before C-J1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 622, P5
+run cj1-fp256: exit 0, wall 34.8 s; device line; segments 240, calls 241, timed 240, marks 0; warm-up warmup lanes 8 call_ns 148184367 flags 0x10 bus ; call max 146.0 ms
+nvidia-smi after C-J1: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 38, 1920, P5
+lock released (j1 C-J1) at 15:04:30
+PASS C-J1 (control) lane 21's x one ulp up: the differing (lane, boundary) pairs [(21, 1), (21, 2), (21, 3), (21, 4), (21, 5), (21, 6)]: exactly lane 21 at all 6 boundaries
+PASS C-J2 (control) fp32: degree 2 against degree 7 on the card, 64 of 64 lane-boundaries differ in state
+PASS C-J2 (control) fp64: degree 2 against degree 7 on the card, 64 of 64 lane-boundaries differ in state
+PASS C-J2 (control) fp128: degree 2 against degree 7 on the card, 64 of 64 lane-boundaries differ in state
+PASS C-J2 (control) fp256: degree 2 against degree 7 on the card, 64 of 64 lane-boundaries differ in state
+PASS C-J3 (control) one byte flipped in a copy of batch 3's binary64 file: the comparison reports [(3, 77, 2)]
+marks on the card: none
+J1 PASS
+# 42 checks, 0 failed; ended 2026-11-23 15:04:30 -0700 local

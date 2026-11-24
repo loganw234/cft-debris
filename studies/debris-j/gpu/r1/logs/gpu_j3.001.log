@@ -1,0 +1,42 @@
+# gpu_j3.001.log, written by j_harness.py (SHA-256 a8974e0f8151190196252f44a6aa4b887686f0a9dd7df8aedcc3890e534c9aa9)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 15:33:37 -0700 local (2026-11-23 22:33:37 UTC)
+# python 3.12.3 on linux
+# CRITERIA (fixed before the data, asserted in code):
+#   gpu-j3: J3, a catalogue day on the card (a measurement, with one equality check at each format).
+#    the lanes: DEBRIS-H's 2,688 seed objects less seed index 1595 (DEBRIS-H decayed it 5.8 h after T_s; I3's rule): 2,687,
+#       in seed index order, made here from the staged base (its SHA-256 the staged plan's);
+#    the span, at binary64 and binary256 at the chosen s, --keep-every 40 / s, warm-up 8, --abort-ms 1000: the whole day
+#       from T_s if the projection is at most 60 minutes, else 6 hours; the projection is (5,760 / s calls) x 2 chunks
+#       (2,048 and 639 lanes, each a launch) x J0c's 2,048-lane call time at that format;
+#    the measurement: the span's wall time (the timed region) against its simulated time (86,400 or 21,600 s);
+#    the check: the 16 lanes drawn at staging (random.Random(20261124), plan.json) each equal, at every 40-step boundary of
+#       the span, the desktop's software-executor replay of the day (in/j3/ref-<fmt>.seg.bin), state and lane byte, bit for
+#       bit; a checked lane that is marked is judged only after the desktop's replay (phase 2);
+#    marks: every mark is counted by format, run and segment, with its lane's seed index, for phase 2's replay;
+#    validity: the device line equals J0's; nvidia-smi before and after (as J2's thresholds, when given).
+PASS B0 the 159 staged files carry the SHA-256 of in/EXPECTED.sha256 (0 differ or are missing)
+this attempt's outputs: out/j3.001; J0's: j0.001; J0c's: j0c.001
+PASS fp64: J3's INIT (2687 lanes) is the staged plan's (7f9fbec0fb948d62)
+fp64: projection 1597 s (26.6 min) for the day: the span is 24 hours
+lock taken (j3-fp64) at 15:33:37, after 0.0 s
+nvidia-smi before j3-fp64: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 37, 210, P8
+processes like GPU work, other than this harness: none
+run j3-fp64: exit 0, wall 1507.2 s; device line; segments 5760, calls 5761, timed 5760, marks 0; warm-up warmup lanes 8 call_ns 96147383 flags 0x10 bus 0; call max 275.6 ms
+nvidia-smi after j3-fp64: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 997, P5
+lock released (j3-fp64) at 15:58:46
+PASS fp64 check: 16 of the 16 drawn lanes (those in this run) against the desktop's replay at 144 boundaries: 0 differences (0 in marked lanes, pending replay)
+PASS fp64 run: exit 0, device line J0's: True, nvidia-smi within the thresholds
+FIG J3 fp64 s=1: 2687 lanes, 24 simulated hours in 1499.8 s of wall time: 57.6 times real time (MEASURED); marks 0
+PASS fp256: J3's INIT (2687 lanes) is the staged plan's (04b9cc00563cd35c)
+fp256: projection 2761 s (46.0 min) for the day: the span is 24 hours
+lock taken (j3-fp256) at 15:58:46, after 0.0 s
+nvidia-smi before j3-fp256: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 997, P5
+processes like GPU work, other than this harness: none
+run j3-fp256: exit 0, wall 2597.1 s; device line; segments 5760, calls 5761, timed 5760, marks 0; warm-up warmup lanes 8 call_ns 140412807 flags 0x10 bus ; call max 465.7 ms
+nvidia-smi after j3-fp256: 1, NVIDIA GeForce RTX 5060 Ti, 12, 16311, 0, 39, 1957, P5
+lock released (j3-fp256) at 16:42:06
+PASS fp256 check: 16 of the 16 drawn lanes (those in this run) against the desktop's replay at 144 boundaries: 0 differences (0 in marked lanes, pending replay)
+PASS fp256 run: exit 0, device line J0's: True, nvidia-smi within the thresholds
+FIG J3 fp256 s=1: 2687 lanes, 24 simulated hours in 2583.5 s of wall time: 33.4 times real time (MEASURED); marks 0
+# 7 checks, 0 failed; ended 2026-11-23 16:42:06 -0700 local

@@ -1,0 +1,192 @@
+# compile.001.log, written by j_harness.py (SHA-256 9408d04b63a25952d22dbc0fe0c4727b5f79b915495a6d99fb5c9d8ac4242037)
+# with i_lib.py (SHA-256 98925848e733127a6d06c6b10e30364ce704d20d63ef88b264ff752445792e87)
+# started 2026-11-23 13:44:42 -0700 local (2026-11-23 20:44:42 UTC)
+# python 3.12.15 on win32
+# CRITERIA (fixed before the data, asserted in code):
+#   compile: cftc at cft-fp256 9e8ff270 (the archive 7814576d..., extracted in the scratch) on DEBRIS-I's sources
+#   unchanged (studies/debris-i/systems/<stem>.cftl, each SHA-256 printed), for sw:512, one image a (source, format, s):
+#   I1's eight systems (the program at degrees 7 and 2 and the six part systems) at binary32, 64, 128 and 256 at s = 40 and
+#   at s = 1, and the program at degree 7 at s = 2, 4 and 8 at binary64, 128 and 256 (73 compiles; each s in its own
+#   folder, the stem DEBRIS-I's). Each compile is one row of studies/debris-j/compiles.tsv (DEBRIS-I's columns).
+#   Asserted: every compile succeeds; each source's SHA-256 is the one DEBRIS-I's compiles.tsv records for it; and each s =
+#   40 image's SHA-256 equals DEBRIS-I's compiles.tsv's (cftc reproduces DEBRIS-I's images).
+PASS compile program-d7-fp64 s=40: compiled; 19362 instructions, bank 403, scratch 378; source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb; image d0a6558b12bf62070b38cf5dee715c9978a4eb68258cc2b74e499f5acbcd53b3
+PASS   program-d7-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d7-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (d0a6558b12bf62070b38cf5dee715c9978a4eb68258cc2b74e499f5acbcd53b3)
+PASS compile program-d7-fp32 s=40: compiled; 19990 instructions, bank 409, scratch 378; source f14132084ee796d25aec06d5fa9786a3e301597862bd09d0cbe902df5cca0b0c; image cdfe93d03fee156e4e0651eaa28f771f0dda196f5fa4ef099b8510ae15fdfc43
+PASS   program-d7-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d7-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (cdfe93d03fee156e4e0651eaa28f771f0dda196f5fa4ef099b8510ae15fdfc43)
+PASS compile program-d7-fp128 s=40: compiled; 19550 instructions, bank 412, scratch 378; source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9; image 02245fbc6025031797005317dbab02d1dec8baa6e16377963aa6c83593bc5994
+PASS   program-d7-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d7-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (02245fbc6025031797005317dbab02d1dec8baa6e16377963aa6c83593bc5994)
+PASS compile program-d2-fp64 s=40: compiled; 15137 instructions, bank 208, scratch 322; source cfcb9d996751aac36530a27116ed14cdb1fdb3fcd4858384b52f06045a255747; image 3547e6acab64c420b6adb34b4baaeba722da7ca736021249e481ccae65ff21d3
+PASS   program-d2-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d2-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (3547e6acab64c420b6adb34b4baaeba722da7ca736021249e481ccae65ff21d3)
+PASS compile program-d2-fp32 s=40: compiled; 15792 instructions, bank 214, scratch 330; source 6d029dedecd35ead7841d4628e3d0fcbc4d6de92121fbeb922791dd579430a72; image aee7ca02c65d01db71fb2cc2980e29fef6ef46437f349cee13034e1666cf9a08
+PASS   program-d2-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d2-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (aee7ca02c65d01db71fb2cc2980e29fef6ef46437f349cee13034e1666cf9a08)
+PASS compile program-d7-fp256 s=40: compiled; 19758 instructions, bank 425, scratch 378; source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7; image 974d6760c68399df1a4f1c93d5027c41e3f1d6eecb926ade0d0c52181c79f7d9
+PASS   program-d7-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d7-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (974d6760c68399df1a4f1c93d5027c41e3f1d6eecb926ade0d0c52181c79f7d9)
+PASS compile part-central-fp32 s=40: compiled; 378 instructions, bank 36, scratch 7; source 61dda2873a96186aed59f86f5c944f00ae6470131ff1750a232ff6c0f2fe311e; image e83fb0e24807a6936610f8b89e6c0c027bc21783ea62ba9ceb5d2caa9f3013b0
+PASS   part-central-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-central-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (e83fb0e24807a6936610f8b89e6c0c027bc21783ea62ba9ceb5d2caa9f3013b0)
+PASS compile program-d2-fp128 s=40: compiled; 15325 instructions, bank 217, scratch 322; source b6bd29e17e3d5009f4d85fd389c1c4545519337a9cf054bba6fd192cb23a99ab; image f4af98cd20e751403ea6143f9b07792a55363fd4b326f909cd8013832666f5c2
+PASS   program-d2-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d2-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (f4af98cd20e751403ea6143f9b07792a55363fd4b326f909cd8013832666f5c2)
+PASS compile part-central-fp64 s=40: compiled; 383 instructions, bank 38, scratch 7; source 9b0ec83e9eeb02f7f567e6ba77b4d3a5d3331cc74fa97d9a7067778adf555896; image fc0375f91d7eade7a22336ef1fb6833fb1d019955a24c9b7cf6003367cc8f0a6
+PASS   part-central-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-central-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (fc0375f91d7eade7a22336ef1fb6833fb1d019955a24c9b7cf6003367cc8f0a6)
+PASS compile part-central-fp128 s=40: compiled; 388 instructions, bank 38, scratch 7; source 7a7820c953b1f0d8791fa632a9b0b3c89310314e4ed70f49ef547893363aa1b3; image 8a067690118a770ec6a4734ba08ca83dfc5cb52974150b1de08e64ebd2eb8528
+PASS   part-central-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-central-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (8a067690118a770ec6a4734ba08ca83dfc5cb52974150b1de08e64ebd2eb8528)
+PASS compile program-d2-fp256 s=40: compiled; 15533 instructions, bank 230, scratch 322; source 6f5b1287a67e5fce740a4996e23762298c453b54f9267af5141f23f385a0d6cf; image 7251bb47bb2134dcda9670b7e0d8a478c3eb29197e8f495685739cf83cdd1372
+PASS   program-d2-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   program-d2-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (7251bb47bb2134dcda9670b7e0d8a478c3eb29197e8f495685739cf83cdd1372)
+PASS compile part-central-fp256 s=40: compiled; 393 instructions, bank 38, scratch 7; source dfb3f859c578f23070b4bdd9839c14a824082e518a01625d3c48a7ef1e964e96; image a7aca97e112f4d3f3a7dcbfac0ee6f3bca0ba275dce1e96276ce8c6a4010d52b
+PASS   part-central-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-central-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (a7aca97e112f4d3f3a7dcbfac0ee6f3bca0ba275dce1e96276ce8c6a4010d52b)
+PASS compile part-grav-fp32 s=40: compiled; 2014 instructions, bank 37, scratch 290; source 8f8d3c23eb6f86fc484d7ac3e89a0f02f1fbe395012f01c0c354b9c824e74b77; image 8fd6669b3bbe202fd97301b0a5327b3acdf600c83174eac7bc6d505f5ef452b3
+PASS   part-grav-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-grav-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (8fd6669b3bbe202fd97301b0a5327b3acdf600c83174eac7bc6d505f5ef452b3)
+PASS compile part-grav-fp64 s=40: compiled; 2027 instructions, bank 39, scratch 290; source 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7; image 13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d
+PASS   part-grav-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-grav-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (13695f910cb762272eeeb38125c2264345b4ed6298d63cf4220e6a7a8ee9d41d)
+PASS compile part-grav-fp128 s=40: compiled; 2034 instructions, bank 39, scratch 290; source 9ca15c030489e74e74fce5db49ea8ec792a96c3996f168937d2428e5842ed668; image ec77d86a11185fd558b7c7215d1fcec6cb4ca9d053948be1c7a9de3dae4f4cd9
+PASS   part-grav-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-grav-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (ec77d86a11185fd558b7c7215d1fcec6cb4ca9d053948be1c7a9de3dae4f4cd9)
+PASS compile part-tides-fp32 s=40: compiled; 1451 instructions, bank 36, scratch 21; source 2cf575f3a53a9789e07308b5e915a4e96f19d5b733955d42468d176cb19ae648; image 17361320fee31d1fb6f774d70a447b1da911eda64202ecb474b8dc0d15c179d2
+PASS   part-tides-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-tides-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (17361320fee31d1fb6f774d70a447b1da911eda64202ecb474b8dc0d15c179d2)
+PASS compile part-tides-fp64 s=40: compiled; 1471 instructions, bank 38, scratch 21; source f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87; image 5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba
+PASS   part-tides-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-tides-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (5dbbed8a52bee608d8b5b4c6fda1765cca58e1aa9cc7a7cd53abc02a0c72a0ba)
+PASS compile part-grav-fp256 s=40: compiled; 2041 instructions, bank 39, scratch 290; source 35c9c67cc2dbb67fb6e240a2ad98efb448242e75f19a0cdebf797df359f157a8; image bd4ab2b4b446d09ada3897c9d518eb5d8958a6703c2c79d2d50438bdb462e3f4
+PASS   part-grav-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-grav-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (bd4ab2b4b446d09ada3897c9d518eb5d8958a6703c2c79d2d50438bdb462e3f4)
+PASS compile part-tides-fp128 s=40: compiled; 1491 instructions, bank 38, scratch 21; source 22711b33f732d4e3b71905a0e1a1c7e0cee7422d23a245cdac7c67f36e638f9c; image 94b308134e306bc098030110a0086b0b52be37d4076c6fcde8aea6cb6bd075f8
+PASS   part-tides-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-tides-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (94b308134e306bc098030110a0086b0b52be37d4076c6fcde8aea6cb6bd075f8)
+PASS compile part-bodies-fp32 s=40: compiled; 912 instructions, bank 32, scratch 126; source ab7b102b2baf6c2f93297062a8af3d6b802a89e6d901f9e3a2d53352cf380bee; image d9d166a37928e2510cf32d994783655332aeca2525ca3aedc3aa94a31e722b91
+PASS   part-bodies-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-bodies-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (d9d166a37928e2510cf32d994783655332aeca2525ca3aedc3aa94a31e722b91)
+PASS compile part-bodies-fp64 s=40: compiled; 918 instructions, bank 33, scratch 126; source f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90; image 390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0
+PASS   part-bodies-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-bodies-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (390d8a297f74f7172774bee3cc831c04dee70757a231ed9e5ea8e937a01984b0)
+PASS compile part-tides-fp256 s=40: compiled; 1511 instructions, bank 38, scratch 21; source 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0; image a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c
+PASS   part-tides-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-tides-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (a4ebbfb786d3cd418f1eb56dccd4e6ca92b30f4bf9cd9d0a8ddd5e40fc4c315c)
+PASS compile part-bodies-fp128 s=40: compiled; 924 instructions, bank 33, scratch 126; source 49c209ca753dba2b713c47e08768cddeeb1023a2c7f4d9e09027e1b2cde83c37; image 1383a17c1651734d76a29263eced3fe98da396bfb310d7ad7b4d09a2ab274dd7
+PASS   part-bodies-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-bodies-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (1383a17c1651734d76a29263eced3fe98da396bfb310d7ad7b4d09a2ab274dd7)
+PASS compile part-frame-fp32 s=40: compiled; 198 instructions, bank 0, scratch 98; source 2d0eaf5df32453d6945a9679ce906e9aad054aff14070b7e71ce0087c1642492; image b4ef172cfddaebbc43aacb25189a893be869f85c3c255d729597f98eb4fc076b
+PASS   part-frame-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-frame-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (b4ef172cfddaebbc43aacb25189a893be869f85c3c255d729597f98eb4fc076b)
+PASS compile part-frame-fp64 s=40: compiled; 198 instructions, bank 0, scratch 98; source bbbc697fb7841a9e976cc3d91c2ec7962c1979eba67da8caafe16988b4015913; image 64c1db1207e365e70f6725eb72f4a96fff86a3b2d18e564b9dea3213fd56b7ff
+PASS   part-frame-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-frame-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (64c1db1207e365e70f6725eb72f4a96fff86a3b2d18e564b9dea3213fd56b7ff)
+PASS compile part-bodies-fp256 s=40: compiled; 930 instructions, bank 33, scratch 126; source 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5; image b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c
+PASS   part-bodies-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-bodies-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (b717fd239faecf1822ef5b99071614b99e0e8dd52d4bc99b33f922ccd661251c)
+PASS compile part-frame-fp128 s=40: compiled; 198 instructions, bank 0, scratch 98; source f1e0e70d94b4265e9c44b121bd6b08e268e7a33c44432584b80646756e9c7dd6; image c4cb5a587ee4e7ec66afefd00c592fb08c2ed328876fec903e92a8501c938e30
+PASS   part-frame-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-frame-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (c4cb5a587ee4e7ec66afefd00c592fb08c2ed328876fec903e92a8501c938e30)
+PASS compile part-frame-fp256 s=40: compiled; 198 instructions, bank 0, scratch 98; source 86bf2b22231e1e879bc6b67be5d1643179cb3e8fdacb60034db4d930b051d8a7; image f9492691f92e264db2bcc48e67a6eb31eff732acb341964d28a1c97d58f952bc
+PASS   part-frame-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-frame-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (f9492691f92e264db2bcc48e67a6eb31eff732acb341964d28a1c97d58f952bc)
+PASS compile part-drag-fp32 s=40: compiled; 1191 instructions, bank 91, scratch 112; source 77a1b6c39e99212fee70976991e17e319117a81026c30ba08aa01d325826a43a; image 4871c5a3640d950fb49cdd327fb650a0e906a6654a03e241474daf7a0c41b57f
+PASS   part-drag-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-drag-fp32 at s = 40: the image's SHA-256 is DEBRIS-I's (4871c5a3640d950fb49cdd327fb650a0e906a6654a03e241474daf7a0c41b57f)
+PASS compile part-drag-fp64 s=40: compiled; 997 instructions, bank 85, scratch 112; source fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818; image f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2
+PASS   part-drag-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-drag-fp64 at s = 40: the image's SHA-256 is DEBRIS-I's (f435feeb86dc7157b8c959b2bfce9771dbf684895329998f2319b1685f7673b2)
+PASS compile part-drag-fp128 s=40: compiled; 1013 instructions, bank 94, scratch 112; source 0467190b1d88346e63999807b930e33d348f7deaece4d4e1085d3bcab8009538; image 75a28d325d932c775145b137dfe310e780c6726ea81408514c04e1ac19a068d1
+PASS   part-drag-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-drag-fp128 at s = 40: the image's SHA-256 is DEBRIS-I's (75a28d325d932c775145b137dfe310e780c6726ea81408514c04e1ac19a068d1)
+PASS compile part-drag-fp256 s=40: compiled; 1034 instructions, bank 107, scratch 112; source b7ac98c5b27421d0223a4d519fd39111620fcb8f5e83c21efb81e5246426664f; image ed12b794dd68b8e4350d53eeabe4dc577482154a23f5971df91510394ebb9056
+PASS   part-drag-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS   part-drag-fp256 at s = 40: the image's SHA-256 is DEBRIS-I's (ed12b794dd68b8e4350d53eeabe4dc577482154a23f5971df91510394ebb9056)
+PASS compile program-d7-fp32 s=1: compiled; 19990 instructions, bank 409, scratch 378; source f14132084ee796d25aec06d5fa9786a3e301597862bd09d0cbe902df5cca0b0c; image 64e6f90abbb2e580c3b4df105d11150920a1c772212508950e2385a3281d5c70
+PASS   program-d7-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp64 s=1: compiled; 19362 instructions, bank 403, scratch 378; source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb; image b7be3a3dba3068a363bbfbff42370294ddab5cfed38c5d32175732069ce63d23
+PASS   program-d7-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp128 s=1: compiled; 19550 instructions, bank 412, scratch 378; source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9; image 3f2f1c5a2b9ee6422914496365c620f7813914fb5d5532a4294d85c83acd5814
+PASS   program-d7-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d2-fp32 s=1: compiled; 15792 instructions, bank 214, scratch 330; source 6d029dedecd35ead7841d4628e3d0fcbc4d6de92121fbeb922791dd579430a72; image ee081f3cf37b9d3b6169f2f3ce1f5eb0ceb2875eb0952999a827d088c7faf4c1
+PASS   program-d2-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d2-fp64 s=1: compiled; 15137 instructions, bank 208, scratch 322; source cfcb9d996751aac36530a27116ed14cdb1fdb3fcd4858384b52f06045a255747; image 95c05f61838a931accf254d0ff98151ac4043adcf12bece25cbcc3d1c2c35a18
+PASS   program-d2-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp256 s=1: compiled; 19758 instructions, bank 425, scratch 378; source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7; image e0ea920af60138105d10d225a574d5eec4e3e153ba250df613e0f06849413f5d
+PASS   program-d7-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-central-fp32 s=1: compiled; 378 instructions, bank 36, scratch 7; source 61dda2873a96186aed59f86f5c944f00ae6470131ff1750a232ff6c0f2fe311e; image 445318407571af5f56b9a833bcfe87e726729f1327ad8a35664053d1ddf701c1
+PASS   part-central-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d2-fp128 s=1: compiled; 15325 instructions, bank 217, scratch 322; source b6bd29e17e3d5009f4d85fd389c1c4545519337a9cf054bba6fd192cb23a99ab; image 133275b8278adbece21f435bb72a6340ccda50cc2547b25388be5269f8d04f68
+PASS   program-d2-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-central-fp64 s=1: compiled; 383 instructions, bank 38, scratch 7; source 9b0ec83e9eeb02f7f567e6ba77b4d3a5d3331cc74fa97d9a7067778adf555896; image 95963613a53689b6d285be1568d9a49f6804237d22462f4b39c76dbdd0c572b3
+PASS   part-central-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-central-fp128 s=1: compiled; 388 instructions, bank 38, scratch 7; source 7a7820c953b1f0d8791fa632a9b0b3c89310314e4ed70f49ef547893363aa1b3; image 25f0897e1292f734b7643ba3334e9e99f5473dbb94455cfdd106d6d753b047a4
+PASS   part-central-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d2-fp256 s=1: compiled; 15533 instructions, bank 230, scratch 322; source 6f5b1287a67e5fce740a4996e23762298c453b54f9267af5141f23f385a0d6cf; image 70c2e950d90d0a5b9f9df1146a9e1bb252de74b3ec69593897e6039e2a57be0a
+PASS   program-d2-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-central-fp256 s=1: compiled; 393 instructions, bank 38, scratch 7; source dfb3f859c578f23070b4bdd9839c14a824082e518a01625d3c48a7ef1e964e96; image 096c701ebf933004be29d85a50180c25ebac935f5fd06a5663bd1737ba881757
+PASS   part-central-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-grav-fp32 s=1: compiled; 2014 instructions, bank 37, scratch 290; source 8f8d3c23eb6f86fc484d7ac3e89a0f02f1fbe395012f01c0c354b9c824e74b77; image f12c24669d0abc7314ae28f9fd84f811d3a31494bb99eaeccd51311fba89615f
+PASS   part-grav-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-grav-fp64 s=1: compiled; 2027 instructions, bank 39, scratch 290; source 0692ae85d1a433d52fd3feacd1ebf56fa336ba745b8de375ce58d84e70da31c7; image eb803fbc135398c451e6714340e04c8d64ce1683d9ad61dc9bb426078af38b51
+PASS   part-grav-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-grav-fp128 s=1: compiled; 2034 instructions, bank 39, scratch 290; source 9ca15c030489e74e74fce5db49ea8ec792a96c3996f168937d2428e5842ed668; image 7c4077d96d5cc5d808b19c88993dc87f67ea1e10e5314c13555d37150aa514dc
+PASS   part-grav-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-tides-fp32 s=1: compiled; 1451 instructions, bank 36, scratch 21; source 2cf575f3a53a9789e07308b5e915a4e96f19d5b733955d42468d176cb19ae648; image f3da8e1418aae0aae3c40695ff8cb731006c6c182d709b57aced2e7e8dada9a2
+PASS   part-tides-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-grav-fp256 s=1: compiled; 2041 instructions, bank 39, scratch 290; source 35c9c67cc2dbb67fb6e240a2ad98efb448242e75f19a0cdebf797df359f157a8; image 48ee3d2fcdb494a471c0b5dfa0e319a7020511f40ef03cd27623d381095c4b23
+PASS   part-grav-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-tides-fp64 s=1: compiled; 1471 instructions, bank 38, scratch 21; source f67ae800e3f06c8fda3dc77025e9828927fa745d443ef559f401bd849b161a87; image 5ce9fde6b64538750e3a86582d05991ef9869d0730fabed9b71200fddc3cd430
+PASS   part-tides-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-tides-fp128 s=1: compiled; 1491 instructions, bank 38, scratch 21; source 22711b33f732d4e3b71905a0e1a1c7e0cee7422d23a245cdac7c67f36e638f9c; image 14b7764a0abdfd5201d2e840a771453fb561b36b4f524801a5f7ed32938838c2
+PASS   part-tides-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-bodies-fp32 s=1: compiled; 912 instructions, bank 32, scratch 126; source ab7b102b2baf6c2f93297062a8af3d6b802a89e6d901f9e3a2d53352cf380bee; image 23c331bfcc436b4eecdb6424d6c8aff4d98cee76a22d04ecc75fe0d23f973c87
+PASS   part-bodies-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-tides-fp256 s=1: compiled; 1511 instructions, bank 38, scratch 21; source 1a9eeaaa171f629725efdf7fb3f5d29e3e203d0e984cdb604c71ecccec7703a0; image 47ad105bb6c4cf1afd8971d1cf33d10b69c2fbf077d45303e8f52dce8334f555
+PASS   part-tides-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-bodies-fp64 s=1: compiled; 918 instructions, bank 33, scratch 126; source f64a021912724581b3c85553aaf114a2ebde5db6c6355f7f3a6b7ab9f0c63f90; image 6c497f3200d14601180ede6bf9066883f135d0d3e540c316c20812f6342b0399
+PASS   part-bodies-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-bodies-fp128 s=1: compiled; 924 instructions, bank 33, scratch 126; source 49c209ca753dba2b713c47e08768cddeeb1023a2c7f4d9e09027e1b2cde83c37; image bc9ac40cd5eb283c5467a1fc04e7acb3a911a7f1f98805beefbe40578a52b40c
+PASS   part-bodies-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-frame-fp32 s=1: compiled; 198 instructions, bank 0, scratch 98; source 2d0eaf5df32453d6945a9679ce906e9aad054aff14070b7e71ce0087c1642492; image 704786c98de872c33ae540df9da239f4c98ddfde652465e18982dcf1a1351c62
+PASS   part-frame-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-frame-fp64 s=1: compiled; 198 instructions, bank 0, scratch 98; source bbbc697fb7841a9e976cc3d91c2ec7962c1979eba67da8caafe16988b4015913; image 12d829756c8395930d409a67fb92c50e145a40f3e02ffc58d334c0f2de8de89a
+PASS   part-frame-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-bodies-fp256 s=1: compiled; 930 instructions, bank 33, scratch 126; source 496ce1db9a67951026082b2141f8c84d8f228abca25ac3d9aef8f5bc9565a5c5; image 3f6c567f0cfdac6c5ea7d9347d69c1a6f3b7a2133add55689a3b0618d9c82cfe
+PASS   part-bodies-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-frame-fp128 s=1: compiled; 198 instructions, bank 0, scratch 98; source f1e0e70d94b4265e9c44b121bd6b08e268e7a33c44432584b80646756e9c7dd6; image 78be6365214f0e32acbf0cb36a30ba21eb023a1a3181851b234bc567747184a2
+PASS   part-frame-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-frame-fp256 s=1: compiled; 198 instructions, bank 0, scratch 98; source 86bf2b22231e1e879bc6b67be5d1643179cb3e8fdacb60034db4d930b051d8a7; image 0694d2676e2f2c6e4417dd31d7e9d680be7d58029cba978a720413223787c255
+PASS   part-frame-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-drag-fp32 s=1: compiled; 1191 instructions, bank 91, scratch 112; source 77a1b6c39e99212fee70976991e17e319117a81026c30ba08aa01d325826a43a; image b89b429f5d08bcc9dc2576bb371c87845cf76a6a110795bac6cf632d482ddaa3
+PASS   part-drag-fp32: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-drag-fp64 s=1: compiled; 997 instructions, bank 85, scratch 112; source fa53e9d74afd1e9926a798750fc1ece65e78df63f3424a747f554d5ea653d818; image b8d139d15320ea1e634fea4b790d8bf22712dbcb84277478f45115c9c9d66245
+PASS   part-drag-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-drag-fp128 s=1: compiled; 1013 instructions, bank 94, scratch 112; source 0467190b1d88346e63999807b930e33d348f7deaece4d4e1085d3bcab8009538; image 8f78d32a4870d2de05c19bd43eb59969372ffbdee829f17c8f8b8d3336ec39ed
+PASS   part-drag-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile part-drag-fp256 s=1: compiled; 1034 instructions, bank 107, scratch 112; source b7ac98c5b27421d0223a4d519fd39111620fcb8f5e83c21efb81e5246426664f; image 4e5e0ce1ad132a9f634fdfa781ed5a23823a21da429abbc782d647b967f53d23
+PASS   part-drag-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp64 s=2: compiled; 19362 instructions, bank 403, scratch 378; source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb; image 9d013d35c10290945cd3942cbce466d6b334da9328923df6c906af1d9165b227
+PASS   program-d7-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp128 s=2: compiled; 19550 instructions, bank 412, scratch 378; source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9; image cc9d8ffe35a4f901e711d580019f65206858278ea42adbf73104c9b6aa926243
+PASS   program-d7-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp256 s=2: compiled; 19758 instructions, bank 425, scratch 378; source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7; image b25a4dcf5d1402acf87cf55fdc08c26b6b87a9191c6b9248904404128fa28373
+PASS   program-d7-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp64 s=4: compiled; 19362 instructions, bank 403, scratch 378; source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb; image 2894deef2a5f774c6e75e3c314b534f571829533de4e52c10e3499c5fefc0886
+PASS   program-d7-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp128 s=4: compiled; 19550 instructions, bank 412, scratch 378; source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9; image 01dc65ab40bb6eb8b49e5b22d7e17628a925fbc8a332bd5c9d41288692518259
+PASS   program-d7-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp256 s=4: compiled; 19758 instructions, bank 425, scratch 378; source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7; image 1ab384236c503e818cf9a0cee2a2bd5e1baf4695611b459567ad69153bfa45c0
+PASS   program-d7-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp64 s=8: compiled; 19362 instructions, bank 403, scratch 378; source c71f5c682fa0fba1c483cd53a4bcd1f444fe85a29078c59b3af3c5ace7081acb; image 6e6ea2fa93351d585a2d0bfd1a2dd585d86849d99623d7fe0d74093e449ff19a
+PASS   program-d7-fp64: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp128 s=8: compiled; 19550 instructions, bank 412, scratch 378; source 2c186ac19b65054a4813903025d8a36545e5929bdbf09cd167dd3adaa5d806c9; image 6d7ffd8c660244b97fdf399a2c4ec7d25e51b54f6fadeb0b142e2652176115cc
+PASS   program-d7-fp128: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+PASS compile program-d7-fp256 s=8: compiled; 19758 instructions, bank 425, scratch 378; source a889d2d27b2e7fe23afeb5cb734818327c3cfbd00b575f1705a9bcfc001014f7; image 688008f91d8a49eca15f263ea6138c6b3accde1ad744802898dfe859c2157c80
+PASS   program-d7-fp256: the source's SHA-256 is DEBRIS-I's compiles.tsv's
+73 compiles, at most 3 at once
+# 178 checks, 0 failed; ended 2026-11-23 13:48:06 -0700 local
